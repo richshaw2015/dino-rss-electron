@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+logs
+*.log
+.idea/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+public/bundle.*
+dist/
+!dist/.placeholder

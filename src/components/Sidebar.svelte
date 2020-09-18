@@ -1,0 +1,1 @@
+<p>Sidebar content</p>

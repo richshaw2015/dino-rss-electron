@@ -1,0 +1,33 @@
+{
+  "name": "electron-quick-start",
+  "version": "0.0.1",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "rollup -c",
+    "autobuild": "rollup -c -w",
+    "start:dev": "concurrently \"npm run autobuild\" \"ELECTRON_RELOAD=yes electron .\""
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "rollup": "^2.27.1",
+    "@rollup/plugin-commonjs": "^12.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.0",
+    "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-terser": "^5.1.2",
+    "concurrently": "^5.3.0",
+    "electron-reload": "^1.5.0",
+    "svelte": "^3.25.1",
+    "electron": "^10.1.2"
+  }
+}
