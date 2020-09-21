@@ -1,4 +1,4 @@
-import LeftNav from './LeftNav.svelte';
+import LeftNav from './Nav.svelte';
 
 export default {
     title: 'LeftNav',

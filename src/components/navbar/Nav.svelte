@@ -8,12 +8,12 @@
         flex-direction: column;
         align-items: center;
     }
-    #nav-image {
+    #omr-nav-image {
         width: 36px;
         height: 36px;
         margin-top: 64px;
     }
-    #nav-image img{
+    #omr-nav-image img{
         max-height: 100%;
         max-width: 100%;
     }
@@ -22,13 +22,13 @@
         height: 24px;
         color: #CDCDCD;
     }
-    #nav-apps-icon, #nav-star-icon, #nav-rss-icon{
+    #omr-nav-apps, #omr-nav-star, #omr-nav-rss{
         margin-top: 36px;
     }
-    #nav-add-icon {
+    #omr-nav-add {
         margin-bottom: 32px;
     }
-    #nav-space {
+    #omr-nav-space {
         flex-grow: 1;
     }
     .activeTab {
@@ -54,26 +54,26 @@
 </script>
 
 <div id="omr-left-nav">
-    <div id="nav-image">
+    <div id="omr-nav-image">
         <img src="{userInfo.image}" alt="Avatar">
     </div>
 
-    <div class="nav-icon {activeTab === 'rss' ? 'activeTab' : ''}" id="nav-rss-icon">
+    <div class="nav-icon {activeTab === 'rss' ? 'activeTab' : ''}" id="omr-nav-rss">
         <i class="material-icons">rss_feed</i>
     </div>
 
-    <div class="nav-icon {activeTab === 'star' ? 'activeTab' : ''}" id="nav-star-icon">
+    <div class="nav-icon {activeTab === 'star' ? 'activeTab' : ''}" id="omr-nav-star">
         <i class="material-icons">star</i>
     </div>
 
-    <div class="nav-icon {activeTab === 'apps' ? 'activeTab' : ''}" id="nav-apps-icon">
+    <div class="nav-icon {activeTab === 'apps' ? 'activeTab' : ''}" id="omr-nav-apps">
         <i class="material-icons">apps</i>
     </div>
 
-    <div id="nav-space">
+    <div id="omr-nav-space">
     </div>
 
-    <div class="nav-icon" id="nav-add-icon">
+    <div class="nav-icon" id="omr-nav-add">
         <i class="material-icons">add_circle</i>
     </div>
 </div>

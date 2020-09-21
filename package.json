@@ -8,7 +8,7 @@
     "build": "rollup -c",
     "autobuild": "rollup -c -w",
     "start:dev": "concurrently \"npm run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
-    "storybook": "start-storybook -s ./public"
+    "storybook": "start-storybook -s ./public -p 12315"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
