@@ -7,7 +7,8 @@
     "start": "electron .",
     "build": "rollup -c",
     "autobuild": "rollup -c -w",
-    "start:dev": "concurrently \"npm run autobuild\" \"ELECTRON_RELOAD=yes electron .\""
+    "start:dev": "concurrently \"npm run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
+    "storybook": "start-storybook -s ./public"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -28,6 +29,11 @@
     "concurrently": "^5.3.0",
     "electron-reload": "^1.5.0",
     "svelte": "^3.25.1",
-    "electron": "^10.1.2"
+    "electron": "^10.1.2",
+    "@babel/core": "^7.11.6",
+    "@storybook/svelte": "6.0.21",
+    "@storybook/addon-actions": "6.0.21",
+    "@storybook/addon-links": "6.0.21",
+    "svelte-loader": "^2.13.6"
   }
 }

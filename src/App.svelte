@@ -1,2 +1,5 @@
+<script>
+    import LeftNav from './components/navbar/LeftNav.svelte';
+</script>
 
-<h1>Hello electron from svelte! xingzx</h1>
+<LeftNav />
