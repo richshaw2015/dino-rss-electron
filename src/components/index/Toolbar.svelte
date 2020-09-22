@@ -1,9 +1,11 @@
 <style>
     #omr-top-toolbar {
         width: 400px;
-        height: 34px;
+        height: 60px;
         display: flex;
-        /*border: 1px dashed red;*/
+        border: 0.5px dashed red;
+        padding-top: 13px;
+        padding-bottom: 13px;
     }
     .toolbar-group {
         width: 180px;

@@ -33,7 +33,14 @@ export let entryInfo = {
     .entry-title-line {
         display: flex;
         align-items: center;
-        height: 30px;
+        height: 34px;
+    }
+    .entry-meta-line {
+        display: flex;
+        align-items: flex-start;
+        height: 24px;
+        color: #616161;
+        font-size: 0.9rem !important;
     }
     .entry-view-stats, .entry-star-stats {
         display: flex;
@@ -53,13 +60,6 @@ export let entryInfo = {
     .entry-star-stats i {
         font-size: 0.95rem;
         margin-right: 3px;
-    }
-    .entry-meta-line {
-        display: flex;
-        align-items: center;
-        height: 24px;
-        color: #616161;
-        font-size: 0.9rem !important;
     }
     .entry-avatar {
         width: 24px;

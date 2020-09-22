@@ -31,7 +31,7 @@ export const Logined = () => ({
             level: 1,
             oauth: 'github/28855629',
             name: 'richshaw2015',
-            image: 'https://www.electronjs.org/images/electron-icon.png',
+            image: 'https://css-tricks.com/apple-touch-icon.png',
             blog: 'https://xingzx.org',
         },
         activeTab: 'star'
