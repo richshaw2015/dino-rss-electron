@@ -31,9 +31,6 @@
     #omr-nav-space {
         flex-grow: 1;
     }
-    .activeTab {
-        color: #ee6e73;
-    }
 </style>
 
 <script>
@@ -58,16 +55,16 @@
         <img src="{userInfo.image}" alt="Avatar">
     </div>
 
-    <div class="nav-icon {activeTab === 'rss' ? 'activeTab' : ''}" id="omr-nav-rss">
-        <i class="material-icons">rss_feed</i>
+    <div class="nav-icon" id="omr-nav-rss">
+        <i class="material-icons {activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
     </div>
 
-    <div class="nav-icon {activeTab === 'star' ? 'activeTab' : ''}" id="omr-nav-star">
-        <i class="material-icons">star</i>
+    <div class="nav-icon" id="omr-nav-star">
+        <i class="material-icons {activeTab === 'star' ? 'primary-color' : ''}">star</i>
     </div>
 
-    <div class="nav-icon {activeTab === 'apps' ? 'activeTab' : ''}" id="omr-nav-apps">
-        <i class="material-icons">apps</i>
+    <div class="nav-icon" id="omr-nav-apps">
+        <i class="material-icons {activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
     </div>
 
     <div id="omr-nav-space">

@@ -65,3 +65,17 @@ pre[class*="language-"]:before {
     -webkit-box-sizing: inherit;
     box-sizing: inherit;
 }
+
+.bold {
+    font-weight: 700;
+}
+
+.primary-color {
+    color: #ee6e73;
+}
+.primary-bg-color {
+    background-color: #ee6e73;
+}
+.second-color {
+    color: #26a69a;
+}

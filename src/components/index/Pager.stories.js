@@ -14,6 +14,15 @@ export const AllAvailable = () => ({
     on: {},
 });
 
+export const OnlyOnePage = () => ({
+    Component: Pager,
+    props: {
+        curPage: 1,
+        numPages: 1,
+    },
+    on: {},
+});
+
 export const FirstPage = () => ({
     Component: Pager,
     props: {
