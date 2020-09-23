@@ -17,7 +17,7 @@
         },
         "stats": {
             "has_read": true,
-            "has_stared": false,
+            "has_stared": true,
             "uv_stared": 5,
             "uv_view": 246,
         }
@@ -28,8 +28,8 @@
 <style>
     #omr-post {
         min-width: 500px;
-        padding-left: 28px;
-        padding-right: 18px;
+        padding: 0 18px 10px 28px;
+        background-color: #f3f3f3;
     }
     .post-title-line {
         display: flex;
@@ -40,23 +40,36 @@
     }
     .post-title {
         flex-grow: 1;
+        font-size: 2rem;
+        margin-top: 12px;
+        margin-bottom: 12px;
     }
     .post-meta {
         color: #616161;
-        margin: 12px 0;
+        margin-top: 0;
+        margin-bottom: 12px;
     }
 </style>
 
 <div id="omr-post">
     <div class="post-title-line">
-        <h1 class="post-title">{ entryInfo.title }</h1>
-        <i class="material-icons">star_border</i>
+        <div class="post-title">{ entryInfo.title }</div>
+        <i class="material-icons {entryInfo.stats.has_stared ? 'primary-color' : ''}">
+            {entryInfo.stats.has_stared ? 'star' : 'star_border'}</i>
         <i class="material-icons">format_size</i>
     </div>
 
-    <blockquote class="post-meta">
-        By {entryInfo.author} at 「{entryInfo.feed.title}」 ( {entryInfo.link} )
-    </blockquote>
+    <div class="post-meta">
+        <div class="chip">
+            <a target="_blank" href="{entryInfo.feed.link}">{entryInfo.feed.title}</a>
+        </div>
+        <div class="chip">
+            {entryInfo.author}
+        </div>
+        <div class="chip">
+            <a target="_blank" href="{entryInfo.link}">{entryInfo.link}</a>
+        </div>
+    </div>
 
     <div class="divider"></div>
 
