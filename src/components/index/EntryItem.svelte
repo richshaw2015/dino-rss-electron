@@ -14,6 +14,7 @@ export let entryInfo = {
         "link": "https://css-tricks.com",
         "description": "Tips, Tricks, and Techniques on using Cascading Style Sheets.",
         "rss": "https://css-tricks.com/feed/",
+        "is_podcast": true
     },
     "stats": {
         "has_read": true,
@@ -27,7 +28,8 @@ export let entryInfo = {
 
 <style>
     .omr-entry-item {
-        width: 400px;
+        width: 100%;
+        max-width: 400px;
         border: 0.5px dashed red;
     }
     .entry-title-line {
@@ -58,7 +60,7 @@ export let entryInfo = {
         margin-right: 3px;
     }
     .entry-star-stats i {
-        font-size: 0.95rem;
+        font-size: 13px;
         margin-right: 3px;
     }
     .entry-avatar {
@@ -72,12 +74,12 @@ export let entryInfo = {
         color: #444;
     }
     .read-icon, .unread-icon {
-        width: 18px;
-        margin-left: 10px;
+        width: 16px;
+        margin-left: 16px;
         margin-right: 12px;
     }
     .read-icon {
-        font-size: 14px;
+        font-size: 16px;
     }
     .unread-icon {
         font-size: 12px;
@@ -90,13 +92,21 @@ export let entryInfo = {
         width: 140px;
         padding: 0 10px;
     }
-
+    .podcast-icon {
+        width: 13px;
+        margin-left: 16px;
+    }
 </style>
 
 <div class="omr-entry-item">
     <div class="entry-title-line">
         <img src="{entryInfo.image}" class="circle entry-avatar" alt="Avatar" />
         <span class="truncate entry-title {entryInfo.stats.has_read ? '' : 'bold'}">{ entryInfo.title }</span>
+
+        {#if entryInfo.feed.is_podcast}
+            <img src="./icon/podcast.svg" class="podcast-icon" alt="Podcast" />
+        {/if}
+
         <i class="material-icons {entryInfo.stats.has_read ? 'read-icon second-color' : 'unread-icon primary-color'}">
             {entryInfo.stats.has_read ? 'check' : 'lens'}</i>
     </div>

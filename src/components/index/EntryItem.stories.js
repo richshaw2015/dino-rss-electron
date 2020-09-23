@@ -33,11 +33,9 @@ export const EntryItemUnread = () => ({
                 "has_read": false,
                 "has_stared": true,
                 "uv_stared": 9999,
-                "uv_view": 88908,
+                "uv_view": 8808,
             }
         }
     },
     on: {},
 });
-
-

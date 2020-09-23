@@ -1,6 +1,7 @@
 <style>
     #omr-top-toolbar {
-        width: 400px;
+        width: 100%;
+        max-width: 400px;
         height: 60px;
         display: flex;
         border: 0.5px dashed red;
