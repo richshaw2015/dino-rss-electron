@@ -23,6 +23,9 @@
 
 /* end */
 
+body {
+    color: #444;
+}
 main {
     width: 100%;
     height: 100%;
@@ -41,6 +44,7 @@ pre[class*="language-"] {
 code, pre {
     position: relative;
     font-size: 1.3rem;
+    overflow: scroll;
 }
 pre {
     font-family: monospace, monospace;
@@ -78,4 +82,41 @@ pre[class*="language-"]:before {
 }
 .second-color {
     color: #26a69a;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 0.6rem;
+}
+h2 {
+    font-size: 1.8rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.4rem;
+}
+h3 {
+    font-size: 1.6rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.2rem;
+}
+h4 {
+    font-size: 1.4rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.2rem;
+}
+h5 {
+    font-size: 1.3rem;
+}
+h6 {
+    font-size: 1.2rem;
+}
+.flow-text {
+    font-size:1.2rem
+}
+
+#omr-third-html {
+    word-break: break-all;
+}
+#omr-third-html img, #omr-third-html iframe, #omr-third-html video, #omr-third-html figure {
+    max-width: 100% !important;
 }
