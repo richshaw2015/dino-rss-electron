@@ -40,7 +40,8 @@
         flex-grow: 1;
     }
     .back-icon {
-        padding-right: 6px;
+        margin-left: 6px;
+        margin-right: 6px;
     }
     .check-icon {
         margin-left: 18px;
