@@ -4,9 +4,9 @@
         "title": "Thinking About Power Usage and Websites",
         "link": "https://css-tricks.com/thinking-about-power-usage-and-websites",
         "comments": "https://css-tricks.com/thinking-about-power-usage-and-websites/#respond",
-        "author": "css-tricks.com",
+        "author": "Selena Deckelmann",
         "image": "https://css-tricks.com/apple-touch-icon.png",
-        "updated": "3 Hours ago",
+        "updated": "3 hours ago",
         "feed": {
             "id": 2,
             "title": "CSS-Tricks",
@@ -37,6 +37,7 @@
     }
     .post-title-line i {
         width: 48px;
+        min-width: 48px;
     }
     .post-title {
         flex-grow: 1;
@@ -61,13 +62,13 @@
 
     <div class="post-meta">
         <div class="chip">
-            <a target="_blank" href="{entryInfo.feed.link}">{entryInfo.feed.title}</a>
-        </div>
-        <div class="chip">
             {entryInfo.author}
         </div>
         <div class="chip">
             <a target="_blank" href="{entryInfo.link}">{entryInfo.link}</a>
+        </div>
+        <div class="chip">
+            {entryInfo.updated}
         </div>
     </div>
 
