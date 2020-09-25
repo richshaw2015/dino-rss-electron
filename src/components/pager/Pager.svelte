@@ -1,7 +1,10 @@
 <script>
-    export let curPage = 2;
+    export let currentPage = 1;
     export let numPages = 9;
-    // export let newPage = 0;
+
+    function nextPage(event) {
+        currentPage += 1;
+    }
 </script>
 
 <style>
@@ -27,15 +30,15 @@
 
 <div id="omr-pager">
     <ul class="pagination">
-        <li class="{ curPage > 1 ? 'waves-effect' : 'disabled' }" title="Previous Page">
+        <li class="{ currentPage > 1 ? 'waves-effect' : 'disabled' }" title="Previous Page">
             <a href={'#'}><i class="material-icons">chevron_left</i></a></li>
 
-        <li class="{ curPage > 1 ? 'waves-effect' : 'disabled' }" title="First Page"><a href={'#'}>1</a></li>
-        <li class="cur_page primary-bg-color" title="Current Page"><a href={'#'}>{curPage}</a></li>
-        <li class="{ curPage < numPages ? 'waves-effect' : 'disabled' }" title="Last Page">
+        <li class="{ currentPage > 1 ? 'waves-effect' : 'disabled' }" title="First Page"><a href={'#'}>1</a></li>
+        <li class="cur_page primary-bg-color" title="Current Page"><a href={'#'}>{currentPage}</a></li>
+        <li class="{ currentPage < numPages ? 'waves-effect' : 'disabled' }" title="Last Page">
             <a href={'#'}>{ numPages }</a></li>
 
-        <li class="{ curPage < numPages ? 'waves-effect' : 'disabled' }" title="Next Page">
+        <li class="{ currentPage < numPages ? 'waves-effect' : 'disabled' }" title="Next Page" on:click={nextPage}>
             <a href={'#'}><i class="material-icons">chevron_right</i></a></li>
     </ul>
 </div>

@@ -55,7 +55,7 @@
         margin-right: 3px;
     }
     .feed-toread-stats i {
-        font-size: 10px;
+        font-size: 11px;
         margin-right: 3px;
     }
     .feed-avatar {

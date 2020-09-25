@@ -5,6 +5,8 @@
     import FeedNav from './components/index/FeedNav.svelte'
     import Pager from './components/pager/Pager.svelte'
     import Post from './components/detail/Post.svelte'
+
+    let activeTab = 'rss'
 </script>
 
 <style>
@@ -22,6 +24,7 @@
         width: 70px;
         min-width: 70px;
         max-width: 70px;
+        overflow: hidden;
     }
     .middle-container {
         width: 400px;
@@ -31,6 +34,7 @@
         border-right: 1px dashed rgba(0,0,0,.14);
         display: flex;
         flex-direction: column;
+        overflow: hidden;
     }
     .right-container {
         flex-grow: 1;
@@ -54,7 +58,7 @@
 
 <div class="main-container">
     <div class="left-container">
-        <Nav />
+        <Nav bind:activeTab />
     </div>
 
     <div class="middle-container">

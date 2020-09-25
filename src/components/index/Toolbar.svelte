@@ -57,8 +57,8 @@
     export let activeTab = 'star'
 </script>
 
-<div id="omr-top-toolbar">
-    <div class="nav-wrapper">
+<div id="omr-top-toolbar" class="drag">
+    <div class="nav-wrapper no-drag">
         <div class="input-field omr-search-form {activeTab === 'apps' ? 'omr-full-search' : ''}">
             <input id="omr-search-input" type="search" class="" placeholder="Search" required>
             <label class="label-icon search-icon" for="omr-search-input">
@@ -67,7 +67,7 @@
     </div>
 
     {#if activeTab !== 'apps'}
-    <div class="toolbar-group">
+    <div class="toolbar-group no-drag">
         {#if activeTab !== 'star'}
         <div class="toolbar-icon" id="omr-toolbar-scope">
             <i class="material-icons">{ scope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
