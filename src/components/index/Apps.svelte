@@ -1,10 +1,10 @@
 <style>
     #omr-apps {
         width: 100%;
-        min-width: 400px;
+        max-width: 400px;
         display: flex;
         flex-direction: column;
-        border: 0.5px dashed red;
+        /*border: 0.5px dashed red;*/
     }
     .one-app {
         display: flex;

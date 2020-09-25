@@ -5,6 +5,7 @@
     import FeedNav from './components/index/FeedNav.svelte'
     import Pager from './components/pager/Pager.svelte'
     import Post from './components/detail/Post.svelte'
+    import Apps from './components/index/Apps.svelte'
 
     let activeTab = 'rss'
 </script>
@@ -62,21 +63,26 @@
     </div>
 
     <div class="middle-container">
-        <Toolbar />
-        <FeedNav />
+        <Toolbar bind:activeTab />
 
-        <div class="middle-list">
-            <ul class="collection mid-index-ul">
-                <li class="collection-item mid-list-li">
-                    <FeedItem />
-                </li>
-                <li class="collection-item mid-list-li">
-                    <FeedItem />
-                </li>
-            </ul>
-        </div>
+        {#if activeTab !== 'apps'}
+            <FeedNav />
 
-        <Pager />
+            <div class="middle-list">
+                <ul class="collection mid-index-ul">
+                    <li class="collection-item mid-list-li">
+                        <FeedItem />
+                    </li>
+                    <li class="collection-item mid-list-li">
+                        <FeedItem />
+                    </li>
+                </ul>
+            </div>
+
+            <Pager />
+        {:else}
+            <Apps />
+        {/if}
     </div>
 
     <div class="right-container">

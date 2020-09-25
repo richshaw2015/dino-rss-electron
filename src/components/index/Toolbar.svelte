@@ -9,13 +9,12 @@
         padding-bottom: 10px;
     }
     .toolbar-group {
-        width: 180px;
+        width: 162px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
     }
     .omr-search-form {
-        width: 220px;
         margin-left: 15px;
         background: #E6E6E6;
         border-radius: 3px;
@@ -27,8 +26,14 @@
         margin: 0;
         height: 100%;
     }
-    .omr-full-search {
+    .nav-wrapper {
         width: 100%;
+        flex-grow: 1;
+        margin-right: 10px;
+    }
+    .omr-full-search {
+        padding-right: 0;
+        margin-right: 0 !important;
     }
     #omr-search-input {
         margin: 0;
@@ -58,8 +63,8 @@
 </script>
 
 <div id="omr-top-toolbar" class="drag">
-    <div class="nav-wrapper no-drag">
-        <div class="input-field omr-search-form {activeTab === 'apps' ? 'omr-full-search' : ''}">
+    <div class="nav-wrapper no-drag {activeTab === 'apps' ? 'omr-full-search' : ''}">
+        <div class="input-field omr-search-form">
             <input id="omr-search-input" type="search" class="" placeholder="Search" required>
             <label class="label-icon search-icon" for="omr-search-input">
                 <i class="material-icons">search</i></label>
