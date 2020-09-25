@@ -4,9 +4,9 @@
         max-width: 400px;
         height: 60px;
         display: flex;
-        border: 0.5px dashed red;
-        padding-top: 13px;
-        padding-bottom: 13px;
+        /*border: 0.5px dashed red;*/
+        padding-top: 16px;
+        padding-bottom: 10px;
     }
     .toolbar-group {
         width: 180px;
@@ -28,7 +28,7 @@
         height: 100%;
     }
     .omr-full-search {
-        width: 400px;
+        width: 100%;
     }
     #omr-search-input {
         margin: 0;

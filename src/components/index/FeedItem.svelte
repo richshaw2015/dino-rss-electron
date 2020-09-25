@@ -25,7 +25,7 @@
     .omr-feed-item {
         width: 100%;
         max-width: 400px;
-        border: 0.5px dashed red;
+        /*border: 0.5px dashed red;*/
     }
     .feed-title-line {
         display: flex;

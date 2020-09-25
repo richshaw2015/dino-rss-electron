@@ -38,37 +38,35 @@
     .post-title-line i {
         width: 48px;
         min-width: 48px;
+        padding-left: 12px;
+        padding-right: 12px;
     }
     .post-title {
         flex-grow: 1;
         font-size: 2rem;
-        margin-top: 12px;
-        margin-bottom: 12px;
+        margin-top: 16px;
+        margin-bottom: 16px;
     }
     .post-meta {
         color: #616161;
-        margin-top: 0;
-        margin-bottom: 12px;
+        padding-bottom: 12px;
     }
 </style>
 
 <div id="omr-post">
-    <div class="post-title-line">
-        <div class="post-title">{ entryInfo.title }</div>
-        <i class="material-icons {entryInfo.stats.has_stared ? 'primary-color' : ''}">
+    <div class="post-title-line drag">
+        <div class="post-title no-drag">{ entryInfo.title }</div>
+        <i class="material-icons no-drag {entryInfo.stats.has_stared ? 'primary-color' : ''}">
             {entryInfo.stats.has_stared ? 'star' : 'star_border'}</i>
-        <i class="material-icons">format_size</i>
+        <i class="material-icons no-drag">format_size</i>
     </div>
 
-    <div class="post-meta">
-        <div class="chip">
+    <div class="post-meta drag">
+        <div class="chip no-drag">
             {entryInfo.author}
         </div>
-        <div class="chip">
+        <div class="chip no-drag">
             <a target="_blank" href="{entryInfo.link}">{entryInfo.link}</a>
-        </div>
-        <div class="chip">
-            {entryInfo.updated}
         </div>
     </div>
 

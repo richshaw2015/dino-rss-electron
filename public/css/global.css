@@ -120,3 +120,9 @@ h6 {
 #omr-third-html img, #omr-third-html iframe, #omr-third-html video, #omr-third-html figure {
     max-width: 100% !important;
 }
+.drag {
+    -webkit-app-region: drag;
+}
+.no-drag {
+    -webkit-app-region: no-drag;
+}

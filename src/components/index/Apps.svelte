@@ -1,7 +1,7 @@
 <style>
     #omr-apps {
         width: 100%;
-        max-width: 400px;
+        min-width: 400px;
         display: flex;
         flex-direction: column;
         border: 0.5px dashed red;

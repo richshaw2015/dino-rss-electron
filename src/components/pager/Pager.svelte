@@ -8,8 +8,8 @@
     #omr-pager {
         width: 100%;
         max-width: 400px;
-        /*border-top: 1px dashed rgba(0,0,0,0.14);*/
-        border: 0.5px dashed red;
+        border-top: 1px dashed rgba(0,0,0,0.14);
+        /*border: 0.5px dashed red;*/
     }
     .pagination {
         display: flex;

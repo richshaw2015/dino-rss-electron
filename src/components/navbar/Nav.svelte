@@ -1,8 +1,7 @@
 <style>
     #omr-left-nav {
-        width: 70px;
         height: 100%;
-        min-height: 600px;
+        min-width: 70px;
         background: #24292E;
         display: flex;
         flex-direction: column;
@@ -50,27 +49,27 @@
     export let activeTab = 'rss'
 </script>
 
-<div id="omr-left-nav">
-    <div id="omr-nav-image">
+<div id="omr-left-nav" class="drag">
+    <div id="omr-nav-image" class="no-drag">
         <img src="{userInfo.image}" alt="Avatar">
     </div>
 
-    <div class="nav-icon" id="omr-nav-rss">
+    <div class="nav-icon no-drag" id="omr-nav-rss">
         <i class="material-icons {activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
     </div>
 
-    <div class="nav-icon" id="omr-nav-star">
+    <div class="nav-icon no-drag" id="omr-nav-star">
         <i class="material-icons {activeTab === 'star' ? 'primary-color' : ''}">star</i>
     </div>
 
-    <div class="nav-icon" id="omr-nav-apps">
+    <div class="nav-icon no-drag" id="omr-nav-apps">
         <i class="material-icons {activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
     </div>
 
     <div id="omr-nav-space">
     </div>
 
-    <div class="nav-icon" id="omr-nav-add">
+    <div class="nav-icon no-drag" id="omr-nav-add">
         <i class="material-icons">add_circle</i>
     </div>
 </div>

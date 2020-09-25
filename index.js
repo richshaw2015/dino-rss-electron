@@ -14,12 +14,15 @@ let mainWindow;
 
 function createWindow () {
 	mainWindow = new BrowserWindow({
-		width: 800,
-		height: 800,
+		width: 1170,
+		height: 720,
+		minWidth: 970,
+		minHeight: 600,
+		titleBarStyle: 'hidden',
 		webPreferences: {
 			nodeIntegration: true
 		},
-		icon: 'icon.png'
+		icon: 'public/icon/icon.svg'
 	});
 
 	mainWindow.loadFile('public/index.html');
@@ -27,6 +30,8 @@ function createWindow () {
 	mainWindow.on('closed', function () {
 		mainWindow = null
 	});
+
+	if (!production) mainWindow.webContents.openDevTools()
 }
 
 app.on('ready', createWindow);

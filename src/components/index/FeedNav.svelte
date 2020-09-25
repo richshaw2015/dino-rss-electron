@@ -28,7 +28,7 @@
         display: flex;
         align-items: center;
         height: 48px;
-        border: 0.5px dashed red;
+        /*border: 0.5px dashed red;*/
     }
     .feed-nav-avatar {
         width: 24px;
