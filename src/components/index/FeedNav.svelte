@@ -28,7 +28,7 @@
         display: flex;
         align-items: center;
         height: 48px;
-        /*border: 0.5px dashed red;*/
+        border-bottom: 1px dashed rgba(0,0,0,.14);
     }
     .feed-nav-avatar {
         width: 24px;
@@ -57,7 +57,7 @@
 
 <div id="omr-feed-nav">
     <div id="omr-feed-back">
-        <i class="material-icons back-icon bold">arrow_back</i>
+        <i class="material-icons back-icon">arrow_back</i>
         <span class="">Back</span>
     </div>
 
@@ -65,5 +65,5 @@
     <span class="truncate bold feed-nav-title">
         {feedInfo.stats.unread_count > 0 ? feedInfo.title + '(' + feedInfo.stats.unread_count + ')': feedInfo.title}
     </span>
-    <i class="material-icons check-icon bold">check</i>
+    <i class="material-icons check-icon">check</i>
 </div>

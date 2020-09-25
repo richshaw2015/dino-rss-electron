@@ -2,6 +2,7 @@
     import Nav from './components/navbar/Nav.svelte';
     import Toolbar from './components/index/Toolbar.svelte'
     import FeedItem from './components/index/FeedItem.svelte'
+    import FeedNav from './components/index/FeedNav.svelte'
     import Pager from './components/pager/Pager.svelte'
     import Post from './components/detail/Post.svelte'
 </script>
@@ -39,10 +40,15 @@
         flex-grow: 1;
     }
     .mid-index-ul {
-        margin: 0;
+        margin: 8px 0 12px 0;
     }
     .mid-list-li {
         padding: 0;
+
+    }
+    .mid-list-li:not(.active):hover{
+        background-color:#ddd;
+        cursor: pointer;
     }
 </style>
 
@@ -53,6 +59,7 @@
 
     <div class="middle-container">
         <Toolbar />
+        <FeedNav />
 
         <div class="middle-list">
             <ul class="collection mid-index-ul">

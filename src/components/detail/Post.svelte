@@ -56,9 +56,9 @@
 <div id="omr-post">
     <div class="post-title-line drag">
         <div class="post-title no-drag">{ entryInfo.title }</div>
-        <i class="material-icons no-drag {entryInfo.stats.has_stared ? 'primary-color' : ''}">
+        <i class="material-icons {entryInfo.stats.has_stared ? 'primary-color' : ''}">
             {entryInfo.stats.has_stared ? 'star' : 'star_border'}</i>
-        <i class="material-icons no-drag">format_size</i>
+        <i class="material-icons">format_size</i>
     </div>
 
     <div class="post-meta drag">
