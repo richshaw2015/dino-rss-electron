@@ -1,18 +1,14 @@
 <script>
     import Nav from './components/navbar/Nav.svelte';
     import Toolbar from './components/index/Toolbar.svelte'
-    import FeedItem from './components/index/FeedItem.svelte'
-    import FeedNav from './components/index/FeedNav.svelte'
-    import Pager from './components/pager/Pager.svelte'
+    import List from './components/listview/List.svelte'
     import Post from './components/detail/Post.svelte'
     import Apps from './components/index/Apps.svelte'
 
     let activeTab = 'rss'
-    let currentPage = 1
     // TODO save to local storage
     let viewMode = 'feed'
     let viewScope = 'all'
-
 </script>
 
 <style>
@@ -46,20 +42,6 @@
         flex-grow: 1;
         overflow-y: auto;
     }
-    .middle-list {
-        flex-grow: 1;
-    }
-    .mid-index-ul {
-        margin: 8px 0 12px 0;
-    }
-    .mid-list-li {
-        padding: 0;
-
-    }
-    .mid-list-li:not(.active):hover{
-        background-color:#ddd;
-        cursor: pointer;
-    }
 </style>
 
 <div class="main-container">
@@ -71,20 +53,7 @@
         <Toolbar bind:activeTab bind:viewMode bind:viewScope />
 
         {#if activeTab !== 'apps'}
-            <FeedNav />
-
-            <div class="middle-list">
-                <ul class="collection mid-index-ul">
-                    <li class="collection-item mid-list-li">
-                        <FeedItem />
-                    </li>
-                    <li class="collection-item mid-list-li">
-                        <FeedItem />
-                    </li>
-                </ul>
-            </div>
-
-            <Pager />
+            <List bind:activeTab bind:viewMode bind:viewScope />
         {:else}
             <Apps />
         {/if}
@@ -93,6 +62,4 @@
     <div class="right-container">
         <Post />
     </div>
-
 </div>
-
