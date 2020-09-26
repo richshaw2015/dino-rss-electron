@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, ipcMain, systemPreferences} = require('electron');
 
 const production = !process.env.ELECTRON_RELOAD;
 
@@ -44,4 +44,15 @@ app.on('window-all-closed', function () {
 
 app.on('activate', function () {
 	if (mainWindow === null) createWindow();
+})
+
+ipcMain.handle('dblclick-title-bar', (event) => {
+	if(!mainWindow) return;
+	if(process.platform === 'darwin') {
+	    const action = systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string');
+	    if(action === 'None') return;
+	    if(action === 'Minimize') return mainWindow.minimize();
+	}
+	if (mainWindow.isMaximized()) return mainWindow.unmaximize();
+	return mainWindow.maximize ();
 })

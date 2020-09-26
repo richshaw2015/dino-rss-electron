@@ -2,6 +2,7 @@
     // import { createEventDispatcher } from 'svelte';
     //
     // const dispatch = createEventDispatcher();
+    const { ipcRenderer } = require('electron')
 
     export let userInfo = {
         id: 0,
@@ -25,6 +26,10 @@
     function switchAppsNav(event) {
         activeTab = 'apps'
         // TODO update data
+    }
+
+    const dblClickTitleBar = () => {
+        ipcRenderer.invoke('dblclick-title-bar')
     }
 </script>
 
@@ -67,6 +72,7 @@
     }
     #omr-nav-space {
         flex-grow: 1;
+        width: 100%;
     }
 </style>
 
@@ -87,7 +93,7 @@
         <i class="material-icons {activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
     </div>
 
-    <div id="omr-nav-space">
+    <div id="omr-nav-space" on:dblclick={dblClickTitleBar}>
     </div>
 
     <div class="nav-tab-btn no-drag" id="omr-nav-add">
