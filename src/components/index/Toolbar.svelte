@@ -57,9 +57,17 @@
 </style>
 
 <script>
-    export let scope = 'all'
-    export let mode = 'feed'
-    export let activeTab = 'star'
+    export let viewScope = 'all' // unread / all
+    export let viewMode = 'feed'
+    export let activeTab = 'star' // star / rss / apps
+
+    function toggleViewMode() {
+        // TODO save to localstorage
+        viewMode = (viewMode === 'feed') ? 'entry' : 'feed'
+    }
+    function toggleViewScope() {
+        viewScope = (viewScope === 'all') ? 'unread' : 'all'
+    }
 </script>
 
 <div id="omr-top-toolbar" class="drag">
@@ -74,13 +82,13 @@
     {#if activeTab !== 'apps'}
     <div class="toolbar-group no-drag">
         {#if activeTab !== 'star'}
-        <div class="toolbar-icon" id="omr-toolbar-scope">
-            <i class="material-icons">{ scope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
+        <div class="toolbar-icon" id="omr-toolbar-scope" on:click={toggleViewScope}>
+            <i class="material-icons">{ viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
         </div>
         {/if}
 
-        <div class="toolbar-icon" id="omr-toolbar-mode">
-            <i class="material-icons">{mode === 'feed' ? 'view_module' : 'view_list'} </i>
+        <div class="toolbar-icon" id="omr-toolbar-mode" on:click={toggleViewMode}>
+            <i class="material-icons">{viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
         </div>
 
         <div class="toolbar-icon" id="omr-toolbar-update">

@@ -30,6 +30,7 @@ export let entryInfo = {
     .omr-entry-item {
         width: 100%;
         max-width: 400px;
+        user-select: none;
         /*border: 0.5px dashed red;*/
     }
     .entry-title-line {

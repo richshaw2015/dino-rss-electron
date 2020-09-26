@@ -8,6 +8,11 @@
     import Apps from './components/index/Apps.svelte'
 
     let activeTab = 'rss'
+    let currentPage = 1
+    // TODO save to local storage
+    let viewMode = 'feed'
+    let viewScope = 'all'
+
 </script>
 
 <style>
@@ -63,7 +68,7 @@
     </div>
 
     <div class="middle-container">
-        <Toolbar bind:activeTab />
+        <Toolbar bind:activeTab bind:viewMode bind:viewScope />
 
         {#if activeTab !== 'apps'}
             <FeedNav />

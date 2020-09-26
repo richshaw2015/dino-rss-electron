@@ -126,3 +126,8 @@ h6 {
 .no-drag {
     -webkit-app-region: no-drag;
 }
+
+i.material-icons {
+    user-select: none;
+    cursor: pointer;
+}

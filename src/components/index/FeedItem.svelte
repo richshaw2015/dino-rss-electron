@@ -25,6 +25,7 @@
     .omr-feed-item {
         width: 100%;
         max-width: 400px;
+        user-select: none;
         /*border: 0.5px dashed red;*/
     }
     .feed-title-line {
