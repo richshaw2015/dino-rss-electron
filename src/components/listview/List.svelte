@@ -9,6 +9,10 @@
     export let viewScope = 'all'
 
     let isFeedEntriesView = false
+
+    const { remote } = require('electron');
+    const { BrowserWindow } = remote;
+    console.log(BrowserWindow)
 </script>
 
 <style>

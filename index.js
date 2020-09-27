@@ -22,7 +22,8 @@ function createWindow () {
 		titleBarStyle: 'hidden',
 		trafficLightPosition: {x: 9, y: 16},
 		webPreferences: {
-			nodeIntegration: true
+			nodeIntegration: true,
+			enableRemoteModule: true
 		},
 		icon: 'public/icon/icon.svg'
 	});
