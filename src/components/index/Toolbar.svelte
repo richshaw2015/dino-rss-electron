@@ -61,12 +61,13 @@
     export let viewMode = 'feed'
     export let activeTab = 'star' // star / rss / apps
 
-    function toggleViewMode() {
-        // TODO save to localstorage
-        viewMode = (viewMode === 'feed') ? 'entry' : 'feed'
+    import { toggleViewMode, toggleViewScope } from '../utils/toolbar.js'
+
+    function evToggleViewMode() {
+        viewMode = toggleViewMode()
     }
-    function toggleViewScope() {
-        viewScope = (viewScope === 'all') ? 'unread' : 'all'
+    function evToggleViewScope() {
+        viewScope = toggleViewScope()
     }
 </script>
 
@@ -82,12 +83,12 @@
     {#if activeTab !== 'apps'}
     <div class="toolbar-group no-drag">
         {#if activeTab !== 'star'}
-        <div class="toolbar-icon" id="omr-toolbar-scope" on:click={toggleViewScope}>
+        <div class="toolbar-icon" id="omr-toolbar-scope" on:click={evToggleViewScope}>
             <i class="material-icons">{ viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
         </div>
         {/if}
 
-        <div class="toolbar-icon" id="omr-toolbar-mode" on:click={toggleViewMode}>
+        <div class="toolbar-icon" id="omr-toolbar-mode" on:click={evToggleViewMode}>
             <i class="material-icons">{viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
         </div>
 

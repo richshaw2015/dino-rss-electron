@@ -5,10 +5,12 @@
     import Post from './components/detail/Post.svelte'
     import Apps from './components/index/Apps.svelte'
 
+    import { getViewMode, getViewScope } from './components/utils/toolbar.js'
+
     let activeTab = 'rss'
-    // TODO save to local storage
-    let viewMode = 'feed'
-    let viewScope = 'all'
+
+    let viewMode = getViewMode()
+    let viewScope = getViewScope()
 </script>
 
 <style>

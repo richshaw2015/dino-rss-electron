@@ -53,7 +53,7 @@
     }
 </style>
 
-<div id="omr-post">
+<div id="omr-post" class="drag">
     <div class="post-title-line drag">
         <div class="post-title no-drag">{ entryInfo.title }</div>
         <i class="material-icons {entryInfo.stats.has_stared ? 'primary-color' : ''}">
@@ -61,7 +61,7 @@
         <i class="material-icons">format_size</i>
     </div>
 
-    <div class="post-meta drag">
+    <div class="post-meta">
         <div class="chip no-drag">
             {entryInfo.author}
         </div>
@@ -72,7 +72,7 @@
 
     <div class="divider"></div>
 
-    <div class="flow-text" id="omr-third-html">
+    <div class="flow-text no-drag" id="omr-third-html">
         { @html content }
     </div>
 
