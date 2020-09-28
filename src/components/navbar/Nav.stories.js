@@ -14,7 +14,7 @@ export const Visitor = () => ({
             level: 1,
             oauth: '',
             name: '',
-            image: './icon/logo-grey.svg',
+            image: './icon/logo.svg',
             blog: 'https://materializecss.com/icons.html',
         },
         activeTab: 'rss'

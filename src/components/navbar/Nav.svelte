@@ -12,7 +12,7 @@
         level: 1,
         oauth: '',
         name: '',
-        image: './icon/logo-grey.svg',
+        image: './icon/logo.svg',
         blog: '',
     };
     export let activeTab = undefined
@@ -66,9 +66,8 @@
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
             role: "windowMenu",
-            label: "🖥  Window"
+            label: "🔲  Window"
         }));
-
         menu.popup({ window: remote.getCurrentWindow() })
     }
 </script>
