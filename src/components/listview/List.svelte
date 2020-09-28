@@ -32,7 +32,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "🖌  Custom Feed",
+            label: "✏️  Custom Feed",
             click: function(){
                 alert(`you clicked on`);
             }
@@ -72,7 +72,7 @@
             }
         }));
         menu.append(new MenuItem({
-            label: "🟠  Mark as unread",
+            label: "📌  Mark as unread",
             click: function(){
                 alert(`you clicked on`);
             }
@@ -88,7 +88,7 @@
 
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
-            label: "🖌  Custom Feed",
+            label: "✏️  Custom Feed",
             click: function(){
                 alert(`you clicked on`);
             }

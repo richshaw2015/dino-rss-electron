@@ -73,7 +73,7 @@
         }));
         menu.append(new MenuItem({
             visible: isMac && hasText,
-            label: "📢  Speaking",
+            label: "🔊  Speaking",
             submenu: [
                 {"role": "startSpeaking"},
                 {"role": "stopSpeaking"},
@@ -90,7 +90,7 @@
 
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
-            label: "🖌  Custom Feed",
+            label: "✏️  Custom Feed",
             click: function(){
                 alert(`you clicked on`);
             }
