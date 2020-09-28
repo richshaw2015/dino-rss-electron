@@ -72,7 +72,7 @@
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
             visible: process.platform === 'darwin',
-            label: "📣  Speaking",
+            label: "📢  Speaking",
             submenu: [
                 {"role": "startSpeaking"},
                 {"role": "stopSpeaking"},

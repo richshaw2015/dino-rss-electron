@@ -32,7 +32,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "🖌  Custom",
+            label: "🖌  Custom Feed",
             click: function(){
                 alert(`you clicked on`);
             }
@@ -40,7 +40,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "🗑  Unsubscribe",
+            label: "🗑  Unsubscribe Feed",
             click: function(){
                 alert(`you clicked on`);
             }
