@@ -23,7 +23,8 @@ function createWindow () {
 		trafficLightPosition: {x: 9, y: 16},
 		webPreferences: {
 			nodeIntegration: true,
-			enableRemoteModule: true
+			enableRemoteModule: true,
+			worldSafeExecuteJavaScript: true
 		},
 		icon: 'public/icon/icon.svg'
 	});
@@ -34,7 +35,7 @@ function createWindow () {
 		mainWindow = null
 	});
 
-	if (!production) mainWindow.webContents.openDevTools()
+	// if (!production) mainWindow.webContents.openDevTools()
 }
 
 app.on('ready', createWindow);

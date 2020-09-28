@@ -13,23 +13,34 @@
     const { remote } = require('electron');
     const { Menu, MenuItem } = remote;
 
-    // TODO add menu icon
+    // TODO dynamic read/unread star/unstar menu
     function showFeedCtxMenu() {
         const menu = new Menu();
         menu.append(new MenuItem({
-            label: "✏️  Custom",
+            label: "✅️  Mark Feed as read",
             click: function(){
                 alert(`you clicked on`);
             }
         }));
-        menu.append(new MenuItem({
-            label: "🗑  Unsubscribe",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
+        menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
             label: "🔗  Copy Link",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: "🖌  Custom",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: "🗑  Unsubscribe",
             click: function(){
                 alert(`you clicked on`);
             }
@@ -45,6 +56,15 @@
                 alert(`you clicked on`);
             }
         }));
+        menu.append(new MenuItem({
+            label: "💔  Unstar",
+            enabled: false,
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
         menu.append(new MenuItem({
             label: "✅️  Mark as read",
             click: function(){
@@ -68,11 +88,12 @@
 
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
-            label: "✏️  Custom Feed",
+            label: "🖌  Custom Feed",
             click: function(){
                 alert(`you clicked on`);
             }
         }));
+        menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
             label: "🗑  Unsubscribe Feed",
             click: function(){

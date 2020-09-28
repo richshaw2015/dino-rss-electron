@@ -3,6 +3,8 @@
     //
     // const dispatch = createEventDispatcher();
     const { ipcRenderer } = require('electron')
+    const { remote } = require('electron')
+    const { Menu, MenuItem } = remote
 
     export let userInfo = {
         id: 0,
@@ -30,6 +32,38 @@
 
     const dblClickTitleBar = () => {
         ipcRenderer.invoke('dblclick-title-bar')
+    }
+    function showNavCtxMenu() {
+        const menu = new Menu();
+
+        menu.append(new MenuItem({
+            role: "zoom",
+            label: "‍📐  Toggle Window Size",
+            visible: process.platform === 'darwin'
+        }));
+        menu.append(new MenuItem({type: "separator", visible: process.platform === 'darwin'}));
+
+        menu.append(new MenuItem({
+            role: "reload",
+            label: "🔄  Reload"
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: "🔍  Zoom",
+            submenu: [
+                {"role": "resetZoom"},
+                {"role": "zoomIn"},
+                {"role": "zoomOut"},
+            ]
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+        menu.append(new MenuItem({
+            role: "windowMenu",
+            label: "🖥  Window"
+        }));
+
+        menu.popup({ window: remote.getCurrentWindow() })
     }
 </script>
 
@@ -93,7 +127,7 @@
         <i class="material-icons {activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
     </div>
 
-    <div id="omr-nav-space" on:dblclick={dblClickTitleBar}>
+    <div id="omr-nav-space" on:dblclick={dblClickTitleBar} on:contextmenu={showNavCtxMenu}>
     </div>
 
     <div class="nav-tab-btn no-drag" id="omr-nav-add">
