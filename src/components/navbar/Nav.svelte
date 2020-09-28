@@ -50,7 +50,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "🔍  Zoom",
+            label: "🔎  Zoom",
             submenu: [
                 {"role": "resetZoom"},
                 {"role": "zoomIn"},
