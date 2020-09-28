@@ -11,8 +11,78 @@
     let isFeedEntriesView = false
 
     const { remote } = require('electron');
-    const { BrowserWindow } = remote;
-    console.log(BrowserWindow)
+    const { Menu, MenuItem } = remote;
+
+    // TODO add menu icon
+    function showFeedCtxMenu() {
+        const menu = new Menu();
+        menu.append(new MenuItem({
+            label: "✏️  Custom",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({
+            label: "🗑  Unsubscribe",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({
+            label: "🔗  Copy Link",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.popup({ window: remote.getCurrentWindow() })
+    }
+
+    function showEntryCtxMenu() {
+        const menu = new Menu();
+        menu.append(new MenuItem({
+            label: "⭐️  Star",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({
+            label: "✅️  Mark as read",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({
+            label: "🟠  Mark as unread",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: "🔗  Copy Link",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+
+        menu.append(new MenuItem({type: "separator",}));
+        menu.append(new MenuItem({
+            label: "✏️  Custom Feed",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({
+            label: "🗑  Unsubscribe Feed",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+
+        menu.popup({ window: remote.getCurrentWindow() })
+    }
+
 </script>
 
 <style>
@@ -37,13 +107,15 @@
 
 <div class="list-wrapper">
     <ul class="collection list-ul">
-        <li class="collection-item list-li">
-            {#if viewMode === 'feed'}
-                <FeedItem />
-            {:else if viewMode === 'entry'}
-                <EntryItem />
-            {/if}
+    {#if viewMode === 'feed'}
+        <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu}>
+            <FeedItem />
         </li>
+    {:else if viewMode === 'entry'}
+        <li class="collection-item list-li" on:contextmenu={showEntryCtxMenu}>
+            <EntryItem />
+        </li>
+    {/if}
     </ul>
 </div>
 
