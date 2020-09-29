@@ -114,10 +114,10 @@ h6 {
     font-size:1.2rem
 }
 
-#omr-third-html {
+#omr-post-third-html {
     word-break: break-all;
 }
-#omr-third-html img, #omr-third-html iframe, #omr-third-html video, #omr-third-html figure {
+#omr-post-third-html img, #omr-post-third-html iframe, #omr-post-third-html video, #omr-post-third-html figure {
     max-width: 100% !important;
 }
 .drag {

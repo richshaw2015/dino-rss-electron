@@ -48,7 +48,8 @@
     }
     .right-container {
         flex-grow: 1;
-        overflow-y: auto;
+        min-width: 500px;
+        height: 100%;
     }
 </style>
 

@@ -1,6 +1,7 @@
 <script>
     import { toast } from '../utils/toast.js'
     import { truncateStr } from '../utils/helper.js'
+    import Title from './Title.svelte'
 
     export let entryInfo = {
         "id": 1233,
@@ -36,7 +37,7 @@
     import { onMount } from 'svelte';
 
     onMount(() => {
-        document.querySelectorAll("#omr-third-html img").forEach(item => {
+        document.querySelectorAll("#omr-post-third-html img").forEach(item => {
 
             item.addEventListener('contextmenu', event => {
                 event.preventDefault()
@@ -130,52 +131,23 @@
 
 <style>
     #omr-post {
+        display: flex;
+        flex-direction: column;
         min-width: 500px;
-        padding: 0 18px 10px 28px;
+        height: 100%;
         background-color: #f3f3f3;
     }
-    .post-title-line {
-        display: flex;
-        align-items: center;
-    }
-    .post-title-line i {
-        width: 48px;
-        min-width: 48px;
-        padding-left: 12px;
-        padding-right: 12px;
-    }
-    .post-title {
-        flex-grow: 1;
-        font-size: 2rem;
-        margin-top: 16px;
-        margin-bottom: 16px;
-    }
-    .post-meta {
-        color: #616161;
-        padding-bottom: 12px;
+    #omr-post-third-html {
+        padding: 4px 14px 6px 24px;
+        overflow-y: auto;
+        height: 100%;
     }
 </style>
 
-<div id="omr-post" class="drag">
-    <div class="post-title-line drag">
-        <div class="post-title no-drag">{ entryInfo.title }</div>
-        <i class="material-icons {entryInfo.stats.has_stared ? 'primary-color' : ''}">
-            {entryInfo.stats.has_stared ? 'star' : 'star_border'}</i>
-        <i class="material-icons">format_size</i>
-    </div>
+<div id="omr-post">
+    <Title bind:entryInfo />
 
-    <div class="post-meta">
-        <div class="chip no-drag">
-            {entryInfo.author}
-        </div>
-        <div class="chip no-drag">
-            <a target="_blank" href="{entryInfo.link}">{entryInfo.link}</a>
-        </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="flow-text no-drag" id="omr-third-html" on:contextmenu={showPostCtxMenu}>
+    <div class="flow-text" id="omr-post-third-html" on:contextmenu={showPostCtxMenu}>
         { @html content }
     </div>
 

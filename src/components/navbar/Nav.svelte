@@ -2,7 +2,7 @@
     // import { createEventDispatcher } from 'svelte';
     //
     // const dispatch = createEventDispatcher();
-    const { ipcRenderer } = require('electron')
+    import { dblClickTitleBar, showNavCtxMenu } from '../utils/helper.js'
     const { remote } = require('electron')
     const { Menu, MenuItem } = remote
 
@@ -28,47 +28,6 @@
     function switchAppsNav(event) {
         activeTab = 'apps'
         // TODO update data
-    }
-
-    const dblClickTitleBar = () => {
-        ipcRenderer.invoke('dblclick-title-bar')
-    }
-    function showNavCtxMenu() {
-        const menu = new Menu();
-
-        menu.append(new MenuItem({
-            role: "zoom",
-            label: "‍📐  Toggle Window Size",
-            visible: process.platform === 'darwin'
-        }));
-        menu.append(new MenuItem({type: "separator", visible: process.platform === 'darwin'}));
-
-        menu.append(new MenuItem({
-            role: "reload",
-            label: "🔄  Reload"
-        }));
-        menu.append(new MenuItem({type: "separator",}));
-
-        menu.append(new MenuItem({
-            label: "🔎  Zoom",
-            submenu: [
-                {"role": "resetZoom"},
-                {"role": "zoomIn"},
-                {"role": "zoomOut"},
-            ]
-        }));
-        menu.append(new MenuItem({type: "separator",}));
-        menu.append(new MenuItem({
-            role: "toggleDevTools",
-            label: "🔨  Inspect",
-            enabled: process.env.ELECTRON_RELOAD
-        }));
-        menu.append(new MenuItem({type: "separator",}));
-        menu.append(new MenuItem({
-            role: "windowMenu",
-            label: "🔲  Window"
-        }));
-        menu.popup({ window: remote.getCurrentWindow() })
     }
 </script>
 
