@@ -36,14 +36,14 @@
         border-bottom: 1px dashed rgba(0,0,0,0.14);
     }
     #omr-post-title-bar i {
-        width: 48px;
-        min-width: 48px;
-        padding-left: 12px;
-        padding-right: 12px;
+        width: 54px;
+        min-width: 54px;
+        padding-left: 15px;
+        padding-right: 15px;
     }
     .post-title {
         flex-grow: 1;
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin-top: 16px;
         margin-bottom: 16px;
     }
