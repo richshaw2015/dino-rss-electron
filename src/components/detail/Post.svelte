@@ -1,4 +1,7 @@
 <script>
+    import { toast } from '../utils/toast.js'
+    import { truncateStr } from '../utils/helper.js'
+
     export let entryInfo = {
         "id": 1233,
         "title": "Thinking About Power Usage and Websites",
@@ -30,9 +33,6 @@
     const { Menu, MenuItem } = remote
     const isMac = process.platform === 'darwin'
 
-    function truncateStr(str) {
-        return str.length < 10 ? str : str.slice(0, 10) + '...'
-    }
     import { onMount } from 'svelte';
 
     onMount(() => {
@@ -48,7 +48,7 @@
 
     function showPostCtxMenu(event) {
         const hasText = window.getSelection().toString().trim().length > 0
-        const truncateText = truncateStr(window.getSelection().toString().trim())
+        const truncateText = truncateStr(window.getSelection().toString().trim(), 20)
 
         const menu = new Menu();
         menu.append(new MenuItem({
@@ -97,6 +97,7 @@
             label: "🔗  Copy Link",
             click: function(){
                 clipboard.writeText(entryInfo.link)
+                toast("Copied")
             }
         }));
         menu.append(new MenuItem({

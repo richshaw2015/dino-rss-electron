@@ -11,6 +11,12 @@
 
     let viewMode = getViewMode()
     let viewScope = getViewScope()
+
+    import { onMount } from 'svelte';
+
+    onMount(() => {
+        M.AutoInit();
+    });
 </script>
 
 <style>
