@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain, systemPreferences} = require('electron');
+const {app, BrowserWindow, ipcMain, systemPreferences, shell} = require('electron');
 
 const production = !process.env.ELECTRON_RELOAD;
 
@@ -11,6 +11,14 @@ if (!production) {
 }
 
 let mainWindow;
+
+// handle webContents events
+function openUrlInDefaultBrowser(event, url) {
+	if(url !== mainWindow.webContents.getURL()) {
+		event.preventDefault()
+		shell.openExternal(url)
+	}
+}
 
 function createWindow () {
 	mainWindow = new BrowserWindow({
@@ -35,9 +43,13 @@ function createWindow () {
 		mainWindow = null
 	});
 
-	// if (!production) mainWindow.webContents.openDevTools()
+	mainWindow.webContents.on('will-navigate', openUrlInDefaultBrowser)
+	mainWindow.webContents.on('new-window', openUrlInDefaultBrowser)
+
+	if (!production) mainWindow.webContents.openDevTools()
 }
 
+// handle app events
 app.on('ready', createWindow);
 
 app.on('window-all-closed', function () {
@@ -48,6 +60,7 @@ app.on('activate', function () {
 	if (mainWindow === null) createWindow();
 })
 
+// handle ipc messages
 ipcMain.handle('dblclick-title-bar', (event) => {
 	if(!mainWindow) return;
 	if(process.platform === 'darwin') {

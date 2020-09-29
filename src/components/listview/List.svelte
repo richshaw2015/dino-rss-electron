@@ -24,7 +24,7 @@
         }));
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
-            label: "🔗  Copy Link",
+            label: "🔗  Copy Feed Link",
             click: function(){
                 alert(`you clicked on`);
             }
@@ -32,7 +32,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "✏️  Custom Feed",
+            label: "✏️  Edit Feed",
             click: function(){
                 alert(`you clicked on`);
             }
@@ -88,7 +88,7 @@
 
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
-            label: "✏️  Custom Feed",
+            label: "✏️  Edit Feed",
             click: function(){
                 alert(`you clicked on`);
             }

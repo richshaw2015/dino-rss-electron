@@ -33,6 +33,18 @@
     function truncateStr(str) {
         return str.length < 10 ? str : str.slice(0, 10) + '...'
     }
+    import { onMount } from 'svelte';
+
+    onMount(() => {
+        document.querySelectorAll("#omr-third-html img").forEach(item => {
+
+            item.addEventListener('contextmenu', event => {
+                event.preventDefault()
+                event.stopPropagation()
+                alert(event)
+            })
+        })
+    });
 
     function showPostCtxMenu(event) {
         const hasText = window.getSelection().toString().trim().length > 0
@@ -87,10 +99,16 @@
                 alert(`you clicked on`);
             }
         }));
+        menu.append(new MenuItem({
+            label: "🧭  Open in Browser",
+            click: function(){
+                shell.openExternal(entryInfo.link);
+            }
+        }));
 
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
-            label: "✏️  Custom Feed",
+            label: "✏️  Edit Feed",
             click: function(){
                 alert(`you clicked on`);
             }
