@@ -14,6 +14,8 @@
     const { remote } = require('electron');
     const { Menu, MenuItem } = remote;
 
+    // TODO shortcut n N p P b C r D
+
     // TODO dynamic read/unread star/unstar menu
     function showFeedCtxMenu() {
         const menu = new Menu();

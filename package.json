@@ -36,6 +36,7 @@
     "@storybook/addon-links": "6.0.21",
     "svelte-loader": "^2.13.6",
     "mousetrap": "^1.6.5",
+    "prismjs": "^1.21.0",
     "materialize-css": "^1.0.0"
   }
 }

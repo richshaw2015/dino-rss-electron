@@ -35,10 +35,17 @@
     const { Menu, MenuItem } = remote
     const isMac = process.platform === 'darwin'
     const Mousetrap = require('mousetrap');
+    const Prism = require('prismjs');
 
-    import { onMount } from 'svelte';
+    import { onMount, afterUpdate } from 'svelte';
+
+    afterUpdate(() => {
+        // highlight code
+        Prism.highlightAll()
+    });
 
     onMount(() => {
+        // keyboard shortcut
         Mousetrap.bind('j', function() {
             document.querySelector('#omr-post-third-html').scrollTop += scrollStep
             return false
