@@ -7,8 +7,8 @@
     "start": "electron .",
     "build": "rollup -c",
     "autobuild": "rollup -c -w",
-    "start:dev": "concurrently \"npm run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
-    "storybook": "start-storybook -s ./public -p 12315"
+    "dev": "concurrently \"npm run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
+    "storybook": "start-storybook -s ./public -p 12315 --ci & electron .storybook/electron.index.js"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -37,6 +37,8 @@
     "svelte-loader": "^2.13.6",
     "mousetrap": "^1.6.5",
     "prismjs": "^1.21.0",
-    "materialize-css": "^1.0.0"
+    "materialize-css": "^1.0.0",
+    "electron-devtools-installer": "^3.1.1",
+    "telnet-client": "^1.4.6"
   }
 }

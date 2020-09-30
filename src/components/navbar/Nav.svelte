@@ -35,6 +35,7 @@
     #omr-left-nav {
         height: 100%;
         min-width: 70px;
+        max-width: 70px;
         background: #24292E;
         display: flex;
         flex-direction: column;

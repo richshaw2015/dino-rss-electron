@@ -1,4 +1,3 @@
-
 <script>
     export let feedInfo = {
         "id": 1233,
@@ -18,7 +17,6 @@
             "unread_list": [1,3,56,89,90,34],
         }
     }
-
 </script>
 
 <style>
