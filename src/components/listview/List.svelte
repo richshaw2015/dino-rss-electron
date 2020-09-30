@@ -7,6 +7,7 @@
     export let activeTab = 'rss'
     export let viewMode = 'feed'
     export let viewScope = 'all'
+    export let entryInfo = {}
 
     let isFeedEntriesView = false
 

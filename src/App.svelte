@@ -2,15 +2,41 @@
     import Nav from './components/navbar/Nav.svelte';
     import Toolbar from './components/index/Toolbar.svelte'
     import List from './components/listview/List.svelte'
-    import Post from './components/detail/Post.svelte'
     import Apps from './components/index/Apps.svelte'
+    import Title from './components/detail/Title.svelte'
+    import Third from './components/detail/Third.svelte'
 
     import { getViewMode, getViewScope } from './components/utils/toolbar.js'
+    const M = require('materialize-css')
 
     let activeTab = 'rss'
 
     let viewMode = getViewMode()
     let viewScope = getViewScope()
+
+    let entryInfo = {
+        "id": 1233,
+        "title": "Thinking About Power Usage and Websites",
+        "link": "https://css-tricks.com/thinking-about-power-usage-and-websites",
+        "comments": "https://css-tricks.com/thinking-about-power-usage-and-websites/#respond",
+        "author": "Selena Deckelmann",
+        "image": "https://css-tricks.com/apple-touch-icon.png",
+        "updated": "3 hours ago",
+        "feed": {
+            "id": 2,
+            "title": "CSS-Tricks",
+            "link": "https://css-tricks.com",
+            "description": "Tips, Tricks, and Techniques on using Cascading Style Sheets.",
+            "rss": "https://css-tricks.com/feed/",
+            "is_podcast": true
+        },
+        "stats": {
+            "has_read": true,
+            "has_stared": true,
+            "uv_stared": 5,
+            "uv_view": 246,
+        }
+    }
 
     import { onMount } from 'svelte';
 
@@ -50,6 +76,9 @@
         flex-grow: 1;
         min-width: 500px;
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: #f3f3f3;
     }
 </style>
 
@@ -62,13 +91,14 @@
         <Toolbar bind:activeTab bind:viewMode bind:viewScope />
 
         {#if activeTab !== 'apps'}
-            <List bind:activeTab bind:viewMode bind:viewScope />
+            <List bind:activeTab bind:viewMode bind:viewScope bind:entryInfo />
         {:else}
             <Apps />
         {/if}
     </div>
 
     <div class="right-container">
-        <Post />
+        <Title bind:entryInfo />
+        <Third bind:entryInfo />
     </div>
 </div>

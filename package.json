@@ -34,6 +34,8 @@
     "@storybook/svelte": "6.0.21",
     "@storybook/addon-actions": "6.0.21",
     "@storybook/addon-links": "6.0.21",
-    "svelte-loader": "^2.13.6"
+    "svelte-loader": "^2.13.6",
+    "mousetrap": "^1.6.5",
+    "materialize-css": "^1.0.0"
   }
 }
