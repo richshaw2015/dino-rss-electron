@@ -2,8 +2,7 @@ const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-d
 const { app, BrowserWindow } = require('electron')
 const Telnet = require('telnet-client')
 
-const url = 'http://localhost:12315'
-let mainWindow = undefined
+let mainWindow
 
 app.commandLine.appendSwitch('disable-web-security')
 app.commandLine.appendSwitch('remote-debugging-port', '5858')
@@ -23,7 +22,7 @@ async function waitUntilLoadUrl() {
     for (let i = 0; i < 100; i++) {
         try {
             await connection.connect(params)
-            mainWindow.loadURL(url)
+            mainWindow.loadURL('http://localhost:12315')
             break
         } catch(error) {
             await sleep(300)

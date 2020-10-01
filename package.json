@@ -39,6 +39,7 @@
     "prismjs": "^1.21.0",
     "materialize-css": "^1.0.0",
     "electron-devtools-installer": "^3.1.1",
+    "@podlove/web-player": "^5.2.3",
     "telnet-client": "^1.4.6"
   }
 }
