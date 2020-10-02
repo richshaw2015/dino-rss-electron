@@ -18,7 +18,7 @@
             {
                 "url": "http://aod.cos.tx.xmcdn.com/storages/5592-audiofreehighqps/FC/3F/CMCoOSEDSe7wAHTrfwBZH1KJ.m4a",
                 "mimeType": "audio/x-m4a",
-                "length": 2475
+                "size": 345677
             }
         ]
     }
@@ -113,9 +113,9 @@
                             <timer-current class="text-sm"></timer-current>
                         </div>
                         <div class="w-6/12 text-center">
-                            <play-state on="active">
-                                <current-chapter class="text-sm truncate"></current-chapter>
-                            </play-state>
+<!--                            <play-state on="active">-->
+<!--                                <current-chapter class="text-sm truncate"></current-chapter>-->
+<!--                            </play-state>-->
                         </div>
                         <div class="w-3/12 text-right">
                             <timer-duration class="text-sm"></timer-duration>
@@ -123,7 +123,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full mt-6 mb-3"></div>
+            <div class="w-full mb-4"></div>
         </div>
         <error></error>
     </root>

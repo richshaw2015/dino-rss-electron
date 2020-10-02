@@ -3,4 +3,4 @@ import '../public/css/global.css';
 import '../public/css/prism.css';
 import './debug.css';
 
-import '../public/player/embed.js'
+import '../public/podplayer/embed.js'
