@@ -49,7 +49,7 @@
             }
         ]
     }
-
+    episodeInfo = {}
     const scrollStep = 100
 
     const { remote } = require('electron')
@@ -187,7 +187,7 @@
 </style>
 
 <div class="flow-text" id="omr-post-third-html" on:contextmenu={showPostCtxMenu} on:dblclick={changeThirdContent}>
-    {#if episodeInfo}
+    {#if Object.keys(episodeInfo).length > 0}
         <Podcast bind:episodeInfo />
     {/if}
 

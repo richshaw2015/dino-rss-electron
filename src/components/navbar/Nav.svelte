@@ -72,6 +72,7 @@
     #omr-nav-space {
         flex-grow: 1;
         width: 100%;
+        cursor: move;
     }
 </style>
 
