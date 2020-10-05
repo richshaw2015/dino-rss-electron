@@ -3,6 +3,8 @@
     //
     // const dispatch = createEventDispatcher();
     import { dblClickTitleBar, macNavCtxMenu, isWin } from '../utils/helper.js'
+    import Titlebar from './Titlebar.svelte'
+
     const { remote } = require('electron')
     const { Menu, MenuItem } = remote
 
@@ -46,7 +48,7 @@
         margin-top: 64px;
     }
     .margin-win32 {
-        margin-top: 32px !important;
+        margin-top: 28px !important;
     }
     #omr-nav-avatar img {
         width: 36px;
@@ -81,6 +83,9 @@
 </style>
 
 <div id="omr-left-nav" class="drag">
+    {#if isWin()}
+        <Titlebar />
+    {/if}
     <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}">
         <img src="{userInfo.image}" alt="Avatar">
     </div>
