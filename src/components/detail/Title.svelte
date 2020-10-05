@@ -61,7 +61,7 @@
     <!--{#if entryInfo.feed.is_podcast}-->
     <!--    <img src="./icon/podcast.svg" class="podcast-icon" alt="Podcast" />-->
     <!--{/if}-->
-    <i class="material-icons {entryInfo.stats.has_stared ? 'primary-color' : ''}">
+    <i class="material-icons no-drag {entryInfo.stats.has_stared ? 'primary-color' : ''}">
         {entryInfo.stats.has_stared ? 'star' : 'star_border'}</i>
-    <i class="material-icons">format_size</i>
+    <i class="material-icons no-drag">format_size</i>
 </div>
