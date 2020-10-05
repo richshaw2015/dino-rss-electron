@@ -2,7 +2,7 @@
     // import { createEventDispatcher } from 'svelte';
     //
     // const dispatch = createEventDispatcher();
-    import { dblClickTitleBar, showNavCtxMenu } from '../utils/helper.js'
+    import { dblClickTitleBar, macNavCtxMenu } from '../utils/helper.js'
     const { remote } = require('electron')
     const { Menu, MenuItem } = remote
 
@@ -93,7 +93,7 @@
         <i class="material-icons {activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
     </div>
 
-    <div id="omr-nav-space" on:dblclick={dblClickTitleBar} on:contextmenu={showNavCtxMenu}>
+    <div id="omr-nav-space" on:dblclick={dblClickTitleBar} on:contextmenu={macNavCtxMenu}>
     </div>
 
     <div class="nav-tab-btn no-drag" id="omr-nav-add">

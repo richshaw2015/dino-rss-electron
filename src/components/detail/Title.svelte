@@ -1,6 +1,6 @@
 
 <script>
-    import { dblClickTitleBar, showNavCtxMenu } from '../utils/helper.js'
+    import { dblClickTitleBar, macNavCtxMenu } from '../utils/helper.js'
 
     export let entryInfo = {
         "id": 1233,
@@ -56,7 +56,7 @@
     /*}*/
 </style>
 
-<div id="omr-post-title-bar" class="drag" on:dblclick={dblClickTitleBar} on:contextmenu={showNavCtxMenu}>
+<div id="omr-post-title-bar" class="drag" on:dblclick={dblClickTitleBar} on:contextmenu={macNavCtxMenu}>
     <div class="post-title">{ entryInfo.title }</div>
     <!--{#if entryInfo.feed.is_podcast}-->
     <!--    <img src="./icon/podcast.svg" class="podcast-icon" alt="Podcast" />-->

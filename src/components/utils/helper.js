@@ -21,7 +21,8 @@ export const dblClickTitleBar = () => {
     ipcRenderer.invoke('dblclick-title-bar')
 }
 
-export function showNavCtxMenu() {
+export function macNavCtxMenu() {
+    // this context menu only works on Mac OS
     const menu = new Menu();
 
     menu.append(new MenuItem({
@@ -29,13 +30,15 @@ export function showNavCtxMenu() {
         label: "‍📐  Toggle Window Size",
         visible: process.platform === 'darwin'
     }));
-    menu.append(new MenuItem({type: "separator", visible: process.platform === 'darwin'}));
+    menu.append(new MenuItem({type: "separator"}));
 
     menu.append(new MenuItem({
         role: "reload",
-        label: "🔄  Reload"
+        label: "🔄  Reload",
+        visible: process.platform === 'darwin'
+        
     }));
-    menu.append(new MenuItem({type: "separator",}));
+    menu.append(new MenuItem({type: "separator"}));
 
     menu.append(new MenuItem({
         label: "🔎  Zoom",
@@ -43,18 +46,21 @@ export function showNavCtxMenu() {
             {"role": "resetZoom"},
             {"role": "zoomIn"},
             {"role": "zoomOut"},
-        ]
+        ],
+        visible: process.platform === 'darwin'
     }));
     menu.append(new MenuItem({type: "separator",}));
     menu.append(new MenuItem({
         role: "toggleDevTools",
         label: "🔨  Inspect",
+        visible: process.platform === 'darwin',
         enabled: process.env.ELECTRON_RELOAD
     }));
     menu.append(new MenuItem({type: "separator",}));
     menu.append(new MenuItem({
         role: "windowMenu",
-        label: "🔲  Window"
+        label: "🔲  Window",
+        visible: process.platform === 'darwin'
     }));
     menu.popup({ window: remote.getCurrentWindow() })
 }
