@@ -3,6 +3,7 @@
     import FeedNav from '../index/FeedNav.svelte'
     import Pager from '../pager/Pager.svelte'
     import EntryItem from "../index/EntryItem.svelte";
+    import {isWin } from '../utils/helper.js'
 
     export let activeTab = 'rss'
     export let viewMode = 'feed'
@@ -54,7 +55,7 @@
     function showEntryCtxMenu() {
         const menu = new Menu();
         menu.append(new MenuItem({
-            label: "⭐️  Star",
+            label: isWin() ? "🌟  Star" : "⭐️  Star",
             click: function(){
                 alert(`you clicked on`);
             }

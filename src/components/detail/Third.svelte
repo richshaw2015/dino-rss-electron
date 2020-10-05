@@ -1,6 +1,6 @@
 <script>
     import { toast } from '../utils/toast.js'
-    import { truncateStr } from '../utils/helper.js'
+    import { truncateStr, isMac, isWin } from '../utils/helper.js'
     import Podcast from './Podcast.svelte'
 
     export let entryInfo = {
@@ -55,7 +55,6 @@
     const { remote } = require('electron')
     const { shell, clipboard } = require('electron')
     const { Menu, MenuItem } = remote
-    const isMac = process.platform === 'darwin'
     const Mousetrap = require('mousetrap');
     const Prism = require('prismjs');
 
@@ -99,12 +98,12 @@
 
         const menu = new Menu();
         menu.append(new MenuItem({
-            label: "⭐️  Star",
+            label: isWin() ? "🌟  Star" : "⭐️  Star",
             click: function(){
                 alert(`you clicked on`);
             }
         }));
-        menu.append(new MenuItem({type: "separator",}));
+        menu.append(new MenuItem({type: "separator"}));
 
         menu.append(new MenuItem({
             label: "📌  Mark as unread",
@@ -112,8 +111,8 @@
                 alert(`you clicked on`);
             }
         }));
+        menu.append(new MenuItem({type: "separator"}));
 
-        menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
             label: `🔍  Search "${truncateText}" with Google`,
             visible: hasText,
@@ -125,21 +124,23 @@
         }));
         menu.append(new MenuItem({
             label: `📗  Look Up "${truncateText}"`,
-            visible: hasText && isMac,
+            visible: hasText && isMac(),
             click: function(){
                 remote.getCurrentWindow().showDefinitionForSelection()
             }
         }));
         menu.append(new MenuItem({
-            visible: isMac && hasText,
+            visible: isMac() && hasText,
             label: "🔊  Speaking",
             submenu: [
                 {"role": "startSpeaking"},
                 {"role": "stopSpeaking"},
             ]
         }));
+        if (hasText) {
+            menu.append(new MenuItem({type: "separator", visible: hasText}));
+        }
 
-        menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
             label: "🔗  Copy Link",
             click: function(){
@@ -153,15 +154,15 @@
                 shell.openExternal(entryInfo.link);
             }
         }));
+        menu.append(new MenuItem({type: "separator"}));
 
-        menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
             label: "✏️  Edit Feed",
             click: function(){
                 alert(`you clicked on`);
             }
         }));
-        menu.append(new MenuItem({type: "separator",}));
+        menu.append(new MenuItem({type: "separator"}));
 
         menu.append(new MenuItem({
             label: "🗑  Unsubscribe Feed",

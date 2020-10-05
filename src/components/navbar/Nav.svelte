@@ -2,7 +2,7 @@
     // import { createEventDispatcher } from 'svelte';
     //
     // const dispatch = createEventDispatcher();
-    import { dblClickTitleBar, macNavCtxMenu } from '../utils/helper.js'
+    import { dblClickTitleBar, macNavCtxMenu, isWin } from '../utils/helper.js'
     const { remote } = require('electron')
     const { Menu, MenuItem } = remote
 
@@ -34,6 +34,7 @@
 <style>
     #omr-left-nav {
         height: 100%;
+        min-height: 600px;
         min-width: 70px;
         max-width: 70px;
         background: #24292E;
@@ -43,6 +44,9 @@
     }
     #omr-nav-avatar {
         margin-top: 64px;
+    }
+    .margin-win32 {
+        margin-top: 32px !important;
     }
     #omr-nav-avatar img {
         width: 36px;
@@ -77,7 +81,7 @@
 </style>
 
 <div id="omr-left-nav" class="drag">
-    <div id="omr-nav-avatar" class="nav-tab-btn no-drag">
+    <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}">
         <img src="{userInfo.image}" alt="Avatar">
     </div>
 

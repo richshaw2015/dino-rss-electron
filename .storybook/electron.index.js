@@ -44,7 +44,7 @@ app.on('ready', function() {
             offscreen: false,
             webSecurity: false,
             contextIsolation: false,
-            zoomFactor: 1.5
+            zoomFactor: 1.3
         },
     })
 

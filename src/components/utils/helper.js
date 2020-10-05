@@ -27,16 +27,13 @@ export function macNavCtxMenu() {
 
     menu.append(new MenuItem({
         role: "zoom",
-        label: "‍📐  Toggle Window Size",
-        visible: process.platform === 'darwin'
+        label: "‍📐  Toggle Window Size"
     }));
     menu.append(new MenuItem({type: "separator"}));
 
     menu.append(new MenuItem({
         role: "reload",
-        label: "🔄  Reload",
-        visible: process.platform === 'darwin'
-        
+        label: "🔄  Reload"
     }));
     menu.append(new MenuItem({type: "separator"}));
 
@@ -46,21 +43,26 @@ export function macNavCtxMenu() {
             {"role": "resetZoom"},
             {"role": "zoomIn"},
             {"role": "zoomOut"},
-        ],
-        visible: process.platform === 'darwin'
+        ]
     }));
     menu.append(new MenuItem({type: "separator",}));
     menu.append(new MenuItem({
         role: "toggleDevTools",
         label: "🔨  Inspect",
-        visible: process.platform === 'darwin',
         enabled: process.env.ELECTRON_RELOAD
     }));
     menu.append(new MenuItem({type: "separator",}));
     menu.append(new MenuItem({
         role: "windowMenu",
-        label: "🔲  Window",
-        visible: process.platform === 'darwin'
+        label: "🔲  Window"
     }));
     menu.popup({ window: remote.getCurrentWindow() })
+}
+
+export function isWin(){
+    return process.platform === 'win32'
+}
+
+export function isMac(){
+    return process.platform === 'darwin'
 }
