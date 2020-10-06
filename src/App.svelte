@@ -5,6 +5,7 @@
     import Apps from './components/index/Apps.svelte'
     import Title from './components/detail/Title.svelte'
     import Third from './components/detail/Third.svelte'
+    import Statusbar from './components/detail/Statusbar.svelte'
 
     import { getViewMode, getViewScope } from './components/utils/toolbar.js'
     const M = require('materialize-css')
@@ -100,5 +101,6 @@
     <div class="right-container">
         <Title bind:entryInfo />
         <Third bind:entryInfo />
+        <Statusbar />
     </div>
 </div>

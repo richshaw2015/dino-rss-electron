@@ -6,7 +6,7 @@
     export let entryInfo = {
         "id": 1233,
         "title": "Thinking About Power Usage and Websites",
-        "link": "https://css-tricks.com/thinking-about-power-usage-and-websites",
+        "link": "",
         "comments": "https://css-tricks.com/thinking-about-power-usage-and-websites/#respond",
         "author": "Selena Deckelmann",
         "image": "https://css-tricks.com/apple-touch-icon.png",
@@ -57,6 +57,7 @@
     const { Menu, MenuItem } = remote
     const Mousetrap = require('mousetrap');
     const Prism = require('prismjs');
+    import { statusMsg } from '../store/store.js'
 
     import { onMount, afterUpdate } from 'svelte';
 
@@ -64,9 +65,15 @@
         // highlight code
         // TODO add highlightjs support
         Prism.highlightAll()
+
+        statusMsg.set(`🔗 ${entryInfo.link}`)
     });
 
     onMount(() => {
+        setTimeout(() => {
+            entryInfo.link = 'https://css-tricks.com/thinking-about-power-usage-and-websites/'
+        }, 10000)
+
         // keyboard shortcut
         Mousetrap.bind('j', function() {
             document.querySelector('#omr-post-third-html').scrollTop += scrollStep
@@ -97,7 +104,7 @@
     });
 
     function showPostCtxMenu(event) {
-        const hasText = window.getSelection().toString().trim().length > 0
+        const hasText = window.getSelection().toString().length > 0
         const truncateText = truncateStr(window.getSelection().toString().trim(), 20)
 
         const menu = new Menu();
@@ -141,6 +148,12 @@
                 {"role": "stopSpeaking"},
             ]
         }));
+        menu.append(new MenuItem({
+            visible: hasText,
+            label: "📋  Copy",
+            role: "copy"
+        }));
+
         if (hasText) {
             menu.append(new MenuItem({type: "separator", visible: hasText}));
         }
@@ -180,6 +193,7 @@
 
     function changeThirdContent() {
         thirdContent = JSON.parse('"<p>How do Electron\'s features written in C++ or Objective-C get to JavaScript so they\'re available to an end-user?</p> <hr> <h2 id=\\"background\\"><a href=\\"#background\\">Background</a></h2> <p><a href=\\"https://electronjs.org\\">Electron</a> is a JavaScript platform whose primary purpose is to lower the barrier to entry for developers to build robust desktop apps without worrying about platform-specific implementations. However, at its core, Electron itself still needs platform-specific functionality to be written in a given system language.</p> <p>In reality, Electron handles the native code for you so that you can focus on a single JavaScript API.</p> <p>How does that work, though? How do Electron\'s features written in C++ or Objective-C get to JavaScript so they\'re available to an end-user?</p> <p>To trace this pathway, let\'s start with the <a href=\\"https://electronjs.org/docs/api/app\\"><code>app</code> module</a>.</p> <p>By opening the <a href=\\"https://github.com/electron/electron/blob/0431997c8d64c9ed437b293e8fa15a96fc73a2a7/lib/browser/api/app.ts\\"><code>app.ts</code></a> file inside our <code>lib/</code> directory, you\'ll find the following line of code towards the top:</p> <pre><code class=\\"hljs language-js\\"><span class=\\"hljs-keyword\\">const</span> binding = process.electronBinding(<span class=\\"hljs-string\\">\'app\'</span>) </code></pre> <p>This line points directly to Electron\'s mechanism for binding its C++/Objective-C modules to JavaScript for use by developers. This function is created by the header and <a href=\\"https://github.com/electron/electron/blob/0431997c8d64c9ed437b293e8fa15a96fc73a2a7/atom/common/api/electron_bindings.cc\\">implementation file</a> for the <code>ElectronBindings</code> class.</p> <h2 id=\\"processelectronbinding\\"><a href=\\"#processelectronbinding\\"><code>process.electronBinding</code></a></h2> <p>These files add the <code>process.electronBinding</code> function, which behaves like Node.js\\u2019 <code>process.binding</code>. <code>process.binding</code> is a lower-level implementation of Node.js\' <a href=\\"https://nodejs.org/api/modules.html#modules_require_id\\"><code>require()</code></a> method, except it allows users to <code>require</code> native code instead of other code written in JS. This custom <code>process.electronBinding</code> function confers the ability to load native code from Electron.</p> <p>When a top-level JavaScript module (like <code>app</code>) requires this native code, how is the state of that native code determined and set? Where are the methods exposed up to JavaScript? What about the properties?</p> <h2 id=\\"native_mate\\"><a href=\\"#native_mate\\"><code>native_mate</code></a></h2> <p>At present, answers to this question can be found in <code>native_mate</code>: a fork of Chromium\'s <a href=\\"https://chromium.googlesource.com/chromium/src.git/+/lkgr/gin/\\"><code>gin</code> library</a> that makes it easier to marshal types between C++ and JavaScript.</p> <p>Inside <code>native_mate/native_mate</code> there\'s a header and implementation file for <code>object_template_builder</code>. This is what allow us to form modules in native code whose shape conforms to what JavaScript developers would expect.</p> <h3 id=\\"mateobjecttemplatebuilder\\"><a href=\\"#mateobjecttemplatebuilder\\"><code>mate::ObjectTemplateBuilder</code></a></h3> <p>If we look at every Electron module as an <code>object</code>, it becomes easier to see why we would want to use <code>object_template_builder</code> to construct them. This class is built on top of a class exposed by V8, which is Google\\u2019s open source high-performance JavaScript and WebAssembly engine, written in C++. V8 implements the JavaScript (ECMAScript) specification, so its native functionality implementations can be directly correlated to implementations in JavaScript. For example, <a href=\\"https://v8docs.nodesource.com/node-0.8/db/d5f/classv8_1_1_object_template.html\\"><code>v8::ObjectTemplate</code></a> gives us JavaScript objects without a dedicated constructor function and prototype. It uses <code>Object[.prototype]</code>, and in JavaScript would be equivalent to <a href=\\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create\\"><code>Object.create()</code></a>.</p> <p>To see this in action, look to the implementation file for the app module, <a href=\\"https://github.com/electron/electron/blob/0431997c8d64c9ed437b293e8fa15a96fc73a2a7/atom/browser/api/atom_api_app.cc\\"><code>atom_api_app.cc</code></a>. At the bottom is the following:</p> <pre><code class=\\"hljs language-cpp\\">mate::ObjectTemplateBuilder(isolate, prototype->PrototypeTemplate()) .SetMethod(<span class=\\"hljs-string\\">\\"getGPUInfo\\"</span>, &#x26;App::GetGPUInfo) </code></pre> <p>In the above line, <code>.SetMethod</code> is called on <code>mate::ObjectTemplateBuilder</code>. <code>.SetMethod</code> can be called on any instance of the <code>ObjectTemplateBuilder</code> class to set methods on the <a href=\\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype\\">Object prototype</a> in JavaScript, with the following syntax:</p> <pre><code class=\\"hljs language-cpp\\">.SetMethod(<span class=\\"hljs-string\\">\\"method_name\\"</span>, &#x26;function_to_bind) </code></pre> <p>This is the JavaScript equivalent of:</p> <pre><code class=\\"hljs language-js\\"><span class=\\"hljs-function\\"><span class=\\"hljs-keyword\\">function</span> <span class=\\"hljs-title\\">App</span></span>{} App.prototype.getGPUInfo = <span class=\\"hljs-function\\"><span class=\\"hljs-keyword\\">function</span> (<span class=\\"hljs-params\\"></span>) </span>{ <span class=\\"hljs-comment\\">// implementation here</span> } </code></pre> <p>This class also contains functions to set properties on a module:</p> <pre><code class=\\"hljs language-cpp\\">.SetProperty(<span class=\\"hljs-string\\">\\"property_name\\"</span>, &#x26;getter_function_to_bind) </code></pre> <p>or</p> <pre><code class=\\"hljs language-cpp\\">.SetProperty(<span class=\\"hljs-string\\">\\"property_name\\"</span>, &#x26;getter_function_to_bind, &#x26;setter_function_to_bind) </code></pre> <p>These would in turn be the JavaScript implementations of <a href=\\"https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty\\">Object.defineProperty</a>:</p> <pre><code class=\\"hljs language-js\\"><span class=\\"hljs-function\\"><span class=\\"hljs-keyword\\">function</span> <span class=\\"hljs-title\\">App</span> </span>{} <span class=\\"hljs-built_in\\">Object</span>.defineProperty(App.prototype, <span class=\\"hljs-string\\">\'myProperty\'</span>, { get() { <span class=\\"hljs-keyword\\">return</span> _myProperty } }) </code></pre> <p>and</p> <pre><code class=\\"hljs language-js\\"><span class=\\"hljs-function\\"><span class=\\"hljs-keyword\\">function</span> <span class=\\"hljs-title\\">App</span> </span>{} <span class=\\"hljs-built_in\\">Object</span>.defineProperty(App.prototype, <span class=\\"hljs-string\\">\'myProperty\'</span>, { get() { <span class=\\"hljs-keyword\\">return</span> _myProperty } set(newPropertyValue) { _myProperty = newPropertyValue } }) </code></pre> <p>It\\u2019s possible to create JavaScript objects formed with prototypes and properties as developers expect them, and more clearly reason about functions and properties implemented at this lower system level!</p> <p>The decision around where to implement any given module method is itself a complex and oft-nondeterministic one, which we\'ll cover in a future post.</p>"')
+        entryInfo.link = 'https://developer.aliyun.com/article/720383'
     }
 </script>
 
@@ -191,7 +205,7 @@
     }
 </style>
 
-<div class="flow-text" id="omr-post-third-html" on:contextmenu={showPostCtxMenu} on:dblclick={changeThirdContent}>
+<div class="flow-text" id="omr-post-third-html" on:contextmenu={showPostCtxMenu}>
     {#if Object.keys(episodeInfo).length > 0}
         <Podcast bind:episodeInfo />
     {/if}
