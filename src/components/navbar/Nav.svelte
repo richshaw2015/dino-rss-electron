@@ -2,7 +2,7 @@
     // import { createEventDispatcher } from 'svelte';
     //
     // const dispatch = createEventDispatcher();
-    import { dblClickTitleBar, macNavCtxMenu, isWin } from '../utils/helper.js'
+    import { toggleMaximizeWindow, macNavCtxMenu, isWin } from '../utils/helper.js'
     import Titlebar from './Titlebar.svelte'
 
     const { remote } = require('electron')
@@ -102,7 +102,7 @@
         <i class="material-icons {activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
     </div>
 
-    <div id="omr-nav-space" on:dblclick={dblClickTitleBar} on:contextmenu={macNavCtxMenu}>
+    <div id="omr-nav-space" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
     </div>
 
     <div class="nav-tab-btn no-drag" id="omr-nav-add">

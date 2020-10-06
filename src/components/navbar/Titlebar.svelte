@@ -1,17 +1,9 @@
 <script>
-    import { isWin, dblClickTitleBar } from '../utils/helper.js'
+    import { toggleMaximizeWindow, minimizeWindow, closeWindow } from '../utils/helper.js'
     const { remote } = require('electron')
     const mainWindow = remote.getCurrentWindow()
 
     export let isMaximized = false
-
-    function minimizeWindow() {
-        mainWindow.minimize()
-    }
-    
-    function closeWindow() {
-        mainWindow.close()
-    }
 
     mainWindow.on('maximize', (e, cmd) => {
         isMaximized = true
@@ -40,9 +32,9 @@
     <img src="./icon/windows/titlebar-minimize.svg" alt="Minimize" on:click={minimizeWindow}>
 
     {#if isMaximized}
-        <img src="./icon/windows/titlebar-restore.svg" alt="Restore" on:click={dblClickTitleBar}>
+        <img src="./icon/windows/titlebar-restore.svg" alt="Restore" on:click={toggleMaximizeWindow}>
     {:else}
-        <img src="./icon/windows/titlebar-maximize.svg" alt="Maximize" on:click={dblClickTitleBar}> 
+        <img src="./icon/windows/titlebar-maximize.svg" alt="Maximize" on:click={toggleMaximizeWindow}> 
     {/if}
 
     <img src="./icon/windows/titlebar-close.svg" alt="Close" on:click="{closeWindow}">

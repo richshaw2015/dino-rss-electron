@@ -1,6 +1,6 @@
 <script>
     import { toast } from '../utils/toast.js'
-    import { truncateStr, isMac, isWin } from '../utils/helper.js'
+    import { truncateStr, isMac, isWin, closeWindow } from '../utils/helper.js'
     import Podcast from './Podcast.svelte'
 
     export let entryInfo = {
@@ -89,6 +89,10 @@
             document.querySelector('#omr-post-third-html').scrollTop +=
                 document.querySelector('#omr-post-third-html').offsetHeight - 40
             return false
+        });
+
+        Mousetrap.bind('x', function() {
+            closeWindow()
         });
     });
 

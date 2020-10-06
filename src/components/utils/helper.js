@@ -17,8 +17,14 @@ const { ipcRenderer } = require('electron')
 const { remote } = require('electron')
 const { Menu, MenuItem } = remote
 
-export const dblClickTitleBar = () => {
-    ipcRenderer.invoke('dblclick-title-bar')
+export const toggleMaximizeWindow = () => {
+    ipcRenderer.invoke('toggle-maximize-window')
+}
+export const minimizeWindow = () => {
+    ipcRenderer.invoke('minimize-window')
+}
+export const closeWindow = () => {
+    ipcRenderer.invoke('close-window')
 }
 
 export function macNavCtxMenu() {

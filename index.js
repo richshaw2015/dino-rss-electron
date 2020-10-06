@@ -62,7 +62,7 @@ app.on('activate', function () {
 })
 
 // handle ipc messages
-ipcMain.handle('dblclick-title-bar', (event) => {
+ipcMain.handle('toggle-maximize-window', (event) => {
 	if(!mainWindow) return;
 	if(process.platform === 'darwin') {
 	    const action = systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string');
@@ -71,4 +71,14 @@ ipcMain.handle('dblclick-title-bar', (event) => {
 	}
 	if (mainWindow.isMaximized()) return mainWindow.unmaximize();
 	return mainWindow.maximize ();
+})
+
+ipcMain.handle('close-window', (event) => {
+	if(!mainWindow) return;
+	return mainWindow.close();
+})
+
+ipcMain.handle('minimize-window', (event) => {
+	if(!mainWindow) return;
+	return mainWindow.minimize();
 })
