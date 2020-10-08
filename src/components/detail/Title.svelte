@@ -2,8 +2,6 @@
 <script>
     import { toggleMaximizeWindow, macNavCtxMenu } from '../utils/helper.js'
     import { setFontSize } from '../utils/storage.js'
-    const { remote } = require('electron')
-    const { BrowserWindow } = require('electron').remote
 
     export let entryInfo = {
         "id": 1233,

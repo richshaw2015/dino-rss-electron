@@ -1,14 +1,14 @@
 <script>
     import { toggleMaximizeWindow, minimizeWindow, closeWindow } from '../utils/helper.js'
-    const { remote } = require('electron')
-    const mainWindow = remote.getCurrentWindow()
+    const { ipcRenderer } = require('electron')
 
     export let isMaximized = false
 
-    mainWindow.on('maximize', (e, cmd) => {
+
+    ipcRenderer.on('maximize-window', () => {
         isMaximized = true
     })
-    mainWindow.on('unmaximize', (e, cmd) => {
+    ipcRenderer.on('unmaximize-window', () => {
         isMaximized = false
     })
 </script>

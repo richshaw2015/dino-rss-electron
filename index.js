@@ -43,6 +43,12 @@ function createMainWindow () {
 	mainWindow.on('closed', function () {
 		mainWindow = null
 	});
+	mainWindow.on('maximize', () => {
+		mainWindow.webContents.send('maximize-window', '')
+    })
+    mainWindow.on('unmaximize', () => {
+        mainWindow.webContents.send('unmaximize-window', '')
+    })
 
 	mainWindow.webContents.on('will-navigate', openUrlInDefaultBrowser)
 	mainWindow.webContents.on('new-window', openUrlInDefaultBrowser)
@@ -70,7 +76,7 @@ ipcMain.handle('toggle-maximize-window', (event) => {
 	    if(action === 'Minimize') return mainWindow.minimize();
 	}
 	if (mainWindow.isMaximized()) return mainWindow.unmaximize();
-	return mainWindow.maximize ();
+	return mainWindow.maximize();
 })
 
 ipcMain.handle('close-window', (event) => {
