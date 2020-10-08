@@ -1,6 +1,7 @@
 
 const viewModeConfKey = 'CONF/VIEW/MODE'
 const viewScopeConfKey = 'CONF/VIEW/SCOPE'
+const fontSizeConfKey = 'CONF/FONT/SIZE'
 
 export function toggleViewMode() {
     const viewMode = getViewMode();
@@ -46,4 +47,11 @@ export function getViewScope() {
     } else {
         return viewScope;
     }
+}
+
+export function setFontSize(size) {
+    return localStorage.setItem(fontSizeConfKey, size)
+}
+export function getFontSize() {
+    return localStorage.getItem(fontSizeConfKey) || 'text-medium'
 }

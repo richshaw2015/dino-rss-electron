@@ -61,7 +61,7 @@
     export let viewMode = 'feed'
     export let activeTab = 'star' // star / rss / apps
 
-    import { toggleViewMode, toggleViewScope } from '../utils/toolbar.js'
+    import { toggleViewMode, toggleViewScope } from '../utils/storage.js'
 
     function evToggleViewMode() {
         viewMode = toggleViewMode()

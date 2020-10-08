@@ -7,13 +7,14 @@
     import Third from './components/detail/Third.svelte'
     import Statusbar from './components/detail/Statusbar.svelte'
 
-    import { getViewMode, getViewScope } from './components/utils/toolbar.js'
+    import { getViewMode, getViewScope, getFontSize } from './components/utils/storage.js'
     const M = require('materialize-css')
 
     let activeTab = 'rss'
 
     let viewMode = getViewMode()
     let viewScope = getViewScope()
+    let fontSize = getFontSize()
 
     let entryInfo = {
         "id": 1233,
@@ -99,8 +100,8 @@
     </div>
 
     <div class="right-container">
-        <Title bind:entryInfo />
-        <Third bind:entryInfo />
+        <Title bind:entryInfo bind:fontSize />
+        <Third bind:entryInfo bind:fontSize />
         <Statusbar />
     </div>
 </div>

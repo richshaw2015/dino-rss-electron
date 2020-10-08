@@ -20,7 +20,7 @@ function openUrlInDefaultBrowser(event, url) {
 	}
 }
 
-function createWindow () {
+function createMainWindow () {
 	mainWindow = new BrowserWindow({
 		width: 1280,
 		height: 720,
@@ -51,14 +51,14 @@ function createWindow () {
 }
 
 // handle app events
-app.on('ready', createWindow);
+app.on('ready', createMainWindow);
 
 app.on('window-all-closed', function () {
 	if (process.platform !== 'darwin') app.quit();
 })
 
 app.on('activate', function () {
-	if (mainWindow === null) createWindow();
+	if (mainWindow === null) createMainWindow();
 })
 
 // handle ipc messages
