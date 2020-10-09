@@ -2,6 +2,7 @@
 <script>
     import { toggleMaximizeWindow, macNavCtxMenu } from '../utils/helper.js'
     import { setFontSize } from '../utils/storage.js'
+    import Find from '../find/Find.svelte'
 
     export let entryInfo = {
         "id": 1233,
@@ -123,3 +124,5 @@
         </label>
     </span>
 </div>
+
+<Find />

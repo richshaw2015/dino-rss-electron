@@ -118,3 +118,7 @@ i.material-icons {
 .modal-overlay {
     background: none !important;
 }
+
+#omr-find-in-page .modal-overlay {
+    z-index: -1 !important;
+}

@@ -197,7 +197,7 @@
             }
         }));
         menu.append(new MenuItem({
-            label: "📱  QR Code",
+            label: "📲   QR Code",
             click: function() {
                 qrcode.clear()
                 qrcode.makeCode(entryInfo.link);
