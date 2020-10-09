@@ -100,7 +100,7 @@ h6 {
 #omr-post-third-html {
     word-break: break-all;
 }
-#omr-post-third-html img, #omr-post-third-html iframe, #omr-post-third-html video, #omr-post-third-html figure {
+#omr-post-third-html img, #omr-post-third-html iframe, #omr-post-third-html video, #omr-post-third-html figure, #omr-qrcode img {
     max-width: 100% !important;
 }
 .drag {

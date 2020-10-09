@@ -59,6 +59,10 @@
     const { Menu, MenuItem } = remote
     const Mousetrap = require('mousetrap');
     const Prism = require('prismjs');
+
+    const qrcodeWidth = 256
+    let qrcode
+
     import { statusMsg } from '../store/store.js'
 
     import { onMount, afterUpdate } from 'svelte';
@@ -114,6 +118,14 @@
         Mousetrap.bind('y y', function() {
             clipboard.writeText(entryInfo.link)
         });
+
+        qrcode = new QRCode(document.getElementById("omr-qrcode"), {
+            width: qrcodeWidth,
+            height: qrcodeWidth,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.L
+        })
     });
 
     function showPostCtxMenu(event) {
@@ -184,6 +196,24 @@
                 shell.openExternal(entryInfo.link);
             }
         }));
+        menu.append(new MenuItem({
+            label: "📱  QR Code",
+            click: function() {
+                qrcode.clear()
+                qrcode.makeCode(entryInfo.link);
+
+                const instanse = M.Modal.init(document.querySelector('#omr-modal-qrcode'), {
+                    inDuration: 0,
+                    outDuration: 0,
+                    opacity: 1,
+                    endingTop:  window.outerHeight / 2 - qrcodeWidth / 2 + "px"
+                });
+                document.querySelector('#omr-modal-qrcode').style.width = `${qrcodeWidth}px`
+                document.querySelector('#omr-modal-qrcode').style.height = `${qrcodeWidth}px`
+                document.querySelector('#omr-modal-qrcode').style.left = (window.outerWidth - 470) / 2 + 470 - qrcodeWidth / 2 + 'px'
+                instanse.open()
+            }
+        }));
         menu.append(new MenuItem({type: "separator"}));
 
         menu.append(new MenuItem({
@@ -216,6 +246,10 @@
         overflow-y: auto;
         height: 100%;
     }
+    #omr-modal-qrcode {
+        padding: 16px;
+        margin: 0;
+    }
 </style>
 
 <div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu}>
@@ -224,4 +258,8 @@
     {/if}
 
     { @html thirdContent }
+</div>
+
+<div class="modal" id="omr-modal-qrcode">
+    <div id="omr-qrcode"></div>
 </div>
