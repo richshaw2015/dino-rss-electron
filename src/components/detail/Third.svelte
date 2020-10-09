@@ -52,7 +52,7 @@
     }
 
     episodeInfo = {}
-    const scrollStep = 100
+    const scrollStep = 60
 
     const { remote } = require('electron')
     const { shell, clipboard } = require('electron')
@@ -72,19 +72,27 @@
     });
 
     onMount(() => {
-        setTimeout(() => {
-            entryInfo.link = 'https://css-tricks.com/thinking-about-power-usage-and-websites/'
-        }, 10000)
-
         // keyboard shortcut
         Mousetrap.bind('j', function() {
             document.querySelector('#omr-post-third-html').scrollTop += scrollStep
             return false
         });
+        Mousetrap.bind('d', function() {
+            document.querySelector('#omr-post-third-html').scrollTop += 
+                document.querySelector('#omr-post-third-html').offsetHeight / 2 - 20
+            return false
+        });
+
         Mousetrap.bind('k', function() {
             document.querySelector('#omr-post-third-html').scrollTop -= scrollStep
             return false
         });
+        Mousetrap.bind('u', function() {
+            document.querySelector('#omr-post-third-html').scrollTop -= 
+                document.querySelector('#omr-post-third-html').offsetHeight / 2 - 20
+            return false
+        });
+
         Mousetrap.bind('g g', function() {
             document.querySelector('#omr-post-third-html').scrollTop = 0
             return false
@@ -102,6 +110,9 @@
 
         Mousetrap.bind('x', function() {
             closeWindow()
+        });
+        Mousetrap.bind('y y', function() {
+            clipboard.writeText(entryInfo.link)
         });
     });
 
