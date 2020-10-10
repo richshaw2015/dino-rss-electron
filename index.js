@@ -53,6 +53,10 @@ function createMainWindow () {
 	mainWindow.webContents.on('will-navigate', openUrlInDefaultBrowser)
 	mainWindow.webContents.on('new-window', openUrlInDefaultBrowser)
 
+	mainWindow.webContents.on('found-in-page', (event, result) => {
+		mainWindow.webContents.send('found-in-page-content', result)
+	})
+
 	if (!production) mainWindow.webContents.openDevTools()
 }
 

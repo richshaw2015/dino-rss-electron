@@ -1,24 +1,72 @@
 <script>
-    function showFindWindow(event) {
-        const width = 360
+    const { ipcRenderer } = require('electron')
+    const { remote } = require('electron');
 
+    const mainWindow = remote.getCurrentWindow()
+
+    let findKeyword
+    let activeMatch
+    let matchesNum
+
+    function focusFindInput(){
+        try {
+            document.getElementById('omr-find-input').select()
+        } catch(err) {
+            console.warn(err)
+        }
+    }
+
+    function showFindWindow() {
         const instanse = M.Modal.init(document.querySelector('#omr-modal-find-in-page'), {
             inDuration: 0,
             outDuration: 0,
             opacity: 1,
             endingTop: document.querySelector('#omr-post-title-bar').offsetHeight + 'px'
         });
-        document.querySelector('#omr-modal-find-in-page').style.width = `${width}px`
 
         instanse.open()
+        focusFindInput()
+    }
+
+    ipcRenderer.on('found-in-page-content', (event, result) => {
+        if (result.matches === 1) {
+            [activeMatch, matchesNum] = [0, 0]
+            showFindWindow()
+        } else {
+            [activeMatch, matchesNum] = [result.activeMatchOrdinal, result.matches]
+        }
+    })
+
+    function findPrev() {
+        mainWindow.webContents.findInPage(findKeyword, {findNext: true, forward: false})
+    }
+    function findNext() {
+        mainWindow.webContents.findInPage(findKeyword, {findNext: true})
+    }
+    function findClose() {
+        [activeMatch, matchesNum] = [0, 0]
+        mainWindow.webContents.stopFindInPage('clearSelection')
+        M.Modal.getInstance(document.querySelector('#omr-modal-find-in-page')).close();
+    }
+    function findStart(event) {
+        if (event.keyCode === 13 && findKeyword !== undefined) {
+            event.preventDefault();
+
+            if (findKeyword === '') {
+                [activeMatch, matchesNum] = [0, 0]
+                mainWindow.webContents.stopFindInPage('activateSelection')
+            } else {
+                mainWindow.webContents.findInPage(findKeyword)
+            }
+        }
     }
 
     import { onMount } from 'svelte';
     onMount(() => {
-        Mousetrap.bind('/', function() {
+        Mousetrap.bind(['command+f', 'ctrl+f', '/'], function() {
             showFindWindow()
             return false
-        });
+        })
     });
 </script>
 
@@ -29,6 +77,7 @@
         left: unset !important;
         right: 54px;
         height: 48px;
+        width: 360px;
     }
     #omr-modal-find-in-page input {
         height: 100%;
@@ -72,19 +121,28 @@
         width: 1px;
         border-right: 1px dashed rgba(0,0,0,0.14)
     }
+    .find-btns .disabled {
+        cursor: default;
+        color: #999;
+    }
 </style>
 
 <div id="omr-find-in-page">
     <div id="omr-modal-find-in-page" class="modal">
         <div class="find-inner">
-            <input type="text" />
-            <span class="find-stats">1/345</span>
+            <input type="text" id="omr-find-input" bind:value={findKeyword} on:keyup={findStart} />
+
+            {#if matchesNum >= 0}
+                <span class="find-stats">{activeMatch}/{matchesNum}</span>
+            {:else}
+                <span class="find-stats"></span>
+            {/if}
 
             <div class="vertical-line"></div>
             <div class="find-btns">
-                <i class="material-icons find-prev" on:click="">expand_less</i>
-                <i class="material-icons find-next" on:click="">expand_more</i>
-                <i class="material-icons find-close" on:click="">clear</i>
+                <i class="material-icons find-prev { matchesNum > 1 ? '' : 'disabled' }" on:click="{findPrev}">expand_less</i>
+                <i class="material-icons find-next { matchesNum > 1 ? '' : 'disabled' }" on:click="{findNext}">expand_more</i>
+                <i class="material-icons find-close" on:click="{findClose}">clear</i>
             </div>
         </div>
     </div>
