@@ -38,10 +38,14 @@
     })
 
     function findPrev() {
-        mainWindow.webContents.findInPage(findKeyword, {findNext: true, forward: false})
+        if (findKeyword && matchesNum > 1) {
+            mainWindow.webContents.findInPage(findKeyword, {findNext: true, forward: false})
+        }
     }
     function findNext() {
-        mainWindow.webContents.findInPage(findKeyword, {findNext: true})
+        if (findKeyword && matchesNum > 1) {
+            mainWindow.webContents.findInPage(findKeyword, {findNext: true})
+        }
     }
     function findClose() {
         [activeMatch, matchesNum] = [0, 0]
@@ -53,7 +57,7 @@
             event.preventDefault();
 
             if (findKeyword === '') {
-                [activeMatch, matchesNum] = [0, 0]
+                [activeMatch, matchesNum] = [undefined, undefined]
                 mainWindow.webContents.stopFindInPage('activateSelection')
             } else {
                 mainWindow.webContents.findInPage(findKeyword)
@@ -65,6 +69,14 @@
     onMount(() => {
         Mousetrap.bind(['command+f', 'ctrl+f', '/'], function() {
             showFindWindow()
+            return false
+        })
+        Mousetrap.bind('enter', function() {
+            findNext()
+            return false
+        })
+        Mousetrap.bind('shift+enter', function() {
+            findPrev()
             return false
         })
     });
