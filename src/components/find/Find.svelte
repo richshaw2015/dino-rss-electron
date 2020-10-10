@@ -65,6 +65,17 @@
         }
     }
 
+    // calculate drag area
+    let coordX
+    function dragStart(event) {
+        coordX = event.x
+    }
+    function dragEnd(event) {
+        coordX =event.x - coordX
+        document.getElementById("omr-modal-find-in-page").style.left = 
+            document.getElementById("omr-modal-find-in-page").offsetLeft + coordX + 'px'
+    }
+
     import { onMount } from 'svelte';
     onMount(() => {
         Mousetrap.bind(['command+f', 'ctrl+f', '/'], function() {
@@ -90,8 +101,7 @@
     #omr-modal-find-in-page {
         margin: 0;
         padding: 7px 4px 7px 16px;
-        left: unset !important;
-        right: 54px;
+        left: calc(100vw - 360px - 54px);
         height: 48px;
         width: 360px;
     }
@@ -144,7 +154,7 @@
 </style>
 
 <div id="omr-find-in-page">
-    <div id="omr-modal-find-in-page" class="modal">
+    <div id="omr-modal-find-in-page" class="modal" draggable="true" on:dragstart={dragStart} on:dragend="{dragEnd}">
         <div class="find-inner">
             <input type="text" id="omr-find-input" bind:value={findKeyword} on:keyup={findStart} />
 
