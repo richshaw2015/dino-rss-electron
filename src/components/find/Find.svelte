@@ -79,6 +79,10 @@
             findPrev()
             return false
         })
+        Mousetrap.bind('esc', function() {
+            findClose()
+            return false
+        })
     });
 </script>
 
