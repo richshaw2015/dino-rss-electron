@@ -73,6 +73,7 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        background-color: #ffffff;
     }
     .right-container {
         flex-grow: 1;

@@ -35,7 +35,8 @@ function createMainWindow () {
 			enableRemoteModule: true,
 			worldSafeExecuteJavaScript: true
 		},
-		icon: 'public/icon/icon.svg'
+		icon: 'public/icon/icon.svg',
+		backgroundColor: '#f3f3f3'
 	});
 
 	mainWindow.loadFile('public/index.html');
