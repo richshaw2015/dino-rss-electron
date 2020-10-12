@@ -1,6 +1,6 @@
 <script>
     import { toast } from '../utils/toast.js'
-    import { truncateStr, isMac, isWin, closeWindow } from '../utils/helper.js'
+    import { truncateStr, isMac, isWin, closeWindow, captureWindow } from '../utils/helper.js'
     import Podcast from './Podcast.svelte'
 
     export let entryInfo = {
@@ -228,6 +228,14 @@
             label: "🗑  Unsubscribe Feed",
             click: function(){
                 alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator"}));
+
+        menu.append(new MenuItem({
+            label: "📸  ScreenShot",
+            click: function(){
+                captureWindow()
             }
         }));
 

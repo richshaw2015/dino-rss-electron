@@ -1,4 +1,5 @@
-const {app, BrowserWindow, ipcMain, systemPreferences, shell} = require('electron');
+const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard} = require('electron');
+const fs = require('fs')
 
 const production = !process.env.ELECTRON_RELOAD;
 
@@ -92,4 +93,23 @@ ipcMain.handle('close-window', (event) => {
 ipcMain.handle('minimize-window', (event) => {
 	if(!mainWindow) return;
 	return mainWindow.minimize();
+})
+
+ipcMain.handle('capture-window', (event) => {
+	mainWindow.webContents.capturePage().then(image => {
+		// copy to clipboard, then save to file
+		const options = { 
+			defaultPath: app.getPath("pictures"),
+			filters: [{ name: 'Images', extensions: ['jpg', 'png', 'gif', 'jpeg'] }]
+		}
+		dialog.showSaveDialog(options).then((result) => {
+			if (result.filePath) {
+				clipboard.writeImage(image)
+
+				fs.writeFileSync(result.filePath, image.toPNG(), (e) => {
+					console.log(e)
+				})
+			}
+		})
+	})
 })

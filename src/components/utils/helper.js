@@ -26,6 +26,9 @@ export const minimizeWindow = () => {
 export const closeWindow = () => {
     ipcRenderer.invoke('close-window')
 }
+export const captureWindow = () => {
+    ipcRenderer.invoke('capture-window')
+}
 
 export function macNavCtxMenu() {
     // this context menu only works on Mac OS
