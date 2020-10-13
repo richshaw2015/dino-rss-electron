@@ -233,7 +233,7 @@
         menu.append(new MenuItem({type: "separator"}));
 
         menu.append(new MenuItem({
-            label: "📸  ScreenShot",
+            label: "📸  Screenshot",
             click: function(){
                 captureWindow()
             }
@@ -267,8 +267,10 @@
     {#if Object.keys(episodeInfo).length > 0}
         <Podcast bind:episodeInfo />
     {/if}
-
-    { @html thirdContent }
+    
+    <article>
+        { @html thirdContent }
+    </article>
 </div>
 
 <div class="modal" id="omr-modal-qrcode">
