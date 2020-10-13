@@ -100,7 +100,7 @@ ipcMain.handle('capture-window', (event) => {
 		// copy to clipboard, then save to file
 		const options = { 
 			defaultPath: app.getPath("pictures"),
-			filters: [{ name: 'Images', extensions: ['jpg', 'png', 'gif', 'jpeg'] }]
+			filters: [{ name: 'Images', extensions: ['png', 'jpg', 'gif', 'jpeg'] }]
 		}
 		dialog.showSaveDialog(options).then((result) => {
 			if (result.filePath) {

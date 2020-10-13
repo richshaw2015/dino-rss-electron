@@ -129,9 +129,10 @@
     });
 
     function showPostCtxMenu(event) {
-        const hasText = window.getSelection().toString().length > 0
+        const hasText = window.getSelection().toString().trim().length > 0
         const truncateText = truncateStr(window.getSelection().toString().trim(), 20)
 
+        console.log(`=${window.getSelection().toString()}= ${hasText}`)
         const menu = new Menu();
         menu.append(new MenuItem({
             label: isWin() ? "🌟  Star" : "⭐️  Star",
@@ -173,13 +174,13 @@
                 {"role": "stopSpeaking"},
             ]
         }));
-        menu.append(new MenuItem({
-            visible: hasText,
-            label: "📋  Copy",
-            role: "copy"
-        }));
 
+        // role and separator are not affected by visible attribute
         if (hasText) {
+            menu.append(new MenuItem({
+                label: "📋  Copy",
+                role: "copy"
+            }));
             menu.append(new MenuItem({type: "separator", visible: hasText}));
         }
 
