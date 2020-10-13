@@ -132,7 +132,6 @@
         const hasText = window.getSelection().toString().trim().length > 0
         const truncateText = truncateStr(window.getSelection().toString().trim(), 20)
 
-        console.log(`=${window.getSelection().toString()}= ${hasText}`)
         const menu = new Menu();
         menu.append(new MenuItem({
             label: isWin() ? "🌟  Star" : "⭐️  Star",
@@ -198,7 +197,7 @@
             }
         }));
         menu.append(new MenuItem({
-            label: "📲   QR Code",
+            label: "📲  QR Code",
             click: function() {
                 qrcode.clear()
                 qrcode.makeCode(entryInfo.link);

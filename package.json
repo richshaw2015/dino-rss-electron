@@ -41,6 +41,7 @@
     "electron-devtools-installer": "^3.1.1",
     "@podlove/web-player": "^5.2.3",
     "telnet-client": "^1.4.6",
-    "qrcodejs": "^1.0.0"
+    "qrcodejs": "^1.0.0",
+    "uuid": "^8.3.1"
   }
 }

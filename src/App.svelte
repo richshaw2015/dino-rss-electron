@@ -1,4 +1,5 @@
 <script>
+    import { getViewMode, getViewScope, getFontSize, getUuid } from './components/utils/storage.js'
     import Nav from './components/navbar/Nav.svelte';
     import Toolbar from './components/index/Toolbar.svelte'
     import List from './components/listview/List.svelte'
@@ -7,11 +8,10 @@
     import Third from './components/detail/Third.svelte'
     import Statusbar from './components/detail/Statusbar.svelte'
 
-    import { getViewMode, getViewScope, getFontSize } from './components/utils/storage.js'
+    const uuid = getUuid()
     const M = require('materialize-css')
 
     let activeTab = 'rss'
-
     let viewMode = getViewMode()
     let viewScope = getViewScope()
     let fontSize = getFontSize()
