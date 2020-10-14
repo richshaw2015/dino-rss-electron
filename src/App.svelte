@@ -1,5 +1,5 @@
 <script>
-    import { getViewMode, getViewScope, getFontSize, getUuid } from './components/utils/storage.js'
+    import { getViewMode, getViewScope, getFontSize, getTokenPromise } from './components/utils/storage.js'
     import Nav from './components/navbar/Nav.svelte';
     import Toolbar from './components/index/Toolbar.svelte'
     import List from './components/listview/List.svelte'
@@ -8,7 +8,7 @@
     import Third from './components/detail/Third.svelte'
     import Statusbar from './components/detail/Statusbar.svelte'
 
-    const uuid = getUuid()
+    const tokenPromise = getTokenPromise()
     const M = require('materialize-css')
 
     let activeTab = 'rss'
@@ -85,24 +85,42 @@
     }
 </style>
 
-<div class="main-container">
-    <div class="left-container">
-        <Nav bind:activeTab />
-    </div>
+{#await tokenPromise}
+    <!-- TODO loading img -->
+    <div class="main-container">
+        <div class="left-container">
+            <Nav bind:activeTab />
+        </div>
 
-    <div class="middle-container">
-        <Toolbar bind:activeTab bind:viewMode bind:viewScope />
+        <div class="middle-container">
+            <Toolbar bind:activeTab bind:viewMode bind:viewScope />
+        </div>
 
-        {#if activeTab !== 'apps'}
-            <List bind:activeTab bind:viewMode bind:viewScope bind:entryInfo />
-        {:else}
-            <Apps />
-        {/if}
+        <div class="right-container">
+        </div>
     </div>
+{:then token}
+    <div class="main-container">
+        <div class="left-container">
+            <Nav bind:activeTab />
+        </div>
 
-    <div class="right-container">
-        <Title bind:entryInfo bind:fontSize />
-        <Third bind:entryInfo bind:fontSize />
-        <Statusbar />
+        <div class="middle-container">
+            <Toolbar bind:activeTab bind:viewMode bind:viewScope />
+
+            {#if activeTab !== 'apps'}
+                <List bind:activeTab bind:viewMode bind:viewScope bind:entryInfo />
+            {:else}
+                <Apps />
+            {/if}
+        </div>
+
+        <div class="right-container">
+            <Title bind:entryInfo bind:fontSize />
+            <Third bind:entryInfo bind:fontSize />
+            <Statusbar />
+        </div>
     </div>
-</div>
+{:catch error}
+    <!-- TODO error page -->
+{/await}

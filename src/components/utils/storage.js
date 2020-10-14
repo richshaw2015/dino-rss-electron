@@ -1,7 +1,9 @@
+import { SERVER } from './config.js'
+
 const viewModeConfKey = 'CONF/VIEW/MODE'
 const viewScopeConfKey = 'CONF/VIEW/SCOPE'
 const fontSizeConfKey = 'CONF/FONT/SIZE'
-const uuidConfKey = 'CONF/UUID'
+const tokenConfKey = 'CONF/TOKEN'
 
 export function toggleViewMode() {
     const viewMode = getViewMode();
@@ -56,14 +58,28 @@ export function getFontSize() {
     return localStorage.getItem(fontSizeConfKey) || 'text-medium'
 }
 
-export function getUuid() {
-    let uuid = localStorage.getItem(uuidConfKey)
+export function getToken() {
+    return localStorage.getItem(tokenConfKey)
+}
 
-    if (uuid === null) {
-        const { v4: uuidv4 } = require('uuid');
-        uuid = uuidv4()
-        localStorage.setItem(uuidConfKey, uuid);
+export async function getTokenPromise() {
+    let token = localStorage.getItem(tokenConfKey)
+
+    if (!token) {
+        try {
+            const { v4: uuidv4 } = require('uuid');
+            let formData = new FormData();
+            formData.append('uuid', uuidv4());
+
+            const rsp = await fetch((new URL('/api/get/token', SERVER)).href, {method:'POST', body: formData})
+            token = (await rsp.json())['token']
+
+            if (token) {
+                localStorage.setItem(tokenConfKey, token)
+            }
+        } catch (e) {
+            throw e
+        }
     }
-    console.assert(uuid.length === 36, `Initialization UUID Error: ${uuid}`)
-    return uuid
+    return token
 }
