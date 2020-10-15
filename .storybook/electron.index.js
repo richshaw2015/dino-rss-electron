@@ -34,7 +34,6 @@ waitUntilLoadUrl()
 
 app.on('ready', function() {
     mainWindow = new BrowserWindow({
-        fullscreen: true,
         webPreferences: {
             enableRemoteModule: true,
             nodeIntegration: true,
@@ -44,7 +43,7 @@ app.on('ready', function() {
             offscreen: false,
             webSecurity: false,
             contextIsolation: false,
-            zoomFactor: 1.3
+            zoomFactor: 1.2
         },
     })
 

@@ -63,6 +63,8 @@ export function getToken() {
 }
 
 export async function getTokenPromise() {
+    // await new Promise(r => setTimeout(r, 1000*1000));
+
     let token = localStorage.getItem(tokenConfKey)
 
     if (!token) {

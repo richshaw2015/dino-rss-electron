@@ -8,6 +8,7 @@
     import Third from './components/detail/Third.svelte'
     import Statusbar from './components/detail/Statusbar.svelte'
     import Error from './components/error/Error.svelte'
+    import Loading from './components/error/Loading.svelte'
 
     const tokenPromise = getTokenPromise()
     const M = require('materialize-css')
@@ -95,6 +96,11 @@
 
         <div class="middle-container">
             <Toolbar bind:activeTab bind:viewMode bind:viewScope />
+            {#if activeTab !== 'apps'}
+                <Loading />
+            {:else}
+                <Apps />
+            {/if}
         </div>
 
         <div class="right-container">
