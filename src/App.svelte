@@ -7,6 +7,7 @@
     import Title from './components/detail/Title.svelte'
     import Third from './components/detail/Third.svelte'
     import Statusbar from './components/detail/Statusbar.svelte'
+    import Error from './components/error/Error.svelte'
 
     const tokenPromise = getTokenPromise()
     const M = require('materialize-css')
@@ -122,5 +123,22 @@
         </div>
     </div>
 {:catch error}
-    <!-- TODO error page -->
+<div class="main-container">
+    <div class="left-container">
+        <Nav bind:activeTab />
+    </div>
+
+    <div class="middle-container">
+        <Toolbar bind:activeTab bind:viewMode bind:viewScope />
+
+        {#if activeTab !== 'apps'}
+            <Error msg={error} />
+        {:else}
+            <Apps />
+        {/if}
+    </div>
+
+    <div class="right-container">
+    </div>
+</div>
 {/await}

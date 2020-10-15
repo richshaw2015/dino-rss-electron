@@ -66,19 +66,16 @@ export async function getTokenPromise() {
     let token = localStorage.getItem(tokenConfKey)
 
     if (!token) {
-        try {
-            const { v4: uuidv4 } = require('uuid');
-            let formData = new FormData();
-            formData.append('uuid', uuidv4());
+        const { v4: uuidv4 } = require('uuid');
+        let formData = new FormData();
+        formData.append('uuid', uuidv4());
 
-            const rsp = await fetch((new URL('/api/get/token', SERVER)).href, {method:'POST', body: formData})
-            token = (await rsp.json())['token']
+        // TODO  sign
+        const rsp = await fetch((new URL('/api/get/token', SERVER)).href, {method:'POST', body: formData})
+        token = (await rsp.json())['token']
 
-            if (token) {
-                localStorage.setItem(tokenConfKey, token)
-            }
-        } catch (e) {
-            throw e
+        if (token) {
+            localStorage.setItem(tokenConfKey, token)
         }
     }
     return token
