@@ -2,6 +2,7 @@
     import FeedItem from '../index/FeedItem.svelte'
     import FeedNav from '../index/FeedNav.svelte'
     import Pager from '../pager/Pager.svelte'
+    import Toolbar from '../index/Toolbar.svelte'
     import EntryItem from "../index/EntryItem.svelte";
     import { isWin, getPageSize } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
@@ -13,6 +14,7 @@
 
     export let itemList = []
     export let currentEntry
+    export let thirdContent
 
 
     export let currentPage = 1
@@ -155,6 +157,17 @@
     }
     function viewEntryDetail(entry) {
         currentEntry = entry
+
+        apiReq('/api/entry/get/content', {
+            entry_id: currentEntry.id,
+            feed_id: currentEntry.feed.id,
+            is_podcast: currentEntry.feed.is_podcast
+        }).then( rsp => {
+            thirdContent = rsp.content
+            // TODO podcast
+        }).catch(err => {
+            // TODO
+        })
     }
 </script>
 
@@ -173,6 +186,8 @@
         cursor: pointer;
     }
 </style>
+
+<Toolbar bind:activeTab bind:viewMode bind:viewScope />
 
 {#if isFeedEntriesView}
     <FeedNav />

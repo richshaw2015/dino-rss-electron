@@ -1,15 +1,14 @@
 <script>
     import { getViewMode, getViewScope, getFontSize, getTokenPromise } from './components/utils/storage.js'
     import Nav from './components/navbar/Nav.svelte';
-    import Toolbar from './components/index/Toolbar.svelte'
     import List from './components/listview/List.svelte'
     import Apps from './components/index/Apps.svelte'
     import Title from './components/detail/Title.svelte'
     import Third from './components/detail/Third.svelte'
+    import Toolbar from './components/index/Toolbar.svelte'
     import Statusbar from './components/detail/Statusbar.svelte'
     import Error from './components/error/Error.svelte'
     import Loading from './components/error/Loading.svelte'
-    import {apiReq } from './components/utils/req.js'
 
     const tokenPromise = getTokenPromise()
     const M = require('materialize-css')
@@ -21,6 +20,7 @@
     let fontSize = getFontSize()
 
     let currentEntry
+    let thirdContent
     let currentFeed
     let itemList
 
@@ -95,10 +95,8 @@
         </div>
 
         <div class="middle-container">
-            <Toolbar bind:activeTab bind:viewMode bind:viewScope />
-
             {#if activeTab !== 'apps'}
-                <List bind:activeTab bind:viewMode bind:viewScope bind:currentEntry bind:itemList />
+                <List bind:activeTab bind:viewMode bind:viewScope bind:currentEntry bind:itemList bind:thirdContent />
             {:else}
                 <Apps />
             {/if}
@@ -106,7 +104,7 @@
 
         <div class="right-container">
             <Title bind:currentEntry bind:fontSize />
-            <Third bind:currentEntry bind:fontSize />
+            <Third bind:currentEntry bind:fontSize bind:thirdContent />
             <Statusbar />
         </div>
     </div>
@@ -117,9 +115,8 @@
     </div>
 
     <div class="middle-container">
-        <Toolbar bind:activeTab bind:viewMode bind:viewScope />
-
         {#if activeTab !== 'apps'}
+            <Toolbar bind:activeTab bind:viewMode bind:viewScope />
             <Error msg={error} />
         {:else}
             <Apps />
