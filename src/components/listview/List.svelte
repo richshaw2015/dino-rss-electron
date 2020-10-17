@@ -28,10 +28,10 @@
     import { onMount } from 'svelte';
 
     onMount(() => {
-        updateListView()
+        refreshListView(1)
     })
 
-    function updateListView(page) {
+    function refreshListView(page) {
         if (!page) {
             page = currentPage
         }
@@ -62,7 +62,9 @@
             })
         }
     }
-
+    function handleRefreshListView(event) {
+        refreshListView(event.detail.page || 1)
+    }
     // TODO shortcut n N p P b C r D
 
     // TODO dynamic read/unread star/unstar menu
@@ -187,7 +189,7 @@
     }
 </style>
 
-<Toolbar bind:activeTab bind:viewMode bind:viewScope />
+<Toolbar bind:activeTab bind:viewMode bind:viewScope on:refresh-list-view={handleRefreshListView} />
 
 {#if isFeedEntriesView}
     <FeedNav />
@@ -198,7 +200,7 @@
     {#if viewMode === 'feed'}
         {#each itemList as feed (feed.id)}
             <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu}>
-                <FeedItem />
+                <FeedItem feedInfo={feed} />
             </li>
         {/each}
 
@@ -213,4 +215,4 @@
     </ul>
 </div>
 
-<Pager bind:currentPage bind:numPages />
+<Pager bind:currentPage bind:numPages on:refresh-list-view={handleRefreshListView} />

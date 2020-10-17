@@ -21,9 +21,7 @@
 
     let currentEntry
     let thirdContent
-    let currentFeed
-    let itemList
-
+    
     import { onMount } from 'svelte';
 
     onMount(() => {
@@ -96,7 +94,7 @@
 
         <div class="middle-container">
             {#if activeTab !== 'apps'}
-                <List bind:activeTab bind:viewMode bind:viewScope bind:currentEntry bind:itemList bind:thirdContent />
+                <List bind:activeTab bind:viewMode bind:viewScope bind:currentEntry bind:thirdContent />
             {:else}
                 <Apps />
             {/if}

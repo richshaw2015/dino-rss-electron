@@ -57,17 +57,26 @@
 </style>
 
 <script>
+    import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
+
     export let viewScope = 'all' // unread / all
     export let viewMode = 'feed'
     export let activeTab = 'star' // star / rss / apps
 
     import { toggleViewMode, toggleViewScope } from '../utils/storage.js'
 
-    function evToggleViewMode() {
+    function handleToggleViewMode() {
         viewMode = toggleViewMode()
+        dispatch('refresh-list-view', {})
     }
-    function evToggleViewScope() {
+    function handleToggleViewScope() {
         viewScope = toggleViewScope()
+        dispatch('refresh-list-view', {})
+    }
+    function handleRefreshAction() {
+        dispatch('refresh-list-view', {})
     }
 </script>
 
@@ -83,16 +92,16 @@
     {#if activeTab !== 'apps'}
     <div class="toolbar-group no-drag">
         {#if activeTab !== 'star'}
-        <div class="toolbar-icon" id="omr-toolbar-scope" on:click={evToggleViewScope}>
+        <div class="toolbar-icon" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
             <i class="material-icons">{ viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
         </div>
         {/if}
 
-        <div class="toolbar-icon" id="omr-toolbar-mode" on:click={evToggleViewMode}>
+        <div class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
             <i class="material-icons">{viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
         </div>
 
-        <div class="toolbar-icon" id="omr-toolbar-update">
+        <div class="toolbar-icon" id="omr-toolbar-update"  on:click={handleRefreshAction}>
             <i class="material-icons">update</i>
         </div>
     </div>

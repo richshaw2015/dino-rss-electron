@@ -1,22 +1,34 @@
 <script>
-    export let currentPage = 1;
-    export let numPages = 1;
+    import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
+
+    export let currentPage = 1
+    export let numPages
 
     function nextPage() {
         if (currentPage < numPages) {
-            currentPage += 1;
+            dispatch('refresh-list-view', {
+                page: currentPage + 1
+            })
         }
     }
     function prevPage() {
         if (currentPage > 1) {
-            currentPage -= 1;
+            dispatch('refresh-list-view', {
+                page: currentPage - 1
+            })
         }
     }
     function firstPage() {
-        currentPage = 1;
+        dispatch('refresh-list-view', {
+            page: 1
+        })
     }
     function lastPage() {
-        currentPage = numPages;
+        dispatch('refresh-list-view', {
+            page: numPages
+        })
     }
 </script>
 
