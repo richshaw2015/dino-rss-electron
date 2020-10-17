@@ -1,5 +1,6 @@
 <script>
     import { getViewMode, getViewScope, getFontSize, getTokenPromise } from './components/utils/storage.js'
+    import { activeTab } from './components/store/store.js'
     import Nav from './components/navbar/Nav.svelte';
     import List from './components/listview/List.svelte'
     import Apps from './components/index/Apps.svelte'
@@ -13,15 +14,13 @@
     const tokenPromise = getTokenPromise()
     const M = require('materialize-css')
 
-    let activeTab = 'rss'
-
     let viewMode = getViewMode()
     let viewScope = getViewScope()
     let fontSize = getFontSize()
 
     let currentEntry
     let thirdContent
-    
+
     import { onMount } from 'svelte';
 
     onMount(() => {
@@ -71,12 +70,12 @@
     <!-- TODO loading img -->
     <div class="main-container">
         <div class="left-container">
-            <Nav bind:activeTab />
+            <Nav />
         </div>
 
         <div class="middle-container">
-            <Toolbar bind:activeTab bind:viewMode bind:viewScope />
-            {#if activeTab !== 'apps'}
+            <Toolbar bind:viewMode bind:viewScope />
+            {#if $activeTab !== 'apps'}
                 <Loading />
             {:else}
                 <Apps />
@@ -89,12 +88,12 @@
 {:then token}
     <div class="main-container">
         <div class="left-container">
-            <Nav bind:activeTab />
+            <Nav />
         </div>
 
         <div class="middle-container">
-            {#if activeTab !== 'apps'}
-                <List bind:activeTab bind:viewMode bind:viewScope bind:currentEntry bind:thirdContent />
+            {#if $activeTab !== 'apps'}
+                <List bind:viewMode bind:viewScope bind:currentEntry bind:thirdContent />
             {:else}
                 <Apps />
             {/if}
@@ -109,12 +108,12 @@
 {:catch error}
 <div class="main-container">
     <div class="left-container">
-        <Nav bind:activeTab />
+        <Nav />
     </div>
 
     <div class="middle-container">
-        {#if activeTab !== 'apps'}
-            <Toolbar bind:activeTab bind:viewMode bind:viewScope />
+        {#if $activeTab !== 'apps'}
+            <Toolbar bind:viewMode bind:viewScope />
             <Error msg={error} />
         {:else}
             <Apps />

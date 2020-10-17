@@ -6,8 +6,7 @@
     import EntryItem from "../index/EntryItem.svelte";
     import { isWin, getPageSize } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
-
-    export let activeTab = 'rss'
+    import { activeTab } from '../store/store.js'
 
     export let viewMode = 'feed'
     export let viewScope = 'all'
@@ -15,7 +14,6 @@
     export let itemList = []
     export let currentEntry
     export let thirdContent
-
 
     export let currentPage = 1
     export let numPages
@@ -28,7 +26,14 @@
     import { onMount } from 'svelte';
 
     onMount(() => {
-        refreshListView(1)
+        const unsubscribe = activeTab.subscribe(switchTab => {
+            console.debug(`New tab ${switchTab}`)
+            if (switchTab !== 'apps') {
+                refreshListView(1)
+            }
+        })
+
+        return () => unsubscribe()
     })
 
     function refreshListView(page) {
@@ -189,7 +194,7 @@
     }
 </style>
 
-<Toolbar bind:activeTab bind:viewMode bind:viewScope on:refresh-list-view={handleRefreshListView} />
+<Toolbar bind:viewMode bind:viewScope on:refresh-list-view={handleRefreshListView} />
 
 {#if isFeedEntriesView}
     <FeedNav />

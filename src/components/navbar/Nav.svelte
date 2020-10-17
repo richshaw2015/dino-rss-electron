@@ -3,10 +3,8 @@
     //
     // const dispatch = createEventDispatcher();
     import { toggleMaximizeWindow, macNavCtxMenu, isWin } from '../utils/helper.js'
+    import { activeTab } from '../store/store.js'
     import Titlebar from './Titlebar.svelte'
-
-    const { remote } = require('electron')
-    const { Menu, MenuItem } = remote
 
     export let userInfo = {
         id: 0,
@@ -17,19 +15,15 @@
         image: './icon/logo.svg',
         blog: '',
     };
-    export let activeTab = undefined
 
     function switchStarNav(event) {
-        activeTab = 'star'
-        // TODO update data
+        activeTab.set('star')
     }
     function switchRssNav(event) {
-        activeTab = 'rss'
-        // TODO update data
+        activeTab.set('rss')
     }
     function switchAppsNav(event) {
-        activeTab = 'apps'
-        // TODO update data
+        activeTab.set('apps')
     }
 </script>
 
@@ -91,15 +85,15 @@
     </div>
 
     <div class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={switchRssNav}>
-        <i class="material-icons {activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
+        <i class="material-icons {$activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
     </div>
 
     <div class="nav-tab-btn no-drag" id="omr-nav-star" on:click={switchStarNav}>
-        <i class="material-icons {activeTab === 'star' ? 'primary-color' : ''}">star</i>
+        <i class="material-icons {$activeTab === 'star' ? 'primary-color' : ''}">star</i>
     </div>
 
     <div class="nav-tab-btn no-drag" id="omr-nav-apps" on:click={switchAppsNav}>
-        <i class="material-icons {activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
+        <i class="material-icons {$activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
     </div>
 
     <div id="omr-nav-space" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>

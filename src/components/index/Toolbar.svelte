@@ -58,12 +58,12 @@
 
 <script>
     import { createEventDispatcher } from 'svelte';
+    import { activeTab } from '../store/store.js'
 
     const dispatch = createEventDispatcher();
 
     export let viewScope = 'all' // unread / all
     export let viewMode = 'feed'
-    export let activeTab = 'star' // star / rss / apps
 
     import { toggleViewMode, toggleViewScope } from '../utils/storage.js'
 
@@ -81,7 +81,7 @@
 </script>
 
 <div id="omr-top-toolbar" class="drag">
-    <div class="nav-wrapper no-drag {activeTab === 'apps' ? 'omr-full-search' : ''}">
+    <div class="nav-wrapper no-drag {$activeTab === 'apps' ? 'omr-full-search' : ''}">
         <div class="input-field omr-search-form">
             <input id="omr-search-input" type="search" class="" placeholder="Search" required>
             <label class="label-icon search-icon" for="omr-search-input">
@@ -89,9 +89,9 @@
         </div>
     </div>
 
-    {#if activeTab !== 'apps'}
+    {#if $activeTab !== 'apps'}
     <div class="toolbar-group no-drag">
-        {#if activeTab !== 'star'}
+        {#if $activeTab !== 'star'}
         <div class="toolbar-icon" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
             <i class="material-icons">{ viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
         </div>
