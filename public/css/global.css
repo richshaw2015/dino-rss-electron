@@ -122,3 +122,24 @@ i.material-icons {
 #omr-find-in-page .modal-overlay {
     z-index: -1 !important;
 }
+
+.collection .collection-item {
+    line-height: unset;
+    max-height: 60px !important;
+}
+
+.collection .collection-item:not(.active) .entry-meta-line, 
+.collection .collection-item:not(.active) .feed-meta-line {
+    color: #616161;
+}
+.collection .collection-item:not(.active) .entry-title, 
+.collection .collection-item:not(.active) .feed-title {
+    color: #444;
+}
+
+.collection .collection-item.active .entry-meta-line, 
+.collection .collection-item.active .feed-meta-line,
+.collection .collection-item.active .entry-title, 
+.collection .collection-item.active .feed-title {
+    color: #eafaf9;
+}

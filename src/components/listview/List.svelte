@@ -3,17 +3,63 @@
     import FeedNav from '../index/FeedNav.svelte'
     import Pager from '../pager/Pager.svelte'
     import EntryItem from "../index/EntryItem.svelte";
-    import {isWin } from '../utils/helper.js'
+    import { isWin, getPageSize } from '../utils/helper.js'
+    import { apiReq } from '../utils/req.js'
 
     export let activeTab = 'rss'
+
     export let viewMode = 'feed'
     export let viewScope = 'all'
-    export let entryInfo = {}
+
+    export let itemList = []
+    export let currentEntry
+
+
+    export let currentPage = 1
+    export let numPages
 
     let isFeedEntriesView = false
 
     const { remote } = require('electron');
     const { Menu, MenuItem } = remote;
+
+    import { onMount } from 'svelte';
+
+    onMount(() => {
+        updateListView()
+    })
+
+    function updateListView(page) {
+        if (!page) {
+            page = currentPage
+        }
+        if (viewMode === 'feed') {
+            apiReq('/api/my/feeds', {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
+                if (rsp.code === 0) {
+                    itemList = rsp.data
+
+                    currentPage = rsp.page
+                    numPages = rsp.num_pages
+                }else {
+                    // TODO
+                }
+            }).catch(err => {
+                // TODO
+            })
+        } else if (viewMode === 'entry') {
+            apiReq('/api/my/entries', {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
+                if (rsp.code === 0) {
+                    itemList = rsp.data
+                    currentPage = rsp.page
+                    numPages = rsp.num_pages
+                }else {
+                    // TODO
+                }
+            }).catch(err => {
+                // TODO
+            })
+        }
+    }
 
     // TODO shortcut n N p P b C r D
 
@@ -107,7 +153,9 @@
 
         menu.popup({ window: remote.getCurrentWindow() })
     }
-
+    function viewEntryDetail(entry) {
+        currentEntry = entry
+    }
 </script>
 
 <style>
@@ -115,7 +163,7 @@
         flex-grow: 1;
     }
     .list-ul {
-        margin: 8px 0 12px 0;
+        margin: 8px 0 8px 0;
     }
     .list-li {
         padding: 0;
@@ -133,15 +181,21 @@
 <div class="list-wrapper">
     <ul class="collection list-ul">
     {#if viewMode === 'feed'}
-        <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu}>
-            <FeedItem />
-        </li>
+        {#each itemList as feed (feed.id)}
+            <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu}>
+                <FeedItem />
+            </li>
+        {/each}
+
     {:else if viewMode === 'entry'}
-        <li class="collection-item list-li" on:contextmenu={showEntryCtxMenu}>
-            <EntryItem />
-        </li>
+        {#each itemList as entry (entry.id)}
+            <li class="collection-item list-li { currentEntry ? (entry.id === currentEntry.id ? 'active' : '') : ''}" 
+                on:contextmenu={showEntryCtxMenu} on:click={() => viewEntryDetail(entry)}>
+                <EntryItem entryInfo={entry} />
+            </li>
+        {/each}
     {/if}
     </ul>
 </div>
 
-<Pager />
+<Pager bind:currentPage bind:numPages />

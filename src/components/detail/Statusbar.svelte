@@ -17,6 +17,6 @@
 
 {#if $statusMsg }
 <div id="omr-status-bar">
-    {$statusMsg}
+    <span class="truncate">{$statusMsg}</span>
 </div>    
 {/if}

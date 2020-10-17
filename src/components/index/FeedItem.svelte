@@ -37,7 +37,6 @@
         display: flex;
         align-items: flex-start;
         height: 24px;
-        color: #616161;
         font-size: 0.9rem !important;
     }
     .feed-update-stats, .feed-toread-stats {
@@ -67,7 +66,6 @@
     }
     .feed-title {
         flex-grow: 1;
-        color: #444;
     }
     .read-icon, .unread-icon {
         width: 16px;

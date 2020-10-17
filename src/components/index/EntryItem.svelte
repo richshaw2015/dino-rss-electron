@@ -1,28 +1,6 @@
 
 <script>
-export let entryInfo = {
-    "id": 1233,
-    "title": "Thinking About Power Usage and Websites Tips, Tricks, and Techniques on using Cascading Styl",
-    "link": "https://css-tricks.com/thinking-about-power-usage-and-websites",
-    "comments": "https://css-tricks.com/thinking-about-power-usage-and-websites/#respond",
-    "author": "css-tricks.com",
-    "image": "https://css-tricks.com/apple-touch-icon.png",
-    "updated": "3 Hours ago",
-    "feed": {
-        "id": 2,
-        "title": "CSS-Tricks",
-        "link": "https://css-tricks.com",
-        "description": "Tips, Tricks, and Techniques on using Cascading Style Sheets.",
-        "rss": "https://css-tricks.com/feed/",
-        "is_podcast": true
-    },
-    "stats": {
-        "has_read": true,
-        "has_stared": false,
-        "uv_stared": 5,
-        "uv_view": 246,
-    }
-}
+export let entryInfo
 
 </script>
 
@@ -42,7 +20,6 @@ export let entryInfo = {
         display: flex;
         align-items: flex-start;
         height: 24px;
-        color: #616161;
         font-size: 0.9rem !important;
     }
     .entry-view-stats, .entry-star-stats {
@@ -72,7 +49,6 @@ export let entryInfo = {
     }
     .entry-title {
         flex-grow: 1;
-        color: #444;
     }
     .read-icon, .unread-icon {
         width: 16px;

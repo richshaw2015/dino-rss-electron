@@ -1,5 +1,4 @@
 
-
 export function toast(msg) {
     M.toast({html: msg, displayLength: 3000});
 }
@@ -74,4 +73,8 @@ export function isWin(){
 
 export function isMac(){
     return process.platform === 'darwin'
+}
+
+export function getPageSize() {
+    return Math.floor((window.innerHeight - 60 - 16 - 60) / 59)
 }

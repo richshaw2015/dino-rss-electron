@@ -4,29 +4,7 @@
     import { setFontSize } from '../utils/storage.js'
     import Find from '../find/Find.svelte'
 
-    export let entryInfo = {
-        "id": 1233,
-        "title": "Thinking About Power Usage and Websites",
-        "link": "https://css-tricks.com/thinking-about-power-usage-and-websites",
-        "comments": "https://css-tricks.com/thinking-about-power-usage-and-websites/#respond",
-        "author": "Selena Deckelmann",
-        "image": "https://css-tricks.com/apple-touch-icon.png",
-        "updated": "3 hours ago",
-        "feed": {
-            "id": 2,
-            "title": "CSS-Tricks",
-            "link": "https://css-tricks.com",
-            "description": "Tips, Tricks, and Techniques on using Cascading Style Sheets.",
-            "rss": "https://css-tricks.com/feed/",
-            "is_podcast": true
-        },
-        "stats": {
-            "has_read": true,
-            "has_stared": true,
-            "uv_stared": 5,
-            "uv_view": 246,
-        }
-    }
+    export let currentEntry
     export let fontSize = "text-medium"
 
     function showFontSizeWindow(event) {
@@ -81,10 +59,11 @@
     }
 </style>
 
+{#if currentEntry}
 <div id="omr-post-title-bar" class="drag" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
-    <div class="post-title">{ entryInfo.title }</div>
-    <i class="material-icons no-drag {entryInfo.stats.has_stared ? 'primary-color' : ''}">
-        {entryInfo.stats.has_stared ? 'star' : 'star_border'}</i>
+    <div class="post-title">{ currentEntry.title }</div>
+    <i class="material-icons no-drag {currentEntry.stats.has_stared ? 'primary-color' : ''}">
+        {currentEntry.stats.has_stared ? 'star' : 'star_border'}</i>
     <i class="material-icons no-drag" on:click="{showFontSizeWindow}">format_size</i>
 </div>
 
@@ -124,5 +103,5 @@
         </label>
     </span>
 </div>
-
+{/if}
 <Find />

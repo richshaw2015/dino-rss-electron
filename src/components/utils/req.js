@@ -1,4 +1,5 @@
-import { SERVER, getToken } from './config.js'
+import { SERVER } from './config.js'
+import { getToken } from './storage.js'
 
 export async function apiReq(path, data) {
     const token = getToken()

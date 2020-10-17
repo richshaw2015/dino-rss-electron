@@ -24,7 +24,7 @@ function openUrlInDefaultBrowser(event, url) {
 function createMainWindow () {
 	mainWindow = new BrowserWindow({
 		width: 1280,
-		height: 720,
+		height: 726,
 		minWidth: 1080,
 		minHeight: 640,
 		center: true,

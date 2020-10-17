@@ -1,6 +1,6 @@
 <script>
     export let currentPage = 1;
-    export let numPages = 9;
+    export let numPages = 1;
 
     function nextPage() {
         if (currentPage < numPages) {

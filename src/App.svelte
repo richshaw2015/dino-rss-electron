@@ -9,38 +9,20 @@
     import Statusbar from './components/detail/Statusbar.svelte'
     import Error from './components/error/Error.svelte'
     import Loading from './components/error/Loading.svelte'
+    import {apiReq } from './components/utils/req.js'
 
     const tokenPromise = getTokenPromise()
     const M = require('materialize-css')
 
     let activeTab = 'rss'
+
     let viewMode = getViewMode()
     let viewScope = getViewScope()
     let fontSize = getFontSize()
 
-    let entryInfo = {
-        "id": 1233,
-        "title": "Thinking About Power Usage and Websites",
-        "link": "https://css-tricks.com/thinking-about-power-usage-and-websites",
-        "comments": "https://css-tricks.com/thinking-about-power-usage-and-websites/#respond",
-        "author": "Selena Deckelmann",
-        "image": "https://css-tricks.com/apple-touch-icon.png",
-        "updated": "3 hours ago",
-        "feed": {
-            "id": 2,
-            "title": "CSS-Tricks",
-            "link": "https://css-tricks.com",
-            "description": "Tips, Tricks, and Techniques on using Cascading Style Sheets.",
-            "rss": "https://css-tricks.com/feed/",
-            "is_podcast": true
-        },
-        "stats": {
-            "has_read": true,
-            "has_stared": true,
-            "uv_stared": 5,
-            "uv_view": 246,
-        }
-    }
+    let currentEntry
+    let currentFeed
+    let itemList
 
     import { onMount } from 'svelte';
 
@@ -116,15 +98,15 @@
             <Toolbar bind:activeTab bind:viewMode bind:viewScope />
 
             {#if activeTab !== 'apps'}
-                <List bind:activeTab bind:viewMode bind:viewScope bind:entryInfo />
+                <List bind:activeTab bind:viewMode bind:viewScope bind:currentEntry bind:itemList />
             {:else}
                 <Apps />
             {/if}
         </div>
 
         <div class="right-container">
-            <Title bind:entryInfo bind:fontSize />
-            <Third bind:entryInfo bind:fontSize />
+            <Title bind:currentEntry bind:fontSize />
+            <Third bind:currentEntry bind:fontSize />
             <Statusbar />
         </div>
     </div>
