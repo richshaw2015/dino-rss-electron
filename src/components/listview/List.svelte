@@ -37,11 +37,10 @@
     })
 
     function refreshListView(page) {
-        if (!page) {
-            page = currentPage
-        }
         if (viewMode === 'feed') {
-            apiReq('/api/my/feeds', {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
+            const apiPath = ($activeTab === 'rss') ? '/api/my/feeds' : '/api/my/stared/feeds'
+
+            apiReq(apiPath, {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
                 if (rsp.code === 0) {
                     itemList = rsp.data
 
@@ -54,7 +53,9 @@
                 // TODO
             })
         } else if (viewMode === 'entry') {
-            apiReq('/api/my/entries', {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
+            const apiPath = ($activeTab === 'rss') ? '/api/my/entries' : '/api/my/stared/entries'
+
+            apiReq(apiPath, {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
                 if (rsp.code === 0) {
                     itemList = rsp.data
                     currentPage = rsp.page
@@ -171,6 +172,7 @@
             is_podcast: currentEntry.feed.is_podcast
         }).then( rsp => {
             thirdContent = rsp.content
+
             // TODO podcast
         }).catch(err => {
             // TODO

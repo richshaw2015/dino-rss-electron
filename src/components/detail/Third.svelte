@@ -73,6 +73,8 @@
         Prism.highlightAll()
 
         statusMsg.set(currentEntry.link)
+
+        document.querySelector('#omr-post-third-html').scrollTop = 0
     });
 
     onMount(() => {
