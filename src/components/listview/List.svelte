@@ -16,6 +16,7 @@
     export let itemList = []
     export let currentEntry
     export let thirdContent
+    export let episodeInfo = {}
 
     export let currentPage = 1
     export let numPages
@@ -25,7 +26,7 @@
     const { remote } = require('electron');
     const { Menu, MenuItem } = remote;
 
-    import { onMount } from 'svelte';
+    import { onMount, tick } from 'svelte';
 
     onMount(() => {
         const unsubscribe = activeTab.subscribe(switchTab => {
@@ -81,6 +82,7 @@
         }
     }
     function handleRefreshListView(event) {
+        console.log(`Refresh list view ${event}`)
         refreshListView(event.detail.page, event.detail.mode)
     }
     // TODO shortcut n N p P b C r D
@@ -185,7 +187,23 @@
         }).then( rsp => {
             thirdContent = rsp.content
 
-            // TODO podcast
+            if (Object.keys(rsp.episode).length > 0) {
+                let episodeBase = {
+                    "version": 5,
+                    "show": {
+                        "title": currentEntry.feed.title,
+                        "subtitle": currentEntry.feed.description,
+                        "poster": currentEntry.feed.image,
+                        "link": currentEntry.feed.link,
+                    },
+                    "title": currentEntry.title,
+                    "link": currentEntry.link,
+                    "publicationDate": currentEntry.updated
+                }
+                episodeInfo = Object.assign(episodeBase, rsp.episode)
+            } else {
+                episodeInfo = {}
+            }
         }).catch(err => {
             // TODO
         })

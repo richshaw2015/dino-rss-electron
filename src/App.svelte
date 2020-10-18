@@ -20,6 +20,7 @@
 
     let currentEntry
     let thirdContent
+    let episodeInfo = {}
 
     import { onMount } from 'svelte';
 
@@ -93,7 +94,7 @@
 
         <div class="middle-container">
             {#if $activeTab !== 'apps'}
-                <List bind:viewMode bind:viewScope bind:currentEntry bind:thirdContent />
+                <List bind:viewMode bind:viewScope bind:currentEntry bind:thirdContent bind:episodeInfo />
             {:else}
                 <Apps />
             {/if}
@@ -101,7 +102,7 @@
 
         <div class="right-container">
             <Title bind:currentEntry bind:fontSize />
-            <Third bind:currentEntry bind:fontSize bind:thirdContent />
+            <Third bind:currentEntry bind:fontSize bind:thirdContent bind:episodeInfo />
             <Statusbar />
         </div>
     </div>
