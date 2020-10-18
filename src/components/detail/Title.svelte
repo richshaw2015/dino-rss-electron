@@ -1,7 +1,7 @@
 
 <script>
     import { toggleMaximizeWindow, macNavCtxMenu } from '../utils/helper.js'
-    import { setFontSize } from '../utils/storage.js'
+    import { saveFontSize } from '../utils/storage.js'
     import Find from '../find/Find.svelte'
 
     export let currentEntry
@@ -22,7 +22,7 @@
         instanse.open()
     }
     $: {
-        setFontSize(fontSize)
+        saveFontSize(fontSize)
     }
 </script>
 
@@ -84,7 +84,7 @@
 
     <span class="size-option">
         <label>
-            <input name="font-size" type="radio" value="text-medium" bind:group={fontSize} checked />
+            <input name="font-size" type="radio" value="text-medium" bind:group={fontSize} />
             <span>Medium</span>
         </label>
     </span>

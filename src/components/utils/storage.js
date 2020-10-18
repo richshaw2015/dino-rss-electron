@@ -5,53 +5,25 @@ const viewScopeConfKey = 'CONF/VIEW/SCOPE'
 const fontSizeConfKey = 'CONF/FONT/SIZE'
 const tokenConfKey = 'CONF/TOKEN'
 
-export function toggleViewMode() {
-    const viewMode = getViewMode();
-
-    if (viewMode === 'entry') {
-        localStorage.setItem(viewModeConfKey, 'feed');
-        return 'feed'
-    } else {
-        localStorage.setItem(viewModeConfKey, 'entry');
-        return 'entry'
-    }
+export function saveViewMode(mode) {
+    localStorage.setItem(viewModeConfKey, mode)
 }
 
 export function getViewMode() {
-    const viewMode = localStorage.getItem(viewModeConfKey)
-
-    if (viewMode === null) {
-        localStorage.setItem(viewModeConfKey, 'entry');
-        return 'entry'
-    } else {
-        return viewMode;
-    }
+    // entry feed
+    return localStorage.getItem(viewModeConfKey) || 'entry'
 }
 
-export function toggleViewScope() {
-    const viewScope = getViewScope();
-
-    if (viewScope === 'all') {
-        localStorage.setItem(viewScopeConfKey, 'unread');
-        return 'unread'
-    } else {
-        localStorage.setItem(viewScopeConfKey, 'all');
-        return 'all'
-    }
+export function saveViewScope(scope) {
+    localStorage.setItem(viewScopeConfKey, scope)
 }
 
 export function getViewScope() {
-    const viewScope = localStorage.getItem(viewScopeConfKey)
-
-    if (viewScope === null) {
-        localStorage.setItem(viewScopeConfKey, 'all');
-        return 'all'
-    } else {
-        return viewScope;
-    }
+    // all unread
+    return localStorage.getItem(viewScopeConfKey) || 'all'
 }
 
-export function setFontSize(size) {
+export function saveFontSize(size) {
     return localStorage.setItem(fontSizeConfKey, size)
 }
 export function getFontSize() {

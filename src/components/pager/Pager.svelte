@@ -8,27 +8,19 @@
 
     function nextPage() {
         if (currentPage < numPages) {
-            dispatch('refresh-list-view', {
-                page: currentPage + 1
-            })
+            dispatch('refresh-list-view', {page: currentPage + 1 })
         }
     }
     function prevPage() {
         if (currentPage > 1) {
-            dispatch('refresh-list-view', {
-                page: currentPage - 1
-            })
+            dispatch('refresh-list-view', { page: currentPage - 1 })
         }
     }
     function firstPage() {
-        dispatch('refresh-list-view', {
-            page: 1
-        })
+        dispatch('refresh-list-view', { page: 1 })
     }
     function lastPage() {
-        dispatch('refresh-list-view', {
-            page: numPages
-        })
+        dispatch('refresh-list-view', { page: numPages })
     }
 </script>
 

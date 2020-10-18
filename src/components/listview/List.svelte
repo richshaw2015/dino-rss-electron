@@ -5,11 +5,13 @@
     import Toolbar from '../index/Toolbar.svelte'
     import EntryItem from "../index/EntryItem.svelte";
     import { isWin, getPageSize } from '../utils/helper.js'
+    import { toast, warnToast } from '../utils/toast.js'
     import { apiReq } from '../utils/req.js'
     import { activeTab } from '../store/store.js'
+    import { saveViewMode } from '../utils/storage.js'
 
-    export let viewMode = 'feed'
-    export let viewScope = 'all'
+    export let viewMode
+    export let viewScope
 
     export let itemList = []
     export let currentEntry
@@ -36,30 +38,40 @@
         return () => unsubscribe()
     })
 
-    function refreshListView(page) {
-        if (viewMode === 'feed') {
+    function refreshListView(page, destMode) {
+        if (!destMode) {
+            destMode = viewMode
+        }
+        if (destMode === 'feed') {
             const apiPath = ($activeTab === 'rss') ? '/api/my/feeds' : '/api/my/stared/feeds'
 
             apiReq(apiPath, {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
                 if (rsp.code === 0) {
-                    itemList = rsp.data
+                    viewMode = destMode
 
+                    itemList = rsp.data
                     currentPage = rsp.page
                     numPages = rsp.num_pages
-                }else {
-                    // TODO
+
+                    saveViewMode(viewMode)
+                } else {
+                    // No Content
                 }
             }).catch(err => {
                 // TODO
             })
-        } else if (viewMode === 'entry') {
+        } else if (destMode === 'entry') {
             const apiPath = ($activeTab === 'rss') ? '/api/my/entries' : '/api/my/stared/entries'
 
             apiReq(apiPath, {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
                 if (rsp.code === 0) {
+                    viewMode = destMode
+
                     itemList = rsp.data
                     currentPage = rsp.page
                     numPages = rsp.num_pages
+
+                    saveViewMode(viewMode)
                 }else {
                     // TODO
                 }
@@ -69,7 +81,7 @@
         }
     }
     function handleRefreshListView(event) {
-        refreshListView(event.detail.page || 1)
+        refreshListView(event.detail.page, event.detail.mode)
     }
     // TODO shortcut n N p P b C r D
 

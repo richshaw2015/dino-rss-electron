@@ -59,24 +59,26 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     import { activeTab } from '../store/store.js'
+    import { saveViewScope } from '../utils/storage.js'
 
     const dispatch = createEventDispatcher();
 
-    export let viewScope = 'all' // unread / all
-    export let viewMode = 'feed'
-
-    import { toggleViewMode, toggleViewScope } from '../utils/storage.js'
+    export let viewScope
+    export let viewMode
 
     function handleToggleViewMode() {
-        viewMode = toggleViewMode()
-        dispatch('refresh-list-view', {})
+        // change status after network
+        const mode = (viewMode === 'feed') ? 'entry' : 'feed'
+        dispatch('refresh-list-view', {page: 1, mode: mode})
     }
     function handleToggleViewScope() {
-        viewScope = toggleViewScope()
-        dispatch('refresh-list-view', {})
+        // change status instant
+        viewScope = (viewScope === 'all') ? 'unread' : 'all'
+        saveViewScope(viewScope)
+        dispatch('refresh-list-view', {page: 1})
     }
     function handleRefreshAction() {
-        dispatch('refresh-list-view', {})
+        dispatch('refresh-list-view', {page: 1})
     }
 </script>
 

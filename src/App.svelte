@@ -25,7 +25,7 @@
 
     onMount(() => {
         M.AutoInit();
-    });
+    })
 </script>
 
 <style>
