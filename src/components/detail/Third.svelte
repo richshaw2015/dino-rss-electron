@@ -1,93 +1,31 @@
 <script>
     import { toast } from '../utils/toast.js'
-    import { truncateStr, isMac, isWin, closeWindow, captureWindow } from '../utils/helper.js'
+    import { truncateStr, isMac, isWin, captureWindow } from '../utils/helper.js'
     import Podcast from './Podcast.svelte'
 
     export let currentEntry
     export let fontSize
     export let thirdContent
     export let episodeInfo = {}
-    const scrollStep = 60
 
     const { remote } = require('electron')
     const { shell, clipboard } = require('electron')
     const { Menu, MenuItem } = remote
-    const Mousetrap = require('mousetrap');
-    const Prism = require('prismjs');
-
-    const qrcodeWidth = 256
+    
     let qrcode
+    const qrcodeSize = 280
 
-    import { statusMsg } from '../store/store.js'
-
-    import { onMount, afterUpdate } from 'svelte';
-
-    afterUpdate(() => {
-        // highlight code
-        // TODO add highlightjs support
-        Prism.highlightAll()
-        
-        if (currentEntry) {
-            statusMsg.set(currentEntry.link)
-        }
-        
-        if (thirdContent) {
-            document.querySelector('#omr-post-third-html').scrollTop = 0
-        }
-    });
+    import { onMount } from 'svelte';
 
     onMount(() => {
-        // keyboard shortcut
-        Mousetrap.bind('j', function() {
-            document.querySelector('#omr-post-third-html').scrollTop += scrollStep
-            return false
-        });
-        Mousetrap.bind('d', function() {
-            document.querySelector('#omr-post-third-html').scrollTop += 
-                document.querySelector('#omr-post-third-html').offsetHeight / 2 - 20
-            return false
-        });
-
-        Mousetrap.bind('k', function() {
-            document.querySelector('#omr-post-third-html').scrollTop -= scrollStep
-            return false
-        });
-        Mousetrap.bind('u', function() {
-            document.querySelector('#omr-post-third-html').scrollTop -= 
-                document.querySelector('#omr-post-third-html').offsetHeight / 2 - 20
-            return false
-        });
-
-        Mousetrap.bind('g g', function() {
-            document.querySelector('#omr-post-third-html').scrollTop = 0
-            return false
-        });
-        Mousetrap.bind('G', function() {
-            document.querySelector('#omr-post-third-html').scrollTop =
-                document.querySelector('#omr-post-third-html').scrollHeight
-            return false
-        });
-        Mousetrap.bind('space', function() {
-            document.querySelector('#omr-post-third-html').scrollTop +=
-                document.querySelector('#omr-post-third-html').offsetHeight - 40
-            return false
-        });
-
-        Mousetrap.bind('x', function() {
-            closeWindow()
-        });
-        Mousetrap.bind('y y', function() {
-            clipboard.writeText(currentEntry.link)
-        });
-
         qrcode = new QRCode(document.getElementById("omr-qrcode"), {
-            width: qrcodeWidth,
-            height: qrcodeWidth,
+            width: qrcodeSize,
+            height: qrcodeSize,
             colorDark : "#000000",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.L
         })
-    });
+    })
 
     function showPostCtxMenu(event) {
         const hasText = window.getSelection().toString().trim().length > 0
@@ -167,11 +105,11 @@
                     inDuration: 0,
                     outDuration: 0,
                     opacity: 1,
-                    endingTop:  window.outerHeight / 2 - qrcodeWidth / 2 + "px"
+                    endingTop:  window.outerHeight / 2 - qrcodeSize / 2 + "px"
                 });
-                document.querySelector('#omr-modal-qrcode').style.width = `${qrcodeWidth}px`
-                document.querySelector('#omr-modal-qrcode').style.height = `${qrcodeWidth}px`
-                document.querySelector('#omr-modal-qrcode').style.left = (window.outerWidth - 470) / 2 + 470 - qrcodeWidth / 2 + 'px'
+                document.querySelector('#omr-modal-qrcode').style.width = `${qrcodeSize}px`
+                document.querySelector('#omr-modal-qrcode').style.height = `${qrcodeSize}px`
+                document.querySelector('#omr-modal-qrcode').style.left = (window.outerWidth - 470) / 2 + 470 - qrcodeSize / 2 + 'px'
                 instanse.open()
             }
         }));

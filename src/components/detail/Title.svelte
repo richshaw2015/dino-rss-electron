@@ -2,8 +2,7 @@
 <script>
     import { toggleMaximizeWindow, macNavCtxMenu } from '../utils/helper.js'
     import { saveFontSize } from '../utils/storage.js'
-    import Find from '../find/Find.svelte'
-
+    
     export let currentEntry
     export let fontSize = "text-medium"
 
@@ -104,4 +103,3 @@
     </span>
 </div>
 {/if}
-<Find />

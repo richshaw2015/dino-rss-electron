@@ -1,13 +1,11 @@
 <script>
-    import { getViewMode, getViewScope, getFontSize, getTokenPromise } from './components/utils/storage.js'
+    import { getViewMode, getViewScope, getTokenPromise } from './components/utils/storage.js'
     import { activeTab } from './components/store/store.js'
-    import Nav from './components/navbar/Nav.svelte';
-    import List from './components/listview/List.svelte'
+    import Nav from './components/navbar/Nav.svelte'
+    import List from './components/view/List.svelte'
     import Apps from './components/index/Apps.svelte'
-    import Title from './components/detail/Title.svelte'
-    import Third from './components/detail/Third.svelte'
+    import Post from './components/view/Post.svelte'
     import Toolbar from './components/index/Toolbar.svelte'
-    import Statusbar from './components/detail/Statusbar.svelte'
     import Error from './components/error/Error.svelte'
     import Loading from './components/error/Loading.svelte'
 
@@ -16,7 +14,6 @@
 
     let viewMode = getViewMode()
     let viewScope = getViewScope()
-    let fontSize = getFontSize()
 
     let currentEntry
     let thirdContent
@@ -75,8 +72,8 @@
         </div>
 
         <div class="middle-container">
-            <Toolbar bind:viewMode bind:viewScope />
             {#if $activeTab !== 'apps'}
+                <Toolbar bind:viewMode bind:viewScope />
                 <Loading />
             {:else}
                 <Apps />
@@ -101,9 +98,7 @@
         </div>
 
         <div class="right-container">
-            <Title bind:currentEntry bind:fontSize />
-            <Third bind:currentEntry bind:fontSize bind:thirdContent bind:episodeInfo />
-            <Statusbar />
+            <Post bind:currentEntry bind:thirdContent bind:episodeInfo />
         </div>
     </div>
 {:catch error}

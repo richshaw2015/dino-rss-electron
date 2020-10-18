@@ -4,7 +4,6 @@
 
     export let isMaximized = false
 
-
     ipcRenderer.on('maximize-window', () => {
         isMaximized = true
     })

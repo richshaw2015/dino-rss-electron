@@ -17,10 +17,14 @@
         }
     }
     function firstPage() {
-        dispatch('refresh-list-view', { page: 1 })
+        if (currentPage > 1) {
+            dispatch('refresh-list-view', { page: 1 })
+        }
     }
     function lastPage() {
-        dispatch('refresh-list-view', { page: numPages })
+        if (currentPage < numPages) {
+            dispatch('refresh-list-view', { page: numPages })
+        }
     }
 </script>
 

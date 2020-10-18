@@ -26,11 +26,10 @@
     const { remote } = require('electron');
     const { Menu, MenuItem } = remote;
 
-    import { onMount, tick } from 'svelte';
+    import { onMount } from 'svelte';
 
     onMount(() => {
         const unsubscribe = activeTab.subscribe(switchTab => {
-            console.debug(`New tab ${switchTab}`)
             if (switchTab !== 'apps') {
                 refreshListView(1)
             }
@@ -82,7 +81,6 @@
         }
     }
     function handleRefreshListView(event) {
-        console.log(`Refresh list view ${event}`)
         refreshListView(event.detail.page, event.detail.mode)
     }
     // TODO shortcut n N p P b C r D
