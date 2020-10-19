@@ -147,3 +147,7 @@ i.material-icons {
 pre {
     overflow-x: overlay;
 }
+
+figure {
+    margin: 0 !important;
+}

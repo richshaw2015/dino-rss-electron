@@ -42,7 +42,7 @@
         <span class="">Back</span>
     </div>
 
-    <img src="{feedInfo.image}" class="circle feed-nav-avatar" alt="Avatar" />
+    <img src="{feedInfo.image}" class="feed-nav-avatar" alt="Avatar" />
     <span class="truncate bold feed-nav-title">
         {feedInfo.stats.unread_count > 0 ? feedInfo.title + '(' + feedInfo.stats.unread_count + ')': feedInfo.title}
     </span>

@@ -82,7 +82,7 @@
 
 <div class="omr-feed-item">
     <div class="feed-title-line">
-        <img src="{feedInfo.image}" class="circle feed-avatar" alt="Avatar" />
+        <img src="{feedInfo.image}" class="feed-avatar" alt="" />
         <span class="truncate feed-title {feedInfo.stats.unread_count > 0 ? 'bold' : ''}">{ feedInfo.title }</span>
 
         {#if feedInfo.is_podcast}

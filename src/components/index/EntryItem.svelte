@@ -77,7 +77,7 @@ export let entryInfo
 
 <div class="omr-entry-item">
     <div class="entry-title-line">
-        <img src="{entryInfo.image}" class="circle entry-avatar" alt="Avatar" />
+        <img src="{entryInfo.image}" class="entry-avatar" alt="" />
         <span class="truncate entry-title {entryInfo.stats.has_read ? '' : 'bold'}">{ entryInfo.title }</span>
 
         {#if entryInfo.feed.is_podcast}
