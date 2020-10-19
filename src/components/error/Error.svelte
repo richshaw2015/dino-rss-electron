@@ -7,14 +7,14 @@
         width: 100%;
         padding: 2rem;
     }
-    .dinosaur {
+    .net-error {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 2rem;
     }
-    .dinosaur img {
+    .net-error img {
         max-width: 96px;
     }
     .msg {
@@ -27,8 +27,8 @@
 </style>
 
 <div class="error-wrapper">
-    <div class="dinosaur">
-        <img src="./icon/dinosaur.svg" alt="Dinosaur" />
+    <div class="net-error">
+        <img src="./icon/neterr.svg" alt="netError" />
     </div>
 
     <div class="msg">{msg}</div>

@@ -6,8 +6,7 @@
     import Apps from './components/index/Apps.svelte'
     import Post from './components/view/Post.svelte'
     import Toolbar from './components/index/Toolbar.svelte'
-    import Error from './components/error/Error.svelte'
-    import Loading from './components/error/Loading.svelte'
+    import Notice from './components/view/Notice.svelte'
 
     const tokenPromise = getTokenPromise()
     const M = require('materialize-css')
@@ -74,7 +73,7 @@
         <div class="middle-container">
             {#if $activeTab !== 'apps'}
                 <Toolbar bind:viewMode bind:viewScope />
-                <Loading />
+                <Notice />
             {:else}
                 <Apps />
             {/if}
@@ -110,7 +109,7 @@
     <div class="middle-container">
         {#if $activeTab !== 'apps'}
             <Toolbar bind:viewMode bind:viewScope />
-            <Error msg={error} />
+            <Notice msg={error} level='warn' />
         {:else}
             <Apps />
         {/if}
