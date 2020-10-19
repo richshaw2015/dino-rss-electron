@@ -109,7 +109,7 @@
     <div class="middle-container">
         {#if $activeTab !== 'apps'}
             <Toolbar bind:viewMode bind:viewScope />
-            <Notice msg={error} level='warn' />
+            <Notice msg={error + " Token"} level='warn' />
         {:else}
             <Apps />
         {/if}
