@@ -206,6 +206,7 @@
     }
     function viewEntryDetail(entry) {
         currentEntry = entry
+        thirdContent = ''
 
         apiReq('/api/entry/get/content', {
             entry_id: currentEntry.id,

@@ -8,6 +8,7 @@
     export let thirdContent
     export let episodeInfo = {}
 
+    const Prism = require('prismjs')
     const { remote } = require('electron')
     const { shell, clipboard } = require('electron')
     const { Menu, MenuItem } = remote
@@ -15,7 +16,7 @@
     let qrcode
     const qrcodeSize = 280
 
-    import { onMount } from 'svelte';
+    import { onMount, afterUpdate } from 'svelte';
 
     onMount(() => {
         qrcode = new QRCode(document.getElementById("omr-qrcode"), {
@@ -25,6 +26,22 @@
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.L
         })
+    })
+
+    afterUpdate(() => {
+        if (thirdContent && currentEntry) {
+            document.querySelector('#omr-post-third-html').scrollTop = 0
+
+            // highlight code
+            if (document.querySelector('#omr-post-third-html pre[class*="language-"]') !== null 
+                || document.querySelector('#omr-post-third-html code[class*="language-"]') !== null) {
+                Prism.highlightAll()
+            } else {
+                document.querySelectorAll('#omr-post-third-html pre > code').forEach((block) => {
+                    hljs.highlightBlock(block)
+                })
+            }
+        }
     })
 
     function showPostCtxMenu(event) {

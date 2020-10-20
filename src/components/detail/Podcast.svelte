@@ -7,6 +7,7 @@
     afterUpdate(() => {
         if (Object.keys(episodeInfo).length > 0) {
             document.getElementById('omr-post-third-podcast').innerHTML = podcastTemplate
+            
             window.podlovePlayer('#omr-post-third-podcast', episodeInfo, podcastConfig)
         } else {
             document.getElementById('omr-post-third-podcast').innerHTML = ''

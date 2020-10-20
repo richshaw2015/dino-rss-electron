@@ -1,7 +1,5 @@
 <script>
     const Mousetrap = require('mousetrap')
-    const Prism = require('prismjs')
-
     const { clipboard } = require('electron')
 
     import { closeWindow } from '../utils/helper.js'
@@ -24,24 +22,8 @@
     const scrollStep = 60
 
     afterUpdate(() => {
-        if (thirdContent) {
-            document.querySelector('#omr-post-third-html').scrollTop = 0
-        }
-
         if (currentEntry) {
             statusMsg.set(currentEntry.link)
-        }
-
-        // highlight code
-        if (document.querySelector('#omr-post-third-html pre[class*="language-"]') !== null 
-            || document.querySelector('#omr-post-third-html code[class*="language-"]') !== null) {
-            Prism.highlightAll()
-        } else {
-            console.log("Apply highlight.js")
-
-            document.querySelectorAll('#omr-post-third-html pre > code').forEach((block) => {
-                hljs.highlightBlock(block)
-            })
         }
     })
 
