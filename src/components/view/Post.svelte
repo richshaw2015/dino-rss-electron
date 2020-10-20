@@ -33,8 +33,16 @@
         }
 
         // highlight code
-        // TODO add highlightjs support
-        Prism.highlightAll()
+        if (document.querySelector('#omr-post-third-html pre[class*="language-"]') !== null 
+            || document.querySelector('#omr-post-third-html code[class*="language-"]') !== null) {
+            Prism.highlightAll()
+        } else {
+            console.log("Apply highlight.js")
+
+            document.querySelectorAll('#omr-post-third-html pre > code').forEach((block) => {
+                hljs.highlightBlock(block)
+            })
+        }
     })
 
     onMount(() => {

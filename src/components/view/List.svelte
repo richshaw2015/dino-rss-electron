@@ -240,6 +240,7 @@
 <style>
     .list-wrapper {
         flex-grow: 1;
+        overflow: hidden;
     }
     .list-ul {
         margin: 8px 0 8px 0;
