@@ -42,6 +42,7 @@
     "@podlove/web-player": "^5.2.3",
     "telnet-client": "^1.4.6",
     "qrcodejs": "^1.0.0",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "highlight.js": "^10.3.1"
   }
 }
