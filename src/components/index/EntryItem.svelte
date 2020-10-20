@@ -1,6 +1,7 @@
-
 <script>
-export let entryInfo
+    import { fromNow } from '../utils/helper.js'
+
+    export let entryInfo
 
 </script>
 
@@ -90,7 +91,7 @@ export let entryInfo
 
     <div class="entry-meta-line">
         <span class="truncate entry-author">@{entryInfo.author}</span>
-        <span class="truncate entry-date">{entryInfo.updated}</span>
+        <span class="truncate entry-date">{fromNow(entryInfo.updated)}</span>
 
         <span class="entry-view-stats">
             <i class="material-icons">visibility</i>

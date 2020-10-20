@@ -78,3 +78,59 @@ export function isMac(){
 export function getPageSize() {
     return Math.floor((window.innerHeight - 60 - 16 - 60) / 59)
 }
+
+export function fromNow(utcTs) {
+    const nowUtcTs = new Date().getTime() / 1000 | 0
+    const seconds = nowUtcTs - utcTs
+
+    let interval = seconds / 31536000 | 0
+    if (interval > 1) {
+        return interval + " years ago"
+    } else if (interval === 1) {
+        return "Last year"
+    }
+
+    interval = seconds / 2678400 | 0
+    if (interval > 1) {
+        return interval + " months ago"
+    } else if (interval === 1) {
+        return "Last month"
+    }
+
+    interval = seconds / 604800 | 0
+    if (interval > 1) {
+        return interval + " weeks ago"
+    } else if (interval === 1) {
+        return "Last week"
+    }
+
+    interval = seconds / 86400 | 0
+    if (interval > 1) {
+        return interval + " days ago"
+    } else if (interval === 1) {
+        return "Yesterday"
+    }
+
+    interval = seconds / 3600 | 0
+    if (interval > 1) {
+        return interval + " hours ago"
+    } else if (interval === 1) {
+        return "An hour ago"
+    }
+
+    interval = seconds / 60 | 0
+    if (interval > 1) {
+        return interval + " minutes ago"
+    } else if (interval === 1) {
+        return "A minute ago"
+    }
+
+    interval = seconds
+    if (interval > 10) {
+        return interval + " seconds ago"
+    } else if (interval >= 0) {
+        return "Just now"
+    }
+
+    return utcTs
+}

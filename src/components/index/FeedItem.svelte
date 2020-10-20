@@ -1,5 +1,6 @@
-
 <script>
+    import { fromNow } from '../utils/helper.js'
+
     export let feedInfo
 </script>
 
@@ -99,7 +100,7 @@
 
     <div class="feed-meta-line">
         <span class="truncate feed-author">@{feedInfo.author}</span>
-        <span class="truncate feed-date">{feedInfo.stats.update_ts}</span>
+        <span class="truncate feed-date">{fromNow(feedInfo.stats.update_ts)}</span>
 
         <span class="feed-update-stats">
             <i class="material-icons">sync</i>
