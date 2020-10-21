@@ -55,19 +55,15 @@
 
                     saveViewMode(destMode)
                 } else if (rsp.code === 100) {
-                    if ($activeTab === "rss") {
-                        if (viewScope === "unread") {
-                            listApiRsp.msg = "No unread Feeds"
-                        } else if (viewScope === "all") {
-                            listApiRsp.msg = "No updated Feeds"
-                        }
-                    } else if ($activeTab === "star"){
-                        listApiRsp.msg = "No starred Feeds"
-                    }
+                    listApiRsp.msg = ($activeTab === "rss") ? "No updated Feeds" : "No starred Feeds"
+                }  else if (rsp.code === 101) {
+                    listApiRsp.msg = "No unread Feeds"
                 }
             }).catch(err => {
                 listApiRsp.code = -1
                 listApiRsp.msg = err + ' Feeds'
+
+                warnToast(listApiRsp.msg)
             })
         } else if (destMode === 'entry') {
             const apiPath = ($activeTab === 'rss') ? '/api/my/entries' : '/api/my/stared/entries'
@@ -84,19 +80,15 @@
 
                     saveViewMode(viewMode)
                 } else if (rsp.code === 100) {
-                    if ($activeTab === "rss") {
-                        if (viewScope === "unread") {
-                            listApiRsp.msg = "No unread Entries"
-                        } else if (viewScope === "all") {
-                            listApiRsp.msg = "No updated Entries"
-                        }
-                    } else if ($activeTab === "star"){
-                        listApiRsp.msg = "No starred Entries"
-                    }
+                    listApiRsp.msg = ($activeTab === "rss") ? "No updated Entries" : "No starred Entries"
+                }  else if (rsp.code === 101) {
+                    listApiRsp.msg = "No unread Entries"
                 }
             }).catch(err => {
                 listApiRsp.code = -1
                 listApiRsp.msg = err + ' Entries'
+
+                warnToast(listApiRsp.msg)
             })
         }
     }
@@ -225,6 +217,8 @@
         }).catch(err => {
             contentApiRsp.code = -1
             contentApiRsp.msg = err + ' Content'
+
+            warnToast(contentApiRsp.msg)
         })
     }
 </script>
@@ -251,11 +245,10 @@
 {#if listApiRsp.code === undefined}
     <!-- loading -->
     <Notice />
-{:else if listApiRsp.code === -1 }
-    <!-- error -->
+{:else if listApiRsp.code === -1 && !listApiRsp.data}
+    <!-- no current list data -->
     <Notice level="warn" msg={listApiRsp.msg} />
-{:else if listApiRsp.code === 0}
-    <!-- success -->
+{:else if listApiRsp.code === 0 || listApiRsp.code === -1 }
     <div class="list-wrapper">
         <ul class="collection list-ul">
         {#if viewMode === 'feed'}
@@ -279,12 +272,9 @@
     <Pager currentPage={listApiRsp.page} numPages={listApiRsp.num_pages} 
         on:refresh-list-view={handleRefreshListView} />
 {:else if listApiRsp.code === 100}
-    <!-- business error -->
-    {#if $activeTab === 'rss' && viewScope === 'unread'}
-        <Notice level="succ" msg={listApiRsp.msg} />
-    {:else}
-        <Notice level="info" msg={listApiRsp.msg} />
-    {/if}
+    <Notice level="info" msg={listApiRsp.msg} />
+{:else if listApiRsp.code === 101}
+    <Notice level="succ" msg={listApiRsp.msg} />
 {/if}
 
 {#if isFeedEntriesView}
