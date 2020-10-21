@@ -2,11 +2,11 @@
     import { toast } from '../utils/toast.js'
     import { truncateStr, isMac, isWin, captureWindow } from '../utils/helper.js'
     import Podcast from './Podcast.svelte'
+    import Notice from '../view/Notice.svelte'
 
     export let currentEntry
     export let fontSize
-    export let thirdContent
-    export let episodeInfo = {}
+    export let contentApiRsp = {}
 
     const Prism = require('prismjs')
     const { remote } = require('electron')
@@ -29,7 +29,7 @@
     })
 
     afterUpdate(() => {
-        if (thirdContent && currentEntry) {
+        if (contentApiRsp.content && currentEntry) {
             document.querySelector('#omr-post-third-html').scrollTop = 0
 
             // highlight code
@@ -175,14 +175,21 @@
     }
 </style>
 
-{#if thirdContent}
-<div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu} on:dragover={allowDrop}>
-    <Podcast bind:episodeInfo />
+{#if contentApiRsp.code === -1}
+    <!-- error -->
+    <Notice level='warn' msg={ contentApiRsp.msg }  />
+{:else if Object.keys(contentApiRsp).length === 0}
+    <!-- loading -->
+    <Notice />
+{:else}
+    <!-- success -->
+    <div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu} on:dragover={allowDrop}>
+        <Podcast episode={ contentApiRsp.episode } />
 
-    <article>
-        { @html thirdContent }
-    </article>
-</div>
+        <article>
+            { @html contentApiRsp.content }
+        </article>
+    </div>
 {/if}
 
 <div class="modal" id="omr-modal-qrcode">

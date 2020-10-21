@@ -14,19 +14,12 @@
     export let viewMode
     export let viewScope
 
-    export let itemList = []
+    export let listApiRsp = {}
     export let currentEntry
-    export let thirdContent
-    export let episodeInfo = {}
-
-    export let currentPage = 1
-    export let numPages
+    export let contentApiRsp= {}
 
     // TODO
     let isFeedEntriesView = false
-
-    let apiRspCode // undefined -1 0 100
-    let apiRspMsg // when code is not 0
 
     const { remote } = require('electron');
     const { Menu, MenuItem } = remote;
@@ -44,8 +37,6 @@
     })
 
     function refreshListView(page, destMode) {
-        [apiRspCode, apiRspMsg] = [undefined, undefined]
-
         if (!destMode) {
             destMode = viewMode
         }
@@ -53,59 +44,59 @@
             const apiPath = ($activeTab === 'rss') ? '/api/my/feeds' : '/api/my/stared/feeds'
 
             apiReq(apiPath, {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
-                apiRspCode = rsp.code
+                listApiRsp.code = rsp.code || 0
+                listApiRsp.data = rsp.data
 
                 if (rsp.code === 0) {
                     viewMode = destMode
 
-                    itemList = rsp.data
-                    currentPage = rsp.page
-                    numPages = rsp.num_pages
+                    listApiRsp.page = rsp.page
+                    listApiRsp.num_pages = rsp.num_pages
 
                     saveViewMode(destMode)
                 } else if (rsp.code === 100) {
                     if ($activeTab === "rss") {
                         if (viewScope === "unread") {
-                            apiRspMsg = "No unread Feeds"
+                            listApiRsp.msg = "No unread Feeds"
                         } else if (viewScope === "all") {
-                            apiRspMsg = "No updated Feeds"
+                            listApiRsp.msg = "No updated Feeds"
                         }
                     } else if ($activeTab === "star"){
-                        apiRspMsg = "No starred Feeds"
+                        listApiRsp.msg = "No starred Feeds"
                     }
                 }
             }).catch(err => {
-                apiRspCode = -1
-                apiRspMsg = err + ' Feeds'
+                listApiRsp.code = -1
+                listApiRsp.msg = err + ' Feeds'
             })
         } else if (destMode === 'entry') {
             const apiPath = ($activeTab === 'rss') ? '/api/my/entries' : '/api/my/stared/entries'
 
             apiReq(apiPath, {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
-                apiRspCode = rsp.code
+                listApiRsp.code = rsp.code || 0
+                listApiRsp.data = rsp.data
 
                 if (rsp.code === 0) {
                     viewMode = destMode
 
-                    itemList = rsp.data
-                    currentPage = rsp.page
-                    numPages = rsp.num_pages
+                    listApiRsp.page = rsp.page
+                    listApiRsp.num_pages = rsp.num_pages
 
                     saveViewMode(viewMode)
                 } else if (rsp.code === 100) {
                     if ($activeTab === "rss") {
                         if (viewScope === "unread") {
-                            apiRspMsg = "No unread Entries"
+                            listApiRsp.msg = "No unread Entries"
                         } else if (viewScope === "all") {
-                            apiRspMsg = "No updated Entries"
+                            listApiRsp.msg = "No updated Entries"
                         }
                     } else if ($activeTab === "star"){
-                        apiRspMsg = "No starred Entries"
+                        listApiRsp.msg = "No starred Entries"
                     }
                 }
             }).catch(err => {
-                apiRspCode = -1
-                apiRspMsg = err + ' Entries'
+                listApiRsp.code = -1
+                listApiRsp.msg = err + ' Entries'
             })
         }
     }
@@ -206,14 +197,15 @@
     }
     function viewEntryDetail(entry) {
         currentEntry = entry
-        thirdContent = ''
+        contentApiRsp= {}
 
         apiReq('/api/entry/get/content', {
             entry_id: currentEntry.id,
             feed_id: currentEntry.feed.id,
             is_podcast: currentEntry.feed.is_podcast
         }).then( rsp => {
-            thirdContent = rsp.content
+            contentApiRsp.code = rsp.code || 0
+            contentApiRsp.content = rsp.content
 
             if (Object.keys(rsp.episode).length > 0) {
                 let episodeBase = {
@@ -228,12 +220,11 @@
                     "link": currentEntry.link,
                     "publicationDate": currentEntry.updated
                 }
-                episodeInfo = Object.assign(episodeBase, rsp.episode)
-            } else {
-                episodeInfo = {}
+                contentApiRsp.episode = Object.assign(episodeBase, rsp.episode)
             }
         }).catch(err => {
-            // TODO
+            contentApiRsp.code = -1
+            contentApiRsp.msg = err + ' Content'
         })
     }
 </script>
@@ -257,25 +248,25 @@
 
 <Toolbar bind:viewMode bind:viewScope on:refresh-list-view={handleRefreshListView} />
 
-{#if apiRspCode === undefined}
+{#if listApiRsp.code === undefined}
     <!-- loading -->
     <Notice />
-{:else if apiRspCode === -1 }
+{:else if listApiRsp.code === -1 }
     <!-- error -->
-    <Notice level="warn" msg={apiRspMsg} />
-{:else if apiRspCode === 0}
+    <Notice level="warn" msg={listApiRsp.msg} />
+{:else if listApiRsp.code === 0}
     <!-- success -->
     <div class="list-wrapper">
         <ul class="collection list-ul">
         {#if viewMode === 'feed'}
-            {#each itemList as feed (feed.id)}
+            {#each listApiRsp.data as feed (feed.id)}
                 <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu}>
                     <FeedItem feedInfo={feed} />
                 </li>
             {/each}
 
         {:else if viewMode === 'entry'}
-            {#each itemList as entry (entry.id)}
+            {#each listApiRsp.data as entry (entry.id)}
                 <li class="collection-item list-li { currentEntry ? (entry.id === currentEntry.id ? 'active' : '') : ''}" 
                     on:contextmenu={showEntryCtxMenu} on:click={() => viewEntryDetail(entry)}>
                     <EntryItem entryInfo={entry} />
@@ -285,13 +276,14 @@
         </ul>
     </div>
 
-    <Pager bind:currentPage bind:numPages on:refresh-list-view={handleRefreshListView} />
-{:else if apiRspCode === 100}
+    <Pager currentPage={listApiRsp.page} numPages={listApiRsp.num_pages} 
+        on:refresh-list-view={handleRefreshListView} />
+{:else if listApiRsp.code === 100}
     <!-- business error -->
     {#if $activeTab === 'rss' && viewScope === 'unread'}
-        <Notice level="succ" msg={apiRspMsg} />
+        <Notice level="succ" msg={listApiRsp.msg} />
     {:else}
-        <Notice level="info" msg={apiRspMsg} />
+        <Notice level="info" msg={listApiRsp.msg} />
     {/if}
 {/if}
 

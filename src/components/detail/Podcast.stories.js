@@ -14,7 +14,7 @@ export const ximalaya = () => ({
 export const nullEpisode = () => ({
     Component: Podcast,
     props: {
-        episodeInfo: {
+        episode: {
             "version": 5,
             "show": {
                 "title": "Syntax - Tasty Web Development Treats",

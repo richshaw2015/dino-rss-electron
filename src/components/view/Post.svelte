@@ -15,8 +15,7 @@
     import { onMount, afterUpdate } from 'svelte';
 
     export let currentEntry
-    export let thirdContent
-    export let episodeInfo
+    export let contentApiRsp = {}
 
     let fontSize = getFontSize()
     const scrollStep = 60
@@ -73,10 +72,10 @@
     })
 </script>
 
-<Title bind:currentEntry bind:fontSize />
+<Title {currentEntry} bind:fontSize />
 
 <Find />
 
-<Third bind:currentEntry bind:fontSize bind:thirdContent bind:episodeInfo />
+<Third {currentEntry} {fontSize} {contentApiRsp} />
 
 <Statusbar />

@@ -1,5 +1,5 @@
 <script>
-    export let msg = "Loading..."
+    export let msg = "Loading ..."
     export let level = "loading"  // succ / info / warn / loading
 
     let src
@@ -24,7 +24,7 @@
     }
     .notice-wrapper {
         width: 100%;
-        padding-bottom: 40%;
+        padding-bottom: 20%;
     }
     .progress-wrapper {
         height: 100px;
@@ -44,7 +44,7 @@
     .notice-msg {
         color: #59595A;
         text-align: center;
-	    margin-top: 1.2rem;
+	    margin-top: 1.8rem;
         font-size: 1.2rem;
         word-break: break-all;
     }

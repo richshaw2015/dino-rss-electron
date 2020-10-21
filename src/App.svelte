@@ -15,8 +15,7 @@
     let viewScope = getViewScope()
 
     let currentEntry
-    let thirdContent
-    let episodeInfo = {}
+    let contentApiRsp = {}
 
     import { onMount } from 'svelte';
 
@@ -91,14 +90,14 @@
 
         <div class="middle-container">
             {#if $activeTab !== 'apps'}
-                <List bind:viewMode bind:viewScope bind:currentEntry bind:thirdContent bind:episodeInfo />
+                <List bind:viewMode bind:viewScope bind:currentEntry bind:contentApiRsp />
             {:else}
                 <Apps />
             {/if}
         </div>
 
         <div class="right-container">
-            <Post bind:currentEntry bind:thirdContent bind:episodeInfo />
+            <Post {currentEntry} {contentApiRsp} />
         </div>
     </div>
 {:catch error}

@@ -1,7 +1,8 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher, onMount } from 'svelte'
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher()
+    const Mousetrap = require('mousetrap')
 
     export let currentPage = 1
     export let numPages
@@ -26,6 +27,18 @@
             dispatch('refresh-list-view', { page: numPages })
         }
     }
+
+    onMount(() => {
+        // keyboard shortcut
+        Mousetrap.bind(['p', 'right'], function() {
+            nextPage()
+            return false
+        });
+        Mousetrap.bind(['P', 'left'], function() {
+            prevPage()
+            return false
+        });
+    })
 </script>
 
 <style>
