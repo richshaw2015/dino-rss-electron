@@ -1,11 +1,12 @@
 <script>
+    export let currentPage = 1
+    export let numPages
+
     import { createEventDispatcher, onMount } from 'svelte'
+    import { shortToast } from '../utils/toast.js'
 
     const dispatch = createEventDispatcher()
     const Mousetrap = require('mousetrap')
-
-    export let currentPage = 1
-    export let numPages
 
     function nextPage() {
         if (currentPage < numPages) {
@@ -32,10 +33,12 @@
         // keyboard shortcut
         Mousetrap.bind(['p', 'right'], function() {
             nextPage()
+            shortToast("Next page")
             return false
         });
         Mousetrap.bind(['P', 'left'], function() {
             prevPage()
+            shortToast("Previous page")
             return false
         });
     })

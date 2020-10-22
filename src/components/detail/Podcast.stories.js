@@ -5,12 +5,6 @@ export default {
     excludeStories: /.*Data$/,
 };
 
-export const ximalaya = () => ({
-    Component: Podcast,
-    props: {},
-    on: {},
-});
-
 export const nullEpisode = () => ({
     Component: Podcast,
     props: {

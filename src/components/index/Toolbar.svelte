@@ -1,3 +1,29 @@
+<script>
+    export let viewScope
+    export let viewMode
+
+    import { createEventDispatcher } from 'svelte';
+    import { activeTab } from '../store/store.js'
+    import { saveViewScope } from '../utils/storage.js'
+
+    const dispatch = createEventDispatcher()
+
+    function handleToggleViewMode() {
+        // change status after network
+        const mode = (viewMode === 'feed') ? 'entry' : 'feed'
+        dispatch('refresh-list-view', {page: 1, mode: mode})
+    }
+    function handleToggleViewScope() {
+        // change status instant
+        viewScope = (viewScope === 'all') ? 'unread' : 'all'
+        saveViewScope(viewScope)
+        dispatch('refresh-list-view', {page: 1})
+    }
+    function handleRefreshAction() {
+        dispatch('refresh-list-view', {page: 1})
+    }
+</script>
+
 <style>
     #omr-top-toolbar {
         width: 100%;
@@ -55,32 +81,6 @@
         margin: 5px 0;
     }
 </style>
-
-<script>
-    import { createEventDispatcher } from 'svelte';
-    import { activeTab } from '../store/store.js'
-    import { saveViewScope } from '../utils/storage.js'
-
-    const dispatch = createEventDispatcher();
-
-    export let viewScope
-    export let viewMode
-
-    function handleToggleViewMode() {
-        // change status after network
-        const mode = (viewMode === 'feed') ? 'entry' : 'feed'
-        dispatch('refresh-list-view', {page: 1, mode: mode})
-    }
-    function handleToggleViewScope() {
-        // change status instant
-        viewScope = (viewScope === 'all') ? 'unread' : 'all'
-        saveViewScope(viewScope)
-        dispatch('refresh-list-view', {page: 1})
-    }
-    function handleRefreshAction() {
-        dispatch('refresh-list-view', {page: 1})
-    }
-</script>
 
 <div id="omr-top-toolbar" class="drag">
     <div class="nav-wrapper no-drag {$activeTab === 'apps' ? 'omr-full-search' : ''}">

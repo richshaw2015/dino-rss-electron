@@ -1,6 +1,9 @@
 
 export const SERVER = 'http://192.168.31.204:8000'
 
+// j k shortcut scroll
+export const scrollStep = 60
+
 export const podcastConfig = {
     "base": "./podplayer/",
     "theme": {

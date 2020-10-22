@@ -35,7 +35,7 @@
         width: 54px;
     }
     .entry-view-stats i {
-        font-size: 0.88rem;
+        font-size: 13px;
         margin-right: 3px;
     }
     .entry-star-stats i {
@@ -76,6 +76,7 @@
     }
 </style>
 
+{#if entryInfo}
 <div class="omr-entry-item">
     <div class="entry-title-line">
         <img src="{entryInfo.image}" class="entry-avatar" alt="" />
@@ -104,3 +105,4 @@
         </span>
     </div>
 </div>
+{/if}

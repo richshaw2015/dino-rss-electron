@@ -1,8 +1,8 @@
 <script>
+    export let isMaximized = false
+
     import { toggleMaximizeWindow, minimizeWindow, closeWindow } from '../utils/helper.js'
     const { ipcRenderer } = require('electron')
-
-    export let isMaximized = false
 
     ipcRenderer.on('maximize-window', () => {
         isMaximized = true

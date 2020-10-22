@@ -1,24 +1,22 @@
-<script>
+<script>    
+    export let currentEntry
+    export let contentApiRsp = {}
+
+    import { onMount, afterUpdate } from 'svelte'
     const Mousetrap = require('mousetrap')
     const { clipboard } = require('electron')
 
-    import { closeWindow } from '../utils/helper.js'
     import { getFontSize } from '../utils/storage.js'
+    import { statusMsg } from '../store/store.js'
+    import { scrollStep } from '../utils/config.js'
+    import { shortToast } from '../utils/toast.js'
 
     import Find from '../find/Find.svelte'
     import Title from '../detail/Title.svelte'
     import Statusbar from '../detail/Statusbar.svelte'
-    import Third from '../detail/Third.svelte'
-
-    import { statusMsg } from '../store/store.js'
-
-    import { onMount, afterUpdate } from 'svelte';
-
-    export let currentEntry
-    export let contentApiRsp = {}
+    import Third from '../detail/Third.svelte'    
 
     let fontSize = getFontSize()
-    const scrollStep = 60
 
     afterUpdate(() => {
         if (currentEntry) {
@@ -62,12 +60,10 @@
                 document.querySelector('#omr-post-third-html').offsetHeight - 40
             return false
         });
-
-        Mousetrap.bind('x', function() {
-            closeWindow()
-        });
         Mousetrap.bind('y y', function() {
             clipboard.writeText(currentEntry.link)
+            shortToast("Link copied")
+            return false
         });
     })
 </script>

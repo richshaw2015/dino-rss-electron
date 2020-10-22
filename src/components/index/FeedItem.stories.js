@@ -5,12 +5,6 @@ export default {
     excludeStories: /.*Data$/,
 };
 
-export const FeedItemDefault = () => ({
-    Component: FeedItem,
-    props: {},
-    on: {},
-});
-
 export const NoUnread = () => ({
     Component: FeedItem,
     props: {

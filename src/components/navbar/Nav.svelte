@@ -1,20 +1,27 @@
 <script>
-    // import { createEventDispatcher } from 'svelte';
-    //
-    // const dispatch = createEventDispatcher();
-    import { toggleMaximizeWindow, macNavCtxMenu, isWin } from '../utils/helper.js'
-    import { activeTab } from '../store/store.js'
-    import Titlebar from './Titlebar.svelte'
-
     export let userInfo = {
-        id: 0,
-        uuid: '',
+        id: 1,
         level: 1,
         oauth: '',
         name: '',
         image: './icon/logo.svg',
-        blog: '',
+        blog: ''
     };
+
+    import { onMount } from 'svelte'
+    const Mousetrap = require('mousetrap')
+
+    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow } from '../utils/helper.js'
+    import { activeTab } from '../store/store.js'
+    import Titlebar from './Titlebar.svelte'
+
+    onMount(() => {
+        // keyboard shortcut
+        Mousetrap.bind('x', function() {
+            closeWindow()
+            return false
+        });
+    })
 
     function switchStarNav(event) {
         activeTab.set('star')

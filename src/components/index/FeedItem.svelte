@@ -34,7 +34,7 @@
         width: 54px;
     }
     .feed-update-stats i {
-        font-size: 0.95rem;
+        font-size: 13px;
         margin-right: 3px;
     }
     .feed-toread-stats i {
@@ -81,6 +81,7 @@
 
 </style>
 
+{#if feedInfo}
 <div class="omr-feed-item">
     <div class="feed-title-line">
         <img src="{feedInfo.image}" class="feed-avatar" alt="" />
@@ -108,8 +109,9 @@
         </span>
 
         <span class="feed-toread-stats">
-            <i class="material-icons {feedInfo.stats.unread_count > 0 ? 'primary-color' : ''}">lens</i>
+            <i class="material-icons">lens</i>
             <span class="uv-stats">{ feedInfo.stats.unread_count }</span>
         </span>
     </div>
 </div>
+{/if}

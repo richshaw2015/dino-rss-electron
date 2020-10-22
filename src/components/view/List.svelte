@@ -1,4 +1,11 @@
 <script>
+    export let viewMode
+    export let viewScope
+
+    export let listApiRsp = {}
+    export let currentEntry
+    export let contentApiRsp= {}
+
     import FeedItem from '../index/FeedItem.svelte'
     import Notice from './Notice.svelte'
     import FeedNav from '../index/FeedNav.svelte'
@@ -11,20 +18,13 @@
     import { activeTab } from '../store/store.js'
     import { saveViewMode } from '../utils/storage.js'
 
-    export let viewMode
-    export let viewScope
-
-    export let listApiRsp = {}
-    export let currentEntry
-    export let contentApiRsp= {}
-
     // TODO
     let isFeedEntriesView = false
 
-    const { remote } = require('electron');
-    const { Menu, MenuItem } = remote;
+    const { remote } = require('electron')
+    const { Menu, MenuItem } = remote
 
-    import { onMount } from 'svelte';
+    import { onMount } from 'svelte'
 
     onMount(() => {
         const unsubscribe = activeTab.subscribe(switchTab => {
@@ -199,7 +199,7 @@
             contentApiRsp.code = rsp.code || 0
             contentApiRsp.content = rsp.content
 
-            if (Object.keys(rsp.episode).length > 0) {
+            if (rsp.episode && Object.keys(rsp.episode).length > 0) {
                 let episodeBase = {
                     "version": 5,
                     "show": {

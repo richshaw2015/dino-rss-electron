@@ -16,8 +16,7 @@ export const Visitor = () => ({
             name: '',
             image: './icon/logo.svg',
             blog: 'https://materializecss.com/icons.html',
-        },
-        activeTab: 'rss'
+        }
     },
     on: {},
 });
@@ -33,8 +32,7 @@ export const Logined = () => ({
             name: 'richshaw2015',
             image: 'https://css-tricks.com/apple-touch-icon.png',
             blog: 'https://xingzx.org',
-        },
-        activeTab: 'star'
+        }
     },
     on: {},
 });

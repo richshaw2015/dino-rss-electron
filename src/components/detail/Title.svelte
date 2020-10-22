@@ -1,11 +1,11 @@
 
 <script>
-    import { toggleMaximizeWindow, macNavCtxMenu } from '../utils/helper.js'
-    import { saveFontSize } from '../utils/storage.js'
-    
     export let currentEntry
     export let fontSize = "text-medium"
 
+    import { toggleMaximizeWindow, macNavCtxMenu } from '../utils/helper.js'
+    import { saveFontSize } from '../utils/storage.js'
+    
     function showFontSizeWindow(event) {
         const width = 450
 
@@ -21,6 +21,7 @@
         instanse.open()
     }
     $: {
+        console.log(`Set font size ${fontSize}`)
         saveFontSize(fontSize)
     }
 </script>

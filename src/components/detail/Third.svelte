@@ -1,12 +1,12 @@
 <script>
+    export let currentEntry
+    export let fontSize
+    export let contentApiRsp = {}
+
     import { toast } from '../utils/toast.js'
     import { truncateStr, isMac, isWin, captureWindow } from '../utils/helper.js'
     import Podcast from './Podcast.svelte'
     import Notice from '../view/Notice.svelte'
-
-    export let currentEntry
-    export let fontSize
-    export let contentApiRsp = {}
 
     const Prism = require('prismjs')
     const { remote } = require('electron')
@@ -33,6 +33,7 @@
             document.querySelector('#omr-post-third-html').scrollTop = 0
 
             // highlight code
+            console.log('Highlight code')
             if (document.querySelector('#omr-post-third-html pre[class*="language-"]') !== null 
                 || document.querySelector('#omr-post-third-html code[class*="language-"]') !== null) {
                 Prism.highlightAll()

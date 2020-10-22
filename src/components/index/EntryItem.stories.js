@@ -5,12 +5,6 @@ export default {
     excludeStories: /.*Data$/,
 };
 
-export const EntryItemDefault = () => ({
-    Component: EntryItem,
-    props: {},
-    on: {},
-});
-
 export const EntryItemUnread = () => ({
     Component: EntryItem,
     props: {
