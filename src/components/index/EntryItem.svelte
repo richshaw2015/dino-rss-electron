@@ -43,6 +43,7 @@
         margin-right: 3px;
     }
     .entry-avatar {
+        min-width: 24px;
         width: 24px;
         height: 24px;
         margin-right: 6px;

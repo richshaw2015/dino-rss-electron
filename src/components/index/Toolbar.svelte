@@ -1,12 +1,25 @@
 <script>
     export let viewScope
     export let viewMode
+    export let showModeBtn = true
 
-    import { createEventDispatcher } from 'svelte';
-    import { activeTab } from '../store/store.js'
+    import { onMount } from 'svelte'
+    import { createEventDispatcher } from 'svelte'
     import { saveViewScope } from '../utils/storage.js'
+    import { activeTab } from '../store/store.js'
+    import { shortToast } from '../utils/toast.js'
 
+    const Mousetrap = require('mousetrap')
     const dispatch = createEventDispatcher()
+
+    onMount(() => {
+        // keyboard shortcut
+        Mousetrap.bind('r', function() {
+            handleRefreshAction()
+            shortToast("Refresh")
+            return false
+        });
+    })
 
     function handleToggleViewMode() {
         // change status after network
@@ -83,29 +96,44 @@
 </style>
 
 <div id="omr-top-toolbar" class="drag">
-    <div class="nav-wrapper no-drag {$activeTab === 'apps' ? 'omr-full-search' : ''}">
-        <div class="input-field omr-search-form">
-            <input id="omr-search-input" type="search" class="" placeholder="Search" required>
-            <label class="label-icon search-icon" for="omr-search-input">
-                <i class="material-icons">search</i></label>
+    {#if $activeTab === 'apps'}
+        <div class="nav-wrapper no-drag omr-full-search">
+            <div class="input-field omr-search-form">
+                <input id="omr-search-input" type="search" class="" placeholder="Search" required>
+                <label class="label-icon search-icon" for="omr-search-input">
+                    <i class="material-icons">search</i></label>
+            </div>
         </div>
-    </div>
-
-    {#if $activeTab !== 'apps'}
-    <div class="toolbar-group no-drag">
-        {#if $activeTab !== 'star'}
-        <div class="toolbar-icon" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
-            <i class="material-icons">{ viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
-        </div>
-        {/if}
-
-        <div class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
-            <i class="material-icons">{viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
+    {:else}
+        <div class="nav-wrapper no-drag">
+            <div class="input-field omr-search-form">
+                <input id="omr-search-input" type="search" class="" placeholder="Search" required>
+                <label class="label-icon search-icon" for="omr-search-input">
+                    <i class="material-icons">search</i></label>
+            </div>
         </div>
 
-        <div class="toolbar-icon" id="omr-toolbar-update"  on:click={handleRefreshAction}>
-            <i class="material-icons">update</i>
+        <div class="toolbar-group no-drag">
+            {#if $activeTab === 'rss'}
+                <div class="toolbar-icon" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
+                    <i class="material-icons">{ viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
+                </div>
+
+                {#if showModeBtn}
+                <div class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
+                    <i class="material-icons">{viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
+                </div>
+                {/if}
+            {:else if $activeTab === 'star' && showModeBtn}
+                <div class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
+                    <i class="material-icons">{viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
+                </div>
+            {/if}
+
+            <div class="toolbar-icon" id="omr-toolbar-update"  on:click={handleRefreshAction}>
+                <i class="material-icons">update</i>
+            </div>
+
         </div>
-    </div>
     {/if}
 </div>

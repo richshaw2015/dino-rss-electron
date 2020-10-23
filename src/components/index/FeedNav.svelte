@@ -1,5 +1,5 @@
 <script>
-    export let feedInfo
+    export let currentFeed
 </script>
 
 <style>
@@ -42,9 +42,9 @@
         <span class="">Back</span>
     </div>
 
-    <img src="{feedInfo.image}" class="feed-nav-avatar" alt="Avatar" />
+    <img src="{currentFeed.image}" class="feed-nav-avatar" alt="Avatar" />
     <span class="truncate bold feed-nav-title">
-        {feedInfo.stats.unread_count > 0 ? feedInfo.title + '(' + feedInfo.stats.unread_count + ')': feedInfo.title}
+        {currentFeed.stats.unread_count > 0 ? currentFeed.title + '(' + currentFeed.stats.unread_count + ')': currentFeed.title}
     </span>
     <i class="material-icons check-icon">check</i>
 </div>

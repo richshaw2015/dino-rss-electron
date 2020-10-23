@@ -33,7 +33,7 @@
     import Toolbar from './Toolbar.svelte'
 </script>
 
-<Toolbar activeTab="apps" />
+<Toolbar />
 
 <div id="omr-apps">
     <div class="waves-effect one-app"><i class="material-icons app-icon explore-icon">explore</i>Explore</div>

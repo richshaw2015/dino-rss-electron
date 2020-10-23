@@ -2,9 +2,10 @@
     import { getViewMode, getViewScope, getTokenPromise } from './components/utils/storage.js'
     import { activeTab } from './components/store/store.js'
     import Nav from './components/navbar/Nav.svelte'
-    import List from './components/view/List.svelte'
-    import Apps from './components/index/Apps.svelte'
-    import Post from './components/view/Post.svelte'
+    import AppsTab from './components/index/AppsTab.svelte'
+    import StarTab from './components/index/StarTab.svelte'
+    import RssTab from './components/index/RssTab.svelte'
+    import Post from './components/post/Post.svelte'
     import Toolbar from './components/index/Toolbar.svelte'
     import Notice from './components/view/Notice.svelte'
 
@@ -75,7 +76,7 @@
                 <Toolbar bind:viewMode bind:viewScope />
                 <Notice />
             {:else}
-                <Apps />
+                <AppsTab />
             {/if}
         </div>
 
@@ -89,10 +90,12 @@
         </div>
 
         <div class="middle-container">
-            {#if $activeTab !== 'apps'}
-                <List bind:viewMode bind:viewScope bind:currentEntry bind:contentApiRsp />
-            {:else}
-                <Apps />
+            {#if $activeTab === 'rss'}
+                <RssTab bind:viewMode bind:viewScope bind:currentEntry bind:contentApiRsp />
+            {:else if $activeTab === 'star'}
+                <StarTab bind:viewMode bind:currentEntry bind:contentApiRsp />
+            {:else if $activeTab === 'apps'}
+                <AppsTab />
             {/if}
         </div>
 
@@ -111,7 +114,7 @@
             <Toolbar bind:viewMode bind:viewScope />
             <Notice msg={error + " Token"} level='warn' />
         {:else}
-            <Apps />
+            <AppsTab />
         {/if}
     </div>
 

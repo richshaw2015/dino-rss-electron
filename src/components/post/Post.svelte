@@ -12,14 +12,15 @@
     import { shortToast } from '../utils/toast.js'
 
     import Find from '../find/Find.svelte'
-    import Title from '../detail/Title.svelte'
-    import Statusbar from '../detail/Statusbar.svelte'
-    import Third from '../detail/Third.svelte'    
+    import Title from './Title.svelte'
+    import Statusbar from './Statusbar.svelte'
+    import Third from './Third.svelte'    
 
     let fontSize = getFontSize()
 
     afterUpdate(() => {
         if (currentEntry) {
+            console.log("Update Entry link")
             statusMsg.set(currentEntry.link)
         }
     })

@@ -42,6 +42,7 @@
         margin-right: 3px;
     }
     .feed-avatar {
+        min-width: 24px;
         width: 24px;
         height: 24px;
         margin-right: 6px;
