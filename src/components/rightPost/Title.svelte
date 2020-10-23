@@ -1,8 +1,8 @@
 
 <script>
-    export let currentEntry
     export let fontSize = "text-medium"
 
+    import { activeEntry } from '../store/store.js'
     import { toggleMaximizeWindow, macNavCtxMenu } from '../utils/helper.js'
     import { saveFontSize } from '../utils/storage.js'
     
@@ -20,6 +20,7 @@
 
         instanse.open()
     }
+    
     $: {
         console.log(`Set font size ${fontSize}`)
         saveFontSize(fontSize)
@@ -59,48 +60,48 @@
     }
 </style>
 
-{#if currentEntry}
-<div id="omr-post-title-bar" class="drag" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
-    <div class="post-title">{ currentEntry.title }</div>
-    <i class="material-icons no-drag {currentEntry.stats.has_stared ? 'primary-color' : ''}">
-        {currentEntry.stats.has_stared ? 'star' : 'star_border'}</i>
-    <i class="material-icons no-drag" on:click="{showFontSizeWindow}">format_size</i>
-</div>
+{#if $activeEntry.id}
+    <div id="omr-post-title-bar" class="drag" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
+        <div class="post-title">{ $activeEntry.title }</div>
+        <i class="material-icons no-drag {$activeEntry.stats.has_stared ? 'primary-color' : ''}">
+            {$activeEntry.stats.has_stared ? 'star' : 'star_border'}</i>
+        <i class="material-icons no-drag" on:click="{showFontSizeWindow}">format_size</i>
+    </div>
 
-<div id="omr-modal-font-size" class="modal">
-    <span class="size-option">
-        <label>
-            <input name="font-size" type="radio" value="text-smaller" bind:group={fontSize} />
-            <span>Smaller</span>
-        </label>
-    </span>
+    <div id="omr-modal-font-size" class="modal">
+        <span class="size-option">
+            <label>
+                <input name="font-size" type="radio" value="text-smaller" bind:group={fontSize} />
+                <span>Smaller</span>
+            </label>
+        </span>
 
-    <span class="size-option">
-        <label>
-            <input name="font-size" type="radio" value="text-small" bind:group={fontSize} />
-            <span>Small</span>
-        </label>
-    </span>
+        <span class="size-option">
+            <label>
+                <input name="font-size" type="radio" value="text-small" bind:group={fontSize} />
+                <span>Small</span>
+            </label>
+        </span>
 
-    <span class="size-option">
-        <label>
-            <input name="font-size" type="radio" value="text-medium" bind:group={fontSize} />
-            <span>Medium</span>
-        </label>
-    </span>
-    
-    <span class="size-option">
-        <label>
-            <input name="font-size" type="radio" value="text-large" bind:group={fontSize} />
-            <span>Large</span>
-        </label>
-    </span>
+        <span class="size-option">
+            <label>
+                <input name="font-size" type="radio" value="text-medium" bind:group={fontSize} />
+                <span>Medium</span>
+            </label>
+        </span>
+        
+        <span class="size-option">
+            <label>
+                <input name="font-size" type="radio" value="text-large" bind:group={fontSize} />
+                <span>Large</span>
+            </label>
+        </span>
 
-    <span class="size-option">
-        <label>
-            <input name="font-size" type="radio" value="text-larger" bind:group={fontSize} />
-            <span>Larger</span>
-        </label>
-    </span>
-</div>
+        <span class="size-option">
+            <label>
+                <input name="font-size" type="radio" value="text-larger" bind:group={fontSize} />
+                <span>Larger</span>
+            </label>
+        </span>
+    </div>
 {/if}

@@ -1,7 +1,5 @@
 <script>
     export let listApiRsp = {}
-    export let currentEntry
-    export let contentApiRsp= {}
 
     import FeedItem from './FeedItem.svelte'
     import Notice from '../global/Notice.svelte'
@@ -13,7 +11,7 @@
     import { shortToast, toast, warnToast } from '../utils/toast.js'
     import { apiReq } from '../utils/req.js'
     import { saveViewMode } from '../utils/storage.js'
-    import { viewMode, viewScope } from '../store/store.js'
+    import { viewMode, viewScope, activeEntry, activeEntryContentRsp } from '../store/store.js'
 
     // TODO
     let currentFeed
@@ -27,19 +25,6 @@
     onMount(() => {
         // first list request
         refreshListView(1)
-
-        // shortcut        
-        // Mousetrap.bind('n', function() {
-        //     // TODO entry view only
-        //     if ($viewMode === 'entry' && listApiRsp.data && listApiRsp.data.length > 0) {
-        //         if (!currentEntry) {
-        //             currentEntry = listApiRsp.data[0]
-        //         } else {
-        //             // TODO ??
-        //         }
-        //     }
-        //     return false
-        // });
     })
 
     function refreshListView(page, destMode) {
@@ -195,37 +180,46 @@
         menu.popup({ window: remote.getCurrentWindow() })
     }
     function viewEntryDetail(entry) {
-        currentEntry = entry
-        contentApiRsp= {}
+        activeEntry.set(entry)
+        activeEntryContentRsp.set({})
 
         apiReq('/api/entry/get/content', {
-            entry_id: currentEntry.id,
-            feed_id: currentEntry.feed.id,
-            is_podcast: currentEntry.feed.is_podcast
+            entry_id: $activeEntry.id,
+            feed_id: $activeEntry.feed.id,
+            is_podcast: $activeEntry.feed.is_podcast
         }).then( rsp => {
-            contentApiRsp.code = rsp.code || 0
-            contentApiRsp.content = rsp.content
-
             if (rsp.episode && Object.keys(rsp.episode).length > 0) {
                 let episodeBase = {
                     "version": 5,
                     "show": {
-                        "title": currentEntry.feed.title,
-                        "subtitle": currentEntry.feed.description,
-                        "poster": currentEntry.feed.image,
-                        "link": currentEntry.feed.link,
+                        "title": $activeEntry.feed.title,
+                        "subtitle": $activeEntry.feed.description,
+                        "poster": $activeEntry.feed.image,
+                        "link": $activeEntry.feed.link,
                     },
-                    "title": currentEntry.title,
-                    "link": currentEntry.link,
-                    "publicationDate": currentEntry.updated
+                    "title": $activeEntry.title,
+                    "link": $activeEntry.link,
+                    "publicationDate": $activeEntry.updated
                 }
-                contentApiRsp.episode = Object.assign(episodeBase, rsp.episode)
+                activeEntryContentRsp.set({
+                    code: rsp.code || 0,
+                    content: rsp.content,
+                    episode: Object.assign(episodeBase, rsp.episode)
+                })
+            } else {
+                activeEntryContentRsp.set({
+                    code: rsp.code || 0,
+                    content: rsp.content
+                })
             }
         }).catch(err => {
-            contentApiRsp.code = -1
-            contentApiRsp.msg = err + ' Content'
+            const msg =  err + ' Content'
+            activeEntryContentRsp.set({
+                    code: -1,
+                    msg: msg
+            })
 
-            warnToast(contentApiRsp.msg)
+            warnToast(msg)
         })
     }
 
@@ -238,13 +232,13 @@
         }).then( rsp => {
             if (rsp.code === 0) {
                 currentFeed = feed
-
-                listApiRsp.code = rsp.code
-                listApiRsp.data = rsp.data
-                listApiRsp.page = rsp.page
-                listApiRsp.num_pages = rsp.num_pages
+                listApiRsp = rsp
             } else if (rsp.code === 100) {
                 toast("No Entries data")
+            }  else if (rsp.code === 101) {
+                currentFeed = feed
+                listApiRsp = rsp
+                listApiRsp.msg = "No unread Entries"
             }
         }).catch(err => {
             warnToast(err + ' Entries')
@@ -274,19 +268,23 @@
 {#if currentFeed}
     <FeedNav {currentFeed} />
 
-    <div class="list-wrapper">
-        <ul class="collection list-ul">
-            {#each listApiRsp.data as entry (entry.id)}
-            <li class="collection-item list-li { currentEntry ? (entry.id === currentEntry.id ? 'active' : '') : ''}" 
-                on:contextmenu={showEntryCtxMenu} on:click={() => viewEntryDetail(entry)}>
-                <EntryItem entryInfo={entry} />
-            </li>
-            {/each}
-        </ul>
-    </div>
+    {#if listApiRsp.code === 101}
+        <Notice level="succ" msg={listApiRsp.msg} />
+    {:else}
+        <div class="list-wrapper">
+            <ul class="collection list-ul">
+                {#each listApiRsp.data as entry (entry.id)}
+                <li class="collection-item list-li { entry.id === $activeEntry.id ? 'active' : ''}" 
+                    on:contextmenu={showEntryCtxMenu} on:click={() => viewEntryDetail(entry)}>
+                    <EntryItem entryInfo={entry} />
+                </li>
+                {/each}
+            </ul>
+        </div>
 
-    <Pager currentPage={listApiRsp.page} numPages={listApiRsp.num_pages} 
+        <Pager currentPage={listApiRsp.page} numPages={listApiRsp.num_pages} 
             on:refresh-list-view={handleRefreshListReq} />
+    {/if}
 {:else}
     {#if listApiRsp.code === undefined}
         <!-- loading -->
@@ -306,7 +304,7 @@
 
             {:else if $viewMode === 'entry'}
                 {#each listApiRsp.data as entry (entry.id)}
-                    <li class="collection-item list-li { currentEntry ? (entry.id === currentEntry.id ? 'active' : '') : ''}" 
+                    <li class="collection-item list-li { entry.id === $activeEntry.id ? 'active' : ''}" 
                         on:contextmenu={showEntryCtxMenu} on:click={() => viewEntryDetail(entry)}>
                         <EntryItem entryInfo={entry} />
                     </li>

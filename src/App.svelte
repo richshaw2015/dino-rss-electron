@@ -12,9 +12,6 @@
     const tokenPromise = getTokenPromise()
     const M = require('materialize-css')
 
-    let currentEntry
-    let contentApiRsp = {}
-
     import { onMount } from 'svelte';
 
     onMount(() => {
@@ -85,16 +82,16 @@
 
         <div class="middle-container">
             {#if $activeTab === 'rss'}
-                <RssTab bind:currentEntry bind:contentApiRsp />
+                <RssTab />
             {:else if $activeTab === 'star'}
-                <StarTab bind:currentEntry bind:contentApiRsp />
+                <StarTab />
             {:else if $activeTab === 'apps'}
                 <AppsTab />
             {/if}
         </div>
 
         <div class="right-container">
-            <Post {currentEntry} {contentApiRsp} />
+            <Post />
         </div>
     </div>
 {:catch error}

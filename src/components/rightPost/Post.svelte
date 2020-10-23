@@ -1,13 +1,10 @@
-<script>    
-    export let currentEntry
-    export let contentApiRsp = {}
-
-    import { onMount, afterUpdate } from 'svelte'
+<script>
+    import { onMount } from 'svelte'
     const Mousetrap = require('mousetrap')
     const { clipboard } = require('electron')
 
     import { getFontSize } from '../utils/storage.js'
-    import { statusMsg } from '../store/store.js'
+    import { activeEntry } from '../store/store.js'
     import { scrollStep } from '../utils/config.js'
     import { shortToast } from '../utils/toast.js'
 
@@ -17,13 +14,6 @@
     import Third from './Third.svelte'    
 
     let fontSize = getFontSize()
-
-    afterUpdate(() => {
-        if (currentEntry) {
-            console.log("Update Entry link")
-            statusMsg.set(currentEntry.link)
-        }
-    })
 
     onMount(() => {
         // keyboard shortcut
@@ -62,17 +52,17 @@
             return false
         });
         Mousetrap.bind('y y', function() {
-            clipboard.writeText(currentEntry.link)
+            clipboard.writeText($activeEntry.link)
             shortToast("Link copied")
             return false
         });
     })
 </script>
 
-<Title {currentEntry} bind:fontSize />
+<Title bind:fontSize />
 
 <Find />
 
-<Third {currentEntry} {fontSize} {contentApiRsp} />
+<Third {fontSize} />
 
 <Statusbar />

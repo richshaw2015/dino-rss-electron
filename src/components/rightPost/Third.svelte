@@ -1,10 +1,9 @@
 <script>
-    export let currentEntry
     export let fontSize
-    export let contentApiRsp = {}
 
     import { toast } from '../utils/toast.js'
     import { truncateStr, isMac, isWin, captureWindow } from '../utils/helper.js'
+    import { activeEntry, activeEntryContentRsp } from '../store/store.js'
     import Podcast from './Podcast.svelte'
     import Notice from '../global/Notice.svelte'
 
@@ -29,9 +28,7 @@
     })
 
     afterUpdate(() => {
-        if (contentApiRsp.content && currentEntry) {
-            document.querySelector('#omr-post-third-html').scrollTop = 0
-
+        if ($activeEntryContentRsp.code !== -1 && $activeEntryContentRsp.content && $activeEntry.id ) {
             // highlight code
             console.log('Highlight code')
             if (document.querySelector('#omr-post-third-html pre[class*="language-"]') !== null 
@@ -43,7 +40,7 @@
                 })
             }
         }
-    })
+	});
 
     function showPostCtxMenu(event) {
         const hasText = window.getSelection().toString().trim().length > 0
@@ -103,21 +100,21 @@
         menu.append(new MenuItem({
             label: "🔗  Copy Link",
             click: function(){
-                clipboard.writeText(currentEntry.link)
+                clipboard.writeText($activeEntry.link)
                 // toast("Copied")
             }
         }));
         menu.append(new MenuItem({
             label: "🧭  Open in Browser",
             click: function(){
-                shell.openExternal(currentEntry.link);
+                shell.openExternal($activeEntry.link);
             }
         }));
         menu.append(new MenuItem({
             label: "📲  QR Code",
             click: function() {
                 qrcode.clear()
-                qrcode.makeCode(currentEntry.link);
+                qrcode.makeCode($activeEntry.link);
 
                 const instanse = M.Modal.init(document.querySelector('#omr-modal-qrcode'), {
                     inDuration: 0,
@@ -176,19 +173,19 @@
     }
 </style>
 
-{#if contentApiRsp.code === -1}
+{#if $activeEntryContentRsp.code === -1}
     <!-- error -->
-    <Notice level='warn' msg={ contentApiRsp.msg }  />
-{:else if Object.keys(contentApiRsp).length === 0}
+    <Notice level='warn' msg={ $activeEntryContentRsp.msg }  />
+{:else if Object.keys($activeEntryContentRsp).length === 0}
     <!-- loading -->
     <Notice />
 {:else}
     <!-- success -->
     <div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu} on:dragover={allowDrop}>
-        <Podcast episode={ contentApiRsp.episode } />
+        <Podcast episode={ $activeEntryContentRsp.episode } />
 
         <article>
-            { @html contentApiRsp.content }
+            { @html $activeEntryContentRsp.content }
         </article>
     </div>
 {/if}

@@ -1,10 +1,15 @@
 import { writable } from 'svelte/store'
 import { getViewMode, getViewScope } from '../utils/storage.js'
 
-export let statusMsg = writable("")
-
+// nav tab
 export let activeTab = writable("rss")
 
+// toolbar button status
 export let viewMode = writable(getViewMode())
-
 export let viewScope = writable(getViewScope())
+
+// current active entry
+export let activeEntry = writable({})
+
+// /api/entry/get/content
+export let activeEntryContentRsp = writable({})
