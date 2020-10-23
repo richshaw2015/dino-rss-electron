@@ -11,7 +11,7 @@ export function saveViewMode(mode) {
 
 export function getViewMode() {
     // entry feed
-    return localStorage.getItem(viewModeConfKey) || 'entry'
+    return localStorage.getItem(viewModeConfKey) || 'feed'
 }
 
 export function saveViewScope(scope) {

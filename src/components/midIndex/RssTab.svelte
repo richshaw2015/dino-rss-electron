@@ -1,21 +1,19 @@
 <script>
-    export let viewMode
-    export let viewScope
-
     export let listApiRsp = {}
     export let currentEntry
     export let contentApiRsp= {}
 
     import FeedItem from './FeedItem.svelte'
-    import Notice from '../view/Notice.svelte'
+    import Notice from '../global/Notice.svelte'
     import FeedNav from './FeedNav.svelte'
-    import Pager from '../pager/Pager.svelte'
+    import Pager from './Pager.svelte'
     import Toolbar from './Toolbar.svelte'
     import EntryItem from "./EntryItem.svelte"
     import { isWin, getPageSize } from '../utils/helper.js'
     import { shortToast, toast, warnToast } from '../utils/toast.js'
     import { apiReq } from '../utils/req.js'
     import { saveViewMode } from '../utils/storage.js'
+    import { viewMode, viewScope } from '../store/store.js'
 
     // TODO
     let currentFeed
@@ -33,7 +31,7 @@
         // shortcut        
         // Mousetrap.bind('n', function() {
         //     // TODO entry view only
-        //     if (viewMode === 'entry' && listApiRsp.data && listApiRsp.data.length > 0) {
+        //     if ($viewMode === 'entry' && listApiRsp.data && listApiRsp.data.length > 0) {
         //         if (!currentEntry) {
         //             currentEntry = listApiRsp.data[0]
         //         } else {
@@ -46,15 +44,15 @@
 
     function refreshListView(page, destMode) {
         if (!destMode) {
-            destMode = viewMode
+            destMode = $viewMode
         }
         if (destMode === 'feed') {
-            apiReq('/api/my/feeds', {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
+            apiReq('/api/my/feeds', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
                 listApiRsp.code = rsp.code || 0
                 listApiRsp.data = rsp.data
 
                 if (rsp.code === 0) {
-                    viewMode = destMode
+                    viewMode.set(destMode)
 
                     listApiRsp.page = rsp.page
                     listApiRsp.num_pages = rsp.num_pages
@@ -72,17 +70,17 @@
                 warnToast(listApiRsp.msg)
             })
         } else if (destMode === 'entry') {
-            apiReq('/api/my/entries', {page: page, page_size: getPageSize(), scope: viewScope}).then( rsp => {
+            apiReq('/api/my/entries', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
                 listApiRsp.code = rsp.code || 0
                 listApiRsp.data = rsp.data
 
                 if (rsp.code === 0) {
-                    viewMode = destMode
+                    viewMode.set(destMode)
 
                     listApiRsp.page = rsp.page
                     listApiRsp.num_pages = rsp.num_pages
 
-                    saveViewMode(viewMode)
+                    saveViewMode($viewMode)
                 } else if (rsp.code === 100) {
                     listApiRsp.msg ="No updated Entries"
                 }  else if (rsp.code === 101) {
@@ -236,7 +234,7 @@
             feed_id: feed.id,
             page: page,
             page_size: getPageSize() - 1, 
-            scope: viewScope
+            scope: $viewScope
         }).then( rsp => {
             if (rsp.code === 0) {
                 currentFeed = feed
@@ -271,7 +269,7 @@
     }
 </style>
 
-<Toolbar bind:viewMode bind:viewScope showModeBtn={!currentFeed} on:refresh-list-view={handleRefreshListReq} />
+<Toolbar showModeBtn={!currentFeed} on:refresh-list-view={handleRefreshListReq} />
 
 {#if currentFeed}
     <FeedNav {currentFeed} />
@@ -299,14 +297,14 @@
     {:else if listApiRsp.code === 0 || listApiRsp.code === -1 }
         <div class="list-wrapper">
             <ul class="collection list-ul">
-            {#if viewMode === 'feed'}
+            {#if $viewMode === 'feed'}
                 {#each listApiRsp.data as feed (feed.id)}
                     <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu} on:click={() => viewFeedEntries(feed)}>
                         <FeedItem feedInfo={feed} />
                     </li>
                 {/each}
 
-            {:else if viewMode === 'entry'}
+            {:else if $viewMode === 'entry'}
                 {#each listApiRsp.data as entry (entry.id)}
                     <li class="collection-item list-li { currentEntry ? (entry.id === currentEntry.id ? 'active' : '') : ''}" 
                         on:contextmenu={showEntryCtxMenu} on:click={() => viewEntryDetail(entry)}>

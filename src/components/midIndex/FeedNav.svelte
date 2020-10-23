@@ -12,6 +12,7 @@
         border-bottom: 1px dashed rgba(0,0,0,.14);
     }
     .feed-nav-avatar {
+        min-width: 24px;
         width: 24px;
         height: 24px;
         margin-left: 18px;
@@ -42,7 +43,7 @@
         <span class="">Back</span>
     </div>
 
-    <img src="{currentFeed.image}" class="feed-nav-avatar" alt="Avatar" />
+    <img src="{currentFeed.image}" class="feed-nav-avatar" alt="" />
     <span class="truncate bold feed-nav-title">
         {currentFeed.stats.unread_count > 0 ? currentFeed.title + '(' + currentFeed.stats.unread_count + ')': currentFeed.title}
     </span>

@@ -1,3 +1,7 @@
+<script>
+    import Toolbar from './Toolbar.svelte'
+</script>
+
 <style>
     #omr-apps {
         width: 100%;
@@ -28,10 +32,6 @@
         font-size: 22px;
     }
 </style>
-
-<script>
-    import Toolbar from './Toolbar.svelte'
-</script>
 
 <Toolbar />
 

@@ -11,7 +11,7 @@
     import { scrollStep } from '../utils/config.js'
     import { shortToast } from '../utils/toast.js'
 
-    import Find from '../find/Find.svelte'
+    import Find from '../global/Find.svelte'
     import Title from './Title.svelte'
     import Statusbar from './Statusbar.svelte'
     import Third from './Third.svelte'    

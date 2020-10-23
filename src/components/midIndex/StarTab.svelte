@@ -1,21 +1,18 @@
 <script>
-    export let viewMode
-    export let viewScope
-
     export let listApiRsp = {}
     export let currentEntry
     export let contentApiRsp= {}
 
     import FeedItem from './FeedItem.svelte'
-    import Notice from '../view/Notice.svelte'
+    import Notice from '../global/Notice.svelte'
     import FeedNav from './FeedNav.svelte'
-    import Pager from '../pager/Pager.svelte'
+    import Pager from './Pager.svelte'
     import Toolbar from './Toolbar.svelte'
     import EntryItem from "./EntryItem.svelte"
     import { isWin, getPageSize } from '../utils/helper.js'
     import { shortToast, toast, warnToast } from '../utils/toast.js'
     import { apiReq } from '../utils/req.js'
-    import { activeTab } from '../store/store.js'
+    import { viewMode } from '../store/store.js'
     import { saveViewMode } from '../utils/storage.js'
 
     // TODO
@@ -34,7 +31,7 @@
         // shortcut        
         // Mousetrap.bind('n', function() {
         //     // TODO entry view only
-        //     if (viewMode === 'entry' && listApiRsp.data && listApiRsp.data.length > 0) {
+        //     if ($viewMode === 'entry' && listApiRsp.data && listApiRsp.data.length > 0) {
         //         if (!currentEntry) {
         //             currentEntry = listApiRsp.data[0]
         //         } else {
@@ -47,14 +44,14 @@
 
     function refreshListView(page, destMode) {
         if (!destMode) {
-            destMode = viewMode
+            destMode = $viewMode
         }
         if (destMode === 'feed') {
             apiReq('/api/my/stared/feeds', {page: page, page_size: getPageSize()}).then( rsp => {
                 listApiRsp = rsp
 
                 if (rsp.code === 0) {
-                    viewMode = destMode
+                    viewMode.set(destMode)
 
                     saveViewMode(destMode)
                 } else if (rsp.code === 100) {
@@ -71,9 +68,9 @@
                 listApiRsp = rsp
 
                 if (rsp.code === 0) {
-                    viewMode = destMode
+                    viewMode.set(destMode)
 
-                    saveViewMode(viewMode)
+                    saveViewMode(destMode)
                 } else if (rsp.code === 100) {
                     listApiRsp.msg = "No starred Entries"
                 }
@@ -255,7 +252,7 @@
     }
 </style>
 
-<Toolbar bind:viewMode bind:viewScope showModeBtn={!currentFeed} on:refresh-list-view={handleRefreshListReq} />
+<Toolbar showModeBtn={!currentFeed} on:refresh-list-view={handleRefreshListReq} />
 
 {#if currentFeed}
     <FeedNav {currentFeed} />
@@ -283,14 +280,14 @@
     {:else if listApiRsp.code === 0 || listApiRsp.code === -1 }
         <div class="list-wrapper">
             <ul class="collection list-ul">
-            {#if viewMode === 'feed'}
+            {#if $viewMode === 'feed'}
                 {#each listApiRsp.data as feed (feed.id)}
                     <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu} on:click={() => viewFeedEntries(feed)}>
                         <FeedItem feedInfo={feed} />
                     </li>
                 {/each}
 
-            {:else if viewMode === 'entry'}
+            {:else if $viewMode === 'entry'}
                 {#each listApiRsp.data as entry (entry.id)}
                     <li class="collection-item list-li { currentEntry ? (entry.id === currentEntry.id ? 'active' : '') : ''}" 
                         on:contextmenu={showEntryCtxMenu} on:click={() => viewEntryDetail(entry)}>

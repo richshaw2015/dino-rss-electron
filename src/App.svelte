@@ -1,19 +1,16 @@
 <script>
-    import { getViewMode, getViewScope, getTokenPromise } from './components/utils/storage.js'
+    import { getTokenPromise } from './components/utils/storage.js'
     import { activeTab } from './components/store/store.js'
-    import Nav from './components/navbar/Nav.svelte'
-    import AppsTab from './components/index/AppsTab.svelte'
-    import StarTab from './components/index/StarTab.svelte'
-    import RssTab from './components/index/RssTab.svelte'
-    import Post from './components/post/Post.svelte'
-    import Toolbar from './components/index/Toolbar.svelte'
-    import Notice from './components/view/Notice.svelte'
+    import Nav from './components/leftNav/Nav.svelte'
+    import AppsTab from './components/midIndex/AppsTab.svelte'
+    import StarTab from './components/midIndex/StarTab.svelte'
+    import RssTab from './components/midIndex/RssTab.svelte'
+    import Toolbar from './components/midIndex/Toolbar.svelte'
+    import Post from './components/rightPost/Post.svelte'
+    import Notice from './components/global/Notice.svelte'
 
     const tokenPromise = getTokenPromise()
     const M = require('materialize-css')
-
-    let viewMode = getViewMode()
-    let viewScope = getViewScope()
 
     let currentEntry
     let contentApiRsp = {}
@@ -72,15 +69,12 @@
         </div>
 
         <div class="middle-container">
-            {#if $activeTab !== 'apps'}
-                <Toolbar bind:viewMode bind:viewScope />
-                <Notice />
-            {:else}
-                <AppsTab />
-            {/if}
+            <Toolbar />
+            <Notice msg={"Loading ..."} />
         </div>
 
         <div class="right-container">
+            <!-- TODO about -->
         </div>
     </div>
 {:then token}
@@ -91,9 +85,9 @@
 
         <div class="middle-container">
             {#if $activeTab === 'rss'}
-                <RssTab bind:viewMode bind:viewScope bind:currentEntry bind:contentApiRsp />
+                <RssTab bind:currentEntry bind:contentApiRsp />
             {:else if $activeTab === 'star'}
-                <StarTab bind:viewMode bind:currentEntry bind:contentApiRsp />
+                <StarTab bind:currentEntry bind:contentApiRsp />
             {:else if $activeTab === 'apps'}
                 <AppsTab />
             {/if}
@@ -110,15 +104,12 @@
     </div>
 
     <div class="middle-container">
-        {#if $activeTab !== 'apps'}
-            <Toolbar bind:viewMode bind:viewScope />
-            <Notice msg={error + " Token"} level='warn' />
-        {:else}
-            <AppsTab />
-        {/if}
+        <Toolbar />
+        <Notice msg={error + " Token"} level='warn' />
     </div>
 
     <div class="right-container">
+        <!-- TODO about -->
     </div>
 </div>
 {/await}

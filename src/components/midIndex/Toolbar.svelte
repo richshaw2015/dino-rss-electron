@@ -1,12 +1,10 @@
 <script>
-    export let viewScope
-    export let viewMode
     export let showModeBtn = true
 
     import { onMount } from 'svelte'
     import { createEventDispatcher } from 'svelte'
     import { saveViewScope } from '../utils/storage.js'
-    import { activeTab } from '../store/store.js'
+    import { activeTab, viewMode, viewScope } from '../store/store.js'
     import { shortToast } from '../utils/toast.js'
 
     const Mousetrap = require('mousetrap')
@@ -23,13 +21,17 @@
 
     function handleToggleViewMode() {
         // change status after network
-        const mode = (viewMode === 'feed') ? 'entry' : 'feed'
+        const mode = ($viewMode === 'feed') ? 'entry' : 'feed'
         dispatch('refresh-list-view', {page: 1, mode: mode})
     }
     function handleToggleViewScope() {
         // change status instant
-        viewScope = (viewScope === 'all') ? 'unread' : 'all'
-        saveViewScope(viewScope)
+        if ($viewScope === 'all') {
+            viewScope.set('unread')
+        } else {
+            viewScope.set('all')
+        }
+        saveViewScope($viewScope)
         dispatch('refresh-list-view', {page: 1})
     }
     function handleRefreshAction() {
@@ -116,17 +118,17 @@
         <div class="toolbar-group no-drag">
             {#if $activeTab === 'rss'}
                 <div class="toolbar-icon" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
-                    <i class="material-icons">{ viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
+                    <i class="material-icons">{ $viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
                 </div>
 
                 {#if showModeBtn}
                 <div class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
-                    <i class="material-icons">{viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
+                    <i class="material-icons">{$viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
                 </div>
                 {/if}
             {:else if $activeTab === 'star' && showModeBtn}
                 <div class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
-                    <i class="material-icons">{viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
+                    <i class="material-icons">{$viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
                 </div>
             {/if}
 
