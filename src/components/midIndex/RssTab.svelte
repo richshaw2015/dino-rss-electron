@@ -178,7 +178,7 @@
 
         menu.popup({ window: remote.getCurrentWindow() })
     }
-    function getEntryContent(entry) {
+    function getEntryContent(entry, index) {
         activeEntry.set(entry)
         entryContentRsp.set({})
 
@@ -211,6 +211,9 @@
                     content: rsp.content
                 })
             }
+
+            // sync read status
+            listRsp.data[index].stats.has_read = true
         }).catch(err => {
             const msg =  err + ' Content'
             entryContentRsp.set({
@@ -276,9 +279,9 @@
     {:else}
         <div class="list-wrapper">
             <ul class="collection list-ul">
-                {#each listRsp.data as entry (entry.id)}
+                {#each listRsp.data as entry, index (entry.id)}
                 <li class="collection-item list-li { entry.id === $activeEntry.id ? 'active' : ''}" 
-                    on:contextmenu={showEntryCtxMenu} on:click={() => getEntryContent(entry)}>
+                    on:contextmenu={showEntryCtxMenu} on:click={() => getEntryContent(entry, index)}>
                     <EntryItem entryInfo={entry} />
                 </li>
                 {/each}
@@ -306,9 +309,9 @@
                 {/each}
 
             {:else if $viewMode === 'entry'}
-                {#each listRsp.data as entry (entry.id)}
+                {#each listRsp.data as entry, index (entry.id)}
                     <li class="collection-item list-li { entry.id === $activeEntry.id ? 'active' : ''}" 
-                        on:contextmenu={showEntryCtxMenu} on:click={() => getEntryContent(entry)}>
+                        on:contextmenu={showEntryCtxMenu} on:click={() => getEntryContent(entry, index)}>
                         <EntryItem entryInfo={entry} />
                     </li>
                 {/each}
