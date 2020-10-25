@@ -1,5 +1,13 @@
 <script>
-    export let currentFeed
+    export let activeFeed
+    export let listRsp
+
+    import { listRspBak } from '../store/store.js'
+
+    function backToFeedList() {
+        activeFeed = undefined
+        listRsp = $listRspBak
+    }
 </script>
 
 <style>
@@ -9,6 +17,7 @@
         display: flex;
         align-items: center;
         height: 48px;
+        min-height: 48px;
         border-bottom: 1px dashed rgba(0,0,0,.14);
     }
     .feed-nav-avatar {
@@ -37,15 +46,17 @@
 
 </style>
 
+{#if activeFeed}
 <div id="omr-feed-nav">
-    <div id="omr-feed-back">
+    <div id="omr-feed-back" on:click={backToFeedList}>
         <i class="material-icons back-icon">arrow_back</i>
         <span class="">Back</span>
     </div>
 
-    <img src="{currentFeed.image}" class="feed-nav-avatar" alt="" />
+    <img src="{activeFeed.image}" class="feed-nav-avatar" alt="" />
     <span class="truncate bold feed-nav-title">
-        {currentFeed.stats.unread_count > 0 ? currentFeed.title + '(' + currentFeed.stats.unread_count + ')': currentFeed.title}
+        {activeFeed.stats.unread_count > 0 ? activeFeed.title + '(' + activeFeed.stats.unread_count + ')': activeFeed.title}
     </span>
     <i class="material-icons check-icon">check</i>
 </div>
+{/if}

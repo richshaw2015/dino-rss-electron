@@ -16,7 +16,7 @@
 </style>
 
 {#if $activeEntry.link }
-<div id="omr-status-bar">
-    <span class="truncate">{$activeEntry.link}</span>
-</div>    
+    <div id="omr-status-bar">
+        <span class="truncate">{$activeEntry.link}</span>
+    </div>    
 {/if}

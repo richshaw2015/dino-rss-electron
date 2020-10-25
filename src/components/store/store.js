@@ -12,4 +12,6 @@ export let viewScope = writable(getViewScope())
 export let activeEntry = writable({})
 
 // /api/entry/get/content
-export let activeEntryContentRsp = writable({})
+export let entryContentRsp = writable({})
+
+export let listRspBak = writable({})

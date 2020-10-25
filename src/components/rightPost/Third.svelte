@@ -3,7 +3,7 @@
 
     import { toast } from '../utils/toast.js'
     import { truncateStr, isMac, isWin, captureWindow } from '../utils/helper.js'
-    import { activeEntry, activeEntryContentRsp } from '../store/store.js'
+    import { activeEntry, entryContentRsp } from '../store/store.js'
     import Podcast from './Podcast.svelte'
     import Notice from '../global/Notice.svelte'
 
@@ -28,7 +28,7 @@
     })
 
     afterUpdate(() => {
-        if ($activeEntryContentRsp.code !== -1 && $activeEntryContentRsp.content && $activeEntry.id ) {
+        if ($entryContentRsp.code !== -1 && $entryContentRsp.content && $activeEntry.id ) {
             // highlight code
             console.log('Highlight code')
             if (document.querySelector('#omr-post-third-html pre[class*="language-"]') !== null 
@@ -173,19 +173,19 @@
     }
 </style>
 
-{#if $activeEntryContentRsp.code === -1}
+{#if $entryContentRsp.code === -1}
     <!-- error -->
-    <Notice level='warn' msg={ $activeEntryContentRsp.msg }  />
-{:else if Object.keys($activeEntryContentRsp).length === 0}
+    <Notice level='warn' msg={ $entryContentRsp.msg }  />
+{:else if Object.keys($entryContentRsp).length === 0}
     <!-- loading -->
     <Notice />
 {:else}
     <!-- success -->
     <div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu} on:dragover={allowDrop}>
-        <Podcast episode={ $activeEntryContentRsp.episode } />
+        <Podcast episode={ $entryContentRsp.episode } />
 
         <article>
-            { @html $activeEntryContentRsp.content }
+            { @html $entryContentRsp.content }
         </article>
     </div>
 {/if}

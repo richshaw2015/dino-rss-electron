@@ -1,5 +1,5 @@
 <script>
-    export let listApiRsp = {}
+    export let listRsp = {}
 
     import FeedItem from './FeedItem.svelte'
     import Notice from '../global/Notice.svelte'
@@ -11,10 +11,9 @@
     import { shortToast, toast, warnToast } from '../utils/toast.js'
     import { apiReq } from '../utils/req.js'
     import { saveViewMode } from '../utils/storage.js'
-    import { viewMode, viewScope, activeEntry, activeEntryContentRsp } from '../store/store.js'
+    import { viewMode, viewScope, activeEntry, entryContentRsp, listRspBak } from '../store/store.js'
 
-    // TODO
-    let currentFeed
+    let activeFeed
 
     const { remote } = require('electron')
     const { Menu, MenuItem } = remote
@@ -24,67 +23,67 @@
 
     onMount(() => {
         // first list request
-        refreshListView(1)
+        updateList(1)
     })
 
-    function refreshListView(page, destMode) {
+    function updateList(page, destMode=null) {
         if (!destMode) {
             destMode = $viewMode
         }
         if (destMode === 'feed') {
             apiReq('/api/my/feeds', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
-                listApiRsp.code = rsp.code || 0
-                listApiRsp.data = rsp.data
+                listRsp.code = rsp.code || 0
+                listRsp.data = rsp.data
 
                 if (rsp.code === 0) {
                     viewMode.set(destMode)
 
-                    listApiRsp.page = rsp.page
-                    listApiRsp.num_pages = rsp.num_pages
+                    listRsp.page = rsp.page
+                    listRsp.num_pages = rsp.num_pages
 
                     saveViewMode(destMode)
                 } else if (rsp.code === 100) {
-                    listApiRsp.msg = "No updated Feeds"
+                    listRsp.msg = "No updated Feeds"
                 }  else if (rsp.code === 101) {
-                    listApiRsp.msg = "No unread Feeds"
+                    listRsp.msg = "No unread Feeds"
                 }
             }).catch(err => {
-                listApiRsp.code = -1
-                listApiRsp.msg = err + ' Feeds'
+                listRsp.code = -1
+                listRsp.msg = err + ' Feeds'
 
-                warnToast(listApiRsp.msg)
+                warnToast(listRsp.msg)
             })
         } else if (destMode === 'entry') {
             apiReq('/api/my/entries', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
-                listApiRsp.code = rsp.code || 0
-                listApiRsp.data = rsp.data
+                listRsp.code = rsp.code || 0
+                listRsp.data = rsp.data
 
                 if (rsp.code === 0) {
                     viewMode.set(destMode)
 
-                    listApiRsp.page = rsp.page
-                    listApiRsp.num_pages = rsp.num_pages
+                    listRsp.page = rsp.page
+                    listRsp.num_pages = rsp.num_pages
 
                     saveViewMode($viewMode)
                 } else if (rsp.code === 100) {
-                    listApiRsp.msg ="No updated Entries"
+                    listRsp.msg ="No updated Entries"
                 }  else if (rsp.code === 101) {
-                    listApiRsp.msg = "No unread Entries"
+                    listRsp.msg = "No unread Entries"
                 }
             }).catch(err => {
-                listApiRsp.code = -1
-                listApiRsp.msg = err + ' Entries'
+                listRsp.code = -1
+                listRsp.msg = err + ' Entries'
 
-                warnToast(listApiRsp.msg)
+                warnToast(listRsp.msg)
             })
         }
     }
 
-    function handleRefreshListReq(event) {
-        if (currentFeed) {
-            viewFeedEntries(currentFeed, event.detail.page)
+    function handleToolbarRefresh(event) {
+        if (activeFeed) {
+            updateFeedEntries(activeFeed, event.detail.page, false)
         } else {
-            refreshListView(event.detail.page, event.detail.mode)
+            updateList(event.detail.page, event.detail.mode)
         }
     }
     // TODO shortcut n N b C r D
@@ -179,9 +178,9 @@
 
         menu.popup({ window: remote.getCurrentWindow() })
     }
-    function viewEntryDetail(entry) {
+    function getEntryContent(entry) {
         activeEntry.set(entry)
-        activeEntryContentRsp.set({})
+        entryContentRsp.set({})
 
         apiReq('/api/entry/get/content', {
             entry_id: $activeEntry.id,
@@ -201,20 +200,20 @@
                     "link": $activeEntry.link,
                     "publicationDate": $activeEntry.updated
                 }
-                activeEntryContentRsp.set({
+                entryContentRsp.set({
                     code: rsp.code || 0,
                     content: rsp.content,
                     episode: Object.assign(episodeBase, rsp.episode)
                 })
             } else {
-                activeEntryContentRsp.set({
+                entryContentRsp.set({
                     code: rsp.code || 0,
                     content: rsp.content
                 })
             }
         }).catch(err => {
             const msg =  err + ' Content'
-            activeEntryContentRsp.set({
+            entryContentRsp.set({
                     code: -1,
                     msg: msg
             })
@@ -223,22 +222,26 @@
         })
     }
 
-    function viewFeedEntries(feed, page=1) {
+    function updateFeedEntries(feed, page=1, saveCtx=false) {
         apiReq('/api/feed/entries', {
             feed_id: feed.id,
             page: page,
             page_size: getPageSize() - 1, 
             scope: $viewScope
         }).then( rsp => {
-            if (rsp.code === 0) {
-                currentFeed = feed
-                listApiRsp = rsp
+            if (rsp.code === 0 || rsp.code === 101) {
+                activeFeed = feed
+                if (saveCtx) {
+                    console.log(listRsp)
+                    listRspBak.set(listRsp)
+                }
+                listRsp = rsp
+
+                if (rsp.code === 101) {
+                    listRsp.msg = "No unread Entries"
+                }
             } else if (rsp.code === 100) {
                 toast("No Entries data")
-            }  else if (rsp.code === 101) {
-                currentFeed = feed
-                listApiRsp = rsp
-                listApiRsp.msg = "No unread Entries"
             }
         }).catch(err => {
             warnToast(err + ' Entries')
@@ -263,49 +266,49 @@
     }
 </style>
 
-<Toolbar showModeBtn={!currentFeed} on:refresh-list-view={handleRefreshListReq} />
+<Toolbar showModeBtn={!activeFeed} on:refresh-list-view={handleToolbarRefresh} />
 
-{#if currentFeed}
-    <FeedNav {currentFeed} />
+{#if activeFeed}
+    <FeedNav bind:activeFeed bind:listRsp />
 
-    {#if listApiRsp.code === 101}
-        <Notice level="succ" msg={listApiRsp.msg} />
+    {#if listRsp.code === 101}
+        <Notice level="succ" msg={listRsp.msg} />
     {:else}
         <div class="list-wrapper">
             <ul class="collection list-ul">
-                {#each listApiRsp.data as entry (entry.id)}
+                {#each listRsp.data as entry (entry.id)}
                 <li class="collection-item list-li { entry.id === $activeEntry.id ? 'active' : ''}" 
-                    on:contextmenu={showEntryCtxMenu} on:click={() => viewEntryDetail(entry)}>
+                    on:contextmenu={showEntryCtxMenu} on:click={() => getEntryContent(entry)}>
                     <EntryItem entryInfo={entry} />
                 </li>
                 {/each}
             </ul>
         </div>
 
-        <Pager currentPage={listApiRsp.page} numPages={listApiRsp.num_pages} 
-            on:refresh-list-view={handleRefreshListReq} />
+        <Pager currentPage={listRsp.page} numPages={listRsp.num_pages} 
+            on:refresh-list-view={handleToolbarRefresh} />
     {/if}
 {:else}
-    {#if listApiRsp.code === undefined}
+    {#if listRsp.code === undefined}
         <!-- loading -->
         <Notice />
-    {:else if listApiRsp.code === -1 && !listApiRsp.data}
+    {:else if listRsp.code === -1 && !listRsp.data}
         <!-- no current list data -->
-        <Notice level="warn" msg={listApiRsp.msg} />
-    {:else if listApiRsp.code === 0 || listApiRsp.code === -1 }
+        <Notice level="warn" msg={listRsp.msg} />
+    {:else if listRsp.code === 0 || listRsp.code === -1 }
         <div class="list-wrapper">
             <ul class="collection list-ul">
             {#if $viewMode === 'feed'}
-                {#each listApiRsp.data as feed (feed.id)}
-                    <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu} on:click={() => viewFeedEntries(feed)}>
+                {#each listRsp.data as feed (feed.id)}
+                    <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu} on:click={() => updateFeedEntries(feed, 1, true)}>
                         <FeedItem feedInfo={feed} />
                     </li>
                 {/each}
 
             {:else if $viewMode === 'entry'}
-                {#each listApiRsp.data as entry (entry.id)}
+                {#each listRsp.data as entry (entry.id)}
                     <li class="collection-item list-li { entry.id === $activeEntry.id ? 'active' : ''}" 
-                        on:contextmenu={showEntryCtxMenu} on:click={() => viewEntryDetail(entry)}>
+                        on:contextmenu={showEntryCtxMenu} on:click={() => getEntryContent(entry)}>
                         <EntryItem entryInfo={entry} />
                     </li>
                 {/each}
@@ -313,11 +316,11 @@
             </ul>
         </div>
 
-        <Pager currentPage={listApiRsp.page} numPages={listApiRsp.num_pages} 
-            on:refresh-list-view={handleRefreshListReq} />
-    {:else if listApiRsp.code === 100}
-        <Notice level="info" msg={listApiRsp.msg} />
-    {:else if listApiRsp.code === 101}
-        <Notice level="succ" msg={listApiRsp.msg} />
+        <Pager currentPage={listRsp.page} numPages={listRsp.num_pages} 
+            on:refresh-list-view={handleToolbarRefresh} />
+    {:else if listRsp.code === 100}
+        <Notice level="info" msg={listRsp.msg} />
+    {:else if listRsp.code === 101}
+        <Notice level="succ" msg={listRsp.msg} />
     {/if}
 {/if}
