@@ -1,8 +1,69 @@
 <script>
-    import { fromNow } from '../utils/helper.js'
-
     export let entryInfo
 
+    import { fromNow } from '../utils/helper.js'
+
+    const { remote } = require('electron')
+    const { Menu, MenuItem } = remote
+    import { isWin, getPageSize } from '../utils/helper.js'
+    import { shortToast, toast, warnToast } from '../utils/toast.js'
+    import { apiReq } from '../utils/req.js'
+
+    function showEntryCtxMenu() {
+        const menu = new Menu();
+        menu.append(new MenuItem({
+            label: isWin() ? "🌟  Star" : "⭐️  Star",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({
+            label: "💔  Unstar",
+            enabled: false,
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: "✅️  Mark as read",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({
+            label: "📌  Mark as unread",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: "🔗  Copy Link",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+
+        menu.append(new MenuItem({type: "separator",}));
+        menu.append(new MenuItem({
+            label: "✏️  Edit Feed",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+        menu.append(new MenuItem({
+            label: "🗑  Unsubscribe Feed",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+
+        menu.popup({ window: remote.getCurrentWindow() })
+    }
 </script>
 
 <style>
@@ -78,7 +139,7 @@
 </style>
 
 {#if entryInfo}
-<div class="omr-entry-item">
+<div class="omr-entry-item" on:contextmenu={showEntryCtxMenu}>
     <div class="entry-title-line">
         <img src="{entryInfo.image}" class="entry-avatar" alt="" />
         <span class="truncate entry-title {entryInfo.stats.has_read ? '' : 'bold'}">{ entryInfo.title }</span>

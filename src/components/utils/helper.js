@@ -128,7 +128,7 @@ export function fromNow(utcTs) {
     interval = seconds
     if (interval > 10) {
         return interval + " seconds ago"
-    } else if (interval >= 0) {
+    } else {
         return "Just now"
     }
 

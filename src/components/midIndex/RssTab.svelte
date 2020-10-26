@@ -2,46 +2,48 @@
     export let listRsp = {}
 
     import FeedItem from './FeedItem.svelte'
+    import Common from '../global/Common.svelte'
     import Notice from '../global/Notice.svelte'
     import FeedNav from './FeedNav.svelte'
     import Pager from './Pager.svelte'
     import Toolbar from './Toolbar.svelte'
     import EntryItem from "./EntryItem.svelte"
-    import { isWin, getPageSize } from '../utils/helper.js'
+    import { getPageSize } from '../utils/helper.js'
     import { shortToast, toast, warnToast } from '../utils/toast.js'
     import { apiReq } from '../utils/req.js'
     import { saveViewMode } from '../utils/storage.js'
-    import { viewMode, viewScope, activeEntry, entryContentRsp, listRspBak } from '../store/store.js'
-
-    let activeFeed
-
-    const { remote } = require('electron')
-    const { Menu, MenuItem } = remote
-    const Mousetrap = require('mousetrap')
+    import { viewMode, viewScope, activeEntry, activeFeed, isFeedEntriesView, feedListRspBak } 
+        from '../store/store.js'
 
     import { onMount } from 'svelte'
 
     onMount(() => {
         // first list request
-        updateList(1)
+        updateList(1, $viewMode)
+
+        activeFeed.subscribe(feed => {
+            if (feed.id) {
+                console.log(feed)
+                gotoFeedEntries(feed, 1, true)
+            }
+        });
     })
 
-    function updateList(page, destMode=null) {
-        if (!destMode) {
-            destMode = $viewMode
-        }
-        if (destMode === 'feed') {
+    function updateList(page, mode) {
+        if (!mode) mode = $viewMode
+
+        if (mode === 'feed') {
             apiReq('/api/my/feeds', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
                 listRsp.code = rsp.code || 0
                 listRsp.data = rsp.data
 
                 if (rsp.code === 0) {
-                    viewMode.set(destMode)
+                    viewMode.set(mode)
 
                     listRsp.page = rsp.page
                     listRsp.num_pages = rsp.num_pages
 
-                    saveViewMode(destMode)
+                    saveViewMode(mode)
                 } else if (rsp.code === 100) {
                     listRsp.msg = "No updated Feeds"
                 }  else if (rsp.code === 101) {
@@ -53,13 +55,13 @@
 
                 warnToast(listRsp.msg)
             })
-        } else if (destMode === 'entry') {
+        } else if (mode === 'entry') {
             apiReq('/api/my/entries', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
                 listRsp.code = rsp.code || 0
                 listRsp.data = rsp.data
 
                 if (rsp.code === 0) {
-                    viewMode.set(destMode)
+                    viewMode.set(mode)
 
                     listRsp.page = rsp.page
                     listRsp.num_pages = rsp.num_pages
@@ -79,153 +81,7 @@
         }
     }
 
-    function handleToolbarRefresh(event) {
-        if (activeFeed) {
-            updateFeedEntries(activeFeed, event.detail.page, false)
-        } else {
-            updateList(event.detail.page, event.detail.mode)
-        }
-    }
-    // TODO shortcut n N b C r D
-
-    // TODO dynamic read/unread star/unstar menu
-    function showFeedCtxMenu() {
-        const menu = new Menu();
-        menu.append(new MenuItem({
-            label: "✅️  Mark Feed as read",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({type: "separator",}));
-        menu.append(new MenuItem({
-            label: "🔗  Copy Feed Link",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({type: "separator",}));
-
-        menu.append(new MenuItem({
-            label: "✏️  Edit Feed",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({type: "separator",}));
-
-        menu.append(new MenuItem({
-            label: "🗑  Unsubscribe Feed",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.popup({ window: remote.getCurrentWindow() })
-    }
-
-    function showEntryCtxMenu() {
-        const menu = new Menu();
-        menu.append(new MenuItem({
-            label: isWin() ? "🌟  Star" : "⭐️  Star",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({
-            label: "💔  Unstar",
-            enabled: false,
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({type: "separator",}));
-
-        menu.append(new MenuItem({
-            label: "✅️  Mark as read",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({
-            label: "📌  Mark as unread",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({type: "separator",}));
-
-        menu.append(new MenuItem({
-            label: "🔗  Copy Link",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-
-        menu.append(new MenuItem({type: "separator",}));
-        menu.append(new MenuItem({
-            label: "✏️  Edit Feed",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({type: "separator",}));
-        menu.append(new MenuItem({
-            label: "🗑  Unsubscribe Feed",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-
-        menu.popup({ window: remote.getCurrentWindow() })
-    }
-    function getEntryContent(entry, index) {
-        activeEntry.set(entry)
-        entryContentRsp.set({})
-
-        apiReq('/api/entry/get/content', {
-            entry_id: $activeEntry.id,
-            feed_id: $activeEntry.feed.id,
-            is_podcast: $activeEntry.feed.is_podcast
-        }).then( rsp => {
-            if (rsp.episode && Object.keys(rsp.episode).length > 0) {
-                let episodeBase = {
-                    "version": 5,
-                    "show": {
-                        "title": $activeEntry.feed.title,
-                        "subtitle": $activeEntry.feed.description,
-                        "poster": $activeEntry.feed.image,
-                        "link": $activeEntry.feed.link,
-                    },
-                    "title": $activeEntry.title,
-                    "link": $activeEntry.link,
-                    "publicationDate": $activeEntry.updated
-                }
-                entryContentRsp.set({
-                    code: rsp.code || 0,
-                    content: rsp.content,
-                    episode: Object.assign(episodeBase, rsp.episode)
-                })
-            } else {
-                entryContentRsp.set({
-                    code: rsp.code || 0,
-                    content: rsp.content
-                })
-            }
-
-            // sync read status
-            listRsp.data[index].stats.has_read = true
-        }).catch(err => {
-            const msg =  err + ' Content'
-            entryContentRsp.set({
-                    code: -1,
-                    msg: msg
-            })
-
-            warnToast(msg)
-        })
-    }
-
-    function updateFeedEntries(feed, page=1, saveCtx=false) {
+    function gotoFeedEntries(feed, page=1, saveCtx=false) {
         apiReq('/api/feed/entries', {
             feed_id: feed.id,
             page: page,
@@ -233,10 +89,9 @@
             scope: $viewScope
         }).then( rsp => {
             if (rsp.code === 0 || rsp.code === 101) {
-                activeFeed = feed
                 if (saveCtx) {
-                    console.log(listRsp)
-                    listRspBak.set(listRsp)
+                    isFeedEntriesView.set(true)
+                    feedListRspBak.set(listRsp)
                 }
                 listRsp = rsp
 
@@ -250,6 +105,15 @@
             warnToast(err + ' Entries')
         })
     }
+
+    function handleToolbarRefresh(event) {
+        if ($isFeedEntriesView) {
+            gotoFeedEntries($activeFeed, event.detail.page, false)
+        } else {
+            updateList(event.detail.page, event.detail.mode)
+        }
+    }
+    // TODO shortcut C r D
 </script>
 
 <style>
@@ -269,19 +133,20 @@
     }
 </style>
 
-<Toolbar showModeBtn={!activeFeed} on:refresh-list-view={handleToolbarRefresh} />
+<Common bind:listRsp />
+<Toolbar showModeBtn={!$isFeedEntriesView} on:refresh-list-view={handleToolbarRefresh} />
 
-{#if activeFeed}
-    <FeedNav bind:activeFeed bind:listRsp />
+{#if $isFeedEntriesView}
+    <FeedNav bind:listRsp />
 
     {#if listRsp.code === 101}
         <Notice level="succ" msg={listRsp.msg} />
     {:else}
         <div class="list-wrapper">
             <ul class="collection list-ul">
-                {#each listRsp.data as entry, index (entry.id)}
+                {#each listRsp.data as entry (entry.id)}
                 <li class="collection-item list-li { entry.id === $activeEntry.id ? 'active' : ''}" 
-                    on:contextmenu={showEntryCtxMenu} on:click={() => getEntryContent(entry, index)}>
+                    on:click={() => activeEntry.set(entry)}>
                     <EntryItem entryInfo={entry} />
                 </li>
                 {/each}
@@ -303,7 +168,8 @@
             <ul class="collection list-ul">
             {#if $viewMode === 'feed'}
                 {#each listRsp.data as feed (feed.id)}
-                    <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu} on:click={() => updateFeedEntries(feed, 1, true)}>
+                    <li class="collection-item list-li { feed.id === $activeFeed.id ? 'active' : '' }" 
+                        on:click={() => activeFeed.set(feed)}>
                         <FeedItem feedInfo={feed} />
                     </li>
                 {/each}
@@ -311,8 +177,8 @@
             {:else if $viewMode === 'entry'}
                 {#each listRsp.data as entry, index (entry.id)}
                     <li class="collection-item list-li { entry.id === $activeEntry.id ? 'active' : ''}" 
-                        on:contextmenu={showEntryCtxMenu} on:click={() => getEntryContent(entry, index)}>
-                        <EntryItem entryInfo={entry} />
+                        on:click={() => activeEntry.set(entry)}>
+                        <EntryItem entryInfo={entry}  />
                     </li>
                 {/each}
             {/if}

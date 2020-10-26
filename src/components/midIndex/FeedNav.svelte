@@ -1,13 +1,23 @@
 <script>
-    export let activeFeed
     export let listRsp
 
-    import { listRspBak } from '../store/store.js'
+    import { onMount } from 'svelte'
+    import { feedListRspBak, isFeedEntriesView, activeFeed } from '../store/store.js'
+
+    const Mousetrap = require('mousetrap')
 
     function backToFeedList() {
-        activeFeed = undefined
-        listRsp = $listRspBak
+        isFeedEntriesView.set(false)
+        listRsp = $feedListRspBak
     }
+
+    onMount(() => {
+        // keyboard shortcut
+        Mousetrap.bind('b', function() {
+            backToFeedList()
+            return false
+        });
+    })
 </script>
 
 <style>
@@ -46,16 +56,16 @@
 
 </style>
 
-{#if activeFeed}
+{#if $isFeedEntriesView}
 <div id="omr-feed-nav">
     <div id="omr-feed-back" on:click={backToFeedList}>
         <i class="material-icons back-icon">arrow_back</i>
         <span class="">Back</span>
     </div>
 
-    <img src="{activeFeed.image}" class="feed-nav-avatar" alt="" />
+    <img src="{$activeFeed.image}" class="feed-nav-avatar" alt="" />
     <span class="truncate bold feed-nav-title">
-        {activeFeed.stats.unread_count > 0 ? activeFeed.title + '(' + activeFeed.stats.unread_count + ')': activeFeed.title}
+        {$activeFeed.stats.unread_count > 0 ? $activeFeed.title + '(' + $activeFeed.stats.unread_count + ')': $activeFeed.title}
     </span>
     <i class="material-icons check-icon">check</i>
 </div>

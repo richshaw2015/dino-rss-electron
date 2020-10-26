@@ -40,6 +40,7 @@
     }
     .notice-img img {
         max-height: 100px;
+        user-select: none;
     }
     .notice-msg {
         color: #59595A;

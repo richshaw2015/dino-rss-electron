@@ -85,7 +85,7 @@
 
     function handleToolbarRefresh(event) {
         if (activeFeed) {
-            updateFeedEntries(activeFeed, event.detail.page)
+            gotoFeedEntries(activeFeed, event.detail.page)
         } else {
             updateList(event.detail.page, event.detail.mode)
         }
@@ -216,7 +216,7 @@
         })
     }
 
-    function updateFeedEntries(feed, page=1) {
+    function gotoFeedEntries(feed, page=1) {
         apiReq('/api/feed/entries', {
             feed_id: feed.id,
             page: page,
@@ -282,7 +282,7 @@
             <ul class="collection list-ul">
             {#if $viewMode === 'feed'}
                 {#each listRsp.data as feed (feed.id)}
-                    <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu} on:click={() => updateFeedEntries(feed)}>
+                    <li class="collection-item list-li" on:contextmenu={showFeedCtxMenu} on:click={() => gotoFeedEntries(feed)}>
                         <FeedItem feedInfo={feed} />
                     </li>
                 {/each}

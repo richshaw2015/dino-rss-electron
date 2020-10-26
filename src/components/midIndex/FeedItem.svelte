@@ -1,7 +1,48 @@
 <script>
+    export let feedInfo
+
     import { fromNow } from '../utils/helper.js'
 
-    export let feedInfo
+    const { remote } = require('electron')
+    const { Menu, MenuItem } = remote
+    import { isWin, getPageSize } from '../utils/helper.js'
+    import { shortToast, toast, warnToast } from '../utils/toast.js'
+    import { apiReq } from '../utils/req.js'
+
+    // TODO dynamic read/unread star/unstar menu
+    function showFeedCtxMenu() {
+        const menu = new Menu();
+        menu.append(new MenuItem({
+            label: "✅️  Mark Feed as read",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+        menu.append(new MenuItem({
+            label: "🔗  Copy Feed Link",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: "✏️  Edit Feed",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: "🗑  Unsubscribe Feed",
+            click: function(){
+                alert(`you clicked on`);
+            }
+        }));
+        menu.popup({ window: remote.getCurrentWindow() })
+    }
 </script>
 
 <style>
@@ -83,7 +124,7 @@
 </style>
 
 {#if feedInfo}
-<div class="omr-feed-item">
+<div class="omr-feed-item" on:contextmenu={showFeedCtxMenu}>
     <div class="feed-title-line">
         <img src="{feedInfo.image}" class="feed-avatar" alt="" />
         <span class="truncate feed-title {feedInfo.stats.unread_count > 0 ? 'bold' : ''}">{ feedInfo.title }</span>

@@ -8,10 +8,13 @@ export let activeTab = writable("rss")
 export let viewMode = writable(getViewMode())
 export let viewScope = writable(getViewScope())
 
-// current active entry
+// current active entry / feed
 export let activeEntry = writable({})
+export let activeFeed = writable({})
 
 // /api/entry/get/content
 export let entryContentRsp = writable({})
 
-export let listRspBak = writable({})
+// feedEntries menu status
+export let feedListRspBak = writable({})
+export let isFeedEntriesView = writable(false)
