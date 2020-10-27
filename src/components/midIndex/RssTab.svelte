@@ -28,28 +28,23 @@
             }
             if ($viewMode === 'entry' || ($viewMode === 'feed' && $rssFeedEntriesView) ) {
                 if (!isInList($rssActiveEntry, $rssListRsp.data)) {
-                    shortToast("Next Entry")
                     rssActiveEntry.set($rssListRsp.data[0])
                 } else {
                     const index = $rssActiveEntry._index + 1
                     if (index === $rssListRsp.data.length) {
                         warnToast("Already the last Entry")
                     } else {
-                        shortToast("Next Entry")
                         rssActiveEntry.set($rssListRsp.data[index])
                     }
                 }
             } else {
                 if (!isInList($rssActiveFeed, $rssListRsp.data)) {
-                    shortToast("Next Feed")
-
                     handleGotoFeedEntries($rssListRsp.data[0])
                 } else {
                     const index = $rssActiveFeed._index + 1
                     if (index === $rssListRsp.data.length) {
                         warnToast("Already the last Feed")
                     } else {
-                        shortToast("Next Feed")
                         handleGotoFeedEntries($rssListRsp.data[index])
                     }
                 }
@@ -62,27 +57,23 @@
             }
             if ($viewMode === 'entry' || ($viewMode === 'feed' && $rssFeedEntriesView) ) {
                 if (!isInList($rssActiveEntry, $rssListRsp.data)) {
-                    shortToast("Previous Entry")
                     activeEntry.set($rssListRsp.data[0])
                 } else {
                     const index = $rssActiveEntry._index - 1
                     if (index < 0) {
                         warnToast("Already the first Entry")
                     } else {
-                        shortToast("Previous Entry")
                         rssActiveEntry.set($rssListRsp.data[index])
                     }
                 }
             } else {
                 if (!isInList($rssActiveFeed, $rssListRsp.data)) {
-                    shortToast("Previous Feed")
                     handleGotoFeedEntries($rssListRsp.data[0])
                 } else {
                     const index = $rssActiveFeed._index - 1
                     if (index < 0 ) {
                         warnToast("Already the first Feed")
                     } else {
-                        shortToast("Previous Feed")
                         handleGotoFeedEntries($rssListRsp.data[index])
                     }
                 }

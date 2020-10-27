@@ -26,27 +26,23 @@
             }
             if ($viewMode === 'entry' || ($viewMode === 'feed' && $starFeedEntriesView) ) {
                 if (!isInList($starActiveEntry, $starListRsp.data)) {
-                    shortToast("Next Entry")
                     starActiveEntry.set($starListRsp.data[0])
                 } else {
                     const index = $starActiveEntry._index + 1
                     if (index === $starListRsp.data.length) {
                         warnToast("Already the last Entry")
                     } else {
-                        shortToast("Next Entry")
                         starActiveEntry.set($starListRsp.data[index])
                     }
                 }
             } else {
                 if (!isInList($starActiveFeed, $starListRsp.data)) {
-                    shortToast("Next Feed")
                     starActiveFeed.set($starListRsp.data[0])
                 } else {
                     const index = $starActiveFeed._index + 1
                     if (index === $starListRsp.data.length) {
                         warnToast("Already the last Feed")
                     } else {
-                        shortToast("Next Feed")
                         starActiveFeed.set($starListRsp.data[index])
                     }
                 }
@@ -59,27 +55,23 @@
             }
             if ($viewMode === 'entry' || ($viewMode === 'feed' && $starFeedEntriesView) ) {
                 if (!isInList($starActiveEntry, $starListRsp.data)) {
-                    shortToast("Previous Entry")
                     starActiveEntry.set($starListRsp.data[0])
                 } else {
                     const index = $starActiveEntry._index - 1
                     if (index < 0) {
                         warnToast("Already the first Entry")
                     } else {
-                        shortToast("Previous Entry")
                         starActiveEntry.set($starListRsp.data[index])
                     }
                 }
             } else {
                 if (!isInList($starActiveFeed, $starListRsp.data)) {
-                    shortToast("Previous Feed")
                     starActiveFeed.set($starListRsp.data[0])
                 } else {
                     const index = $starActiveFeed._index - 1
                     if (index < 0 ) {
                         warnToast("Already the first Feed")
                     } else {
-                        shortToast("Previous Feed")
                         starActiveFeed.set($starListRsp.data[index])
                     }
                 }

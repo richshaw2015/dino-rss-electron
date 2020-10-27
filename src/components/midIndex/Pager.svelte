@@ -3,35 +3,37 @@
     export let numPages
 
     import { createEventDispatcher, onMount } from 'svelte'
-    import { shortToast } from '../utils/toast.js'
+    import { warnToast } from '../utils/toast.js'
 
     const dispatch = createEventDispatcher()
     const Mousetrap = require('mousetrap')
 
-    function nextPage(fromKbd=false) {
+    function nextPage() {
         if (currentPage < numPages) {
-            if (fromKbd) {
-                shortToast("Next page")
-            }
             dispatch('refresh-list-view', {page: currentPage + 1 })
+        } else {
+            warnToast("Already the last page")
         }
     }
-    function prevPage(fromKbd=false) {
+    function prevPage() {
         if (currentPage > 1) {
-            if (fromKbd) {
-                shortToast("Previous page")
-            }
             dispatch('refresh-list-view', { page: currentPage - 1 })
+        } else {
+            warnToast("Already the first page")
         }
     }
     function firstPage() {
         if (currentPage > 1) {
             dispatch('refresh-list-view', { page: 1 })
+        } else {
+            warnToast("Already the first page")
         }
     }
     function lastPage() {
         if (currentPage < numPages) {
             dispatch('refresh-list-view', { page: numPages })
+        } else {
+            warnToast("Already the last page")
         }
     }
 
