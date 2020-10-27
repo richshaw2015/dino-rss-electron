@@ -4,16 +4,85 @@
     const { clipboard } = require('electron')
 
     import { getFontSize } from '../utils/storage.js'
-    import { activeEntry } from '../store/store.js'
+    import { isInList } from '../utils/helper.js'
     import { scrollStep } from '../utils/config.js'
-    import { shortToast } from '../utils/toast.js'
 
     import Find from '../global/Find.svelte'
     import Title from './Title.svelte'
     import Statusbar from './Statusbar.svelte'
     import Third from './Third.svelte'    
 
+    import { shortToast, toast, warnToast } from '../utils/toast.js'
+    import { apiReq } from '../utils/req.js'
+    import { rssActiveEntry, rssListRsp, rssEntryContentRsp, starActiveEntry, starEntryContentRsp, 
+        activeTab } from '../store/store.js'
+
     let fontSize = getFontSize()
+
+    function getEntryContent(entry) {
+        let activeEntry
+        let entryContentRsp
+
+        if ($activeTab === "star") {
+            starEntryContentRsp.set({})
+            activeEntry = $starActiveEntry
+        } else if ($activeTab === "rss") {
+            rssEntryContentRsp.set({})
+            activeEntry = $rssActiveEntry
+        }
+
+        apiReq('/api/entry/get/content', {
+            entry_id: activeEntry.id,
+            feed_id: activeEntry.feed.id,
+            is_podcast: activeEntry.feed.is_podcast
+        }).then( rsp => {
+            if (rsp.episode && Object.keys(rsp.episode).length > 0) {
+                let episodeBase = {
+                    "version": 5,
+                    "show": {
+                        "title": activeEntry.feed.title,
+                        "subtitle": activeEntry.feed.description,
+                        "poster": activeEntry.feed.image,
+                        "link": activeEntry.feed.link,
+                    },
+                    "title": activeEntry.title,
+                    "link": activeEntry.link,
+                    "publicationDate": activeEntry.updated
+                }
+                entryContentRsp = {
+                    code: rsp.code,
+                    content: rsp.content,
+                    episode: Object.assign(episodeBase, rsp.episode)
+                }
+            } else {
+                entryContentRsp = rsp
+            }
+
+            if ($activeTab === "star") {
+                starEntryContentRsp.set(entryContentRsp)
+            } else if ($activeTab === "rss") {
+                rssEntryContentRsp.set(entryContentRsp)
+
+                // sync read status
+                if (isInList(entry, $rssListRsp.data)) {
+                    $rssListRsp.data[entry._index].stats.has_read = true
+                }
+            }
+        }).catch(err => {
+            const msg =  err + ' Content'
+            if ($activeTab === "star") {
+                starEntryContentRsp.set({
+                    code: -1,
+                    msg: msg
+                })
+            } else if ($activeTab === "rss") {
+                rssEntryContentRsp.set({
+                    code: -1,
+                    msg: msg
+                })
+            }
+        })
+    }
 
     onMount(() => {
         // keyboard shortcut
@@ -52,17 +121,44 @@
             return false
         });
         Mousetrap.bind('y y', function() {
-            clipboard.writeText($activeEntry.link)
+            if ($activeTab === "star") {
+                clipboard.writeText($starActiveEntry.link)
+            } else if ($activeTab === "rss") {
+                clipboard.writeText($rssActiveEntry.link)
+            }
             shortToast("Link copied")
             return false
         });
     })
+
+    rssActiveEntry.subscribe(entry => {
+        if (entry.id) {
+            console.log("rssActiveEntry changed")
+            getEntryContent(entry)
+        }
+        return entry
+    });
+    starActiveEntry.subscribe(entry => {
+        if (entry.id) {
+            console.log("starActiveEntry changed")
+            getEntryContent(entry)
+        }
+        return entry
+    });
 </script>
 
-<Title bind:fontSize />
+{#if $activeTab === "rss"}
+    <Title bind:fontSize activeEntry={$rssActiveEntry} />
+
+    <Third {fontSize} activeEntry={$rssActiveEntry} entryContentRsp={$rssEntryContentRsp} />
+
+    <Statusbar activeEntry={$rssActiveEntry} />
+{:else if $activeTab === "star" }
+    <Title bind:fontSize activeEntry={$starActiveEntry} />
+
+    <Third {fontSize} activeEntry={$starActiveEntry} entryContentRsp={$starEntryContentRsp} />
+
+    <Statusbar activeEntry={$starActiveEntry} />
+{/if}
 
 <Find />
-
-<Third {fontSize} />
-
-<Statusbar />

@@ -162,8 +162,8 @@
         </span>
 
         <span class="entry-star-stats">
-            <i class="material-icons {entryInfo.stats.has_stared ? 'primary-color' : ''}">star</i>
-            <span class="uv-stats">{ entryInfo.stats.uv_stared }</span>
+            <i class="material-icons {entryInfo.stats.has_starred ? 'primary-color' : ''}">star</i>
+            <span class="uv-stats">{ entryInfo.stats.uv_starred }</span>
         </span>
     </div>
 </div>

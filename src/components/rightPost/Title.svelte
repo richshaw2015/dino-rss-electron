@@ -1,8 +1,8 @@
 
 <script>
     export let fontSize = "text-medium"
+    export let activeEntry = {}
 
-    import { activeEntry } from '../store/store.js'
     import { toggleMaximizeWindow, macNavCtxMenu } from '../utils/helper.js'
     import { saveFontSize } from '../utils/storage.js'
     
@@ -60,11 +60,11 @@
     }
 </style>
 
-{#if $activeEntry.id}
+{#if activeEntry.id}
     <div id="omr-post-title-bar" class="drag" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
-        <div class="post-title">{ $activeEntry.title }</div>
-        <i class="material-icons no-drag {$activeEntry.stats.has_stared ? 'primary-color' : ''}">
-            {$activeEntry.stats.has_stared ? 'star' : 'star_border'}</i>
+        <div class="post-title">{ activeEntry.title }</div>
+        <i class="material-icons no-drag {activeEntry.stats.has_starred ? 'primary-color' : ''}">
+            {activeEntry.stats.has_starred ? 'star' : 'star_border'}</i>
         <i class="material-icons no-drag" on:click="{showFontSizeWindow}">format_size</i>
     </div>
 

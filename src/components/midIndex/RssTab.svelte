@@ -1,105 +1,184 @@
 <script>
-    export let listRsp = {}
-
     import FeedItem from './FeedItem.svelte'
-    import Common from '../global/Common.svelte'
     import Notice from '../global/Notice.svelte'
     import FeedNav from './FeedNav.svelte'
     import Pager from './Pager.svelte'
     import Toolbar from './Toolbar.svelte'
     import EntryItem from "./EntryItem.svelte"
-    import { getPageSize } from '../utils/helper.js'
+    import { getPageSize, isInList } from '../utils/helper.js'
     import { shortToast, toast, warnToast } from '../utils/toast.js'
     import { apiReq } from '../utils/req.js'
     import { saveViewMode } from '../utils/storage.js'
-    import { viewMode, viewScope, activeEntry, activeFeed, isFeedEntriesView, feedListRspBak } 
-        from '../store/store.js'
+    import { viewMode, viewScope, rssActiveEntry, rssActiveFeed, rssListRsp, rssFeedListRsp, rssEntryContentRsp, 
+        rssFeedEntriesView } from '../store/store.js'
 
-    import { onMount } from 'svelte'
+    import { onMount, onDestroy } from 'svelte'
+    const Mousetrap = require('mousetrap')
 
     onMount(() => {
         // first list request
-        updateList(1, $viewMode)
-
-        activeFeed.subscribe(feed => {
-            if (feed.id) {
-                console.log(feed)
-                gotoFeedEntries(feed, 1, true)
+        if(!$rssFeedEntriesView) {
+            updateRssList(1, $viewMode)
+        }
+        
+        // keyboard shortcut
+        Mousetrap.bind('n', function() {
+            if ($rssListRsp.code !== 0 || $rssListRsp.data.length === 0) {
+                return false
             }
+            if ($viewMode === 'entry' || ($viewMode === 'feed' && $rssFeedEntriesView) ) {
+                if (!isInList($rssActiveEntry, $rssListRsp.data)) {
+                    shortToast("Next Entry")
+                    rssActiveEntry.set($rssListRsp.data[0])
+                } else {
+                    const index = $rssActiveEntry._index + 1
+                    if (index === $rssListRsp.data.length) {
+                        warnToast("Already the last Entry")
+                    } else {
+                        shortToast("Next Entry")
+                        rssActiveEntry.set($rssListRsp.data[index])
+                    }
+                }
+            } else {
+                if (!isInList($rssActiveFeed, $rssListRsp.data)) {
+                    shortToast("Next Feed")
+
+                    handleGotoFeedEntries($rssListRsp.data[0])
+                } else {
+                    const index = $rssActiveFeed._index + 1
+                    if (index === $rssListRsp.data.length) {
+                        warnToast("Already the last Feed")
+                    } else {
+                        shortToast("Next Feed")
+                        handleGotoFeedEntries($rssListRsp.data[index])
+                    }
+                }
+            }
+            return false
+        });
+        Mousetrap.bind('N', function() {
+            if ($rssListRsp.data.length === 0 || $rssListRsp.code !== 0) {
+                return false
+            }
+            if ($viewMode === 'entry' || ($viewMode === 'feed' && $rssFeedEntriesView) ) {
+                if (!isInList($rssActiveEntry, $rssListRsp.data)) {
+                    shortToast("Previous Entry")
+                    activeEntry.set($rssListRsp.data[0])
+                } else {
+                    const index = $rssActiveEntry._index - 1
+                    if (index < 0) {
+                        warnToast("Already the first Entry")
+                    } else {
+                        shortToast("Previous Entry")
+                        rssActiveEntry.set($rssListRsp.data[index])
+                    }
+                }
+            } else {
+                if (!isInList($rssActiveFeed, $rssListRsp.data)) {
+                    shortToast("Previous Feed")
+                    handleGotoFeedEntries($rssListRsp.data[0])
+                } else {
+                    const index = $rssActiveFeed._index - 1
+                    if (index < 0 ) {
+                        warnToast("Already the first Feed")
+                    } else {
+                        shortToast("Previous Feed")
+                        handleGotoFeedEntries($rssListRsp.data[index])
+                    }
+                }
+            }
+            return false
         });
     })
+    onDestroy(() => {
+        console.log("onDestroy RssTab")
+    })
 
-    function updateList(page, mode) {
+    function handleGotoFeedEntries(feed, page) {
+        rssActiveFeed.set(feed)
+        gotoFeedEntries(page)
+    }
+
+    function updateRssList(page, mode) {
         if (!mode) mode = $viewMode
 
         if (mode === 'feed') {
             apiReq('/api/my/feeds', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
-                listRsp.code = rsp.code || 0
-                listRsp.data = rsp.data
+                rssListRsp.set(rsp)
+
+                if (!$rssFeedEntriesView) {
+                    rssFeedListRsp.set(rsp)
+                }
 
                 if (rsp.code === 0) {
                     viewMode.set(mode)
-
-                    listRsp.page = rsp.page
-                    listRsp.num_pages = rsp.num_pages
-
                     saveViewMode(mode)
                 } else if (rsp.code === 100) {
-                    listRsp.msg = "No updated Feeds"
+                    rssListRsp.set({
+                        "code": rsp.code,
+                        "msg": "No updated Feeds"
+                    })
                 }  else if (rsp.code === 101) {
-                    listRsp.msg = "No unread Feeds"
+                    rssListRsp.set({
+                        "code": rsp.code,
+                        "msg": "No unread Feeds"
+                    })
                 }
             }).catch(err => {
-                listRsp.code = -1
-                listRsp.msg = err + ' Feeds'
-
-                warnToast(listRsp.msg)
+                rssListRsp.set({
+                    "code": -1,
+                    "msg": err + ' Feeds'
+                })
+                warnToast($rssListRsp.msg)
             })
         } else if (mode === 'entry') {
             apiReq('/api/my/entries', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
-                listRsp.code = rsp.code || 0
-                listRsp.data = rsp.data
+                rssListRsp.set(rsp)
 
                 if (rsp.code === 0) {
                     viewMode.set(mode)
-
-                    listRsp.page = rsp.page
-                    listRsp.num_pages = rsp.num_pages
-
                     saveViewMode($viewMode)
                 } else if (rsp.code === 100) {
-                    listRsp.msg ="No updated Entries"
-                }  else if (rsp.code === 101) {
-                    listRsp.msg = "No unread Entries"
+                    rssListRsp.set({
+                        "code": rsp.code,
+                        "msg": "No updated Entries"
+                    })
+                } else if (rsp.code === 101) {
+                    rssListRsp.set({
+                        "code": rsp.code,
+                        "msg": "No unread Entries"
+                    })
                 }
             }).catch(err => {
-                listRsp.code = -1
-                listRsp.msg = err + ' Entries'
-
-                warnToast(listRsp.msg)
+                rssListRsp.set({
+                    "code": -1,
+                    "msg": err + ' Entries'
+                })
+                warnToast($rssListRsp.msg)
             })
         }
     }
 
-    function gotoFeedEntries(feed, page=1, saveCtx=false) {
+    function gotoFeedEntries(page=1) {
         apiReq('/api/feed/entries', {
-            feed_id: feed.id,
+            feed_id: $rssActiveFeed.id,
             page: page,
-            page_size: getPageSize() - 1, 
+            page_size: getPageSize(true), 
             scope: $viewScope
         }).then( rsp => {
-            if (rsp.code === 0 || rsp.code === 101) {
-                if (saveCtx) {
-                    isFeedEntriesView.set(true)
-                    feedListRspBak.set(listRsp)
-                }
-                listRsp = rsp
+            rssFeedEntriesView.set(true)
+            rssListRsp.set(rsp)
 
-                if (rsp.code === 101) {
-                    listRsp.msg = "No unread Entries"
-                }
+            if (rsp.code === 101) {
+                rssListRsp.set({
+                    "code": rsp.code,
+                    "msg": "No unread Entries"
+                })
             } else if (rsp.code === 100) {
-                toast("No Entries data")
+                rssListRsp.set({ 
+                    "code": rsp.code,
+                    "msg": "No Entries data"
+                })
             }
         }).catch(err => {
             warnToast(err + ' Entries')
@@ -107,10 +186,10 @@
     }
 
     function handleToolbarRefresh(event) {
-        if ($isFeedEntriesView) {
-            gotoFeedEntries($activeFeed, event.detail.page, false)
+        if ($rssFeedEntriesView) {
+            gotoFeedEntries(event.detail.page)
         } else {
-            updateList(event.detail.page, event.detail.mode)
+            updateRssList(event.detail.page, event.detail.mode)
         }
     }
     // TODO shortcut C r D
@@ -133,51 +212,51 @@
     }
 </style>
 
-<Common bind:listRsp />
-<Toolbar showModeBtn={!$isFeedEntriesView} on:refresh-list-view={handleToolbarRefresh} />
+<Toolbar showModeBtn={!$rssFeedEntriesView} on:refresh-list-view={handleToolbarRefresh} />
 
-{#if $isFeedEntriesView}
-    <FeedNav bind:listRsp />
+{#if $rssFeedEntriesView}
+    <FeedNav />
 
-    {#if listRsp.code === 101}
-        <Notice level="succ" msg={listRsp.msg} />
+    {#if $rssListRsp.code === 101}
+        <Notice level="succ" msg={$rssListRsp.msg} />
+    {:else if $rssListRsp.code === 100}
+        <Notice level="info" msg={$rssListRsp.msg} />
     {:else}
         <div class="list-wrapper">
             <ul class="collection list-ul">
-                {#each listRsp.data as entry (entry.id)}
-                <li class="collection-item list-li { entry.id === $activeEntry.id ? 'active' : ''}" 
-                    on:click={() => activeEntry.set(entry)}>
+                {#each $rssListRsp.data as entry (entry.id)}
+                <li class="collection-item list-li { entry.id === $rssActiveEntry.id ? 'active' : ''}" 
+                    on:click={() => rssActiveEntry.set(entry)}>
                     <EntryItem entryInfo={entry} />
                 </li>
                 {/each}
             </ul>
         </div>
 
-        <Pager currentPage={listRsp.page} numPages={listRsp.num_pages} 
+        <Pager currentPage={$rssListRsp.page} numPages={$rssListRsp.num_pages} 
             on:refresh-list-view={handleToolbarRefresh} />
     {/if}
 {:else}
-    {#if listRsp.code === undefined}
+    {#if $rssListRsp.code === undefined}
         <!-- loading -->
         <Notice />
-    {:else if listRsp.code === -1 && !listRsp.data}
-        <!-- no current list data -->
-        <Notice level="warn" msg={listRsp.msg} />
-    {:else if listRsp.code === 0 || listRsp.code === -1 }
+    {:else if $rssListRsp.code === -1}
+        <Notice level="warn" msg={$rssListRsp.msg} />
+    {:else if $rssListRsp.code === 0}
         <div class="list-wrapper">
             <ul class="collection list-ul">
             {#if $viewMode === 'feed'}
-                {#each listRsp.data as feed (feed.id)}
-                    <li class="collection-item list-li { feed.id === $activeFeed.id ? 'active' : '' }" 
-                        on:click={() => activeFeed.set(feed)}>
+                {#each $rssListRsp.data as feed (feed.id)}
+                    <li class="collection-item list-li { feed.id === $rssActiveFeed.id ? 'active' : '' }" 
+                        on:click={() => handleGotoFeedEntries(feed)}>
                         <FeedItem feedInfo={feed} />
                     </li>
                 {/each}
 
             {:else if $viewMode === 'entry'}
-                {#each listRsp.data as entry, index (entry.id)}
-                    <li class="collection-item list-li { entry.id === $activeEntry.id ? 'active' : ''}" 
-                        on:click={() => activeEntry.set(entry)}>
+                {#each $rssListRsp.data as entry (entry.id)}
+                    <li class="collection-item list-li { entry.id === $rssActiveEntry.id ? 'active' : ''}" 
+                        on:click={() => rssActiveEntry.set(entry)}>
                         <EntryItem entryInfo={entry}  />
                     </li>
                 {/each}
@@ -185,11 +264,11 @@
             </ul>
         </div>
 
-        <Pager currentPage={listRsp.page} numPages={listRsp.num_pages} 
+        <Pager currentPage={$rssListRsp.page} numPages={$rssListRsp.num_pages} 
             on:refresh-list-view={handleToolbarRefresh} />
-    {:else if listRsp.code === 100}
-        <Notice level="info" msg={listRsp.msg} />
-    {:else if listRsp.code === 101}
-        <Notice level="succ" msg={listRsp.msg} />
+    {:else if $rssListRsp.code === 100}
+        <Notice level="info" msg={$rssListRsp.msg} />
+    {:else if $rssListRsp.code === 101}
+        <Notice level="succ" msg={$rssListRsp.msg} />
     {/if}
 {/if}

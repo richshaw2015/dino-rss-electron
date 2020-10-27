@@ -25,8 +25,8 @@ export const EntryItemUnread = () => ({
             },
             "stats": {
                 "has_read": false,
-                "has_stared": true,
-                "uv_stared": 9999,
+                "has_starred": true,
+                "uv_starred": 9999,
                 "uv_view": 8808,
             }
         }

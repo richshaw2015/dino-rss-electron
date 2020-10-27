@@ -8,13 +8,19 @@
     const dispatch = createEventDispatcher()
     const Mousetrap = require('mousetrap')
 
-    function nextPage() {
+    function nextPage(fromKbd=false) {
         if (currentPage < numPages) {
+            if (fromKbd) {
+                shortToast("Next page")
+            }
             dispatch('refresh-list-view', {page: currentPage + 1 })
         }
     }
-    function prevPage() {
+    function prevPage(fromKbd=false) {
         if (currentPage > 1) {
+            if (fromKbd) {
+                shortToast("Previous page")
+            }
             dispatch('refresh-list-view', { page: currentPage - 1 })
         }
     }
@@ -32,13 +38,11 @@
     onMount(() => {
         // keyboard shortcut
         Mousetrap.bind(['p', 'right'], function() {
-            nextPage()
-            shortToast("Next page")
+            nextPage(true)
             return false
         });
         Mousetrap.bind(['P', 'left'], function() {
-            prevPage()
-            shortToast("Previous page")
+            prevPage(true)
             return false
         });
     })

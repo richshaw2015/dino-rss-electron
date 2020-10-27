@@ -1,14 +1,12 @@
 <script>
-    export let listRsp
-
     import { onMount } from 'svelte'
-    import { feedListRspBak, isFeedEntriesView, activeFeed } from '../store/store.js'
+    import { rssActiveFeed, rssListRsp, rssFeedListRsp, rssFeedEntriesView } from '../store/store.js'
 
     const Mousetrap = require('mousetrap')
 
     function backToFeedList() {
-        isFeedEntriesView.set(false)
-        listRsp = $feedListRspBak
+        rssFeedEntriesView.set(false)
+        rssListRsp.set($rssFeedListRsp)
     }
 
     onMount(() => {
@@ -52,20 +50,22 @@
         display: flex;
         align-items: center;
         width: 64px;
+        cursor: pointer;
     }
 
 </style>
 
-{#if $isFeedEntriesView}
+{#if $rssFeedEntriesView}
 <div id="omr-feed-nav">
     <div id="omr-feed-back" on:click={backToFeedList}>
         <i class="material-icons back-icon">arrow_back</i>
         <span class="">Back</span>
     </div>
 
-    <img src="{$activeFeed.image}" class="feed-nav-avatar" alt="" />
+    <img src="{$rssActiveFeed.image}" class="feed-nav-avatar" alt="" />
     <span class="truncate bold feed-nav-title">
-        {$activeFeed.stats.unread_count > 0 ? $activeFeed.title + '(' + $activeFeed.stats.unread_count + ')': $activeFeed.title}
+        {$rssActiveFeed.stats.unread_count > 0 ? $rssActiveFeed.title + '(' + $rssActiveFeed.stats.unread_count + ')'
+            : $rssActiveFeed.title}
     </span>
     <i class="material-icons check-icon">check</i>
 </div>

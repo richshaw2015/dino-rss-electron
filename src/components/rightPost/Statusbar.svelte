@@ -1,5 +1,5 @@
 <script>
-    import { activeEntry } from '../store/store.js'
+    export let activeEntry = {}
 </script>
 
 <style>
@@ -15,8 +15,8 @@
     }
 </style>
 
-{#if $activeEntry.link }
+{#if activeEntry.link }
     <div id="omr-status-bar">
-        <span class="truncate">{$activeEntry.link}</span>
+        <span class="truncate">{activeEntry.link}</span>
     </div>    
 {/if}

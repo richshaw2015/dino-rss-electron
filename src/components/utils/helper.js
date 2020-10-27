@@ -75,8 +75,12 @@ export function isMac(){
     return process.platform === 'darwin'
 }
 
-export function getPageSize() {
-    return Math.floor((window.innerHeight - 60 - 16 - 60) / 59)
+export function getPageSize(isFeedEntriesView=false) {
+    if (isFeedEntriesView) {
+        return Math.floor((window.innerHeight - 60 - 16 - 60 - 48) / 59)
+    } else {
+        return Math.floor((window.innerHeight - 60 - 16 - 60) / 59)
+    }
 }
 
 export function fromNow(utcTs) {
@@ -133,4 +137,15 @@ export function fromNow(utcTs) {
     }
 
     return utcTs
+}
+
+export function isInList(item, list) {
+    if (item && list) {
+        for (let i of list) {
+            if (item.id === i.id) {
+                return true
+            } 
+         }
+    }
+    return false
 }

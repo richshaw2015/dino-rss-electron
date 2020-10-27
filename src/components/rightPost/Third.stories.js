@@ -26,8 +26,8 @@ export const codeHighlight = () => ({
             },
             "stats": {
                 "has_read": true,
-                "has_stared": true,
-                "uv_stared": 5,
+                "has_starred": true,
+                "uv_starred": 5,
                 "uv_view": 246,
             }
         }
