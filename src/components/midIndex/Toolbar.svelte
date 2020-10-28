@@ -4,7 +4,7 @@
     import { onMount } from 'svelte'
     import { createEventDispatcher } from 'svelte'
     import { saveViewScope } from '../utils/storage.js'
-    import { activeTab, viewMode, viewScope } from '../store/store.js'
+    import { activeTab, viewMode, viewScope } from '../utils/store.js'
     import { shortToast } from '../utils/toast.js'
 
     const Mousetrap = require('mousetrap')

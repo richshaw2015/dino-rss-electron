@@ -10,7 +10,7 @@
     import { apiReq } from '../utils/req.js'
     import { saveViewMode } from '../utils/storage.js'
     import { viewMode, viewScope, starActiveEntry, starActiveFeed, starFeedEntriesView, starFeedListRsp, starListRsp } 
-        from '../store/store.js'
+        from '../utils/store.js'
 
     import { onMount } from 'svelte'
 

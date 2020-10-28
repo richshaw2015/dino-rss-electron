@@ -1,6 +1,6 @@
 <script>
     import { getTokenPromise } from './components/utils/storage.js'
-    import { activeTab } from './components/store/store.js'
+    import { activeTab } from './components/utils/store.js'
     import Nav from './components/leftNav/Nav.svelte'
     import AppsTab from './components/midIndex/AppsTab.svelte'
     import StarTab from './components/midIndex/StarTab.svelte'

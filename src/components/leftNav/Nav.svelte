@@ -12,7 +12,7 @@
     const Mousetrap = require('mousetrap')
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow } from '../utils/helper.js'
-    import { activeTab } from '../store/store.js'
+    import { activeTab, unreadCount } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
 
     onMount(() => {
@@ -81,6 +81,26 @@
         width: 100%;
         cursor: move;
     }
+    .rss-notify-wrapper {
+        position: relative;
+        width: 100%;
+    }
+    .rss-notify-wrapper i {
+        margin-left: 23px;
+    }
+    .rss-notify-badge {
+        position: absolute;
+        top: -5px;
+        right: 12px;
+        padding: 1px 5px;
+        min-width: 18px;
+        min-height: 18px;
+        border-radius: 50%;
+        color: white;
+        font-size: 11px;
+        display: flex;
+        justify-content: center;
+    }
 </style>
 
 <div id="omr-left-nav" class="drag">
@@ -92,7 +112,14 @@
     </div>
 
     <div class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={switchRssNav}>
-        <i class="material-icons {$activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
+        <div class="rss-notify-wrapper">
+            <i class="material-icons {$activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
+            {#if $unreadCount > 0}
+                <span class="rss-notify-badge second-bg-color">
+                    {$unreadCount <= 999 ? $unreadCount : '···'}
+                </span>
+            {/if}
+        </div>
     </div>
 
     <div class="nav-tab-btn no-drag" id="omr-nav-star" on:click={switchStarNav}>

@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { getViewMode, getViewScope } from '../utils/storage.js'
+import { getViewMode, getViewScope } from './storage.js'
 
 // nav tab
 export let activeTab = writable("rss")
@@ -7,6 +7,8 @@ export let activeTab = writable("rss")
 // toolbar button status
 export let viewMode = writable(getViewMode())
 export let viewScope = writable(getViewScope())
+
+export let unreadCount = writable(0)
 
 // rss tab
 export let rssListRsp = writable({})

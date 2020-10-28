@@ -15,7 +15,7 @@
     import { shortToast, toast, warnToast } from '../utils/toast.js'
     import { apiReq } from '../utils/req.js'
     import { rssActiveEntry, rssListRsp, rssEntryContentRsp, starActiveEntry, starEntryContentRsp, 
-        activeTab } from '../store/store.js'
+        activeTab, unreadCount, rssFeedEntriesView, rssActiveFeed } from '../utils/store.js'
 
     let fontSize = getFontSize()
 
@@ -58,6 +58,8 @@
                 entryContentRsp = rsp
             }
 
+            // TODO set cache
+
             if ($activeTab === "star") {
                 starEntryContentRsp.set(entryContentRsp)
             } else if ($activeTab === "rss") {
@@ -65,7 +67,14 @@
 
                 // sync read status
                 if (isInList(entry, $rssListRsp.data)) {
-                    $rssListRsp.data[entry._index].stats.has_read = true
+                    if (!$rssListRsp.data[entry._index].stats.has_read) {
+                        $rssListRsp.data[entry._index].stats.has_read = true
+                        $unreadCount -= 1
+
+                        if ($rssFeedEntriesView) {
+                            $rssActiveFeed.stats.unread_count -= 1
+                        }
+                    }
                 }
             }
         }).catch(err => {

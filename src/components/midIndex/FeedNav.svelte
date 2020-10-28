@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte'
-    import { rssActiveFeed, rssListRsp, rssFeedListRsp, rssFeedEntriesView } from '../store/store.js'
+    import { rssActiveFeed, rssListRsp, rssFeedListRsp, rssFeedEntriesView } from '../utils/store.js'
 
     const Mousetrap = require('mousetrap')
 

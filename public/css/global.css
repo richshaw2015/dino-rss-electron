@@ -51,6 +51,9 @@ main {
 .second-color {
     color: #26a69a;
 }
+.second-bg-color {
+    background-color: #26a69a;
+}
 
 h1 {
     font-size: 1.8rem;

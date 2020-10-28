@@ -9,8 +9,8 @@
     import { shortToast, toast, warnToast } from '../utils/toast.js'
     import { apiReq } from '../utils/req.js'
     import { saveViewMode } from '../utils/storage.js'
-    import { viewMode, viewScope, rssActiveEntry, rssActiveFeed, rssListRsp, rssFeedListRsp, rssEntryContentRsp, 
-        rssFeedEntriesView } from '../store/store.js'
+    import { viewMode, viewScope, rssActiveEntry, rssActiveFeed, rssListRsp, rssFeedListRsp, rssFeedEntriesView, 
+        unreadCount } from '../utils/store.js'
 
     import { onMount, onDestroy } from 'svelte'
     const Mousetrap = require('mousetrap')
@@ -80,14 +80,25 @@
             }
             return false
         });
-    })
-    onDestroy(() => {
-        console.log("onDestroy RssTab")
+
+        const syncUnreadInterval = setInterval(syncUnreadCount, 3600*1000)
+
+        return () => clearInterval(syncUnreadInterval)
     })
 
     function handleGotoFeedEntries(feed, page) {
         rssActiveFeed.set(feed)
         gotoFeedEntries(page)
+    }
+
+    function syncUnreadCount() {
+        apiReq('/api/count/unread', {}).then(rsp => {
+            if (rsp.code === 0) {
+                unreadCount.set(rsp.count)
+            }
+        }).catch(err => {
+            toast(err + " unread count")
+        })
     }
 
     function updateRssList(page, mode) {
@@ -147,6 +158,11 @@
                 })
                 warnToast($rssListRsp.msg)
             })
+        }
+
+        // sync unread count
+        if (page === 1) {
+            syncUnreadCount()
         }
     }
 
