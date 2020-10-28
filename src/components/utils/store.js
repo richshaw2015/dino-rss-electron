@@ -8,7 +8,7 @@ export let activeTab = writable("rss")
 export let viewMode = writable(getViewMode())
 export let viewScope = writable(getViewScope())
 
-export let unreadCount = writable(0)
+export let unreadCountRsp = writable(0)
 
 // rss tab
 export let rssListRsp = writable({})

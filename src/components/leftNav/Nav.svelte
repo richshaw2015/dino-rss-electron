@@ -12,7 +12,7 @@
     const Mousetrap = require('mousetrap')
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow } from '../utils/helper.js'
-    import { activeTab, unreadCount } from '../utils/store.js'
+    import { activeTab, unreadCountRsp } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
 
     onMount(() => {
@@ -114,9 +114,9 @@
     <div class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={switchRssNav}>
         <div class="rss-notify-wrapper">
             <i class="material-icons {$activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
-            {#if $unreadCount > 0}
+            {#if $unreadCountRsp.count > 0}
                 <span class="rss-notify-badge second-bg-color">
-                    {$unreadCount <= 999 ? $unreadCount : '···'}
+                    {$unreadCountRsp.count <= 999 ? $unreadCountRsp.count : '···'}
                 </span>
             {/if}
         </div>

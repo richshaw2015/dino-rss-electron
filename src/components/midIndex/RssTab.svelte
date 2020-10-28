@@ -10,7 +10,7 @@
     import { apiReq } from '../utils/req.js'
     import { saveViewMode } from '../utils/storage.js'
     import { viewMode, viewScope, rssActiveEntry, rssActiveFeed, rssListRsp, rssFeedListRsp, rssFeedEntriesView, 
-        unreadCount } from '../utils/store.js'
+        unreadCountRsp } from '../utils/store.js'
 
     import { onMount, onDestroy } from 'svelte'
     const Mousetrap = require('mousetrap')
@@ -86,6 +86,15 @@
         return () => clearInterval(syncUnreadInterval)
     })
 
+    unreadCountRsp.subscribe(rsp => {
+        if (rsp.count < 0 && rsp.code === 0) {
+            console.warn("unreadCountRsp changed negative")
+            rsp.code = -1
+            syncUnreadCount()
+        }
+        return rsp
+    });
+
     function handleGotoFeedEntries(feed, page) {
         rssActiveFeed.set(feed)
         gotoFeedEntries(page)
@@ -94,7 +103,7 @@
     function syncUnreadCount() {
         apiReq('/api/count/unread', {}).then(rsp => {
             if (rsp.code === 0) {
-                unreadCount.set(rsp.count)
+                unreadCountRsp.set(rsp)
             }
         }).catch(err => {
             toast(err + " unread count")
