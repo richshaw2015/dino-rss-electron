@@ -5,6 +5,8 @@ const viewScopeConfKey = 'CONF/VIEW/SCOPE'
 const fontSizeConfKey = 'CONF/FONT/SIZE'
 const tokenConfKey = 'CONF/TOKEN'
 
+// TODO clear thirdparty data and rebuild localStorage
+
 export function saveViewMode(mode) {
     localStorage.setItem(viewModeConfKey, mode)
 }

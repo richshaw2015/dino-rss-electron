@@ -54,6 +54,11 @@
             } else if ($activeTab === "rss") {
                 rssEntryContentRsp.set(entryCache)
             }
+
+            try {
+                document.querySelector('#omr-post-third-html').scrollTop = 0
+            } catch (e) {}
+
             return true
         }
 
