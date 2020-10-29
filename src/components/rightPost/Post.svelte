@@ -1,7 +1,9 @@
 <script>
     import { onMount } from 'svelte'
     const Mousetrap = require('mousetrap')
-    const { clipboard } = require('electron')
+    const { clipboard, remote } = require('electron')
+    const fs = require('fs')
+    const path = require('path')
 
     import { getFontSize } from '../utils/storage.js'
     import { isInList } from '../utils/helper.js'
@@ -18,8 +20,44 @@
         activeTab, unreadCountRsp, rssFeedEntriesView, rssActiveFeed } from '../utils/store.js'
 
     let fontSize = getFontSize()
+    
+    const entryCacheDir = path.join(remote.app.getPath('temp'), remote.app.getName(), "entry.tmp")
+    
+    function setEntryCache(entryId, cacheRsp) {
+        const entryCacheFile = path.join(entryCacheDir, entryId + ".json")
+        fs.writeFileSync(entryCacheFile, JSON.stringify(cacheRsp), {encoding: "utf8"})
+    }
+    function getEntryCache(entryId) {
+        if (!fs.existsSync(entryCacheDir)) {
+            fs.mkdirSync(entryCacheDir, {recursive: true})
+            return null
+        }
+
+        const entryCacheFile = path.join(entryCacheDir, entryId + ".json")
+        if (!fs.existsSync(entryCacheFile)) {
+            return null
+        } else {
+            try {
+                return JSON.parse(fs.readFileSync(entryCacheFile, 'utf8'))
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
 
     function getEntryContent(entry) {
+        const entryCache = getEntryCache(entry.id)
+        // hit cache
+        if (entryCache) {
+            if ($activeTab === "star") {
+                starEntryContentRsp.set(entryCache)
+            } else if ($activeTab === "rss") {
+                rssEntryContentRsp.set(entryCache)
+            }
+            return true
+        }
+
+        // through network api
         let activeEntry
         let entryContentRsp
 
@@ -58,7 +96,8 @@
                 entryContentRsp = rsp
             }
 
-            // TODO set cache
+            // set cache
+            setEntryCache(entry.id, rsp)
 
             if ($activeTab === "star") {
                 starEntryContentRsp.set(entryContentRsp)
