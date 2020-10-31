@@ -43,6 +43,9 @@ function createMainWindow () {
 
 	mainWindow.loadFile('public/index.html');
 
+	mainWindow.on('closed', () => {
+		mainWindow = null
+	})
 	mainWindow.on('maximize', () => {
 		mainWindow.webContents.send('maximize-window', '')
     })
@@ -82,6 +85,9 @@ function createAuthWindow(token) {
 	})
 	authWindow.loadURL(githubAuthUrl)
 
+	authWindow.on('closed', () => {
+		authWindow = null
+	})
 	authWindow.webContents.on('did-finish-load', function() {
 		authWindow.webContents.insertCSS('body{ overflow: hidden !important; }')
    	})
