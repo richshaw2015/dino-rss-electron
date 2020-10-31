@@ -5,8 +5,7 @@
     import Pager from './Pager.svelte'
     import Toolbar from './Toolbar.svelte'
     import EntryItem from "./EntryItem.svelte"
-    import { getPageSize, isInList } from '../utils/helper.js'
-    import { shortToast, toast, warnToast } from '../utils/toast.js'
+    import { getPageSize, isInList, shortToast, toast, warnToast } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
     import { saveViewMode } from '../utils/storage.js'
     import { viewMode, viewScope, rssActiveEntry, rssActiveFeed, rssListRsp, rssFeedListRsp, rssFeedEntriesView, 

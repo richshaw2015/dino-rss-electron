@@ -1,18 +1,11 @@
 <script>
-    export let userInfo = {
-        id: 1,
-        level: 1,
-        oauth: '',
-        name: '',
-        image: './icon/logo.svg',
-        blog: ''
-    };
-
     import { onMount } from 'svelte'
+    const { ipcRenderer } = require('electron')
     const Mousetrap = require('mousetrap')
 
-    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow } from '../utils/helper.js'
-    import { activeTab, unreadCountRsp } from '../utils/store.js'
+    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast } from '../utils/helper.js'
+    import { getToken } from '../utils/storage.js';
+    import { activeTab, unreadCountRsp, userInfoRsp } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
 
     onMount(() => {
@@ -23,14 +16,20 @@
         });
     })
 
-    function switchStarNav(event) {
-        activeTab.set('star')
-    }
-    function switchRssNav(event) {
-        activeTab.set('rss')
-    }
-    function switchAppsNav(event) {
-        activeTab.set('apps')
+    ipcRenderer.on('login-status-changed', (event) => {
+        toast("login-status-changed")
+    })
+    
+    function handleUserLogin() {
+        const token = getToken()
+        if (token) {
+            if ($userInfoRsp.id > 0) {
+                // display user info
+            } else {
+                // OAuth login 
+                ipcRenderer.invoke('show-login-window', token)
+            }
+        }
     }
 </script>
 
@@ -107,11 +106,11 @@
     {#if isWin()}
         <Titlebar />
     {/if}
-    <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}">
-        <img src="{userInfo.image}" alt="Avatar">
+    <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}" on:click={handleUserLogin}>
+        <img src="{$userInfoRsp.image}" alt="Avatar">
     </div>
 
-    <div class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={switchRssNav}>
+    <div class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={() => activeTab.set('rss')}>
         <div class="rss-notify-wrapper">
             <i class="material-icons {$activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
             {#if $unreadCountRsp.count > 0}
@@ -122,11 +121,11 @@
         </div>
     </div>
 
-    <div class="nav-tab-btn no-drag" id="omr-nav-star" on:click={switchStarNav}>
+    <div class="nav-tab-btn no-drag" id="omr-nav-star" on:click={() => activeTab.set('star')}>
         <i class="material-icons {$activeTab === 'star' ? 'primary-color' : ''}">star</i>
     </div>
 
-    <div class="nav-tab-btn no-drag" id="omr-nav-apps" on:click={switchAppsNav}>
+    <div class="nav-tab-btn no-drag" id="omr-nav-apps" on:click={() => activeTab.set('apps')}>
         <i class="material-icons {$activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
     </div>
 

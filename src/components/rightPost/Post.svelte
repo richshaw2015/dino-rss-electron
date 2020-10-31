@@ -6,7 +6,7 @@
     const path = require('path')
 
     import { getFontSize } from '../utils/storage.js'
-    import { isInList } from '../utils/helper.js'
+    import { isInList, shortToast, toast, warnToast } from '../utils/helper.js'
     import { scrollStep } from '../utils/config.js'
 
     import Find from '../global/Find.svelte'
@@ -14,7 +14,6 @@
     import Statusbar from './Statusbar.svelte'
     import Third from './Third.svelte'    
 
-    import { shortToast, toast, warnToast } from '../utils/toast.js'
     import { apiReq } from '../utils/req.js'
     import { rssActiveEntry, rssListRsp, rssEntryContentRsp, starActiveEntry, starEntryContentRsp, 
         activeTab, unreadCountRsp, rssFeedEntriesView, rssActiveFeed } from '../utils/store.js'

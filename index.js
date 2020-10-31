@@ -12,6 +12,7 @@ if (!production) {
 }
 
 let mainWindow;
+let authWindow;
 
 // handle webContents events
 function openUrlInDefaultBrowser(event, url) {
@@ -42,15 +43,18 @@ function createMainWindow () {
 
 	mainWindow.loadFile('public/index.html');
 
-	mainWindow.on('closed', function () {
-		mainWindow = null
-	});
 	mainWindow.on('maximize', () => {
 		mainWindow.webContents.send('maximize-window', '')
     })
     mainWindow.on('unmaximize', () => {
         mainWindow.webContents.send('unmaximize-window', '')
-    })
+	})
+	
+	mainWindow.on('focus', function () {
+		if (authWindow) {
+			authWindow.close()
+		}
+	});
 
 	mainWindow.webContents.on('will-navigate', openUrlInDefaultBrowser)
 	mainWindow.webContents.on('new-window', openUrlInDefaultBrowser)
@@ -60,6 +64,39 @@ function createMainWindow () {
 	})
 
 	if (!production) mainWindow.webContents.openDevTools()
+}
+
+function createAuthWindow(token) {
+	const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=d7e9908669cff42cdbc8&allow_signup=false&state=${token}`
+
+	authWindow = new BrowserWindow({
+		width: 480, 
+		height: 640,
+		titleBarStyle: 'hidden',
+		resizable: false,
+		movable: false,
+		frame: false,
+		trafficLightPosition: {x: 9, y: 16},
+		parent: mainWindow,
+		icon: 'public/icon/icon.svg'
+	})
+	authWindow.loadURL(githubAuthUrl)
+
+	authWindow.webContents.on('did-finish-load', function() {
+		authWindow.webContents.insertCSS('body{ overflow: hidden !important; }')
+   	})
+
+	// authWindow.webContents.openDevTools()
+	authWindow.webContents.on('will-redirect', function(event, url) {
+		// back to homepage, success or fail ?
+		if (new URL(url).pathname === "/") {
+			console.log("changed")
+			if (mainWindow) {
+				mainWindow.webContents.send('login-status-changed')
+			}
+			authWindow.hide()
+		}
+	})
 }
 
 // handle app events
@@ -93,6 +130,10 @@ ipcMain.handle('close-window', (event) => {
 ipcMain.handle('minimize-window', (event) => {
 	if(!mainWindow) return;
 	return mainWindow.minimize();
+})
+
+ipcMain.handle('show-login-window', (event, token) => {
+	createAuthWindow(token)
 })
 
 ipcMain.handle('capture-window', (event) => {

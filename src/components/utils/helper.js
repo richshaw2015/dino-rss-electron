@@ -8,6 +8,10 @@ export function warnToast(msg) {
     M.toast({html: html, displayLength: 4500});
 }
 
+export function shortToast(msg) {
+    M.toast({html: msg, displayLength: 1500});
+}
+
 export function truncateStr(str, len) {
     return str.length < len ? str : str.slice(0, len) + '...'
 }

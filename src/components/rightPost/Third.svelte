@@ -3,8 +3,7 @@
     export let activeEntry = {}
     export let entryContentRsp = {}
 
-    import { toast } from '../utils/toast.js'
-    import { truncateStr, isMac, isWin, captureWindow } from '../utils/helper.js'
+    import { truncateStr, isMac, isWin, captureWindow, toast } from '../utils/helper.js'
     import Podcast from './Podcast.svelte'
     import Notice from '../global/Notice.svelte'
 

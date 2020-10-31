@@ -3,7 +3,7 @@
     export let numPages
 
     import { createEventDispatcher, onMount } from 'svelte'
-    import { warnToast } from '../utils/toast.js'
+    import { warnToast } from '../utils/helper.js'
 
     const dispatch = createEventDispatcher()
     const Mousetrap = require('mousetrap')

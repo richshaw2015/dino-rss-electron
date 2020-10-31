@@ -5,7 +5,7 @@
     import { createEventDispatcher } from 'svelte'
     import { saveViewScope } from '../utils/storage.js'
     import { activeTab, viewMode, viewScope } from '../utils/store.js'
-    import { shortToast } from '../utils/toast.js'
+    import { shortToast } from '../utils/helper.js'
 
     const Mousetrap = require('mousetrap')
     const dispatch = createEventDispatcher()

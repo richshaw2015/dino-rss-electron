@@ -4,6 +4,7 @@ const viewModeConfKey = 'CONF/VIEW/MODE'
 const viewScopeConfKey = 'CONF/VIEW/SCOPE'
 const fontSizeConfKey = 'CONF/FONT/SIZE'
 const tokenConfKey = 'CONF/TOKEN'
+const userInfoConfKey = 'CONF/USER'
 
 // TODO clear thirdparty data and rebuild localStorage
 
@@ -23,6 +24,25 @@ export function saveViewScope(scope) {
 export function getViewScope() {
     // all unread
     return localStorage.getItem(viewScopeConfKey) || 'all'
+}
+
+export function saveUserInfo(user) {
+    localStorage.setItem(userInfoConfKey, JSON.stringify(user))
+}
+export function getUserInfo() {
+    const user = localStorage.getItem(userInfoConfKey)
+    if (user) {
+        return JSON.parse(user)
+    } else {
+        return {
+            id: 0,
+            level: 1,
+            oauth: '',
+            name: '',
+            image: './icon/logo.svg',
+            blog: ''
+        }
+    }
 }
 
 export function saveFontSize(size) {

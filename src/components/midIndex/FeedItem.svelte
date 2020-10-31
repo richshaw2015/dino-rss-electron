@@ -5,8 +5,7 @@
 
     const { remote } = require('electron')
     const { Menu, MenuItem } = remote
-    import { isWin, getPageSize } from '../utils/helper.js'
-    import { shortToast, toast, warnToast } from '../utils/toast.js'
+    import { isWin, getPageSize, shortToast, toast, warnToast } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
 
     // TODO dynamic read/unread star/unstar menu
