@@ -71,7 +71,7 @@ export async function getTokenPromise() {
         formData.append('uuid', uuidv4());
 
         // TODO  sign
-        const rsp = await fetch((new URL('/api/get/token', SERVER)).href, {method:'POST', body: formData})
+        const rsp = await fetch((new URL('/api/user/token', SERVER)).href, {method:'POST', body: formData})
         token = (await rsp.json())['token']
 
         if (token) {
@@ -79,11 +79,4 @@ export async function getTokenPromise() {
         }
     }
     return token
-}
-
-export function saveObj(key, obj) {
-    return localStorage.setItem(key, JSON.stringify(obj))
-}
-export function getObj(key) {
-    return JSON.parse(localStorage.getItem(key))
 }
