@@ -4,7 +4,8 @@
     const Mousetrap = require('mousetrap')
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast } from '../utils/helper.js'
-    import { getToken } from '../utils/storage.js';
+    import { getToken, saveUserInfo, setToken } from '../utils/storage.js';
+    import { apiReq } from '../utils/req.js';
     import { activeTab, unreadCountRsp, userInfoRsp } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
 
@@ -17,10 +18,32 @@
     })
 
     ipcRenderer.on('login-status-changed', (event) => {
-        toast("login-status-changed")
+        // try multi times
+        syncUserInfo()
+        setTimeout(syncUserInfo, 1000)
+        setTimeout(syncUserInfo, 3000)
+        setTimeout(syncUserInfo, 5000)
+        setTimeout(syncUserInfo, 10000)
+        setTimeout(syncUserInfo, 30000)
     })
     
-    function handleUserLogin() {
+    function syncUserInfo() {
+        if ($userInfoRsp.id <= 0) {
+            apiReq('/api/user/info', {}).then( rsp => {
+                if (rsp.code === 0 && rsp.id > 0) {
+                    if (rsp.token) {
+                        setToken(rsp.token)
+                    }
+                    userInfoRsp.set(rsp)
+                    saveUserInfo(rsp)
+                }
+            }).catch(err => {
+                console.log(err + " User info")
+            })
+        }
+    }
+
+    function showLoginOrUser() {
         const token = getToken()
         if (token) {
             if ($userInfoRsp.id > 0) {
@@ -106,7 +129,7 @@
     {#if isWin()}
         <Titlebar />
     {/if}
-    <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}" on:click={handleUserLogin}>
+    <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}" on:click={showLoginOrUser}>
         <img src="{$userInfoRsp.image}" alt="Avatar">
     </div>
 

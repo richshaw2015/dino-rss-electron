@@ -96,7 +96,6 @@ function createAuthWindow(token) {
 	authWindow.webContents.on('will-redirect', function(event, url) {
 		// back to homepage, success or fail ?
 		if (new URL(url).pathname === "/") {
-			console.log("changed")
 			if (mainWindow) {
 				mainWindow.webContents.send('login-status-changed')
 			}

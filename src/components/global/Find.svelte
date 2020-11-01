@@ -77,6 +77,7 @@
     }
 
     import { onMount } from 'svelte';
+
     onMount(() => {
         Mousetrap.bind(['command+f', 'ctrl+f', '/'], function() {
             showFindWindow()

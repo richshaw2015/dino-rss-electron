@@ -56,6 +56,10 @@ export function getToken() {
     return localStorage.getItem(tokenConfKey)
 }
 
+export function setToken(token) {
+    return localStorage.setItem(tokenConfKey, token)
+}
+
 export async function getTokenPromise() {
     // await new Promise(r => setTimeout(r, 1000*1000));
 
