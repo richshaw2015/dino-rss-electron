@@ -3,7 +3,7 @@
     const { ipcRenderer } = require('electron')
     const Mousetrap = require('mousetrap')
 
-    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast } from '../utils/helper.js'
+    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl } from '../utils/helper.js'
     import { getToken, saveUserInfo, setToken } from '../utils/storage.js';
     import { apiReq } from '../utils/req.js';
     import { activeTab, unreadCountRsp, userInfoRsp } from '../utils/store.js'
@@ -15,11 +15,15 @@
             closeWindow()
             return false
         });
+        Mousetrap.bind('f5', function() {
+            reloadWindow()
+            return false
+        });
     })
 
     ipcRenderer.on('login-status-changed', (event) => {
         // try multi times
-        syncUserInfo()
+        setTimeout(syncUserInfo, 1)
         setTimeout(syncUserInfo, 1000)
         setTimeout(syncUserInfo, 3000)
         setTimeout(syncUserInfo, 5000)
@@ -34,8 +38,11 @@
                     if (rsp.token) {
                         setToken(rsp.token)
                     }
+
                     userInfoRsp.set(rsp)
                     saveUserInfo(rsp)
+
+                    reloadWindow()
                 }
             }).catch(err => {
                 console.log(err + " User info")
@@ -130,7 +137,7 @@
         <Titlebar />
     {/if}
     <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}" on:click={showLoginOrUser}>
-        <img src="{$userInfoRsp.image}&s=128" alt="Avatar">
+        <img src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar">
     </div>
 
     <div class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={() => activeTab.set('rss')}>

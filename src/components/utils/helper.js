@@ -33,6 +33,10 @@ export const captureWindow = () => {
     ipcRenderer.invoke('capture-window')
 }
 
+export function reloadWindow() {
+    remote.getCurrentWindow().reload()
+}
+
 export function macNavCtxMenu() {
     // this context menu only works on Mac OS
     const menu = new Menu();
@@ -152,4 +156,18 @@ export function isInList(item, list) {
          }
     }
     return false
+}
+
+export function resizeImageUrl(image, size=128) {
+    try {
+        let url = new URL(image)
+        if (url.host.indexOf("github") > 0) {
+            let params = new URLSearchParams(url.search)
+            params.set("s", size)
+            url.search = params.toString()
+            return url.href
+        }
+    } catch (e) {}
+    
+    return image
 }
