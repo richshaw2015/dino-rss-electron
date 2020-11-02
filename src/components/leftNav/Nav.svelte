@@ -173,7 +173,7 @@
         right: 0px;
         width: 20px;
         height: 20px;
-        font-size: 13px;
+        font-size: 14px;
         border-radius: 50%;
         color: white;
         display: flex;
