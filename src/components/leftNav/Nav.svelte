@@ -50,13 +50,18 @@
         }
     }
 
-    function showLoginOrUser() {
+    function showLoginOrUser(event) {
         const token = getToken()
         if (token) {
             if ($userInfoRsp.id > 0) {
-                // display user info
+                const instanse = M.Modal.init(document.querySelector('#omr-modal-user-info'), {
+                    inDuration: 0,
+                    outDuration: 0,
+                    opacity: 1,
+                    endingTop: event.y + 'px'
+                });
+                instanse.open()
             } else {
-                // OAuth login 
                 ipcRenderer.invoke('show-login-window', token)
             }
         }
@@ -130,6 +135,56 @@
         display: flex;
         justify-content: center;
     }
+    #omr-modal-user-info {
+        width: 300px;
+        margin: 0;
+        padding: 24px;
+        left: 70px;
+    }
+    .user-top-wrapper, .user-info {
+        display: flex;
+        justify-content: center;
+    }
+    .user-info {
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    .user-oauth {
+        color: #616161;
+    }
+    .user-name {
+        font-size: 1.2rem;
+    }
+    .user-name a {
+        color: unset;
+    }
+    .user-image {
+        max-width: 64px;
+        max-height: 64px;
+    }
+
+    .user-image-wrapper {
+        position: relative;
+        width: 100%;
+    }
+    .avatar-vip-badge {
+        position: absolute;
+        top: 38px;
+        right: 0px;
+        width: 20px;
+        height: 20px;
+        font-size: 13px;
+        border-radius: 50%;
+        color: white;
+        display: flex;
+        justify-content: center;
+        background: #ff9d28;
+        box-shadow: 0 0 0 1px #fff;
+    }
+
+    .user-divider {
+        margin: 16px 0;
+    }
 </style>
 
 <div id="omr-left-nav" class="drag">
@@ -165,4 +220,31 @@
     <div class="nav-tab-btn no-drag" id="omr-nav-add">
         <i class="material-icons">add_circle</i>
     </div>
+</div>
+
+<div id="omr-modal-user-info" class="modal">
+    <div class="user-top-wrapper">
+        <div class="user-info">
+            <div class="user-name bold"><a href="{$userInfoRsp.blog}" target="_blank">{$userInfoRsp.name}</a></div>
+            <div class="user-oauth">ID: {$userInfoRsp.oauth}</div>
+        </div>
+
+        <div>
+            <div class="user-image-wrapper">
+                <img class="user-image circle" src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar">
+    
+                {#if $userInfoRsp.level >= 10}
+                    <span class="avatar-vip-badge">V</span>
+                {/if}
+            </div>
+        </div>
+    </div>
+
+    <div class="divider user-divider"></div>
+
+    {#if $userInfoRsp.intro}
+        <div class="user-intro-wrapper">{$userInfoRsp.intro}</div>
+    {:else}
+        <div class="user-intro-wrapper"><a href="{$userInfoRsp.blog}" target="_blank">{$userInfoRsp.blog}</a></div>
+    {/if}
 </div>
