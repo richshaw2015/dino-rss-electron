@@ -140,7 +140,7 @@
 {#if entryInfo}
 <div class="omr-entry-item" on:contextmenu={showEntryCtxMenu}>
     <div class="entry-title-line">
-        <img src="{entryInfo.image}" class="entry-avatar" alt="" />
+        <img src="{entryInfo.image || 'icon/logo.svg'}" class="entry-avatar" alt="" />
         <span class="truncate entry-title {entryInfo.stats.has_read ? '' : 'bold'}">{ entryInfo.title }</span>
 
         {#if entryInfo.feed.is_podcast}

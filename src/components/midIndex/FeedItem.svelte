@@ -125,7 +125,7 @@
 {#if feedInfo}
 <div class="omr-feed-item" on:contextmenu={showFeedCtxMenu}>
     <div class="feed-title-line">
-        <img src="{feedInfo.image}" class="feed-avatar" alt="" />
+        <img src="{feedInfo.image || 'icon/logo.svg'}" class="feed-avatar" alt="" />
         <span class="truncate feed-title {feedInfo.stats.unread_count > 0 ? 'bold' : ''}">{ feedInfo.title }</span>
 
         {#if feedInfo.is_podcast}

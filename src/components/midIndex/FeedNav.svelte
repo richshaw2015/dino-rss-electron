@@ -62,7 +62,7 @@
         <span class="">Back</span>
     </div>
 
-    <img src="{$rssActiveFeed.image}" class="feed-nav-avatar" alt="" />
+    <img src="{$rssActiveFeed.image || 'icon/logo.svg'}" class="feed-nav-avatar" alt="" />
     <span class="truncate bold feed-nav-title">
         {$rssActiveFeed.stats.unread_count > 0 ? $rssActiveFeed.title + '(' + $rssActiveFeed.stats.unread_count + ')'
             : $rssActiveFeed.title}
