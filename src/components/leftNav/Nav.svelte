@@ -66,6 +66,16 @@
             }
         }
     }
+
+    function showAddFeedWindow(event) {
+        const instanse = M.Modal.init(document.querySelector('#omr-modal-add-feed'), {
+            inDuration: 0,
+            outDuration: 0,
+            opacity: 1,
+            endingTop: "20%"
+        });
+        instanse.open()
+    }
 </script>
 
 <style>
@@ -141,6 +151,11 @@
         padding: 24px;
         left: 70px;
     }
+    #omr-modal-add-feed {
+        width: 600px;
+        padding: 24px;
+        left: 70px;
+    }
     .user-top-wrapper, .user-info {
         display: flex;
         justify-content: center;
@@ -185,6 +200,44 @@
     .user-divider {
         margin: 16px 0;
     }
+    .submit-feed {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 60px;
+        margin-bottom: 12px;
+    }
+    .rss-input-wrapper {
+        margin: 0;
+        flex-grow: 1;
+    }
+    .rss-submit-btn {
+        margin-left: 1rem;
+    }
+    .submit-divider {
+        margin: 12px 0;
+    }
+    .submit-opml, .feed-ranking {
+        display: flex;
+        align-items: center;
+        text-transform: none;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+    .add-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
+    }
+    .add-title i {
+        cursor: auto;
+    }
+    .app-icon {
+        margin-left: 12px;
+        margin-right: 10px;
+    }
+    .import-icon {
+        font-size: 24px;
+    }
 </style>
 
 <div id="omr-left-nav" class="drag">
@@ -217,7 +270,7 @@
     <div id="omr-nav-space" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
     </div>
 
-    <div class="nav-tab-btn no-drag" id="omr-nav-add">
+    <div class="nav-tab-btn no-drag" id="omr-nav-add" on:click={showAddFeedWindow}>
         <i class="material-icons">add_circle</i>
     </div>
 </div>
@@ -247,4 +300,27 @@
     {:else}
         <div class="user-intro-wrapper"><a href="{$userInfoRsp.blog}" target="_blank">{$userInfoRsp.blog}</a></div>
     {/if}
+</div>
+
+<div id="omr-modal-add-feed" class="modal">
+    <div class="add-title"><i class="material-icons">rss_feed</i> Add Subscription</div>
+
+    <div class="submit-feed">
+        <div class="input-field rss-input-wrapper">
+            <input id="rss-input" type="text" data-length="1024">
+            <label for="rss-input">Feed URL</label>
+        </div>
+
+        <button class="waves-effect waves-light btn rss-submit-btn">Add</button>
+    </div>
+
+    <div class="waves-effect btn-flat submit-opml">
+        <i class="material-icons app-icon import-icon">import_export</i>Import from OPML
+    </div>
+    
+    <div class="divider submit-divider"></div>
+
+    <div class="waves-effect btn-flat feed-ranking">
+        <i class="material-icons app-icon equalizer-icon">equalizer</i>Feed ranking
+    </div>
 </div>

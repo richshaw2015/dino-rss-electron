@@ -48,9 +48,14 @@
         }
     }
     function findClose() {
-        [activeMatch, matchesNum] = [0, 0]
-        mainWindow.webContents.stopFindInPage('clearSelection')
-        M.Modal.getInstance(document.querySelector('#omr-modal-find-in-page')).close();
+        if (findKeyword) {
+            [activeMatch, matchesNum] = [0, 0]
+            mainWindow.webContents.stopFindInPage('clearSelection')
+        }
+
+        try {
+            M.Modal.getInstance(document.querySelector('#omr-modal-find-in-page')).close();
+        } catch (e) {}
     }
     function findStart(event) {
         if (event.keyCode === 13 && findKeyword !== undefined) {
