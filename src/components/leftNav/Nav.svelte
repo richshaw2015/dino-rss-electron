@@ -27,15 +27,15 @@
 
     ipcRenderer.on('login-status-changed', (event) => {
         // try multi times
-        setTimeout(syncUserInfo, 1)
-        setTimeout(syncUserInfo, 1000)
-        setTimeout(syncUserInfo, 3000)
-        setTimeout(syncUserInfo, 5000)
-        setTimeout(syncUserInfo, 10000)
-        setTimeout(syncUserInfo, 30000)
+        setTimeout(syncVisitorInfo, 1)
+        setTimeout(syncVisitorInfo, 1000)
+        setTimeout(syncVisitorInfo, 3000)
+        setTimeout(syncVisitorInfo, 5000)
+        setTimeout(syncVisitorInfo, 10000)
+        setTimeout(syncVisitorInfo, 30000)
     })
     
-    function syncUserInfo() {
+    function syncVisitorInfo() {
         if ($userInfoRsp.id <= 0) {
             apiReq('/api/user/info', {}).then( rsp => {
                 if (rsp.code === 0 && rsp.id > 0) {
@@ -54,6 +54,19 @@
         }
     }
 
+    function syncUserInfo() {
+        if ($userInfoRsp.id > 0) {
+            apiReq('/api/user/info', {}).then( rsp => {
+                if (rsp.code === 0 && rsp.id) {
+                    userInfoRsp.set(rsp)
+                    saveUserInfo(rsp)
+                }
+            }).catch(err => {
+                console.log(err + " User info")
+            })
+        }
+    }
+
     function showLoginOrUser(event) {
         const token = getToken()
         if (token) {
@@ -65,6 +78,8 @@
                     endingTop: event.y + 'px'
                 });
                 instanse.open()
+                
+                syncUserInfo()
             } else {
                 ipcRenderer.invoke('show-login-window', token)
             }
