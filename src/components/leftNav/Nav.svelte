@@ -1,7 +1,9 @@
 <script>
     import { onMount } from 'svelte'
-    const { ipcRenderer } = require('electron')
+    const { ipcRenderer, remote } = require('electron')
     const Mousetrap = require('mousetrap')
+    const fs = require('fs')
+    const { dialog } = remote
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, warnToast } from '../utils/helper.js'
     import { getToken, saveUserInfo, setToken } from '../utils/storage.js';
@@ -78,7 +80,38 @@
         });
         instanse.open()
     }
-    
+    function showOpmlUploadDialog(event) {
+		const options = {
+            filters: [{ name: 'Opml', extensions: ['opml'] }],
+            properties: ['openFile']
+		}
+        dialog.showOpenDialog(options).then((result) => {
+			if (result.filePaths.length > 0) {
+                const fileContent = fs.readFileSync(result.filePaths[0])
+
+                if (fileContent.length < 10 * 1024 * 1024) {
+                    isApiLoading.set(true)
+                    apiReq('/api/feed/import/opml', {file: fileContent}).then( rsp => {
+                        if (rsp.code === 0) {
+                            toast("Please wait for a few minutes")
+
+                            try {
+                                M.Modal.getInstance(document.querySelector('#omr-modal-add-feed')).close();
+                            } catch (e) {}
+                        }
+                    }).catch(err => {
+                        warnToast(err)
+                    }).finally(() => {
+                        isApiLoading.set(false)
+                    });
+                } else {
+                    warnToast("File too large")
+                }
+			}
+        }).catch(err => {
+            warnToast(err + " Upload file")
+        })
+    }
     function handleAddFeed(event) {
         if (isValidUrl(feedUrl)) {
             isApiLoading.set(true)
@@ -227,6 +260,7 @@
         align-items: center;
         min-height: 60px;
         margin-bottom: 12px;
+        margin-top: 20px;
     }
     .rss-input-wrapper {
         margin: 0;
@@ -252,7 +286,7 @@
     .add-title i {
         cursor: auto;
     }
-    .app-icon {
+    .submit-opml i, .feed-ranking i {
         margin-left: 12px;
         margin-right: 10px;
     }
@@ -335,13 +369,13 @@
         <button class="waves-effect waves-light btn rss-submit-btn" on:click={handleAddFeed}>Add</button>
     </div>
 
-    <div class="waves-effect btn-flat submit-opml">
-        <i class="material-icons app-icon import-icon">import_export</i>Import from OPML
+    <div class="waves-effect btn-flat submit-opml" on:click={showOpmlUploadDialog}>
+        <i class="material-icons import-icon">import_export</i>Import from OPML
     </div>
     
     <div class="divider submit-divider"></div>
 
     <div class="waves-effect btn-flat feed-ranking">
-        <i class="material-icons app-icon equalizer-icon">equalizer</i>Feed ranking
+        <i class="material-icons equalizer-icon">equalizer</i>Feed ranking
     </div>
 </div>

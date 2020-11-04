@@ -139,37 +139,51 @@
     onMount(() => {
         // keyboard shortcut
         Mousetrap.bind('j', function() {
-            document.querySelector('#omr-post-third-html').scrollTop += scrollStep
+            try {
+                document.querySelector('#omr-post-third-html').scrollTop += scrollStep
+            } catch (e) {}
             return false
         });
         Mousetrap.bind('d', function() {
-            document.querySelector('#omr-post-third-html').scrollTop += 
-                document.querySelector('#omr-post-third-html').offsetHeight / 2 - 20
+            try {
+                document.querySelector('#omr-post-third-html').scrollTop += 
+                    document.querySelector('#omr-post-third-html').offsetHeight / 2 - 20
+            } catch(e) {}
             return false
         });
 
         Mousetrap.bind('k', function() {
-            document.querySelector('#omr-post-third-html').scrollTop -= scrollStep
+            try {
+                document.querySelector('#omr-post-third-html').scrollTop -= scrollStep
+            } catch(e) {}
             return false
         });
         Mousetrap.bind('u', function() {
-            document.querySelector('#omr-post-third-html').scrollTop -= 
-                document.querySelector('#omr-post-third-html').offsetHeight / 2 - 20
+            try {
+                document.querySelector('#omr-post-third-html').scrollTop -= 
+                    document.querySelector('#omr-post-third-html').offsetHeight / 2 - 20
+            } catch(e) {}
             return false
         });
 
         Mousetrap.bind('g g', function() {
-            document.querySelector('#omr-post-third-html').scrollTop = 0
+            try {
+                document.querySelector('#omr-post-third-html').scrollTop = 0
+            } catch(e) {}
             return false
         });
         Mousetrap.bind('G', function() {
-            document.querySelector('#omr-post-third-html').scrollTop =
-                document.querySelector('#omr-post-third-html').scrollHeight
+            try {
+                document.querySelector('#omr-post-third-html').scrollTop =
+                    document.querySelector('#omr-post-third-html').scrollHeight
+            } catch(e) {}
             return false
         });
         Mousetrap.bind('space', function() {
-            document.querySelector('#omr-post-third-html').scrollTop +=
+            try {
+                document.querySelector('#omr-post-third-html').scrollTop +=
                 document.querySelector('#omr-post-third-html').offsetHeight - 40
+            } catch(e) {}
             return false
         });
         Mousetrap.bind('y y', function() {
