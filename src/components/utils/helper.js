@@ -53,15 +53,15 @@ export function macNavCtxMenu() {
     }));
     menu.append(new MenuItem({type: "separator"}));
 
-    menu.append(new MenuItem({
-        label: "🔎  Zoom",
-        submenu: [
-            {"role": "resetZoom"},
-            {"role": "zoomIn"},
-            {"role": "zoomOut"},
-        ]
-    }));
-    menu.append(new MenuItem({type: "separator",}));
+    // menu.append(new MenuItem({
+    //     label: "🔎  Zoom",
+    //     submenu: [
+    //         {"role": "resetZoom"},
+    //         {"role": "zoomIn"},
+    //         {"role": "zoomOut"},
+    //     ]
+    // }));
+    // menu.append(new MenuItem({type: "separator",}));
     menu.append(new MenuItem({
         role: "toggleDevTools",
         label: "🔨  Inspect",
