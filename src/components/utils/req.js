@@ -1,6 +1,15 @@
 import { SERVER } from './config.js'
 import { getToken } from './storage.js'
 
+export function isValidUrl(url) {
+    try {
+        new URL(url)
+    } catch (_) {
+        return false
+    }
+    return true
+}
+
 export async function apiReq(path, data) {
     const token = getToken()
     if (!token) {

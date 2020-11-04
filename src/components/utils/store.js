@@ -12,6 +12,8 @@ export let userInfoRsp = writable(getUserInfo())
 
 export let unreadCountRsp = writable(0)
 
+export let isApiLoading = writable(false)
+
 // rss tab
 export let rssListRsp = writable({})
 export let rssFeedListRsp = writable({})

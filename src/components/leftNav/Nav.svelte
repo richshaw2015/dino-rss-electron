@@ -3,11 +3,13 @@
     const { ipcRenderer } = require('electron')
     const Mousetrap = require('mousetrap')
 
-    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl } from '../utils/helper.js'
+    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, warnToast } from '../utils/helper.js'
     import { getToken, saveUserInfo, setToken } from '../utils/storage.js';
-    import { apiReq } from '../utils/req.js';
-    import { activeTab, unreadCountRsp, userInfoRsp } from '../utils/store.js'
+    import { apiReq, isValidUrl } from '../utils/req.js';
+    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
+    
+    let feedUrl
 
     onMount(() => {
         // keyboard shortcut
@@ -72,9 +74,28 @@
             inDuration: 0,
             outDuration: 0,
             opacity: 1,
-            endingTop: "20%"
+            endingTop: "15%"
         });
         instanse.open()
+    }
+    
+    function handleAddFeed(event) {
+        if (isValidUrl(feedUrl)) {
+            isApiLoading.set(true)
+            apiReq('/api/feed/add', {feed_rss: feedUrl}).then( rsp => {
+                if (rsp.code === 0) {
+                    toast("Feed add success")
+                } else {
+                    warnToast(`Parse error: ${feedUrl}`)
+                }
+            }).catch(err => {
+                warnToast(err + " Request")
+            }).finally(() => { 
+                isApiLoading.set(false)
+            });
+        } else {
+            warnToast(`Url not valid: ${feedUrl}`)
+        }
     }
 </script>
 
@@ -307,11 +328,11 @@
 
     <div class="submit-feed">
         <div class="input-field rss-input-wrapper">
-            <input id="rss-input" type="text" data-length="1024">
+            <input id="rss-input" type="text" data-length="1024" bind:value={feedUrl}>
             <label for="rss-input">Feed URL</label>
         </div>
 
-        <button class="waves-effect waves-light btn rss-submit-btn">Add</button>
+        <button class="waves-effect waves-light btn rss-submit-btn" on:click={handleAddFeed}>Add</button>
     </div>
 
     <div class="waves-effect btn-flat submit-opml">

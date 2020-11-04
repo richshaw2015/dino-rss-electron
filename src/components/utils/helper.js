@@ -92,6 +92,10 @@ export function getPageSize(isFeedEntriesView=false) {
 }
 
 export function fromNow(utcTs) {
+    if (!utcTs) {
+        return "Null"
+    }
+
     const nowUtcTs = new Date().getTime() / 1000 | 0
     const seconds = nowUtcTs - utcTs
 
@@ -168,6 +172,6 @@ export function resizeImageUrl(image, size=128) {
             return url.href
         }
     } catch (e) {}
-    
+
     return image
 }

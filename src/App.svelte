@@ -1,6 +1,7 @@
 <script>
     import { getTokenPromise } from './components/utils/storage.js'
     import { activeTab } from './components/utils/store.js'
+
     import Nav from './components/leftNav/Nav.svelte'
     import AppsTab from './components/midIndex/AppsTab.svelte'
     import StarTab from './components/midIndex/StarTab.svelte'
@@ -8,6 +9,7 @@
     import Toolbar from './components/midIndex/Toolbar.svelte'
     import Post from './components/rightPost/Post.svelte'
     import Notice from './components/global/Notice.svelte'
+    import Preloader from './components/global/Preloader.svelte'
 
     const tokenPromise = getTokenPromise()
     const M = require('materialize-css')
@@ -110,3 +112,5 @@
     </div>
 </div>
 {/await}
+
+<Preloader />
