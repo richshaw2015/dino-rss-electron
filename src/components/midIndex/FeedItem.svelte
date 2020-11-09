@@ -40,9 +40,9 @@
         }));
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
-            label: "🔗  Copy Feed Link",
+            label: "🔗  Copy Feed RSS",
             click: function(){
-                copyToClipboard(feedInfo.link)
+                copyToClipboard(feedInfo.rss)
             }
         }));
         menu.append(new MenuItem({type: "separator",}));

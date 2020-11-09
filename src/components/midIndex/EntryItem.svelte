@@ -6,7 +6,7 @@
     const { remote } = require('electron')
     const { Menu, MenuItem } = remote
     import { isWin, getPageSize, shortToast, toast, warnToast, fromNow, isInList, copyToClipboard } from '../utils/helper.js'
-    import { apiReq } from '../utils/req.js'
+    import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
 
     function handleMarkEntryAsRead(entry) {
         if (!entry.stats.has_read) {
@@ -103,7 +103,7 @@
         menu.append(new MenuItem({
             label: "🗑  Unsubscribe Feed",
             click: function(){
-                alert(`you clicked on`);
+                handleUnsubscribeFeed(entry.feed.id)
             }
         }));
 
