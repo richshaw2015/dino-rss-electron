@@ -70,6 +70,10 @@
     .feed-nav-title {
         flex-grow: 1;
     }
+    .feed-nav-unread {
+        min-width: 1rem;
+        flex-grow: 50;
+    }
     .back-icon {
         margin-left: 6px;
         margin-right: 6px;
@@ -95,10 +99,11 @@
     </div>
 
     <img src="{$rssActiveFeed.image || 'icon/logo.svg'}" class="feed-nav-avatar" alt="" />
-    <span class="truncate bold feed-nav-title">
-        {$rssActiveFeed.stats.unread_count > 0 ? $rssActiveFeed.title + '(' + $rssActiveFeed.stats.unread_count + ')'
-            : $rssActiveFeed.title}
-    </span>
+    <span class="truncate bold feed-nav-title" title="{$rssActiveFeed.title}">{$rssActiveFeed.title}</span>
+    {#if $rssActiveFeed.stats.unread_count > 0}
+        <span class="bold feed-nav-unread">({$rssActiveFeed.stats.unread_count})</span>
+    {/if}
+
     <i class="material-icons check-icon" on:click={handleMarkFeedAsRead}>check</i>
 </div>
 {/if}
