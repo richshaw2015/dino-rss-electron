@@ -56,14 +56,6 @@
         menu.append(new MenuItem({type: "separator"}));
 
         menu.append(new MenuItem({
-            label: "📌  Mark as unread",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({type: "separator"}));
-
-        menu.append(new MenuItem({
             label: `🔍  Search "${truncateText}" with Google`,
             visible: hasText,
             click: function(){
@@ -125,22 +117,6 @@
                 document.querySelector('#omr-modal-qrcode').style.height = `${qrcodeSize}px`
                 document.querySelector('#omr-modal-qrcode').style.left = (window.outerWidth - 470) / 2 + 470 - qrcodeSize / 2 + 'px'
                 instanse.open()
-            }
-        }));
-        menu.append(new MenuItem({type: "separator"}));
-
-        menu.append(new MenuItem({
-            label: "✏️  Edit Feed",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({type: "separator"}));
-
-        menu.append(new MenuItem({
-            label: "🗑  Unsubscribe Feed",
-            click: function(){
-                alert(`you clicked on`);
             }
         }));
         menu.append(new MenuItem({type: "separator"}));
