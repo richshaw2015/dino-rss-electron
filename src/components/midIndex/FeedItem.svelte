@@ -5,23 +5,44 @@
 
     const { remote } = require('electron')
     const { Menu, MenuItem } = remote
-    import { isWin, getPageSize, shortToast, toast, warnToast } from '../utils/helper.js'
-    import { apiReq } from '../utils/req.js'
+    import { isWin, getPageSize, shortToast, toast, warnToast, copyToClipboard, isInList } from '../utils/helper.js'
+    import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
+    import { unreadCountRsp, rssListRsp } from '../utils/store.js'
+    
+    function handleMarkFeedAsRead(feedInfo) {
+        const unreadCount = feedInfo.stats.unread_count
 
+        if (unreadCount > 0) {
+            apiReq('/api/entry/mark/read', {entries: feedInfo.stats.unread_list.join(',')}).then( rsp => {
+                if (rsp.code === 0) {
+                    shortToast("Mark Feed as read")
+                    
+                    if (isInList(feedInfo, $rssListRsp.data)) {
+                        $rssListRsp.data[feedInfo._index].stats.unread_count = 0
+                        $rssListRsp.data[feedInfo._index].stats.unread_list = []
+                    }
+
+                    $unreadCountRsp.count -= unreadCount
+                }
+            }).catch(err => {
+                warnToast(err + " Mark")
+            })
+        }
+    }
     // TODO dynamic read/unread star/unstar menu
-    function showFeedCtxMenu() {
+    function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
         menu.append(new MenuItem({
             label: "✅️  Mark Feed as read",
             click: function(){
-                alert(`you clicked on`);
+                handleMarkFeedAsRead(feedInfo)
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
             label: "🔗  Copy Feed Link",
             click: function(){
-                alert(`you clicked on`);
+                copyToClipboard(feedInfo.link)
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
@@ -29,7 +50,7 @@
         menu.append(new MenuItem({
             label: "✏️  Edit Feed",
             click: function(){
-                alert(`you clicked on`);
+                // TODO 
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
@@ -37,7 +58,7 @@
         menu.append(new MenuItem({
             label: "🗑  Unsubscribe Feed",
             click: function(){
-                alert(`you clicked on`);
+                handleUnsubscribeFeed(feedInfo.id)
             }
         }));
         menu.popup({ window: remote.getCurrentWindow() })
@@ -123,7 +144,7 @@
 </style>
 
 {#if feedInfo}
-<div class="omr-feed-item" on:contextmenu={showFeedCtxMenu}>
+<div class="omr-feed-item" on:contextmenu={() => showFeedCtxMenu(feedInfo)}>
     <div class="feed-title-line">
         <img src="{feedInfo.image || 'icon/logo.svg'}" class="feed-avatar" alt="" />
         <span class="truncate feed-title {feedInfo.stats.unread_count > 0 ? 'bold' : ''}">{ feedInfo.title }</span>

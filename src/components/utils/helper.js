@@ -16,8 +16,7 @@ export function truncateStr(str, len) {
     return str.length < len ? str : str.slice(0, len) + '...'
 }
 
-const { ipcRenderer } = require('electron')
-const { remote } = require('electron')
+const { ipcRenderer, remote, clipboard } = require('electron')
 const { Menu, MenuItem } = remote
 
 export const toggleMaximizeWindow = () => {
@@ -174,4 +173,9 @@ export function resizeImageUrl(image, size=128) {
     } catch (e) {}
 
     return image
+}
+
+export function copyToClipboard(text) {
+    clipboard.writeText(text)
+    shortToast("Copied")
 }

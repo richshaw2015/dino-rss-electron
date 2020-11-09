@@ -6,7 +6,7 @@
     const path = require('path')
 
     import { getFontSize } from '../utils/storage.js'
-    import { isInList, shortToast, toast, warnToast } from '../utils/helper.js'
+    import { isInList, shortToast, toast, warnToast, copyToClipboard } from '../utils/helper.js'
     import { scrollStep } from '../utils/config.js'
 
     import Find from '../global/Find.svelte'
@@ -188,11 +188,10 @@
         });
         Mousetrap.bind('y y', function() {
             if ($activeTab === "star") {
-                clipboard.writeText($starActiveEntry.link)
+                copyToClipboard($starActiveEntry.link)
             } else if ($activeTab === "rss") {
-                clipboard.writeText($rssActiveEntry.link)
+                copyToClipboard($rssActiveEntry.link)
             }
-            shortToast("Link copied")
             return false
         });
     })

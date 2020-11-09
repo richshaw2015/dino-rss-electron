@@ -1,12 +1,44 @@
 <script>
     import { onMount } from 'svelte'
-    import { rssActiveFeed, rssListRsp, rssFeedListRsp, rssFeedEntriesView } from '../utils/store.js'
+    import { rssActiveFeed, rssListRsp, rssFeedListRsp, rssFeedEntriesView, unreadCountRsp } from '../utils/store.js'
+    import { apiReq } from '../utils/req.js'
+    import { warnToast, shortToast } from '../utils/helper.js'
+    import { getViewScope } from '../utils/storage.js'
 
     const Mousetrap = require('mousetrap')
 
     function backToFeedList() {
         rssFeedEntriesView.set(false)
         rssListRsp.set($rssFeedListRsp)
+    }
+    function handleMarkFeedAsRead() {
+        const unreadCount = $rssActiveFeed.stats.unread_count
+
+        if (unreadCount > 0) {
+            apiReq('/api/entry/mark/read', {entries: $rssActiveFeed.stats.unread_list.join(',')}).then( rsp => {
+                if (rsp.code === 0) {
+                    shortToast("Mark Feed as read")
+
+                    $rssActiveFeed.stats.unread_count = 0
+                    $rssActiveFeed.stats.unread_list = []
+
+                    $unreadCountRsp.count -= unreadCount
+                    
+                    if (getViewScope() === 'unread') {
+                        rssListRsp.set({
+                            "code": 101,
+                            "msg": "No unread Entries"
+                        })
+                    } else {
+                        for (let i in $rssListRsp.data) {
+                            $rssListRsp.data[i].stats.has_read = true
+                        }
+                    }
+                }
+            }).catch(err => {
+                warnToast(err + " Mark")
+            })
+        }
     }
 
     onMount(() => {
@@ -67,6 +99,6 @@
         {$rssActiveFeed.stats.unread_count > 0 ? $rssActiveFeed.title + '(' + $rssActiveFeed.stats.unread_count + ')'
             : $rssActiveFeed.title}
     </span>
-    <i class="material-icons check-icon">check</i>
+    <i class="material-icons check-icon" on:click={handleMarkFeedAsRead}>check</i>
 </div>
 {/if}

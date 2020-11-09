@@ -3,7 +3,7 @@
     export let activeEntry = {}
     export let entryContentRsp = {}
 
-    import { truncateStr, isMac, isWin, captureWindow, toast } from '../utils/helper.js'
+    import { truncateStr, isMac, isWin, captureWindow, toast, copyToClipboard } from '../utils/helper.js'
     import Podcast from './Podcast.svelte'
     import Notice from '../global/Notice.svelte'
 
@@ -99,9 +99,8 @@
 
         menu.append(new MenuItem({
             label: "🔗  Copy Link",
-            click: function(){
-                clipboard.writeText(activeEntry.link)
-                // toast("Copied")
+            click: function() {
+                copyToClipboard(activeEntry.link)
             }
         }));
         menu.append(new MenuItem({

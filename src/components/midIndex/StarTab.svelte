@@ -210,7 +210,7 @@
                 {#each $starListRsp.data as entry (entry.id)}
                     <li class="collection-item list-li { entry.id === $starActiveEntry.id ? 'active' : ''}" 
                         on:click={() => starActiveEntry.set(entry)}>
-                        <EntryItem entryInfo={entry}  />
+                        <EntryItem entryInfo={entry} />
                     </li>
                 {/each}
             {/if}

@@ -1,14 +1,58 @@
 <script>
     export let entryInfo
 
-    import { fromNow } from '../utils/helper.js'
+    import { rssFeedEntriesView, rssListRsp, unreadCountRsp, rssActiveFeed } from '../utils/store.js'
 
     const { remote } = require('electron')
     const { Menu, MenuItem } = remote
-    import { isWin, getPageSize, shortToast, toast, warnToast } from '../utils/helper.js'
+    import { isWin, getPageSize, shortToast, toast, warnToast, fromNow, isInList, copyToClipboard } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
 
-    function showEntryCtxMenu() {
+    function handleMarkEntryAsRead(entry) {
+        if (!entry.stats.has_read) {
+            apiReq('/api/entry/mark/read', {entries: entry.id}).then( rsp => {
+                if (rsp.code === 0) {
+                    shortToast("Mark Entry as read")
+
+                    if (isInList(entry, $rssListRsp.data)) {
+                        $rssListRsp.data[entry._index].stats.has_read = true
+                    }
+        
+                    $unreadCountRsp.count -= 1
+
+                    if ($rssFeedEntriesView) {
+                        $rssActiveFeed.stats.unread_count -= 1
+                    }
+                }
+            }).catch(err => {
+                warnToast(err + " Mark")
+            })
+        }
+    }
+
+    export function handleMarkEntryAsUnread(entry) {
+        if (entry.stats.has_read) {
+            apiReq('/api/entry/mark/unread', {entry_id: entry.id}).then( rsp => {
+                if (rsp.code === 0) {
+                    shortToast("Mark Entry as unread")
+
+                    if (isInList(entry, $rssListRsp.data)) {
+                        $rssListRsp.data[entry._index].stats.has_read = false
+                    }
+        
+                    $unreadCountRsp.count += 1
+
+                    if ($rssFeedEntriesView) {
+                        $rssActiveFeed.stats.unread_count += 1
+                    }
+                }
+            }).catch(err => {
+                warnToast(err + " Mark")
+            })
+        }
+    }
+
+    function showEntryCtxMenu(entry) {
         const menu = new Menu();
         menu.append(new MenuItem({
             label: isWin() ? "🌟  Star" : "⭐️  Star",
@@ -27,14 +71,16 @@
 
         menu.append(new MenuItem({
             label: "✅️  Mark as read",
+            enabled: !entry.stats.has_read,
             click: function(){
-                alert(`you clicked on`);
+                handleMarkEntryAsRead(entry)
             }
         }));
         menu.append(new MenuItem({
             label: "📌  Mark as unread",
+            enabled: entry.stats.has_read,
             click: function(){
-                alert(`you clicked on`);
+                handleMarkEntryAsUnread(entry)
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
@@ -42,7 +88,7 @@
         menu.append(new MenuItem({
             label: "🔗  Copy Link",
             click: function(){
-                alert(`you clicked on`);
+                copyToClipboard(entry.link)
             }
         }));
 
@@ -138,7 +184,7 @@
 </style>
 
 {#if entryInfo}
-<div class="omr-entry-item" on:contextmenu={showEntryCtxMenu}>
+<div class="omr-entry-item" on:contextmenu={()=> showEntryCtxMenu(entryInfo)}>
     <div class="entry-title-line">
         <img src="{entryInfo.image || 'icon/logo.svg'}" class="entry-avatar" alt="" />
         <span class="truncate entry-title {entryInfo.stats.has_read ? '' : 'bold'}">{ entryInfo.title }</span>
