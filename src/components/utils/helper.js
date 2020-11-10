@@ -38,6 +38,10 @@ export function reloadWindow() {
 
 export function macNavCtxMenu() {
     // this context menu only works on Mac OS
+    if (!isMac()) {
+        return false
+    }
+  
     const menu = new Menu();
 
     menu.append(new MenuItem({
@@ -52,15 +56,15 @@ export function macNavCtxMenu() {
     }));
     menu.append(new MenuItem({type: "separator"}));
 
-    // menu.append(new MenuItem({
-    //     label: "🔎  Zoom",
-    //     submenu: [
-    //         {"role": "resetZoom"},
-    //         {"role": "zoomIn"},
-    //         {"role": "zoomOut"},
-    //     ]
-    // }));
-    // menu.append(new MenuItem({type: "separator",}));
+    menu.append(new MenuItem({
+        label: "🔎  Zoom",
+        submenu: [
+            {"role": "resetZoom"},
+            {"role": "zoomIn"},
+            {"role": "zoomOut"},
+        ]
+    }));
+    menu.append(new MenuItem({type: "separator",}));
     menu.append(new MenuItem({
         role: "toggleDevTools",
         label: "🔨  Inspect",
