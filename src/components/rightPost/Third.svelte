@@ -88,12 +88,16 @@
                 copyToClipboard(activeEntry.link)
             }
         }));
+        menu.append(new MenuItem({type: "separator"}));
+        
         menu.append(new MenuItem({
             label: "🧭  Open in Browser",
             click: function(){
                 shell.openExternal(activeEntry.link);
             }
         }));
+        menu.append(new MenuItem({type: "separator"}));
+
         menu.append(new MenuItem({
             label: "📲  QR Code",
             click: function() {
