@@ -1,7 +1,8 @@
 <script>
     export let entryInfo
 
-    import { rssFeedEntriesView, rssListRsp, unreadCountRsp, rssActiveFeed } from '../utils/store.js'
+    import { rssFeedEntriesView, rssListRsp, unreadCountRsp, rssActiveFeed, rssActiveEntry, activeTab, starListRsp, 
+        starActiveEntry } from '../utils/store.js'
 
     const { remote } = require('electron')
     const { Menu, MenuItem } = remote
@@ -52,33 +53,85 @@
         }
     }
 
+    export function handleStarEntry(entry) {
+        if (!entry.stats.has_starred) {
+            apiReq('/api/star/entry', {entry_id: entry.id, feed_id: entry.feed.id}).then( rsp => {
+                if (rsp.code === 0) {
+                    shortToast("Star Entry")
+
+                    if (isInList(entry, $rssListRsp.data)) {
+                        $rssListRsp.data[entry._index].stats.has_starred = true
+                    }
+                    if ($activeTab === 'rss') {
+                        if (entry.id === $rssActiveEntry.id) {
+                            $rssActiveEntry.stats.has_starred = true
+                        }
+                    } else if ($activeTab === 'star') {
+                        if (entry.id === $starActiveEntry.id) {
+                            $starActiveEntry.stats.has_starred = true
+                        }
+                    }
+                }
+            }).catch(err => {
+                warnToast(err + " Star")
+            })
+        }
+    }
+
+    export function handleUnstarEntry(entry) {
+        if (entry.stats.has_starred) {
+            apiReq('/api/unstar/entry', {entry_id: entry.id, feed_id: entry.feed.id}).then( rsp => {
+                if (rsp.code === 0) {
+                    shortToast("Unstar Entry")
+
+                    if (isInList(entry, $rssListRsp.data)) {
+                        $rssListRsp.data[entry._index].stats.has_starred = false
+                    }
+                    if ($activeTab === 'rss') {
+                        if (entry.id === $rssActiveEntry.id) {
+                            $rssActiveEntry.stats.has_starred = false
+                        }
+                    } else if ($activeTab === 'star') {
+                        if (entry.id === $starActiveEntry.id) {
+                            $starActiveEntry.stats.has_starred = false
+                        }
+                    }
+                }
+            }).catch(err => {
+                warnToast(err + " Star")
+            })
+        }
+    }
+
     function showEntryCtxMenu(entry) {
         const menu = new Menu();
+
         menu.append(new MenuItem({
             label: isWin() ? "🌟  Star" : "⭐️  Star",
+            visible: !entry.stats.has_starred,
             click: function(){
-                alert(`you clicked on`);
+                handleStarEntry(entry)
             }
         }));
         menu.append(new MenuItem({
             label: "💔  Unstar",
-            enabled: false,
+            visible: entry.stats.has_starred,
             click: function(){
-                alert(`you clicked on`);
+                handleUnstarEntry(entry)
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
             label: "✅️  Mark as read",
-            enabled: !entry.stats.has_read,
+            visible: !entry.stats.has_read,
             click: function(){
                 handleMarkEntryAsRead(entry)
             }
         }));
         menu.append(new MenuItem({
             label: "📌  Mark as unread",
-            enabled: entry.stats.has_read,
+            visible: entry.stats.has_read,
             click: function(){
                 handleMarkEntryAsUnread(entry)
             }
@@ -94,14 +147,14 @@
 
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
-            label: "✏️  Edit Feed",
+            label: "✏️  Edit",
             click: function(){
                 alert(`you clicked on`);
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
-            label: "🗑  Unsubscribe Feed",
+            label: "🗑  Unsubscribe",
             click: function(){
                 handleUnsubscribeFeed(entry.feed.id)
             }

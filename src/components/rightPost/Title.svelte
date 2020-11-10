@@ -3,8 +3,10 @@
     export let fontSize = "text-medium"
     export let activeEntry = {}
 
-    import { toggleMaximizeWindow, macNavCtxMenu } from '../utils/helper.js'
+    import { toggleMaximizeWindow, macNavCtxMenu, isInList } from '../utils/helper.js'
     import { saveFontSize } from '../utils/storage.js'
+    import { apiReq } from '../utils/req.js'
+    import { activeTab, rssListRsp, starListRsp } from '../utils/store.js'
     
     function showFontSizeWindow(event) {
         const width = 450
@@ -20,7 +22,27 @@
 
         instanse.open()
     }
-    
+
+    function toggleStarStatus(event) {
+        const url = activeEntry.stats.has_starred ? '/api/unstar/entry' : '/api/star/entry'
+        apiReq(url, {entry_id: activeEntry.id, feed_id: activeEntry.feed.id}).then( rsp => {
+            if (rsp.code === 0) {
+                activeEntry.stats.has_starred = !activeEntry.stats.has_starred
+                if ($activeTab === 'rss') {
+                    if (isInList(activeEntry, $rssListRsp.data)) {
+                        $rssListRsp.data[activeEntry._index].stats.has_starred = activeEntry.stats.has_starred
+                    }
+                } else if ($activeTab === 'star') {
+                    if (isInList(activeEntry, $starListRsp.data)) {
+                        $starListRsp.data[activeEntry._index].stats.has_starred = activeEntry.stats.has_starred
+                    }
+                }
+            }
+        }).catch(err => {
+            warnToast(err + " Star")
+        })
+    }
+
     $: {
         console.log(`Set font size ${fontSize}`)
         saveFontSize(fontSize)
@@ -63,8 +85,10 @@
 {#if activeEntry.id}
     <div id="omr-post-title-bar" class="drag" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
         <div class="post-title">{ activeEntry.title }</div>
-        <i class="material-icons no-drag {activeEntry.stats.has_starred ? 'primary-color' : ''}">
+
+        <i class="material-icons no-drag {activeEntry.stats.has_starred ? 'primary-color' : ''}" on:click={toggleStarStatus}>
             {activeEntry.stats.has_starred ? 'star' : 'star_border'}</i>
+
         <i class="material-icons no-drag" on:click="{showFontSizeWindow}">format_size</i>
     </div>
 

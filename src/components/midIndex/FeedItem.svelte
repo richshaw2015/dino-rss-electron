@@ -3,7 +3,7 @@
 
     import { fromNow } from '../utils/helper.js'
 
-    const { remote } = require('electron')
+    const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
     import { isWin, getPageSize, shortToast, toast, warnToast, copyToClipboard, isInList } from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
@@ -33,22 +33,22 @@
     function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
         menu.append(new MenuItem({
-            label: "✅️  Mark Feed as read",
+            label: "✅️  Mark as read",
             click: function(){
                 handleMarkFeedAsRead(feedInfo)
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
         menu.append(new MenuItem({
-            label: "🔗  Copy Feed RSS",
+            label: `🔗  Open ${feedInfo.link}`,
             click: function(){
-                copyToClipboard(feedInfo.rss)
+                shell.openExternal(feedInfo.link)
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "✏️  Edit Feed",
+            label: "✏️  Edit",
             click: function(){
                 // TODO 
             }
@@ -56,7 +56,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "🗑  Unsubscribe Feed",
+            label: "🗑  Unsubscribe",
             click: function(){
                 handleUnsubscribeFeed(feedInfo.id)
             }

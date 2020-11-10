@@ -46,14 +46,7 @@
         const hasText = window.getSelection().toString().trim().length > 0
         const truncateText = truncateStr(window.getSelection().toString().trim(), 20)
 
-        const menu = new Menu();
-        menu.append(new MenuItem({
-            label: isWin() ? "🌟  Star" : "⭐️  Star",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-        menu.append(new MenuItem({type: "separator"}));
+        const menu = new Menu()
 
         menu.append(new MenuItem({
             label: `🔍  Search "${truncateText}" with Google`,
