@@ -1,12 +1,11 @@
 <script>
     export let entryInfo
 
-    import { rssFeedEntriesView, rssListRsp, unreadCountRsp, rssActiveFeed, rssActiveEntry, activeTab, starListRsp, 
-        starActiveEntry } from '../utils/store.js'
+    import { rssFeedEntriesView, rssEntryListRsp, unreadCountRsp, rssActiveFeed, rssActiveEntry } from '../utils/store.js'
 
-    const { remote } = require('electron')
+    const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
-    import { isWin, getPageSize, shortToast, toast, warnToast, fromNow, isInList, copyToClipboard } from '../utils/helper.js'
+    import { isWin, getPageSize, shortToast, toast, warnToast, fromNow, isInList } from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
 
     function handleMarkEntryAsRead(entry) {
@@ -15,8 +14,8 @@
                 if (rsp.code === 0) {
                     shortToast("Mark Entry as read")
 
-                    if (isInList(entry, $rssListRsp.data)) {
-                        $rssListRsp.data[entry._index].stats.has_read = true
+                    if (isInList(entry, $rssEntryListRsp.data)) {
+                        $rssEntryListRsp.data[entry._index].stats.has_read = true
                     }
         
                     $unreadCountRsp.count -= 1
@@ -37,8 +36,8 @@
                 if (rsp.code === 0) {
                     shortToast("Mark Entry as unread")
 
-                    if (isInList(entry, $rssListRsp.data)) {
-                        $rssListRsp.data[entry._index].stats.has_read = false
+                    if (isInList(entry, $rssEntryListRsp.data)) {
+                        $rssEntryListRsp.data[entry._index].stats.has_read = false
                     }
         
                     $unreadCountRsp.count += 1
@@ -59,17 +58,11 @@
                 if (rsp.code === 0) {
                     shortToast("Star Entry")
 
-                    if (isInList(entry, $rssListRsp.data)) {
-                        $rssListRsp.data[entry._index].stats.has_starred = true
+                    if (isInList(entry, $rssEntryListRsp.data)) {
+                        $rssEntryListRsp.data[entry._index].stats.has_starred = true
                     }
-                    if ($activeTab === 'rss') {
-                        if (entry.id === $rssActiveEntry.id) {
-                            $rssActiveEntry.stats.has_starred = true
-                        }
-                    } else if ($activeTab === 'star') {
-                        if (entry.id === $starActiveEntry.id) {
-                            $starActiveEntry.stats.has_starred = true
-                        }
+                    if (entry.id === $rssActiveEntry.id) {
+                        $rssActiveEntry.stats.has_starred = true
                     }
                 }
             }).catch(err => {
@@ -84,17 +77,11 @@
                 if (rsp.code === 0) {
                     shortToast("Unstar Entry")
 
-                    if (isInList(entry, $rssListRsp.data)) {
-                        $rssListRsp.data[entry._index].stats.has_starred = false
+                    if (isInList(entry, $rssEntryListRsp.data)) {
+                        $rssEntryListRsp.data[entry._index].stats.has_starred = false
                     }
-                    if ($activeTab === 'rss') {
-                        if (entry.id === $rssActiveEntry.id) {
-                            $rssActiveEntry.stats.has_starred = false
-                        }
-                    } else if ($activeTab === 'star') {
-                        if (entry.id === $starActiveEntry.id) {
-                            $starActiveEntry.stats.has_starred = false
-                        }
+                    if (entry.id === $rssActiveEntry.id) {
+                        $rssActiveEntry.stats.has_starred = false
                     }
                 }
             }).catch(err => {
@@ -139,9 +126,9 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "🔗  Copy Link",
+            label: `🧭  Open in Browser`,
             click: function(){
-                copyToClipboard(entry.link)
+                shell.openExternal(entry.link)
             }
         }));
 
@@ -187,8 +174,7 @@
         align-items: center;
     }
     .entry-star-stats {
-        width: 66px;
-        padding-right: 24px;
+        min-width: 60px;
     }
     .entry-view-stats {
         width: 54px;
@@ -213,22 +199,26 @@
     }
     .read-icon, .unread-icon {
         width: 16px;
-        margin-left: 16px;
-        margin-right: 12px;
+        margin-left: 16px; 
     }
     .read-icon {
         font-size: 16px;
+    }
+    .padding-icon {
+        margin-right: 12px;
     }
     .unread-icon {
         font-size: 12px;
     }
     .entry-author {
-        width: 140px;
+        width: 130px;
         padding-left: 12px;
+        flex-grow: 1;
     }
     .entry-date {
-        width: 140px;
-        padding: 0 10px;
+        width: 130px;
+        max-width: 130px;
+        padding: 0 8px;
     }
     .podcast-icon {
         width: 13px;
@@ -237,16 +227,16 @@
 </style>
 
 {#if entryInfo}
-<div class="omr-entry-item" on:contextmenu={()=> showEntryCtxMenu(entryInfo)}>
+<div class="omr-entry-item" title="{entryInfo.title}" on:contextmenu={()=> showEntryCtxMenu(entryInfo)}>
     <div class="entry-title-line">
         <img src="{entryInfo.image || 'icon/logo.svg'}" class="entry-avatar" alt="" />
-        <span class="truncate entry-title {entryInfo.stats.has_read ? '' : 'bold'}">{ entryInfo.title }</span>
+        <span class="truncate entry-title {!entryInfo.stats.has_read ? 'bold' : ''}">{ entryInfo.title }</span>
 
         {#if entryInfo.feed.is_podcast}
             <img src="./icon/podcast.svg" class="podcast-icon" alt="Podcast" />
         {/if}
 
-        <i class="material-icons {entryInfo.stats.has_read ? 'read-icon second-color' : 'unread-icon primary-color'}">
+        <i class="material-icons padding-icon {entryInfo.stats.has_read ? 'read-icon second-color' : 'unread-icon primary-color'}">
             {entryInfo.stats.has_read ? 'check' : 'lens'}</i>
     </div>
 

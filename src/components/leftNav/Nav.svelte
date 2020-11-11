@@ -5,7 +5,8 @@
     const fs = require('fs')
     const { dialog } = remote
 
-    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, warnToast } from '../utils/helper.js'
+    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, 
+        warnToast, readableCount } from '../utils/helper.js'
     import { getToken, saveUserInfo, setToken } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
     import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading } from '../utils/store.js'
@@ -323,7 +324,7 @@
             <i class="material-icons {$activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
             {#if $unreadCountRsp.count > 0}
                 <span class="rss-notify-badge second-bg-color">
-                    {$unreadCountRsp.count <= 999 ? $unreadCountRsp.count : '···'}
+                    {readableCount($unreadCountRsp.count)}
                 </span>
             {/if}
         </div>

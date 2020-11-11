@@ -1,15 +1,15 @@
 <script>
     import { onMount } from 'svelte'
-    import { rssActiveFeed, rssListRsp, rssFeedListRsp, rssFeedEntriesView, unreadCountRsp } from '../utils/store.js'
+    import { rssActiveFeed, rssEntryListRsp, rssFeedListRsp, rssFeedEntriesView, unreadCountRsp } from '../utils/store.js'
     import { apiReq } from '../utils/req.js'
-    import { warnToast, shortToast } from '../utils/helper.js'
+    import { warnToast, shortToast, readableCount } from '../utils/helper.js'
     import { getViewScope } from '../utils/storage.js'
 
     const Mousetrap = require('mousetrap')
 
     function backToFeedList() {
         rssFeedEntriesView.set(false)
-        rssListRsp.set($rssFeedListRsp)
+        rssEntryListRsp.set($rssFeedListRsp)
     }
     function handleMarkFeedAsRead() {
         const unreadCount = $rssActiveFeed.stats.unread_count
@@ -25,13 +25,13 @@
                     $unreadCountRsp.count -= unreadCount
                     
                     if (getViewScope() === 'unread') {
-                        rssListRsp.set({
+                        rssEntryListRsp.set({
                             "code": 101,
                             "msg": "No unread Entries"
                         })
                     } else {
-                        for (let i in $rssListRsp.data) {
-                            $rssListRsp.data[i].stats.has_read = true
+                        for (let i in $rssEntryListRsp.data) {
+                            $rssEntryListRsp.data[i].stats.has_read = true
                         }
                     }
                 }
@@ -101,7 +101,7 @@
     <img src="{$rssActiveFeed.image || 'icon/logo.svg'}" class="feed-nav-avatar" alt="" />
     <span class="truncate bold feed-nav-title" title="{$rssActiveFeed.title}">{$rssActiveFeed.title}</span>
     {#if $rssActiveFeed.stats.unread_count > 0}
-        <span class="bold feed-nav-unread">({$rssActiveFeed.stats.unread_count})</span>
+        <span class="bold feed-nav-unread">({readableCount($rssActiveFeed.stats.unread_count)})</span>
     {/if}
 
     <i class="material-icons check-icon" on:click={handleMarkFeedAsRead}>check</i>

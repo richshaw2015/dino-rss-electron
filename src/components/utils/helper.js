@@ -154,6 +154,20 @@ export function fromNow(utcTs) {
     return utcTs
 }
 
+export function readableCount(count) {
+    if (count < 1000) {
+        return count
+    } else {
+        if (count < 10000) {
+            return Math.floor(count / 1000) + 'K+'
+        } else if (count < 100000) {
+            return Math.floor(count / 10000) + 'W+'
+        } else {
+            return '···'
+        }
+    }
+}
+
 export function isInList(item, list) {
     if (item && list) {
         for (let i of list) {

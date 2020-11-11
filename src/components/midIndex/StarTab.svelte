@@ -1,77 +1,86 @@
 <script>
-    import FeedItem from './FeedItem.svelte'
+    import StarFeed from './StarFeed.svelte'
+    import StarEntry from "./StarEntry.svelte"
     import Notice from '../global/Notice.svelte'
     import FeedNav from './FeedNav.svelte'
     import Pager from './Pager.svelte'
     import Toolbar from './Toolbar.svelte'
-    import EntryItem from "./EntryItem.svelte"
+
     import { getPageSize, isInList, shortToast, toast, warnToast } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
-    import { saveViewMode } from '../utils/storage.js'
-    import { viewMode, viewScope, starActiveEntry, starActiveFeed, starFeedEntriesView, starFeedListRsp, starListRsp } 
+    import { saveStarViewMode } from '../utils/storage.js'
+    import { starViewMode, starActiveEntry, starActiveFeed, starFeedEntriesView, starFeedListRsp, starEntryListRsp } 
         from '../utils/store.js'
 
     import { onMount } from 'svelte'
 
     onMount(() => {
         if (!$starFeedEntriesView) {
-            updateStarList(1)
+            if ($starViewMode === "entry") {
+                if (!$starEntryListRsp.page || $starEntryListRsp.page === 1) {
+                    updateStarList(1, $starViewMode)
+                }
+            } else if ($starViewMode === "feed") {
+                if (!$starEntryListRsp.page || $starEntryListRsp.page === 1) {
+                    updateStarList(1, $starViewMode)
+                }
+            }
         }
         
         // keyboard shortcut
         Mousetrap.bind('n', function() {
-            if ($starListRsp.data.length === 0 || $starListRsp.code !== 0) {
+            if ($starEntryListRsp.data.length === 0 || $starEntryListRsp.code !== 0) {
                 return false
             }
-            if ($viewMode === 'entry' || ($viewMode === 'feed' && $starFeedEntriesView) ) {
-                if (!isInList($starActiveEntry, $starListRsp.data)) {
-                    starActiveEntry.set($starListRsp.data[0])
+            if ($starViewMode === 'entry' || ($starViewMode === 'feed' && $starFeedEntriesView) ) {
+                if (!isInList($starActiveEntry, $starEntryListRsp.data)) {
+                    starActiveEntry.set($starEntryListRsp.data[0])
                 } else {
                     const index = $starActiveEntry._index + 1
-                    if (index === $starListRsp.data.length) {
+                    if (index === $starEntryListRsp.data.length) {
                         warnToast("Already the last Entry")
                     } else {
-                        starActiveEntry.set($starListRsp.data[index])
+                        starActiveEntry.set($starEntryListRsp.data[index])
                     }
                 }
             } else {
-                if (!isInList($starActiveFeed, $starListRsp.data)) {
-                    starActiveFeed.set($starListRsp.data[0])
+                if (!isInList($starActiveFeed, $starEntryListRsp.data)) {
+                    starActiveFeed.set($starEntryListRsp.data[0])
                 } else {
                     const index = $starActiveFeed._index + 1
-                    if (index === $starListRsp.data.length) {
+                    if (index === $starEntryListRsp.data.length) {
                         warnToast("Already the last Feed")
                     } else {
-                        starActiveFeed.set($starListRsp.data[index])
+                        starActiveFeed.set($starEntryListRsp.data[index])
                     }
                 }
             }
             return false
         });
         Mousetrap.bind('N', function() {
-            if ($starListRsp.data.length === 0 || $starListRsp.code !== 0) {
+            if ($starEntryListRsp.data.length === 0 || $starEntryListRsp.code !== 0) {
                 return false
             }
-            if ($viewMode === 'entry' || ($viewMode === 'feed' && $starFeedEntriesView) ) {
-                if (!isInList($starActiveEntry, $starListRsp.data)) {
-                    starActiveEntry.set($starListRsp.data[0])
+            if ($starViewMode === 'entry' || ($starViewMode === 'feed' && $starFeedEntriesView) ) {
+                if (!isInList($starActiveEntry, $starEntryListRsp.data)) {
+                    starActiveEntry.set($starEntryListRsp.data[0])
                 } else {
                     const index = $starActiveEntry._index - 1
                     if (index < 0) {
                         warnToast("Already the first Entry")
                     } else {
-                        starActiveEntry.set($starListRsp.data[index])
+                        starActiveEntry.set($starEntryListRsp.data[index])
                     }
                 }
             } else {
-                if (!isInList($starActiveFeed, $starListRsp.data)) {
-                    starActiveFeed.set($starListRsp.data[0])
+                if (!isInList($starActiveFeed, $starEntryListRsp.data)) {
+                    starActiveFeed.set($starEntryListRsp.data[0])
                 } else {
                     const index = $starActiveFeed._index - 1
                     if (index < 0 ) {
                         warnToast("Already the first Feed")
                     } else {
-                        starActiveFeed.set($starListRsp.data[index])
+                        starActiveFeed.set($starEntryListRsp.data[index])
                     }
                 }
             }
@@ -80,21 +89,21 @@
     })
 
     function updateStarList(page, mode) {
-        if (!mode) mode = $viewMode
+        if (!mode) mode = $starViewMode
 
         if (mode === 'feed') {
             apiReq('/api/my/starred/feeds', {page: page, page_size: getPageSize()}).then( rsp => {
-                starListRsp.set(rsp)
+                starEntryListRsp.set(rsp)
 
                 if (rsp.code === 0) {
-                    viewMode.set(mode)
-                    saveViewMode(mode)
+                    starViewMode.set(mode)
+                    saveStarViewMode(mode)
                 } else if (rsp.code === 100) {
-                    $starListRsp.msg = "No starred Feeds"
+                    $starEntryListRsp.msg = "No starred Feeds"
                 }
             }).catch(err => {
                 const msg =  err + ' starred Feeds'
-                starListRsp.set({
+                starEntryListRsp.set({
                     code: -1,
                     msg:  msg
                 })
@@ -102,17 +111,17 @@
             })
         } else if (mode === 'entry') {
             apiReq('/api/my/starred/entries', {page: page, page_size: getPageSize()}).then( rsp => {
-                starListRsp.set(rsp)
+                starEntryListRsp.set(rsp)
                 
                 if (rsp.code === 0) {
-                    viewMode.set(mode)
-                    saveViewMode($viewMode)
+                    starViewMode.set(mode)
+                    saveStarViewMode($starViewMode)
                 } else if (rsp.code === 100) {
-                    $starListRsp.msg ="No starred Entries"
+                    $starEntryListRsp.msg ="No starred Entries"
                 }
             }).catch(err => {
                 const msg =  err + ' starred Entries'
-                starListRsp.set({
+                starEntryListRsp.set({
                     code: -1,
                     msg:  msg
                 })
@@ -134,11 +143,10 @@
             feed_id: feed.id,
             page: page,
             page_size: getPageSize(true), 
-            scope: $viewScope
         }).then( rsp => {
             starFeedEntriesView.set(true)
-            feedListRspBak.set($starListRsp)
-            $starListRsp = rsp
+            feedListRspBak.set($starEntryListRsp)
+            $starEntryListRsp = rsp
 
             if (rsp.code === 100) {
                 toast("No starred Entries")
@@ -171,55 +179,55 @@
 {#if $starFeedEntriesView}
     <FeedNav />
 
-    {#if $starListRsp.code === 100}
-        <Notice level="info" msg={$starListRsp.msg} />
+    {#if $starEntryListRsp.code === 100}
+        <Notice level="info" msg={$starEntryListRsp.msg} />
     {:else}
         <div class="list-wrapper">
             <ul class="collection list-ul">
-                {#each $starListRsp.data as entry (entry.id)}
+                {#each $starEntryListRsp.data as entry (entry.id)}
                 <li class="collection-item list-li { entry.id === $starActiveEntry.id ? 'active' : ''}" 
                     on:click={() => starActiveEntry.set(entry)}>
-                    <EntryItem entryInfo={entry} />
+                    <StarEntry entryInfo={entry} />
                 </li>
                 {/each}
             </ul>
         </div>
 
-        <Pager currentPage={$starListRsp.page} numPages={$starListRsp.num_pages} 
+        <Pager currentPage={$starEntryListRsp.page} numPages={$starEntryListRsp.num_pages} 
             on:refresh-list-view={handleToolbarRefresh} />
     {/if}
 {:else}
-    {#if $starListRsp.code === undefined}
+    {#if $starEntryListRsp.code === undefined}
         <!-- loading -->
         <Notice />
-    {:else if $starListRsp.code === -1 && !$starListRsp.data}
+    {:else if $starEntryListRsp.code === -1 && !$starEntryListRsp.data}
         <!-- no current list data -->
-        <Notice level="warn" msg={$starListRsp.msg} />
-    {:else if $starListRsp.code === 0 || $starListRsp.code === -1 }
+        <Notice level="warn" msg={$starEntryListRsp.msg} />
+    {:else if $starEntryListRsp.code === 0 || $starEntryListRsp.code === -1 }
         <div class="list-wrapper">
             <ul class="collection list-ul">
-            {#if $viewMode === 'feed'}
-                {#each $starListRsp.data as feed (feed.id)}
+            {#if $starViewMode === 'feed'}
+                {#each $starEntryListRsp.data as feed (feed.id)}
                     <li class="collection-item list-li { feed.id === $starActiveFeed.id ? 'active' : '' }" 
                         on:click={() => starActiveFeed.set(feed)}>
-                        <FeedItem feedInfo={feed} />
+                        <StarFeed feedInfo={feed} />
                     </li>
                 {/each}
 
-            {:else if $viewMode === 'entry'}
-                {#each $starListRsp.data as entry (entry.id)}
+            {:else if $starViewMode === 'entry'}
+                {#each $starEntryListRsp.data as entry (entry.id)}
                     <li class="collection-item list-li { entry.id === $starActiveEntry.id ? 'active' : ''}" 
                         on:click={() => starActiveEntry.set(entry)}>
-                        <EntryItem entryInfo={entry} />
+                        <StarEntry entryInfo={entry} />
                     </li>
                 {/each}
             {/if}
             </ul>
         </div>
 
-        <Pager currentPage={$starListRsp.page} numPages={$starListRsp.num_pages} 
+        <Pager currentPage={$starEntryListRsp.page} numPages={$starEntryListRsp.num_pages} 
             on:refresh-list-view={handleToolbarRefresh} />
-    {:else if $starListRsp.code === 100}
-        <Notice level="info" msg={$starListRsp.msg} />
+    {:else if $starEntryListRsp.code === 100}
+        <Notice level="info" msg={$starEntryListRsp.msg} />
     {/if}
 {/if}

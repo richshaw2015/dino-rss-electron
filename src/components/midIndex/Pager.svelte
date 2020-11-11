@@ -10,6 +10,7 @@
 
     function nextPage() {
         if (currentPage < numPages) {
+            console.log(currentPage + 1)
             dispatch('refresh-list-view', {page: currentPage + 1 })
         } else {
             warnToast("Already the last page")

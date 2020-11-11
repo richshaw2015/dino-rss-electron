@@ -4,7 +4,7 @@
     import { onMount } from 'svelte'
     import { createEventDispatcher } from 'svelte'
     import { saveViewScope } from '../utils/storage.js'
-    import { activeTab, viewMode, viewScope } from '../utils/store.js'
+    import { activeTab, rssViewMode, viewScope, starViewMode } from '../utils/store.js'
     import { shortToast } from '../utils/helper.js'
 
     const Mousetrap = require('mousetrap')
@@ -21,8 +21,13 @@
 
     function handleToggleViewMode() {
         // change status after network
-        const mode = ($viewMode === 'feed') ? 'entry' : 'feed'
-        dispatch('refresh-list-view', {page: 1, mode: mode})
+        if ($activeTab === "rss") {
+            const mode = ($rssViewMode === 'feed') ? 'entry' : 'feed'
+            dispatch('refresh-list-view', {page: 1, mode: mode})
+        } else {
+            const mode = ($starViewMode === 'feed') ? 'entry' : 'feed'
+            dispatch('refresh-list-view', {page: 1, mode: mode})
+        }
     }
     function handleToggleViewScope() {
         // change status instant
@@ -123,12 +128,12 @@
 
                 {#if showModeBtn}
                 <div class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
-                    <i class="material-icons">{$viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
+                    <i class="material-icons">{$rssViewMode === 'feed' ? 'view_module' : 'view_list'} </i>
                 </div>
                 {/if}
             {:else if $activeTab === 'star' && showModeBtn}
                 <div class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
-                    <i class="material-icons">{$viewMode === 'feed' ? 'view_module' : 'view_list'} </i>
+                    <i class="material-icons">{$starViewMode === 'feed' ? 'view_module' : 'view_list'} </i>
                 </div>
             {/if}
 

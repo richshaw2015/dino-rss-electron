@@ -1,6 +1,8 @@
 import { SERVER } from './config.js'
 
-const viewModeConfKey = 'CONF/VIEW/MODE'
+const starViewModeConfKey = 'CONF/STAR/VIEW/MODE'
+const rssViewModeConfKey = 'CONF/RSS/VIEW/MODE'
+
 const viewScopeConfKey = 'CONF/VIEW/SCOPE'
 const fontSizeConfKey = 'CONF/FONT/SIZE'
 const tokenConfKey = 'CONF/TOKEN'
@@ -8,13 +10,20 @@ const userInfoConfKey = 'CONF/USER'
 
 // TODO clear thirdparty data and rebuild localStorage
 
-export function saveViewMode(mode) {
-    localStorage.setItem(viewModeConfKey, mode)
+export function saveRssViewMode(mode) {
+    localStorage.setItem(rssViewModeConfKey, mode)
 }
 
-export function getViewMode() {
-    // entry feed
-    return localStorage.getItem(viewModeConfKey) || 'feed'
+export function getRssViewMode() {
+    return localStorage.getItem(rssViewModeConfKey) || 'feed'
+}
+
+export function saveStarViewMode(mode) {
+    localStorage.setItem(starViewModeConfKey, mode)
+}
+
+export function getStarViewMode() {
+    return localStorage.getItem(starViewModeConfKey) || 'entry'
 }
 
 export function saveViewScope(scope) {
