@@ -1,7 +1,7 @@
 <script>
     export let entryInfo
 
-    import { rssFeedEntriesView, rssEntryListRsp, unreadCountRsp, rssActiveFeed, rssActiveEntry } from '../utils/store.js'
+    import { rssFeedEntriesView, rssListRsp, unreadCountRsp, rssActiveFeed, rssActiveEntry } from '../utils/store.js'
 
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
@@ -14,8 +14,8 @@
                 if (rsp.code === 0) {
                     shortToast("Mark Entry as read")
 
-                    if (isInList(entry, $rssEntryListRsp.data)) {
-                        $rssEntryListRsp.data[entry._index].stats.has_read = true
+                    if (isInList(entry, $rssListRsp.data)) {
+                        $rssListRsp.data[entry._index].stats.has_read = true
                     }
         
                     $unreadCountRsp.count -= 1
@@ -36,8 +36,8 @@
                 if (rsp.code === 0) {
                     shortToast("Mark Entry as unread")
 
-                    if (isInList(entry, $rssEntryListRsp.data)) {
-                        $rssEntryListRsp.data[entry._index].stats.has_read = false
+                    if (isInList(entry, $rssListRsp.data)) {
+                        $rssListRsp.data[entry._index].stats.has_read = false
                     }
         
                     $unreadCountRsp.count += 1
@@ -58,8 +58,8 @@
                 if (rsp.code === 0) {
                     shortToast("Star Entry")
 
-                    if (isInList(entry, $rssEntryListRsp.data)) {
-                        $rssEntryListRsp.data[entry._index].stats.has_starred = true
+                    if (isInList(entry, $rssListRsp.data)) {
+                        $rssListRsp.data[entry._index].stats.has_starred = true
                     }
                     if (entry.id === $rssActiveEntry.id) {
                         $rssActiveEntry.stats.has_starred = true
@@ -77,8 +77,8 @@
                 if (rsp.code === 0) {
                     shortToast("Unstar Entry")
 
-                    if (isInList(entry, $rssEntryListRsp.data)) {
-                        $rssEntryListRsp.data[entry._index].stats.has_starred = false
+                    if (isInList(entry, $rssListRsp.data)) {
+                        $rssListRsp.data[entry._index].stats.has_starred = false
                     }
                     if (entry.id === $rssActiveEntry.id) {
                         $rssActiveEntry.stats.has_starred = false

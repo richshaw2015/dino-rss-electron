@@ -55,7 +55,6 @@
         padding-bottom: 10px;
     }
     .toolbar-group {
-        width: 162px;
         display: flex;
         align-items: center;
         justify-content: flex-end;

@@ -1,6 +1,7 @@
 <script>
     import { onMount } from 'svelte'
-    import { rssActiveFeed, rssEntryListRsp, rssFeedListRsp, rssFeedEntriesView, unreadCountRsp } from '../utils/store.js'
+    import { rssActiveFeed, rssListRsp, rssFeedListRspBak, rssFeedEntriesView, unreadCountRsp, activeTab, 
+        starActiveFeed, starFeedEntriesView, starFeedListRspBak, starListRsp } from '../utils/store.js'
     import { apiReq } from '../utils/req.js'
     import { warnToast, shortToast, readableCount } from '../utils/helper.js'
     import { getViewScope } from '../utils/storage.js'
@@ -8,9 +9,15 @@
     const Mousetrap = require('mousetrap')
 
     function backToFeedList() {
-        rssFeedEntriesView.set(false)
-        rssEntryListRsp.set($rssFeedListRsp)
+        if ($activeTab === "rss") {
+            rssFeedEntriesView.set(false)
+            rssListRsp.set($rssFeedListRspBak)
+        } else if ($activeTab === "star") {
+            starFeedEntriesView.set(false)
+            starListRsp.set($starFeedListRspBak)
+        }
     }
+
     function handleMarkFeedAsRead() {
         const unreadCount = $rssActiveFeed.stats.unread_count
 
@@ -25,13 +32,13 @@
                     $unreadCountRsp.count -= unreadCount
                     
                     if (getViewScope() === 'unread') {
-                        rssEntryListRsp.set({
+                        rssListRsp.set({
                             "code": 101,
                             "msg": "No unread Entries"
                         })
                     } else {
-                        for (let i in $rssEntryListRsp.data) {
-                            $rssEntryListRsp.data[i].stats.has_read = true
+                        for (let i in $rssListRsp.data) {
+                            $rssListRsp.data[i].stats.has_read = true
                         }
                     }
                 }
@@ -91,19 +98,29 @@
 
 </style>
 
-{#if $rssFeedEntriesView}
-<div id="omr-feed-nav">
-    <div id="omr-feed-back" on:click={backToFeedList}>
-        <i class="material-icons back-icon">arrow_back</i>
-        <span class="">Back</span>
+{#if $activeTab === "rss"}
+    <div id="omr-feed-nav">
+        <div id="omr-feed-back" on:click={backToFeedList}>
+            <i class="material-icons back-icon">arrow_back</i>
+            <span class="">Back</span>
+        </div>
+
+        <img src="{$rssActiveFeed.image || 'icon/logo.svg'}" class="feed-nav-avatar" alt="" />
+        <span class="truncate bold feed-nav-title" title="{$rssActiveFeed.title}">{$rssActiveFeed.title}</span>
+        {#if $rssActiveFeed.stats.unread_count > 0}
+            <span class="bold feed-nav-unread">({readableCount($rssActiveFeed.stats.unread_count)})</span>
+        {/if}
+
+        <i class="material-icons check-icon" on:click={handleMarkFeedAsRead}>check</i>
     </div>
+{:else if $activeTab === "star"}
+    <div id="omr-feed-nav">
+        <div id="omr-feed-back" on:click={backToFeedList}>
+            <i class="material-icons back-icon">arrow_back</i>
+            <span class="">Back</span>
+        </div>
 
-    <img src="{$rssActiveFeed.image || 'icon/logo.svg'}" class="feed-nav-avatar" alt="" />
-    <span class="truncate bold feed-nav-title" title="{$rssActiveFeed.title}">{$rssActiveFeed.title}</span>
-    {#if $rssActiveFeed.stats.unread_count > 0}
-        <span class="bold feed-nav-unread">({readableCount($rssActiveFeed.stats.unread_count)})</span>
-    {/if}
-
-    <i class="material-icons check-icon" on:click={handleMarkFeedAsRead}>check</i>
-</div>
+        <img src="{$starActiveFeed.image || 'icon/logo.svg'}" class="feed-nav-avatar" alt="" />
+        <span class="truncate bold feed-nav-title" title="{$starActiveFeed.title}">{$starActiveFeed.title}</span>
+    </div>
 {/if}

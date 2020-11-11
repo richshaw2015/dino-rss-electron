@@ -7,7 +7,7 @@
     const { Menu, MenuItem } = remote
     import { isWin, getPageSize, shortToast, toast, warnToast, copyToClipboard, isInList } from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
-    import { unreadCountRsp, rssEntryListRsp } from '../utils/store.js'
+    import { unreadCountRsp, rssListRsp } from '../utils/store.js'
     
     function handleMarkFeedAsRead(feedInfo) {
         const unreadCount = feedInfo.stats.unread_count
@@ -17,9 +17,9 @@
                 if (rsp.code === 0) {
                     shortToast("Mark Feed as read")
                     
-                    if (isInList(feedInfo, $rssEntryListRsp.data)) {
-                        $rssEntryListRsp.data[feedInfo._index].stats.unread_count = 0
-                        $rssEntryListRsp.data[feedInfo._index].stats.unread_list = []
+                    if (isInList(feedInfo, $rssListRsp.data)) {
+                        $rssListRsp.data[feedInfo._index].stats.unread_count = 0
+                        $rssListRsp.data[feedInfo._index].stats.unread_list = []
                     }
 
                     $unreadCountRsp.count -= unreadCount

@@ -6,7 +6,7 @@
     import { toggleMaximizeWindow, macNavCtxMenu, isInList } from '../utils/helper.js'
     import { saveFontSize } from '../utils/storage.js'
     import { apiReq } from '../utils/req.js'
-    import { activeTab, rssEntryListRsp, starEntryListRsp } from '../utils/store.js'
+    import { activeTab, rssListRsp, starListRsp } from '../utils/store.js'
     
     function showFontSizeWindow(event) {
         const width = 450
@@ -29,12 +29,12 @@
             if (rsp.code === 0) {
                 activeEntry.stats.has_starred = !activeEntry.stats.has_starred
                 if ($activeTab === 'rss') {
-                    if (isInList(activeEntry, $rssEntryListRsp.data)) {
-                        $rssEntryListRsp.data[activeEntry._index].stats.has_starred = activeEntry.stats.has_starred
+                    if (isInList(activeEntry, $rssListRsp.data)) {
+                        $rssListRsp.data[activeEntry._index].stats.has_starred = activeEntry.stats.has_starred
                     }
                 } else if ($activeTab === 'star') {
-                    if (isInList(activeEntry, $starEntryListRsp.data)) {
-                        $starEntryListRsp.data[activeEntry._index].stats.has_starred = activeEntry.stats.has_starred
+                    if (isInList(activeEntry, $starListRsp.data)) {
+                        $starListRsp.data[activeEntry._index].stats.has_starred = activeEntry.stats.has_starred
                     }
                 }
             }

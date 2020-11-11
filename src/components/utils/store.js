@@ -16,16 +16,16 @@ export let unreadCountRsp = writable(0)
 export let isApiLoading = writable(false)
 
 // rss tab
-export let rssEntryListRsp = writable({})
-export let rssFeedListRsp = writable({})
+export let rssListRsp = writable({})
+export let rssFeedListRspBak = writable({})
 export let rssEntryContentRsp = writable({})
 export let rssActiveEntry = writable({})
 export let rssActiveFeed = writable({})
 export let rssFeedEntriesView = writable(false)
 
 // star tab
-export let starEntryListRsp = writable({})
-export let starFeedListRsp = writable({})
+export let starListRsp = writable({})
+export let starFeedListRspBak = writable({})
 export let starEntryContentRsp = writable({})
 export let starActiveEntry = writable({})
 export let starActiveFeed = writable({})

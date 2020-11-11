@@ -1,7 +1,7 @@
 <script>
     export let entryInfo
 
-    import { starEntryListRsp, starActiveEntry } from '../utils/store.js'
+    import { starListRsp, starActiveEntry } from '../utils/store.js'
 
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
@@ -14,8 +14,8 @@
                 if (rsp.code === 0) {
                     shortToast("Star Entry")
 
-                    if (isInList(entry, $starEntryListRsp.data)) {
-                        $starEntryListRsp.data[entry._index].stats.has_starred = true
+                    if (isInList(entry, $starListRsp.data)) {
+                        $starListRsp.data[entry._index].stats.has_starred = true
                     }
                     if (entry.id === $starActiveEntry.id) {
                         $starActiveEntry.stats.has_starred = true
@@ -33,8 +33,8 @@
                 if (rsp.code === 0) {
                     shortToast("Unstar Entry")
 
-                    if (isInList(entry, $starEntryListRsp.data)) {
-                        $starEntryListRsp.data[entry._index].stats.has_starred = false
+                    if (isInList(entry, $starListRsp.data)) {
+                        $starListRsp.data[entry._index].stats.has_starred = false
                     }
                     if (entry.id === $starActiveEntry.id) {
                         $starActiveEntry.stats.has_starred = false

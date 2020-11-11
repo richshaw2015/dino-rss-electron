@@ -15,7 +15,7 @@
     import Third from './Third.svelte'    
 
     import { apiReq } from '../utils/req.js'
-    import { rssActiveEntry, rssEntryListRsp, rssEntryContentRsp, starActiveEntry, starEntryContentRsp, 
+    import { rssActiveEntry, rssListRsp, rssEntryContentRsp, starActiveEntry, starEntryContentRsp, 
         activeTab, unreadCountRsp, rssFeedEntriesView, rssActiveFeed } from '../utils/store.js'
 
     let fontSize = getFontSize()
@@ -109,9 +109,9 @@
                 rssEntryContentRsp.set(entryContentRsp)
 
                 // sync read status
-                if (isInList(entry, $rssEntryListRsp.data)) {
-                    if (!$rssEntryListRsp.data[entry._index].stats.has_read) {
-                        $rssEntryListRsp.data[entry._index].stats.has_read = true
+                if (isInList(entry, $rssListRsp.data)) {
+                    if (!$rssListRsp.data[entry._index].stats.has_read) {
+                        $rssListRsp.data[entry._index].stats.has_read = true
                         $unreadCountRsp.count -= 1
 
                         if ($rssFeedEntriesView) {
