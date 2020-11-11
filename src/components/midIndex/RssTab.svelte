@@ -89,7 +89,6 @@
 
     unreadCountRsp.subscribe(rsp => {
         if (rsp.count < 0 && rsp.code === 0) {
-            console.warn("unreadCountRsp changed negative")
             rsp.code = -1
             syncUnreadCount()
         }

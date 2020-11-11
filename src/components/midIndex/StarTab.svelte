@@ -39,13 +39,13 @@
                 }
             } else {
                 if (!isInList($starActiveFeed, $starListRsp.data)) {
-                    starActiveFeed.set($starListRsp.data[0])
+                    handleGotoStarredFeedEntries($starListRsp.data[0])
                 } else {
                     const index = $starActiveFeed._index + 1
                     if (index === $starListRsp.data.length) {
                         warnToast("Already the last Feed")
                     } else {
-                        starActiveFeed.set($starListRsp.data[index])
+                        handleGotoStarredFeedEntries($starListRsp.data[index])
                     }
                 }
             }
@@ -68,13 +68,13 @@
                 }
             } else {
                 if (!isInList($starActiveFeed, $starListRsp.data)) {
-                    starActiveFeed.set($starListRsp.data[0])
+                    handleGotoStarredFeedEntries($starListRsp.data[0])
                 } else {
                     const index = $starActiveFeed._index - 1
                     if (index < 0 ) {
                         warnToast("Already the first Feed")
                     } else {
-                        starActiveFeed.set($starListRsp.data[index])
+                        handleGotoStarredFeedEntries($starListRsp.data[index])
                     }
                 }
             }
