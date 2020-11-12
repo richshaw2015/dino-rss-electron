@@ -25,6 +25,7 @@
 
     function toggleStarStatus(event) {
         const url = activeEntry.stats.has_starred ? '/api/unstar/entry' : '/api/star/entry'
+        
         apiReq(url, {entry_id: activeEntry.id, feed_id: activeEntry.feed.id}).then( rsp => {
             if (rsp.code === 0) {
                 activeEntry.stats.has_starred = !activeEntry.stats.has_starred

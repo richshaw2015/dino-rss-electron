@@ -5,9 +5,9 @@
 
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
-    import { isWin, getPageSize, shortToast, toast, warnToast, copyToClipboard, isInList } from '../utils/helper.js'
+    import { shortToast, toast, warnToast, isInList } from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
-    import { unreadCountRsp, rssListRsp } from '../utils/store.js'
+    import { unreadCountRsp, rssListRsp, rssFeedEntriesView } from '../utils/store.js'
     
     function handleMarkFeedAsRead(feedInfo) {
         const unreadCount = feedInfo.stats.unread_count
@@ -17,19 +17,19 @@
                 if (rsp.code === 0) {
                     shortToast("Mark Feed as read")
                     
+                    $unreadCountRsp.count -= unreadCount
+
                     if (isInList(feedInfo, $rssListRsp.data)) {
                         $rssListRsp.data[feedInfo._index].stats.unread_count = 0
                         $rssListRsp.data[feedInfo._index].stats.unread_list = []
                     }
-
-                    $unreadCountRsp.count -= unreadCount
                 }
             }).catch(err => {
                 warnToast(err + " Mark")
             })
         }
     }
-    // TODO dynamic read/unread star/unstar menu
+
     function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
         menu.append(new MenuItem({
@@ -146,7 +146,7 @@
 
 </style>
 
-{#if feedInfo}
+{#if !$rssFeedEntriesView}
 <div class="omr-feed-item" title="{feedInfo.title}" on:contextmenu={() => showFeedCtxMenu(feedInfo)}>
     <div class="feed-title-line">
         <img src="{feedInfo.image || 'icon/logo.svg'}" class="feed-avatar" alt="" />

@@ -37,7 +37,7 @@
                         starActiveEntry.set($starListRsp.data[index])
                     }
                 }
-            } else {
+            } else if ($starViewMode === 'feed' && !$starFeedEntriesView) {
                 if (!isInList($starActiveFeed, $starListRsp.data)) {
                     handleGotoStarredFeedEntries($starListRsp.data[0])
                 } else {
@@ -66,7 +66,7 @@
                         starActiveEntry.set($starListRsp.data[index])
                     }
                 }
-            } else {
+            } else if ($starViewMode === 'feed' && !$starFeedEntriesView) {
                 if (!isInList($starActiveFeed, $starListRsp.data)) {
                     handleGotoStarredFeedEntries($starListRsp.data[0])
                 } else {
@@ -87,44 +87,47 @@
 
         if (mode === 'feed') {
             apiReq('/api/my/starred/feeds', {page: page, page_size: getPageSize()}).then( rsp => {
-                starListRsp.set(rsp)
-                
                 if (!$starFeedEntriesView) {
-                    starFeedListRspBak.set(rsp)
-                    console.log($starFeedListRspBak)
-                }
+                    starListRsp.set(rsp)
+                
+                    if (!$starFeedEntriesView) {
+                        starFeedListRspBak.set(rsp)
+                    }
 
-                if (rsp.code === 0) {
-                    starViewMode.set(mode)
-                    saveStarViewMode(mode)
-                } else if (rsp.code === 100) {
-                    $starListRsp.msg = "No starred Feeds"
+                    if (rsp.code === 0) {
+                        if ($starViewMode !== mode) {
+                            starViewMode.set(mode)
+                            saveStarViewMode(mode)
+                        }
+                    } else if (rsp.code === 100) {
+                        $starListRsp.msg = "No starred Feeds"
+                    }
                 }
             }).catch(err => {
-                const msg =  err + ' starred Feeds'
                 starListRsp.set({
                     code: -1,
-                    msg:  msg
+                    msg:  err + ' starred Feeds'
                 })
-                warnToast(msg)
+                warnToast($starListRsp.msg)
             })
         } else if (mode === 'entry') {
             apiReq('/api/my/starred/entries', {page: page, page_size: getPageSize()}).then( rsp => {
                 starListRsp.set(rsp)
                 
                 if (rsp.code === 0) {
-                    starViewMode.set(mode)
-                    saveStarViewMode($starViewMode)
+                    if ($starViewMode !== mode) {
+                        starViewMode.set(mode)
+                        saveStarViewMode($starViewMode)
+                    }
                 } else if (rsp.code === 100) {
                     $starListRsp.msg ="No starred Entries"
                 }
             }).catch(err => {
-                const msg =  err + ' starred Entries'
                 starListRsp.set({
                     code: -1,
-                    msg:  msg
+                    msg:  err + ' starred Entries'
                 })
-                warnToast(msg)
+                warnToast($starListRsp.msg)
             })
         }
     }
@@ -137,8 +140,10 @@
         }
     }
     function handleGotoStarredFeedEntries(feed, page=1) {
-        starActiveFeed.set(feed)
-        gotoStarredFeedEntries(page)
+        if (!$starFeedEntriesView && $starViewMode === "feed") {
+            starActiveFeed.set(feed)
+            gotoStarredFeedEntries(page)
+        }
     }
     function gotoStarredFeedEntries(page=1) {
         apiReq('/api/starred/feed/entries', {

@@ -1,15 +1,15 @@
 
-export function toast(msg) {
-    M.toast({html: msg, displayLength: 3000});
+export function toast(msg, ttl=3000) {
+    M.toast({html: msg, displayLength: ttl});
 }
 
 export function warnToast(msg) {
-    const html = '<span style="color: #eeff41;">' + msg + '</span>';
-    M.toast({html: html, displayLength: 4500});
+    msg = '<span style="color: #eeff41;">' + msg + '</span>'
+    toast(msg, 4500)
 }
 
 export function shortToast(msg) {
-    M.toast({html: msg, displayLength: 1500});
+    toast(msg, 1500)
 }
 
 export function truncateStr(str, len) {
@@ -169,12 +169,14 @@ export function readableCount(count) {
 }
 
 export function isInList(item, list) {
+    // TODO struct valid
     if (item && list) {
         for (let i of list) {
-            if (item.id === i.id) {
+            if (item.id === i.id && Object.keys(item).toString() === Object.keys(i).toString()) {
+                console.log("in list")
                 return true
-            } 
-         }
+            }
+        }
     }
     return false
 }

@@ -66,11 +66,11 @@
         let entryContentRsp
 
         if ($activeTab === "star") {
-            starEntryContentRsp.set({})
             activeEntry = $starActiveEntry
+            starEntryContentRsp.set({})
         } else if ($activeTab === "rss") {
-            rssEntryContentRsp.set({})
             activeEntry = $rssActiveEntry
+            rssEntryContentRsp.set({})
         }
 
         apiReq('/api/entry/get/content', {
@@ -108,7 +108,7 @@
             } else if ($activeTab === "rss") {
                 rssEntryContentRsp.set(entryContentRsp)
 
-                // sync read status
+                // sync rss read status
                 if (isInList(entry, $rssListRsp.data)) {
                     if (!$rssListRsp.data[entry._index].stats.has_read) {
                         $rssListRsp.data[entry._index].stats.has_read = true

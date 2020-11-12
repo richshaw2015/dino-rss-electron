@@ -6,7 +6,7 @@
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
     import { shortToast, toast, warnToast, isInList } from '../utils/helper.js'
-    import { apiReq } from '../utils/req.js'
+    import { starFeedEntriesView } from '../utils/store.js'
     
     function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
@@ -89,7 +89,7 @@
 
 </style>
 
-{#if feedInfo}
+{#if !$starFeedEntriesView}
 <div class="omr-feed-item" title="{feedInfo.title}" on:contextmenu={() => showFeedCtxMenu(feedInfo)}>
     <div class="feed-title-line">
         <img src="{feedInfo.image || 'icon/logo.svg'}" class="feed-avatar" alt="" />

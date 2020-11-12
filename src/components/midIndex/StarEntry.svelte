@@ -39,7 +39,6 @@
                     if (entry.id === $starActiveEntry.id) {
                         $starActiveEntry.stats.has_starred = false
                     }
-
                 }
             }).catch(err => {
                 warnToast(err + " Star")

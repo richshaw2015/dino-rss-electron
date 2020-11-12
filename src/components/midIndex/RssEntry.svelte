@@ -5,7 +5,7 @@
 
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
-    import { isWin, getPageSize, shortToast, toast, warnToast, fromNow, isInList } from '../utils/helper.js'
+    import { isWin, shortToast, toast, warnToast, fromNow, isInList } from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
 
     function handleMarkEntryAsRead(entry) {
@@ -13,14 +13,14 @@
             apiReq('/api/entry/mark/read', {entries: entry.id}).then( rsp => {
                 if (rsp.code === 0) {
                     shortToast("Mark Entry as read")
+                    
+                    $unreadCountRsp.count -= 1
 
                     if (isInList(entry, $rssListRsp.data)) {
                         $rssListRsp.data[entry._index].stats.has_read = true
                     }
-        
-                    $unreadCountRsp.count -= 1
 
-                    if ($rssFeedEntriesView) {
+                    if ($rssFeedEntriesView && entry.feed.id === $rssActiveFeed.id) {
                         $rssActiveFeed.stats.unread_count -= 1
                     }
                 }
@@ -30,19 +30,19 @@
         }
     }
 
-    export function handleMarkEntryAsUnread(entry) {
+    function handleMarkEntryAsUnread(entry) {
         if (entry.stats.has_read) {
             apiReq('/api/entry/mark/unread', {entry_id: entry.id}).then( rsp => {
                 if (rsp.code === 0) {
                     shortToast("Mark Entry as unread")
 
+                    $unreadCountRsp.count += 1
+
                     if (isInList(entry, $rssListRsp.data)) {
                         $rssListRsp.data[entry._index].stats.has_read = false
                     }
-        
-                    $unreadCountRsp.count += 1
 
-                    if ($rssFeedEntriesView) {
+                    if ($rssFeedEntriesView && entry.feed.id === $rssActiveFeed.id) {
                         $rssActiveFeed.stats.unread_count += 1
                     }
                 }
@@ -52,7 +52,7 @@
         }
     }
 
-    export function handleStarEntry(entry) {
+    function handleStarEntry(entry) {
         if (!entry.stats.has_starred) {
             apiReq('/api/star/entry', {entry_id: entry.id, feed_id: entry.feed.id}).then( rsp => {
                 if (rsp.code === 0) {
@@ -71,7 +71,7 @@
         }
     }
 
-    export function handleUnstarEntry(entry) {
+    function handleUnstarEntry(entry) {
         if (entry.stats.has_starred) {
             apiReq('/api/unstar/entry', {entry_id: entry.id, feed_id: entry.feed.id}).then( rsp => {
                 if (rsp.code === 0) {

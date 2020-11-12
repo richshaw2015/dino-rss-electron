@@ -7,7 +7,7 @@
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, 
         warnToast, readableCount } from '../utils/helper.js'
-    import { getToken, saveUserInfo, setToken } from '../utils/storage.js';
+    import { getToken, saveUserInfo, saveToken } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
     import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
@@ -40,14 +40,15 @@
         if ($userInfoRsp.id <= 0) {
             apiReq('/api/user/info', {}).then( rsp => {
                 if (rsp.code === 0 && rsp.id > 0) {
-                    if (rsp.token) {
-                        setToken(rsp.token)
+                    if ($userInfoRsp.id <= 0) {
+                        if (rsp.token) {
+                            saveToken(rsp.token)
+                        }
+                        saveUserInfo(rsp)
+                        userInfoRsp.set(rsp)
+
+                        reloadWindow()
                     }
-
-                    userInfoRsp.set(rsp)
-                    saveUserInfo(rsp)
-
-                    reloadWindow()
                 }
             }).catch(err => {
                 console.log(err + " User info")
@@ -59,8 +60,8 @@
         if ($userInfoRsp.id > 0) {
             apiReq('/api/user/info', {}).then( rsp => {
                 if (rsp.code === 0 && rsp.id) {
-                    userInfoRsp.set(rsp)
                     saveUserInfo(rsp)
+                    userInfoRsp.set(rsp)
                 }
             }).catch(err => {
                 console.log(err + " User info")
@@ -109,7 +110,7 @@
                     isApiLoading.set(true)
                     apiReq('/api/feed/import/opml', {file: fileContent}).then( rsp => {
                         if (rsp.code === 0) {
-                            toast("Please wait for a few minutes")
+                            toast("Please wait for a few minutes", 30*1000)
 
                             try {
                                 M.Modal.getInstance(document.querySelector('#omr-modal-add-feed')).close();

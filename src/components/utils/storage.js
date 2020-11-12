@@ -65,7 +65,7 @@ export function getToken() {
     return localStorage.getItem(tokenConfKey)
 }
 
-export function setToken(token) {
+export function saveToken(token) {
     return localStorage.setItem(tokenConfKey, token)
 }
 

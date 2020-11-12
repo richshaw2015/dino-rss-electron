@@ -38,7 +38,7 @@
                         rssActiveEntry.set($rssListRsp.data[index])
                     }
                 }
-            } else {
+            } else if ($rssViewMode === 'feed' && !$rssFeedEntriesView) {
                 if (!isInList($rssActiveFeed, $rssListRsp.data)) {
                     handleGotoFeedEntries($rssListRsp.data[0])
                 } else {
@@ -67,7 +67,7 @@
                         rssActiveEntry.set($rssListRsp.data[index])
                     }
                 }
-            } else {
+            } else if ($rssViewMode === 'feed' && !$rssFeedEntriesView) {
                 if (!isInList($rssActiveFeed, $rssListRsp.data)) {
                     handleGotoFeedEntries($rssListRsp.data[0])
                 } else {
@@ -96,8 +96,10 @@
     });
 
     function handleGotoFeedEntries(feed, page) {
-        rssActiveFeed.set(feed)
-        gotoFeedEntries(page)
+        if (!$rssFeedEntriesView && $rssViewMode === "feed") {
+            rssActiveFeed.set(feed)
+            gotoFeedEntries(page)
+        }
     }
 
     function syncUnreadCount() {
@@ -115,25 +117,23 @@
 
         if (mode === 'feed') {
             apiReq('/api/my/feeds', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
-                rssListRsp.set(rsp)
-
                 if (!$rssFeedEntriesView) {
-                    rssFeedListRspBak.set(rsp)
-                }
+                    rssListRsp.set(rsp)
 
-                if (rsp.code === 0) {
-                    rssViewMode.set(mode)
-                    saveRssViewMode(mode)
-                } else if (rsp.code === 100) {
-                    rssListRsp.set({
-                        "code": rsp.code,
-                        "msg": "No updated Feeds"
-                    })
-                }  else if (rsp.code === 101) {
-                    rssListRsp.set({
-                        "code": rsp.code,
-                        "msg": "No unread Feeds"
-                    })
+                    if (!$rssFeedEntriesView) {
+                        rssFeedListRspBak.set(rsp)
+                    }
+
+                    if (rsp.code === 0) {
+                        if ($rssViewMode !== mode) {
+                            rssViewMode.set(mode)
+                            saveRssViewMode(mode)
+                        }
+                    } else if (rsp.code === 100) {
+                        $rssListRsp.msg = "No updated Feeds"
+                    }  else if (rsp.code === 101) {
+                        $rssListRsp.msg = "No unread Feeds"
+                    }
                 }
             }).catch(err => {
                 rssListRsp.set({
@@ -147,18 +147,14 @@
                 rssListRsp.set(rsp)
 
                 if (rsp.code === 0) {
-                    rssViewMode.set(mode)
-                    saveRssViewMode($rssViewMode)
+                    if ($rssViewMode !== mode) {
+                        rssViewMode.set(mode)
+                        saveRssViewMode(mode)
+                    }
                 } else if (rsp.code === 100) {
-                    rssListRsp.set({
-                        "code": rsp.code,
-                        "msg": "No updated Entries"
-                    })
+                    $rssListRsp.msg = "No updated Entries"
                 } else if (rsp.code === 101) {
-                    rssListRsp.set({
-                        "code": rsp.code,
-                        "msg": "No unread Entries"
-                    })
+                    $rssListRsp.msg = "No unread Entries"
                 }
             }).catch(err => {
                 rssListRsp.set({
@@ -182,19 +178,15 @@
             page_size: getPageSize(true), 
             scope: $viewScope
         }).then( rsp => {
-            rssFeedEntriesView.set(true)
-            rssListRsp.set(rsp)
+            if (!$rssFeedEntriesView) {
+                rssFeedEntriesView.set(true)
+                rssListRsp.set(rsp)
 
-            if (rsp.code === 101) {
-                rssListRsp.set({
-                    "code": rsp.code,
-                    "msg": "No unread Entries"
-                })
-            } else if (rsp.code === 100) {
-                rssListRsp.set({ 
-                    "code": rsp.code,
-                    "msg": "No Entries data"
-                })
+                if (rsp.code === 101) {
+                    $rssListRsp.msg = "No unread Entries"
+                } else if (rsp.code === 100) {
+                    $rssListRsp.msg = "No Entries data"
+                }
             }
         }).catch(err => {
             warnToast(err + ' Entries')

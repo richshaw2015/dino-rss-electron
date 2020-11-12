@@ -1,7 +1,7 @@
 <script>
     export let isMaximized = false
 
-    import { toggleMaximizeWindow, minimizeWindow, closeWindow, toast } from '../utils/helper.js'
+    import { toggleMaximizeWindow, minimizeWindow, closeWindow } from '../utils/helper.js'
     const { ipcRenderer } = require('electron')
 
     ipcRenderer.on('maximize-window', () => {
@@ -24,6 +24,7 @@
     }
     #omr-win-titlebar img {
         display: block;
+        user-select: none;
     }
 </style>
 

@@ -22,20 +22,14 @@
     function handleToggleViewMode() {
         // change status after network
         if ($activeTab === "rss") {
-            const mode = ($rssViewMode === 'feed') ? 'entry' : 'feed'
-            dispatch('refresh-list-view', {page: 1, mode: mode})
-        } else {
-            const mode = ($starViewMode === 'feed') ? 'entry' : 'feed'
-            dispatch('refresh-list-view', {page: 1, mode: mode})
+            dispatch('refresh-list-view', {page: 1, mode: ($rssViewMode === 'feed') ? 'entry' : 'feed'})
+        } else if ($activeTab === "star") {
+            dispatch('refresh-list-view', {page: 1, mode: ($starViewMode === 'feed') ? 'entry' : 'feed'})
         }
     }
     function handleToggleViewScope() {
         // change status instant
-        if ($viewScope === 'all') {
-            viewScope.set('unread')
-        } else {
-            viewScope.set('all')
-        }
+        viewScope.set(($viewScope === 'all') ? 'unread' : 'all')
         saveViewScope($viewScope)
         dispatch('refresh-list-view', {page: 1})
     }

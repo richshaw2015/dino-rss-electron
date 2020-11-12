@@ -10,7 +10,6 @@
 
     function nextPage() {
         if (currentPage < numPages) {
-            console.log(currentPage + 1)
             dispatch('refresh-list-view', {page: currentPage + 1 })
         } else {
             warnToast("Already the last page")
@@ -63,9 +62,9 @@
         justify-content: center;
     }
     .pagination li {
-        width: 14%;
-        margin: auto 3%;
-        border-radius: 4px;
+        width: 16%;
+        margin: auto 2%;
+        border-radius: 3px;
     }
     .current-page a {
         color: #fff;

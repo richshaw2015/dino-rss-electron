@@ -9,10 +9,10 @@
     const Mousetrap = require('mousetrap')
 
     function backToFeedList() {
-        if ($activeTab === "rss") {
+        if ($activeTab === "rss" && $rssFeedEntriesView) {
             rssFeedEntriesView.set(false)
             rssListRsp.set($rssFeedListRspBak)
-        } else if ($activeTab === "star") {
+        } else if ($activeTab === "star" && $starFeedEntriesView) {
             starFeedEntriesView.set(false)
             starListRsp.set($starFeedListRspBak)
         }
@@ -20,25 +20,28 @@
 
     function handleMarkFeedAsRead() {
         const unreadCount = $rssActiveFeed.stats.unread_count
+        const feedId = $rssActiveFeed.id
 
         if (unreadCount > 0) {
             apiReq('/api/entry/mark/read', {entries: $rssActiveFeed.stats.unread_list.join(',')}).then( rsp => {
                 if (rsp.code === 0) {
                     shortToast("Mark Feed as read")
-
-                    $rssActiveFeed.stats.unread_count = 0
-                    $rssActiveFeed.stats.unread_list = []
-
-                    $unreadCountRsp.count -= unreadCount
                     
-                    if (getViewScope() === 'unread') {
-                        rssListRsp.set({
-                            "code": 101,
-                            "msg": "No unread Entries"
-                        })
-                    } else {
-                        for (let i in $rssListRsp.data) {
-                            $rssListRsp.data[i].stats.has_read = true
+                    $unreadCountRsp.count -= unreadCount
+
+                    if ($rssFeedEntriesView && $rssActiveFeed.id === feedId) {
+                        $rssActiveFeed.stats.unread_count = 0
+                        $rssActiveFeed.stats.unread_list = []
+
+                        if (getViewScope() === 'unread') {
+                            rssListRsp.set({
+                                "code": 101,
+                                "msg": "No unread Entries"
+                            })
+                        } else {
+                            for (let i in $rssListRsp.data) {
+                                $rssListRsp.data[i].stats.has_read = true
+                            }
                         }
                     }
                 }
