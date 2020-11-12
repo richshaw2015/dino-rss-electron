@@ -180,13 +180,13 @@
         }).then( rsp => {
             if (!$rssFeedEntriesView) {
                 rssFeedEntriesView.set(true)
-                rssListRsp.set(rsp)
+            }
+            rssListRsp.set(rsp)
 
-                if (rsp.code === 101) {
-                    $rssListRsp.msg = "No unread Entries"
-                } else if (rsp.code === 100) {
-                    $rssListRsp.msg = "No Entries data"
-                }
+            if (rsp.code === 101) {
+                $rssListRsp.msg = "No unread Entries"
+            } else if (rsp.code === 100) {
+                $rssListRsp.msg = "No Entries data"
             }
         }).catch(err => {
             warnToast(err + ' Entries')

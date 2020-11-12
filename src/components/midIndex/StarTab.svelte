@@ -151,8 +151,14 @@
             page: page,
             page_size: getPageSize(true),
         }).then( rsp => {
-            starFeedEntriesView.set(true)
-            $starListRsp = rsp
+            if (!$starFeedEntriesView) {
+                starFeedEntriesView.set(true)
+            }
+            starListRsp.set(rsp)
+
+            if (rsp.code === 100) {
+                $starListRsp.msg = "No starred data"
+            }
         }).catch(err => {
             warnToast(err + ' starred Entries')
         })
