@@ -310,6 +310,18 @@
     .import-icon {
         font-size: 24px;
     }
+    .user-stats {
+        display: flex;
+        align-items: center;
+        padding-top: 8px;
+    }
+    .user-stats i {
+        font-size: 18px;
+        cursor: auto;
+    }
+    .padding-space {
+        width: 8px;
+    }
 </style>
 
 <div id="omr-left-nav" class="drag">
@@ -352,6 +364,12 @@
         <div class="user-info">
             <div class="user-name bold"><a href="{$userInfoRsp.blog}" target="_blank">{$userInfoRsp.name}</a></div>
             <div class="user-oauth">ID: {$userInfoRsp.oauth}</div>
+
+            <div class="user-stats">
+                <i class="material-icons">rss_feed</i>{$userInfoRsp.stats.sub_feeds_count}
+                <div class="padding-space"></div>
+                <i class="material-icons">star_border</i>{$userInfoRsp.stats.star_entries_count}
+            </div>
         </div>
 
         <div>
