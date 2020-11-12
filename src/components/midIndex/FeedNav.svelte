@@ -82,6 +82,10 @@
     }
     .feed-nav-unread {
         min-width: 1rem;
+        padding-left: 4px;
+        color: #757575;
+    }
+    .padding-space {
         flex-grow: 50;
     }
     .back-icon {
@@ -113,7 +117,7 @@
         {#if $rssActiveFeed.stats.unread_count > 0}
             <span class="bold feed-nav-unread">({readableCount($rssActiveFeed.stats.unread_count)})</span>
         {/if}
-
+        <span class="padding-space"></span>
         <i class="material-icons check-icon" on:click={handleMarkFeedAsRead}>check</i>
     </div>
 {:else if $activeTab === "star"}
