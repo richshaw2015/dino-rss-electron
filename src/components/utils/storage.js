@@ -49,7 +49,11 @@ export function getUserInfo() {
             oauth: '',
             name: '',
             image: './icon/logo.svg',
-            blog: ''
+            blog: '',
+            stats: {
+                star_entries_count: 0,
+                sub_feeds_count: 0
+            }
         }
     }
 }
