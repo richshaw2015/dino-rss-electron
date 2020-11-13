@@ -43,6 +43,7 @@
     "telnet-client": "^1.4.6",
     "qrcodejs": "^1.0.0",
     "uuid": "^8.3.1",
+    "md5": "^2.3.0",
     "highlight.js": "^10.3.1"
   }
 }

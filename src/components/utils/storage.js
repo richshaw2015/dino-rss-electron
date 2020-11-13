@@ -74,16 +74,21 @@ export function saveToken(token) {
 }
 
 export async function getTokenPromise() {
-    // await new Promise(r => setTimeout(r, 1000*1000));
-
     let token = localStorage.getItem(tokenConfKey)
 
     if (!token) {
-        const { v4: uuidv4 } = require('uuid');
-        let formData = new FormData();
-        formData.append('uuid', uuidv4());
+        const { v4: uuidv4 } = require('uuid')
+        const md5 = require('md5')
+        
+        const uuid = uuidv4()
+        const random = Math.floor(Math.random() * 100000000)
+        const sign = md5(`${uuid} ${random}`)
 
-        // TODO  sign
+        let formData = new FormData()
+        formData.append('uuid', uuid)
+        formData.append('random', random)
+        formData.append('sign', sign)
+
         const rsp = await fetch((new URL('/api/user/token', SERVER)).href, {method:'POST', body: formData})
         token = (await rsp.json())['token']
 
