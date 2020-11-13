@@ -107,7 +107,7 @@
 
 {#if $activeTab === "rss"}
     <div id="omr-feed-nav">
-        <div id="omr-feed-back" on:click={backToFeedList}>
+        <div title="Back" id="omr-feed-back" on:click={backToFeedList}>
             <i class="material-icons back-icon">arrow_back</i>
             <span class="">Back</span>
         </div>
@@ -118,11 +118,12 @@
             <span class="bold feed-nav-unread">({readableCount($rssActiveFeed.stats.unread_count)})</span>
         {/if}
         <span class="padding-space"></span>
-        <i class="material-icons check-icon" on:click={handleMarkFeedAsRead}>check</i>
+
+        <i title="Mark feed as read" class="material-icons check-icon" on:click={handleMarkFeedAsRead}>check</i>
     </div>
 {:else if $activeTab === "star"}
     <div id="omr-feed-nav">
-        <div id="omr-feed-back" on:click={backToFeedList}>
+        <div title="Back" id="omr-feed-back" on:click={backToFeedList}>
             <i class="material-icons back-icon">arrow_back</i>
             <span class="">Back</span>
         </div>

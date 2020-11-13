@@ -74,18 +74,18 @@
 
 <div id="omr-pager">
     <ul class="pagination">
-        <li class="{ currentPage > 1 ? 'waves-effect' : 'disabled' }" title="Previous Page" on:click={prevPage}>
+        <li class="{ currentPage > 1 ? 'waves-effect' : 'disabled' }" title="Previous page" on:click={prevPage}>
             <a href={'#'}><i class="material-icons">chevron_left</i></a></li>
 
-        <li class="{ currentPage > 1 ? 'waves-effect' : 'disabled' }" title="First Page" on:click={firstPage}>
+        <li class="{ currentPage > 1 ? 'waves-effect' : 'disabled' }" title="First page" on:click={firstPage}>
             <a href={'#'}>1</a></li>
 
-        <li class="current-page primary-bg-color" title="Current Page"><a href={'#'}>{currentPage}</a></li>
+        <li class="current-page primary-bg-color" title="Current page"><a href={'#'}>{currentPage}</a></li>
 
-        <li class="{ currentPage < numPages ? 'waves-effect' : 'disabled' }" title="Last Page" on:click={lastPage}>
+        <li class="{ currentPage < numPages ? 'waves-effect' : 'disabled' }" title="Last page" on:click={lastPage}>
             <a href={'#'}>{ numPages }</a></li>
 
-        <li class="{ currentPage < numPages ? 'waves-effect' : 'disabled' }" title="Next Page" on:click={nextPage}>
+        <li class="{ currentPage < numPages ? 'waves-effect' : 'disabled' }" title="Next page" on:click={nextPage}>
             <a href={'#'}><i class="material-icons">chevron_right</i></a></li>
     </ul>
 </div>

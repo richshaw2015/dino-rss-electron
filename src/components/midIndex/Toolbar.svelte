@@ -115,22 +115,22 @@
 
         <div class="toolbar-group no-drag">
             {#if $activeTab === 'rss'}
-                <div class="toolbar-icon" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
+                <div title="Toggle unread / all" class="toolbar-icon" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
                     <i class="material-icons">{ $viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
                 </div>
 
                 {#if showModeBtn}
-                <div class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
+                <div title="Toggle feed / entry view" class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
                     <i class="material-icons">{$rssViewMode === 'feed' ? 'view_module' : 'view_list'} </i>
                 </div>
                 {/if}
             {:else if $activeTab === 'star' && showModeBtn}
-                <div class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
+                <div title="Toggle feed / entry view" class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
                     <i class="material-icons">{$starViewMode === 'feed' ? 'view_module' : 'view_list'} </i>
                 </div>
             {/if}
 
-            <div class="toolbar-icon" id="omr-toolbar-update"  on:click={handleRefreshAction}>
+            <div title="Refresh" class="toolbar-icon" id="omr-toolbar-update"  on:click={handleRefreshAction}>
                 <i class="material-icons">update</i>
             </div>
 

@@ -162,6 +162,7 @@
     }
     #omr-nav-avatar {
         margin-top: 64px;
+        cursor: pointer;
     }
     .margin-win32 {
         margin-top: 28px !important;
@@ -188,6 +189,13 @@
     #omr-nav-apps, #omr-nav-star, #omr-nav-rss{
         margin-top: 24px;
     }
+    .nav-tab-btn i:not(.primary-color) {
+        opacity: 0.8;
+    }
+    .nav-tab-btn i:not(.primary-color):hover {
+        opacity: 1;
+    }
+
     #omr-nav-add {
         margin-bottom: 32px;
     }
@@ -332,7 +340,7 @@
         <img src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar">
     </div>
 
-    <div class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={() => activeTab.set('rss')}>
+    <div title="RSS" class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={() => activeTab.set('rss')}>
         <div class="rss-notify-wrapper">
             <i class="material-icons {$activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
             {#if $unreadCountRsp.count > 0}
@@ -343,18 +351,18 @@
         </div>
     </div>
 
-    <div class="nav-tab-btn no-drag" id="omr-nav-star" on:click={() => activeTab.set('star')}>
+    <div title="Star" class="nav-tab-btn no-drag" id="omr-nav-star" on:click={() => activeTab.set('star')}>
         <i class="material-icons {$activeTab === 'star' ? 'primary-color' : ''}">star</i>
     </div>
 
-    <div class="nav-tab-btn no-drag" id="omr-nav-apps" on:click={() => activeTab.set('apps')}>
+    <div title="More" class="nav-tab-btn no-drag" id="omr-nav-apps" on:click={() => activeTab.set('apps')}>
         <i class="material-icons {$activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
     </div>
 
     <div id="omr-nav-space" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
     </div>
 
-    <div class="nav-tab-btn no-drag" id="omr-nav-add" on:click={showAddFeedWindow}>
+    <div title="Add" class="nav-tab-btn no-drag" id="omr-nav-add" on:click={showAddFeedWindow}>
         <i class="material-icons">add_circle</i>
     </div>
 </div>
