@@ -1,7 +1,7 @@
 {
-  "name": "electron-quick-start",
-  "version": "0.0.1",
   "description": "A minimal Electron application",
+  "version": "0.1.0",
+  "description": "Dinasaur RSS",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -12,11 +12,10 @@
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "Dinasaur",
+    "RSS",
+    "reader",
+    "news"
   ],
   "author": "GitHub",
   "license": "CC0-1.0",
