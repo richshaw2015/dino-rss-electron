@@ -1,5 +1,5 @@
 {
-  "description": "A minimal Electron application",
+  "name": "Dinorss",
   "version": "0.1.0",
   "description": "Dinasaur RSS",
   "main": "main.js",
@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
     "storybook": "start-storybook -s ./public -p 12315 --ci & electron .storybook/electron.index.js"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/richshaw2015/dino-rss-electron",
   "keywords": [
     "Dinasaur",
     "RSS",
