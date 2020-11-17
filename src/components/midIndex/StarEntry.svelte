@@ -72,14 +72,6 @@
             }
         }));
 
-        menu.append(new MenuItem({type: "separator",}));
-        menu.append(new MenuItem({
-            label: "✏️  Edit",
-            click: function(){
-                alert(`you clicked on`);
-            }
-        }));
-
         menu.popup({ window: remote.getCurrentWindow() })
     }
 </script>
@@ -162,7 +154,7 @@
     </div>
 
     <div class="entry-meta-line">
-        <span class="truncate entry-author">@{entryInfo.author}</span>
+        <span class="truncate entry-author">@{entryInfo.custom.author || entryInfo.author}</span>
         <span class="truncate entry-date">{fromNow(entryInfo.updated)}</span>
 
         <span class="entry-view-stats">

@@ -5,9 +5,8 @@
 
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
-    import { shortToast, toast, warnToast, isInList } from '../utils/helper.js'
-    import { starFeedEntriesView } from '../utils/store.js'
-    
+    import { starFeedEntriesView, feedToEdit } from '../utils/store.js'
+
     function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
 
@@ -21,8 +20,8 @@
 
         menu.append(new MenuItem({
             label: "✏️  Edit",
-            click: function(){
-                // TODO 
+            click: function() {
+                feedToEdit.set(feedInfo)
             }
         }));
 
@@ -93,7 +92,7 @@
 <div class="omr-feed-item" title="{feedInfo.title}" on:contextmenu={() => showFeedCtxMenu(feedInfo)}>
     <div class="feed-title-line">
         <img src="{feedInfo.image || 'icon/logo.svg'}" class="feed-avatar" alt="" />
-        <span class="truncate feed-title">{ feedInfo.title }</span>
+        <span class="truncate feed-title">{ feedInfo.custom.title || feedInfo.title }</span>
 
         {#if feedInfo.is_podcast}
             <img src="./icon/podcast.svg" class="podcast-icon" alt="Podcast" />
@@ -107,7 +106,7 @@
     </div>
 
     <div class="feed-meta-line">
-        <span class="truncate feed-author">@{feedInfo.author}</span>
+        <span class="truncate feed-author">@{feedInfo.custom.author || feedInfo.author}</span>
         <span class="truncate feed-date">{fromNow(feedInfo.stats.update_ts)}</span>
 
         <span class="feed-star-stats">

@@ -304,13 +304,6 @@
         justify-content: center;
         font-size: 1.1rem;
     }
-    .add-title {
-        font-size: 1.5rem;
-        margin-bottom: 1.2rem;
-    }
-    .add-title i {
-        cursor: auto;
-    }
     .submit-opml i, .feed-ranking i {
         margin-left: 12px;
         margin-right: 10px;
@@ -401,7 +394,7 @@
 </div>
 
 <div id="omr-modal-add-feed" class="modal">
-    <div class="add-title"><i class="material-icons">rss_feed</i> Add Subscription</div>
+    <div class="modal-title"><i class="material-icons">rss_feed</i> Add Subscription</div>
 
     <div class="submit-feed">
         <div class="input-field rss-input-wrapper">

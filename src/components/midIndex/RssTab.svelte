@@ -12,8 +12,9 @@
         unreadCountRsp} from '../utils/store.js'
 
     import { onMount, onDestroy } from 'svelte'
-    const Mousetrap = require('mousetrap')
 
+    const Mousetrap = require('mousetrap')
+    
     onMount(() => {
         // first list request
         if(!$rssFeedEntriesView) {

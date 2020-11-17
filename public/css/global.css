@@ -164,3 +164,11 @@ figure {
     left: calc(50% + 70px - 32px);
     z-index: 9999;
 }
+
+.modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+}
+.modal-title i {
+    cursor: auto;
+}

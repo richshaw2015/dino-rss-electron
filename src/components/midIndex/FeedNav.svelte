@@ -113,7 +113,8 @@
         </div>
 
         <img src="{$rssActiveFeed.image || 'icon/logo.svg'}" class="feed-nav-avatar" alt="" />
-        <span class="truncate bold feed-nav-title" title="{$rssActiveFeed.title}">{$rssActiveFeed.title}</span>
+        <span class="truncate bold feed-nav-title" title="{$rssActiveFeed.title}">
+            {$rssActiveFeed.custom.title || $rssActiveFeed.title}</span>
         {#if $rssActiveFeed.stats.unread_count > 0}
             <span class="bold feed-nav-unread">({readableCount($rssActiveFeed.stats.unread_count)})</span>
         {/if}
@@ -129,6 +130,7 @@
         </div>
 
         <img src="{$starActiveFeed.image || 'icon/logo.svg'}" class="feed-nav-avatar" alt="" />
-        <span class="truncate bold feed-nav-title" title="{$starActiveFeed.title}">{$starActiveFeed.title}</span>
+        <span class="truncate bold feed-nav-title" title="{$starActiveFeed.title}">
+            {$starActiveFeed.custom.title || $starActiveFeed.title}</span>
     </div>
 {/if}

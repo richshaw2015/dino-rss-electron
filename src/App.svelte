@@ -4,6 +4,7 @@
 
     import Nav from './components/leftNav/Nav.svelte'
     import AppsTab from './components/midIndex/AppsTab.svelte'
+    import FeedEdit from './components/midIndex/FeedEdit.svelte'
     import StarTab from './components/midIndex/StarTab.svelte'
     import RssTab from './components/midIndex/RssTab.svelte'
     import Toolbar from './components/midIndex/Toolbar.svelte'
@@ -114,3 +115,4 @@
 {/await}
 
 <Preloader />
+<FeedEdit />

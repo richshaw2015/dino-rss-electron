@@ -1,13 +1,15 @@
 <script>
     export let feedInfo
 
-    import { fromNow } from '../utils/helper.js'
+    import { createEventDispatcher } from 'svelte'
 
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
-    import { shortToast, toast, warnToast, isInList } from '../utils/helper.js'
+    const dispatch = createEventDispatcher()
+
+    import { shortToast, toast, warnToast, isInList, fromNow } from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
-    import { unreadCountRsp, rssListRsp, rssFeedEntriesView } from '../utils/store.js'
+    import { unreadCountRsp, rssListRsp, rssFeedEntriesView, feedToEdit } from '../utils/store.js'
     
     function handleMarkFeedAsRead(feedInfo) {
         const unreadCount = feedInfo.stats.unread_count
@@ -50,7 +52,7 @@
         menu.append(new MenuItem({
             label: "✏️  Edit",
             click: function(){
-                // TODO 
+                feedToEdit.set(feedInfo)
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
@@ -150,7 +152,8 @@
 <div class="omr-feed-item" title="{feedInfo.title}" on:contextmenu={() => showFeedCtxMenu(feedInfo)}>
     <div class="feed-title-line">
         <img src="{feedInfo.image || 'icon/logo.svg'}" class="feed-avatar" alt="" />
-        <span class="truncate feed-title {feedInfo.stats.unread_count > 0 ? 'bold' : ''}">{ feedInfo.title }</span>
+        <span class="truncate feed-title {feedInfo.stats.unread_count > 0 ? 'bold' : ''}">
+            { feedInfo.custom.title || feedInfo.title }</span>
 
         {#if feedInfo.is_podcast}
             <img src="./icon/podcast.svg" class="podcast-icon" alt="Podcast" />
@@ -165,7 +168,8 @@
     </div>
 
     <div class="feed-meta-line">
-        <span class="truncate feed-author">@{feedInfo.author}</span>
+        <span class="truncate feed-author">@
+            {feedInfo.custom.author || feedInfo.author}</span>
         <span class="truncate feed-date">{fromNow(feedInfo.stats.update_ts)}</span>
 
         <span class="feed-update-stats">
