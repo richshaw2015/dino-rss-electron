@@ -1,7 +1,7 @@
 const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard} = require('electron');
 const fs = require('fs')
 
-const production = !process.env.ELECTRON_RELOAD;
+const production = true
 
 if (!production) {
 	const path = require('path');

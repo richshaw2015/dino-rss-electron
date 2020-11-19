@@ -1,13 +1,16 @@
 {
   "name": "Dinorss",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Dinasaur RSS",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "start": "electron .",
     "build": "rollup -c",
     "autobuild": "rollup -c -w",
-    "dev": "concurrently \"npm run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
+    "dev:win": "concurrently \"yarn run autobuild\" \"set ELECTRON_RELOAD=yes && electron .\"",
+    "dev:mac": "concurrently \"yarn run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
     "storybook": "start-storybook -s ./public -p 12315 --ci & electron .storybook/electron.index.js"
   },
   "repository": "https://github.com/richshaw2015/dino-rss-electron",
@@ -17,32 +20,69 @@
     "reader",
     "news"
   ],
-  "author": "GitHub",
+  "author": "Richshaw",
   "license": "CC0-1.0",
+  "build": {
+    "appId": "org.dinorss",
+    "productName": "Dinasaur RSS",
+    "artifactName": "${productName}.${version}.${ext}",
+    "files": [
+      "!public/*.map"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "public/icon/logo.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "electronDownload": {
+      "mirror":"https://npm.taobao.org/mirrors/electron/"
+    }
+  },
   "devDependencies": {
-    "rollup": "^2.27.1",
+    "@babel/core": "^7.11.6",
+    "@podlove/web-player": "^5.2.3",
     "@rollup/plugin-commonjs": "^12.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
-    "rollup-plugin-svelte": "^5.0.3",
-    "rollup-plugin-terser": "^5.1.2",
-    "concurrently": "^5.3.0",
-    "electron-reload": "^1.5.0",
-    "svelte": "^3.25.1",
-    "electron": "^10.1.5",
-    "@babel/core": "^7.11.6",
-    "@storybook/svelte": "6.0.21",
     "@storybook/addon-actions": "6.0.21",
     "@storybook/addon-links": "6.0.21",
-    "svelte-loader": "^2.13.6",
-    "mousetrap": "^1.6.5",
-    "prismjs": "^1.21.0",
-    "materialize-css": "^1.0.0",
+    "@storybook/svelte": "6.0.21",
+    "concurrently": "^5.3.0",
+    "electron": "^10.1.5",
+    "electron-builder": "^22.9.1",
     "electron-devtools-installer": "^3.1.1",
-    "@podlove/web-player": "^5.2.3",
-    "telnet-client": "^1.4.6",
+    "electron-reload": "^1.5.0",
+    "highlight.js": "^10.3.1",
     "qrcodejs": "^1.0.0",
-    "uuid": "^8.3.1",
+    "rollup": "^2.27.1",
+    "rollup-plugin-svelte": "^6.1.1",
+    "rollup-plugin-terser": "^5.1.2",
+    "svelte": "^3.25.1",
+    "svelte-loader": "^2.13.6",
+    "telnet-client": "^1.4.6"
+  },
+  "dependencies": {
+    "materialize-css": "^1.0.0",
     "md5": "^2.3.0",
-    "highlight.js": "^10.3.1"
+    "mousetrap": "^1.6.5",
+    "prismjs": "^1.22.0",
+    "uuid": "^8.3.1"
   }
 }
