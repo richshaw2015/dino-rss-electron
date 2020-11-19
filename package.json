@@ -29,31 +29,29 @@
     "files": [
       "!public/*.map"
     ],
-    "dmg": {
-      "contents": [
-        {
-          "x": 110,
-          "y": 150
-        },
-        {
-          "x": 240,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
     "win": {
       "target": "nsis",
       "icon": "public/icon/logo.png"
+    },
+    "mac": {
+      "icon": "public/icon/logo.icns",
+      "type": "development",
+      "category": "public.app-category.news",
+      "target": [
+        "dmg",
+        "mas"
+      ],
+      "extendInfo": {
+      }
     },
     "nsis": {
       "oneClick": false,
       "perMachine": true,
       "allowToChangeInstallationDirectory": true
     },
+    "dmg": {},
     "electronDownload": {
-      "mirror":"https://npm.taobao.org/mirrors/electron/"
+      "mirror": "https://npm.taobao.org/mirrors/electron/"
     }
   },
   "devDependencies": {
@@ -65,7 +63,7 @@
     "@storybook/addon-links": "6.0.21",
     "@storybook/svelte": "6.0.21",
     "concurrently": "^5.3.0",
-    "electron": "^10.1.5",
+    "electron": "^10.1.6",
     "electron-builder": "^22.9.1",
     "electron-devtools-installer": "^3.1.1",
     "electron-reload": "^1.5.0",
@@ -79,6 +77,7 @@
     "telnet-client": "^1.4.6"
   },
   "dependencies": {
+    "fsevents": "^2.2.1",
     "materialize-css": "^1.0.0",
     "md5": "^2.3.0",
     "mousetrap": "^1.6.5",
