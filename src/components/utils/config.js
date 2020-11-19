@@ -1,5 +1,6 @@
 
-export const SERVER = 'http://192.168.31.204:8000'
+// export const SERVER = 'http://192.168.31.204:8000'
+export const SERVER = 'https://dinorss.org'
 
 // j k shortcut scroll
 export const scrollStep = 60
