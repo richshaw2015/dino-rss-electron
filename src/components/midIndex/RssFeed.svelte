@@ -168,8 +168,7 @@
     </div>
 
     <div class="feed-meta-line">
-        <span class="truncate feed-author">@
-            {feedInfo.custom.author || feedInfo.author}</span>
+        <span class="truncate feed-author">@{feedInfo.custom.author || feedInfo.author}</span>
         <span class="truncate feed-date">{fromNow(feedInfo.stats.update_ts)}</span>
 
         <span class="feed-update-stats">

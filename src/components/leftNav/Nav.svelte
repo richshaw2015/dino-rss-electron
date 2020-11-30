@@ -106,7 +106,7 @@
 			if (result.filePaths.length > 0) {
                 const fileContent = fs.readFileSync(result.filePaths[0])
 
-                if (fileContent.length < 10 * 1024 * 1024) {
+                if (fileContent.length < 1 * 1024 * 1024) {
                     isApiLoading.set(true)
                     apiReq('/api/feed/import/opml', {file: fileContent}).then( rsp => {
                         if (rsp.code === 0) {
@@ -115,6 +115,8 @@
                             try {
                                 M.Modal.getInstance(document.querySelector('#omr-modal-add-feed')).close();
                             } catch (e) {}
+                        } else {
+                            warnToast("File parse error")
                         }
                     }).catch(err => {
                         warnToast(err)

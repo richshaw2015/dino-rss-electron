@@ -84,7 +84,7 @@
                     "show": {
                         "title": activeEntry.feed.title,
                         "subtitle": activeEntry.feed.description,
-                        "poster": activeEntry.feed.image,
+                        "poster": activeEntry.image,
                         "link": activeEntry.feed.link,
                     },
                     "title": activeEntry.title,
@@ -95,6 +95,9 @@
                     code: rsp.code,
                     content: rsp.content,
                     episode: Object.assign(episodeBase, rsp.episode)
+                }
+                if (!entryContentRsp.episode.poster) {
+                    entryContentRsp.episode.poster = activeEntry.image
                 }
             } else {
                 entryContentRsp = rsp
