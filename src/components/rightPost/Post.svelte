@@ -4,6 +4,7 @@
     const { clipboard, remote } = require('electron')
     const fs = require('fs')
     const path = require('path')
+    const Autolinker = require( 'autolinker' );
 
     import { getFontSize } from '../utils/storage.js'
     import { isInList, shortToast, toast, warnToast, copyToClipboard } from '../utils/helper.js'
@@ -102,7 +103,11 @@
             } else {
                 entryContentRsp = rsp
             }
-
+            
+            // auto link
+            entryContentRsp.content = Autolinker.link(entryContentRsp.content, {
+                phone: false, stripPrefix: false, stripTrailingSlash: false
+            })
             // set cache
             setEntryCache(entry.id, rsp)
 

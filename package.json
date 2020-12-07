@@ -41,8 +41,7 @@
         "dmg",
         "mas"
       ],
-      "extendInfo": {
-      }
+      "extendInfo": {}
     },
     "nsis": {
       "oneClick": false,
@@ -75,6 +74,7 @@
     "telnet-client": "^1.4.6"
   },
   "dependencies": {
+    "autolinker": "^3.14.2",
     "materialize-css": "^1.0.0",
     "md5": "^2.3.0",
     "mousetrap": "^1.6.5",
@@ -82,9 +82,9 @@
     "uuid": "^8.3.1"
   },
   "optionalDependencies": {
-    "highlight.js": "^10.3.1",
-    "qrcodejs": "^1.0.0",
     "@podlove/web-player": "^5.2.3",
-    "fsevents": "^2.2.1"
+    "fsevents": "^2.2.1",
+    "highlight.js": "^10.3.1",
+    "qrcodejs": "^1.0.0"
   }
 }
