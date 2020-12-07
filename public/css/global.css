@@ -157,7 +157,7 @@ i.material-icons {
 }
 
 pre {
-    overflow-x: overlay;
+    overflow-x: auto;
 }
 
 figure {
