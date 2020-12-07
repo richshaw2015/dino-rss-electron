@@ -110,7 +110,7 @@
                     isApiLoading.set(true)
                     apiReq('/api/feed/import/opml', {file: fileContent}).then( rsp => {
                         if (rsp.code === 0) {
-                            toast("Please wait for a few minutes", 30*1000)
+                            toast("Please wait a moment", 30*1000)
 
                             try {
                                 M.Modal.getInstance(document.querySelector('#omr-modal-add-feed')).close();

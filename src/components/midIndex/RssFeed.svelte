@@ -31,6 +31,15 @@
             })
         }
     }
+    function handleSyncFeed(feedInfo) {
+        apiReq('/api/feed/sync', {feed_id: feedInfo.id}).then( rsp => {
+            if (rsp.code === 0) {
+                toast("Please wait a moment")
+            }
+        }).catch(err => {
+            warnToast(err + " Sync")
+        })
+    }
 
     function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
@@ -41,10 +50,19 @@
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
+
         menu.append(new MenuItem({
             label: `🧭  Open in Browser`,
             click: function(){
                 shell.openExternal(feedInfo.link)
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: `🔄  Sync`,
+            click: function(){
+                handleSyncFeed(feedInfo)
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
