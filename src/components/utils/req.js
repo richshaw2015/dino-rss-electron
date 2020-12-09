@@ -45,6 +45,8 @@ export function handleSubscribeFeed(feedId) {
     apiReq('/api/feed/subscribe', {feed_id: feedId}).then( rsp => {
         if (rsp.code === 0) {
             shortToast("Subscribed")
+        } else if (rsp.code === 105) {
+            warnToast("Max feeds limit!")
         }
     }).catch(err => {
         warnToast(err + " Subscribe")
