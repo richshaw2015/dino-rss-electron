@@ -24,7 +24,7 @@
         }
         
         // keyboard shortcut
-        Mousetrap.bind('n', function() {
+        Mousetrap.bind(['n', 'down'], function() {
             if ($rssListRsp.code !== 0 || $rssListRsp.data.length === 0) {
                 return false
             }
@@ -53,7 +53,7 @@
             }
             return false
         });
-        Mousetrap.bind('N', function() {
+        Mousetrap.bind(['N', 'up'], function() {
             if ($rssListRsp.data.length === 0 || $rssListRsp.code !== 0) {
                 return false
             }

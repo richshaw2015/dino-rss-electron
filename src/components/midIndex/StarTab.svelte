@@ -22,7 +22,7 @@
         }
         
         // keyboard shortcut
-        Mousetrap.bind('n', function() {
+        Mousetrap.bind(['n', 'down'], function() {
             if ($starListRsp.data.length === 0 || $starListRsp.code !== 0) {
                 return false
             }
@@ -51,7 +51,7 @@
             }
             return false
         });
-        Mousetrap.bind('N', function() {
+        Mousetrap.bind(['N', 'up'], function() {
             if ($starListRsp.data.length === 0 || $starListRsp.code !== 0) {
                 return false
             }
