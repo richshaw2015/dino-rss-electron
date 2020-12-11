@@ -6,7 +6,7 @@
     const { dialog } = remote
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, 
-        warnToast, readableCount } from '../utils/helper.js'
+        warnToast, readableCount, shortToast } from '../utils/helper.js'
     import { getToken, saveUserInfo, saveToken } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
     import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading } from '../utils/store.js'
@@ -22,6 +22,18 @@
         });
         Mousetrap.bind('f5', function() {
             reloadWindow()
+            return false
+        });
+        Mousetrap.bind('M', function() {
+            if ($unreadCountRsp.count > 0) {
+                apiReq('/api/entry/mark/read', {entries: $unreadCountRsp.list.join(',')}).then( rsp => {
+                    if (rsp.code === 0) {
+                        shortToast("Mark all as read")
+                    }
+                }).catch(err => {
+                    warnToast(err + " Mark")
+                })
+            }
             return false
         });
     })

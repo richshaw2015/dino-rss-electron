@@ -63,7 +63,7 @@
         <tr>
             <td><kbd> p </kbd> / <kbd>➡️️</kbd> - Next page </td>
             <td><kbd> P </kbd> / <kbd>⬅️️️</kbd> - Previous page </td>
-            <td><kbd> C </kbd> - Mark all as read </td>
+            <td><kbd> M </kbd> - Mark all as read </td>
         </tr>
         <tr>
             <td><kbd> j </kbd> - Move down </td>
