@@ -178,3 +178,14 @@ figure {
 .modal-title i {
     cursor: auto;
 }
+kbd {
+    border: .1em solid #aaa;
+    border-radius: 15%;
+    display: inline-block;
+    padding: .1em .5em;
+    background: linear-gradient(180deg,#fff,#fff,#fff,#ddd);
+    user-select: none;
+    cursor: pointer;
+    color: #000;
+    font-weight: 700;
+}

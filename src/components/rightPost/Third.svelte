@@ -5,6 +5,7 @@
 
     import { truncateStr, isMac, isWin, captureWindow, toast, copyToClipboard } from '../utils/helper.js'
     import Podcast from './Podcast.svelte'
+    import Home from './Home.svelte'
     import Notice from '../global/Notice.svelte'
 
     const Prism = require('prismjs')
@@ -28,9 +29,9 @@
     })
 
     afterUpdate(() => {
-        if (entryContentRsp.code !== -1 && entryContentRsp.content && activeEntry.id ) {
+        if (entryContentRsp && entryContentRsp.code !== -1 && entryContentRsp.content && activeEntry.id ) {
             // highlight code
-            console.log('Highlight code')
+            console.log('Highlight article code')
             if (document.querySelector('#omr-post-third-html pre[class*="language-"]') !== null 
                 || document.querySelector('#omr-post-third-html code[class*="language-"]') !== null) {
                 Prism.highlightAll()
@@ -39,6 +40,9 @@
                     hljs.highlightBlock(block)
                 })
             }
+        } else if (entryContentRsp && Object.keys(entryContentRsp).length === 0) {
+            console.log('Highlight home')
+            Prism.highlightAll()
         }
 	});
 
@@ -145,12 +149,17 @@
     }
 </style>
 
-{#if entryContentRsp.code === -1}
-    <!-- error -->
-    <Notice level='warn' msg={ entryContentRsp.msg }  />
-{:else if Object.keys(entryContentRsp).length === 0}
+{#if entryContentRsp === undefined}
     <!-- loading -->
     <Notice />
+{:else if entryContentRsp && entryContentRsp.code === -1}
+    <!-- error -->
+    <Notice level='warn' msg={ entryContentRsp.msg }  />
+{:else if entryContentRsp && Object.keys(entryContentRsp).length === 0}
+    <!-- init -->
+    <div class="flow-text" id="omr-post-third-html">
+        <Home />
+    </div>
 {:else}
     <!-- success -->
     <div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu} on:dragover={allowDrop}>

@@ -1,0 +1,160 @@
+<script>
+
+</script>
+
+<style>
+    .buymeacoffee {
+        height: 60px;
+        width: 231px;
+        border-radius: 12px;
+        margin-right: 12px;
+    }
+    .donate-info {
+        display: flex;
+        align-items: center;
+    }
+    .sponsor {
+        border: 1px solid rgba(0,0,0,.1);
+        display: inline-flex;
+        margin-right: 4px;
+        margin-bottom: 4px;
+    }
+    .sponsor-img {
+        width: 100px;
+        height: 100px !important;
+    }
+    .social-wrapper {
+        display: flex;
+        align-items: center;
+    }
+    .social {
+        width: 64px;
+        padding: 0 16px;
+    }
+    .social-img {
+        width: 32px;
+        height: 32px;
+    }
+</style>
+
+<div>
+    <h1>A simple, efficient, open source RSS reader service.</h1>
+
+    <h2>Key Features</h2>
+
+    <h3>️🚀 Simple and Efficient</h3>
+    <p>
+        Dinorss use Client-Server architecture, feeds are synchronized intelligently on the server,
+        so it's very fast and energy efficient for your device.
+    </p>
+    <p>
+        Dinorss is build as minimum viable product, new features will be added up to your feedback.
+    </p>
+
+    <h3>⌨️ Keyboard Shortcuts</h3>
+
+    <table class="responsive-table">
+        <tr>
+            <td><kbd> n </kbd> / <kbd>⬇️</kbd> - Next </td>
+            <td><kbd> N </kbd> / <kbd>⬆️</kbd> - Previous </td>
+            <td><kbd> b </kbd> - Back </td>
+        </tr>
+
+        <tr>
+            <td><kbd> p </kbd> / <kbd>➡️️</kbd> - Next page </td>
+            <td><kbd> P </kbd> / <kbd>⬅️️️</kbd> - Previous page </td>
+            <td><kbd> C </kbd> - Mark all as read </td>
+        </tr>
+        <tr>
+            <td><kbd> j </kbd> - Move down </td>
+            <td><kbd> k </kbd> - Move up </td>
+            <td><kbd> x </kbd> - Exit </td>
+        </tr>
+        <tr>
+            <td><kbd> d </kbd> / <kbd>space</kbd> - PgOn </td>
+            <td><kbd> u </kbd> - PgUp </td>
+            <td><kbd> r </kbd> - Refresh </td>
+        </tr>
+
+        <tr>
+            <td><kbd>gg</kbd> - Go to first line </td>
+            <td><kbd> G </kbd> - Go to last line </td>
+            <td><kbd>yy</kbd> - Copy link </td>
+        </tr>
+
+        <tr>
+            <td><kbd>F5</kbd> - Reload window </td>
+            <td><kbd>Esc</kbd> - Close modal window </td>
+            <td><kbd>Ctrl + f</kbd> - Search </td>
+        </tr>
+    </table>
+    <br />
+
+    <h3>️🖥 Cross Platform</h3>
+
+    <table class="responsive-table">
+        <thead>
+        <tr>
+            <th>MacOS</th>
+            <th>Windows</th>
+            <th>Linux</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>✅ tested on MacOS 10.15</td>
+            <td>✅ tested on Windows 10</td>
+            <td>🔜 on the way</td>
+        </tr>
+        </tbody>
+    </table>
+    <br />
+
+    <h3>️🎙 Podcast Optimized</h3>
+    <p>Integrated with <code>@Podlove Player</code> for the specific needs of podcasters.</p>
+    <img src="podplayer/podlove.jpg" width="480px" alt="podlove player" />
+    <br />
+
+    <h3>️💡 Code Highlight</h3>
+    <pre><code class="language-js">const code = `var data = 1;`;
+
+// log
+console.log(code)</code></pre>
+    <br />
+
+    <h3>️🆓 Free for 100 feeds</h3>
+    <p class="donate-info">
+        <a href="https://www.buymeacoffee.com/dinorss" target="_blank">
+            <img src="icon/buymeacoffee.png" class="buymeacoffee" alt="Buy Me A Coffee" />
+        </a>
+        to unlock 100 feeds limit.
+    </p>
+
+<!--    <h2>Thanks to</h2>-->
+<!--    <ul>-->
+<!--        <li><a href="https://www.electronjs.org/" target="_blank">Electron</a></li>-->
+<!--        <li><a href="https://svelte.dev/" target="_blank">Svelte</a></li>-->
+<!--        <li><a href="https://materializecss.com/" target="_blank">Materialize</a></li>-->
+<!--        <li><a href="https://www.djangoproject.com/" target="_blank">Django</a></li>-->
+<!--        <li><a href="https://redis.io/" target="_blank">Redis</a></li>-->
+<!--        <li><a href="https://postgresql.org/" target="_blank">PostgreSQL</a></li>-->
+<!--    </ul>-->
+
+    <h2>Sponsors</h2>
+    <p>
+        <a href="https://www.jetbrains.com/?from=dinorss" class="sponsor" rel="nofollow" target="_blank" title="JetBrains">
+            <img src="icon/jetbrains.svg" class="sponsor-img" alt="JetBrains" />
+        </a>
+    </p>
+
+    <p class="social-wrapper">
+        <span>Follow Us: </span>
+        <a href="https://twitter.com/dino_rss" class="social" rel="nofollow" target="_blank">
+            <img src="icon/twitter.svg" class="social-img" alt="Twitter" />
+        </a>
+        <a href="https://github.com/richshaw2015/dino-rss-electron" class="social" rel="nofollow" target="_blank">
+            <img src="icon/github.svg" class="social-img" alt="GitHub" />
+        </a>
+    </p>
+</div>
+

@@ -332,7 +332,7 @@
         <Titlebar />
     {/if}
     <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}" on:click={showLoginOrUser}>
-        <img src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar">
+        <img src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar" title="{$userInfoRsp.level > 1 ? 'My' : 'Login'}">
     </div>
 
     <div title="RSS" class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={() => activeTab.set('rss')}>

@@ -59,7 +59,7 @@
         border-bottom: 1px dashed rgba(0,0,0,0.14);
         cursor: move;
     }
-    #omr-post-title-bar i {
+    #omr-post-title-bar > i {
         width: 54px;
         min-width: 54px;
         padding-left: 15px;
@@ -129,5 +129,11 @@
                 <span>Larger</span>
             </label>
         </span>
+    </div>
+{:else}
+    <div id="omr-post-title-bar" class="drag" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
+        <div class="post-title">
+            Dinosaur Rss 🦕
+        </div>
     </div>
 {/if}

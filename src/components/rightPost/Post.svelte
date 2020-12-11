@@ -68,10 +68,10 @@
 
         if ($activeTab === "star") {
             activeEntry = $starActiveEntry
-            starEntryContentRsp.set({})
+            starEntryContentRsp.set(undefined)
         } else if ($activeTab === "rss") {
             activeEntry = $rssActiveEntry
-            rssEntryContentRsp.set({})
+            rssEntryContentRsp.set(undefined)
         }
 
         apiReq('/api/entry/get/content', {

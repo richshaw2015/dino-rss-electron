@@ -1,7 +1,7 @@
 {
   "name": "Dinorss",
   "version": "0.1.2",
-  "description": "Dinasaur RSS",
+  "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
     "start": "electron .",
@@ -15,7 +15,7 @@
   },
   "repository": "https://github.com/richshaw2015/dino-rss-electron",
   "keywords": [
-    "Dinasaur",
+    "Dinosaur",
     "RSS",
     "reader",
     "news"
@@ -24,7 +24,7 @@
   "license": "CC0-1.0",
   "build": {
     "appId": "org.dinorss",
-    "productName": "Dinasaur RSS",
+    "productName": "Dinosaur RSS 🦕",
     "artifactName": "${productName}.${version}.${ext}",
     "files": [
       "!public/*.map"
