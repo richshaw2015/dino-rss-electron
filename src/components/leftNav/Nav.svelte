@@ -423,9 +423,9 @@
         <i class="material-icons import-icon">import_export</i>Import from OPML
     </div>
     
-    <div class="divider submit-divider"></div>
+    <!-- <div class="divider submit-divider"></div>
 
     <div class="waves-effect btn-flat feed-ranking">
         <i class="material-icons equalizer-icon">equalizer</i>Feed ranking
-    </div>
+    </div> -->
 </div>
