@@ -90,7 +90,7 @@
     </table>
     <br />
 
-    <h3>️🖥 Cross Platform</h3>
+    <h3>️💻 Cross Platform</h3>
 
     <table class="responsive-table">
         <thead>
@@ -110,7 +110,7 @@
     </table>
     <br />
 
-    <h3>️🎙 Podcast Optimized</h3>
+    <h3>️🎤 Podcast Optimized</h3>
     <p>Integrated with <code>@Podlove Player</code> for the specific needs of podcasters.</p>
     <img src="podplayer/podlove.jpg" width="480px" alt="podlove player" />
     <br />
