@@ -308,17 +308,14 @@
     .rss-submit-btn {
         margin-left: 1rem;
     }
-    .submit-divider {
-        margin: 12px 0;
-    }
-    .submit-opml, .feed-ranking {
+    .submit-opml {
         display: flex;
         align-items: center;
         text-transform: none;
         justify-content: center;
         font-size: 1.1rem;
     }
-    .submit-opml i, .feed-ranking i {
+    .submit-opml i {
         margin-left: 12px;
         margin-right: 10px;
     }

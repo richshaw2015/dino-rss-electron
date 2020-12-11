@@ -1,6 +1,6 @@
 {
   "name": "Dinorss",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   "license": "CC0-1.0",
   "build": {
     "appId": "org.dinorss",
-    "productName": "Dinosaur RSS 🦕",
+    "productName": "Dinosaur RSS",
     "artifactName": "${productName}.${version}.${ext}",
     "files": [
       "!public/*.map"
@@ -35,7 +35,7 @@
     },
     "mac": {
       "icon": "public/icon/logo.icns",
-      "type": "development",
+      "type": "distribution",
       "category": "public.app-category.news",
       "target": [
         "dmg",
