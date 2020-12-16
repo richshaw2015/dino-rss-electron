@@ -4,13 +4,15 @@
     export let entryContentRsp = {}
 
     import { truncateStr, isMac, isWin, captureWindow, toast, copyToClipboard } from '../utils/helper.js'
+    import { appsActiveMenu, activeTab } from '../utils/store.js'
     import Podcast from './Podcast.svelte'
     import Home from './Home.svelte'
+    import Thanks from './Thanks.svelte'
     import Notice from '../global/Notice.svelte'
 
     const Prism = require('prismjs')
     const { remote } = require('electron')
-    const { shell, clipboard } = require('electron')
+    const { shell } = require('electron')
     const { Menu, MenuItem } = remote
     
     let qrcode
@@ -158,7 +160,15 @@
 {:else if entryContentRsp && Object.keys(entryContentRsp).length === 0}
     <!-- init -->
     <div class="flow-text" id="omr-post-third-html">
-        <Home />
+        {#if $activeTab !== 'apps'}
+            <Home />
+        {:else}
+            {#if $appsActiveMenu === 'about'}
+                <Home />
+            {:else if $appsActiveMenu === 'thanks'}
+                <Thanks />
+            {/if}
+        {/if}
     </div>
 {:else}
     <!-- success -->

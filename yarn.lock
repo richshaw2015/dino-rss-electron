@@ -4005,10 +4005,10 @@ electron-to-chromium@^1.3.378, electron-to-chromium@^1.3.591:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.599.tgz#3fbb004733f3c0dcf59934c8644ddf800b94443a"
   integrity sha512-u6VGpFsIzSCNrWJb1I72SUypz3EGoBaiEgygoMkd0IOcGR3WF3je5VTx9OIRI9Qd8UOMHinLImyJFkYHTq6nsg==
 
-electron@^10.1.6:
-  version "10.1.6"
-  resolved "https://registry.npmjs.org/electron/-/electron-10.1.6.tgz#1b74838fc5f8263dcf198dc16bd6a88b095a59bb"
-  integrity sha512-Wyiq5Fy64KAa51i72m+5zayYKSm9O5lnittUdaElAn3PAzGl3yDifYO2QsXR7k/iKxWVSROOPzf43mXYytL67Q==
+electron@^10.2.0:
+  version "10.2.0"
+  resolved "https://registry.npm.taobao.org/electron/download/electron-10.2.0.tgz?cache=0&sync_timestamp=1608031698298&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felectron%2Fdownload%2Felectron-10.2.0.tgz#4b00f0907b28aca4b93661bb53ce9a4f8ad32201"
+  integrity sha1-SwDwkHsorKS5NmG7U86aT4rTIgE=
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"

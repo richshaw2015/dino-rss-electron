@@ -3,7 +3,21 @@
 export const SERVER = 'https://dinorss.org'
 
 // j k shortcut scroll
-export const scrollStep = 60
+export const SCROLLSTEP = 60
+
+export const SPONSORS = [{
+        name: "JetBrains",
+        link: "https://www.jetbrains.com/?from=dinorss",
+        image: "icon/jetbrains.svg"
+    }
+]
+export const SUPPORTERS = [
+    // {
+    //     name: "twitter",
+    //     link: "https://www.jetbrains.com/?from=dinorss",
+    //     image: "icon/twitter.svg"
+    // }
+]
 
 export const podcastConfig = {
     "base": "./podplayer/",

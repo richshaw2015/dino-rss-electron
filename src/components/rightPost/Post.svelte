@@ -1,14 +1,13 @@
 <script>
     import { onMount } from 'svelte'
     const Mousetrap = require('mousetrap')
-    const { clipboard, remote } = require('electron')
     const fs = require('fs')
     const path = require('path')
     const Autolinker = require( 'autolinker' );
 
     import { getFontSize } from '../utils/storage.js'
-    import { isInList, shortToast, toast, warnToast, copyToClipboard } from '../utils/helper.js'
-    import { scrollStep } from '../utils/config.js'
+    import { isInList, shortToast, toast, warnToast, copyToClipboard, getCacheDir } from '../utils/helper.js'
+    import { SCROLLSTEP } from '../utils/config.js'
 
     import Find from '../global/Find.svelte'
     import Title from './Title.svelte'
@@ -21,7 +20,7 @@
 
     let fontSize = getFontSize()
     
-    const entryCacheDir = path.join(remote.app.getPath('temp'), remote.app.getName(), "entry.tmp")
+    const entryCacheDir = getCacheDir()
     
     function setEntryCache(entryId, cacheRsp) {
         const entryCacheFile = path.join(entryCacheDir, entryId + ".json")
@@ -148,7 +147,7 @@
         // keyboard shortcut
         Mousetrap.bind('j', function() {
             try {
-                document.querySelector('#omr-post-third-html').scrollTop += scrollStep
+                document.querySelector('#omr-post-third-html').scrollTop += SCROLLSTEP
             } catch (e) {}
             return false
         });
@@ -162,7 +161,7 @@
 
         Mousetrap.bind('k', function() {
             try {
-                document.querySelector('#omr-post-third-html').scrollTop -= scrollStep
+                document.querySelector('#omr-post-third-html').scrollTop -= SCROLLSTEP
             } catch(e) {}
             return false
         });
@@ -232,6 +231,9 @@
     <Third {fontSize} activeEntry={$starActiveEntry} entryContentRsp={$starEntryContentRsp} />
 
     <Statusbar activeEntry={$starActiveEntry} />
+{:else if $activeTab === "apps" }
+    <Title />
+    <Third {fontSize} />
 {/if}
 
 <Find />

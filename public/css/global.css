@@ -134,6 +134,9 @@ i.material-icons {
 #omr-find-in-page .modal-overlay {
     z-index: -1 !important;
 }
+#omr-top-toolbar .modal-overlay {
+    background: #000 !important;
+}
 
 .collection .collection-item {
     line-height: unset;
@@ -174,9 +177,12 @@ figure {
 .modal-title {
     font-size: 1.5rem;
     margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
 }
 .modal-title i {
     cursor: auto;
+    margin-right: 6px;
 }
 kbd {
     border: .1em solid #aaa;
@@ -188,4 +194,15 @@ kbd {
     cursor: pointer;
     color: #000;
     font-weight: 700;
+}
+
+.sponsor {
+    border: 1px solid rgba(0,0,0,.1);
+    display: inline-flex;
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+.sponsor-img {
+    width: 96px;
+    height: 96px !important;
 }

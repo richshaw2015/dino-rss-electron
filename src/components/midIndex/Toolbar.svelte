@@ -4,11 +4,16 @@
     import { onMount } from 'svelte'
     import { createEventDispatcher } from 'svelte'
     import { saveViewScope } from '../utils/storage.js'
-    import { activeTab, rssViewMode, viewScope, starViewMode } from '../utils/store.js'
-    import { shortToast } from '../utils/helper.js'
+    import { activeTab, rssViewMode, viewScope, starViewMode, isApiLoading } from '../utils/store.js'
+    import { shortToast, warnToast } from '../utils/helper.js'
+    import FeedCard from '../global/FeedCard.svelte'
+    import { apiReq } from '../utils/req.js';
 
     const Mousetrap = require('mousetrap')
     const dispatch = createEventDispatcher()
+
+    let searchKeyword
+    let searchRsp
 
     onMount(() => {
         // keyboard shortcut
@@ -36,6 +41,37 @@
     function handleRefreshAction() {
         dispatch('refresh-list-view', {page: 1})
     }
+    function handleSearch(event) {
+        if (event.keyCode === 13 && searchKeyword) {
+            event.preventDefault()
+
+            isApiLoading.set(true)
+            searchRsp = undefined
+            apiReq('/api/search/feed', {keyword: searchKeyword}).then( rsp => {
+                if (rsp.code === 0) {
+                    searchRsp = rsp
+                    showSearchhWindow()
+                } else if (rsp.code === 106) {
+                    warnToast("Keyword error!")
+                } else if (rsp.code === 100) {
+                    warnToast("No data!")
+                } 
+            }).catch(err => {
+                warnToast(err)
+            }).finally(() => {
+                isApiLoading.set(false)
+            });
+        }
+    }
+    function showSearchhWindow() {
+        const instanse = M.Modal.init(document.querySelector('#omr-modal-search-feed'), {
+            inDuration: 0,
+            outDuration: 0,
+            opacity: 0.5,
+            endingTop: document.querySelector('#omr-top-toolbar').offsetHeight + 'px'
+        });
+        instanse.open()
+    }
 </script>
 
 <style>
@@ -44,7 +80,6 @@
         max-width: 400px;
         height: 60px;
         display: flex;
-        /*border: 0.5px dashed red;*/
         padding-top: 16px;
         padding-bottom: 10px;
     }
@@ -93,13 +128,20 @@
     .search-icon {
         margin: 5px 0;
     }
+    #omr-modal-search-feed {
+        width: 80%;
+        padding: 24px;
+        left: 70px;
+        max-height: calc(100% - 120px);
+    }
 </style>
 
 <div id="omr-top-toolbar" class="drag">
     {#if $activeTab === 'apps'}
         <div class="nav-wrapper no-drag omr-full-search">
             <div class="input-field omr-search-form">
-                <input id="omr-search-input" type="search" class="" placeholder="Search" required>
+                <input id="omr-search-input" type="search" class="" placeholder="Search" required 
+                    bind:value={searchKeyword} on:keyup={handleSearch} />
                 <label class="label-icon search-icon" for="omr-search-input">
                     <i class="material-icons">search</i></label>
             </div>
@@ -107,7 +149,8 @@
     {:else}
         <div class="nav-wrapper no-drag">
             <div class="input-field omr-search-form">
-                <input id="omr-search-input" type="search" class="" placeholder="Search" required>
+                <input id="omr-search-input" type="search" class="" placeholder="Search" required
+                    bind:value={searchKeyword} on:keyup={handleSearch} />
                 <label class="label-icon search-icon" for="omr-search-input">
                     <i class="material-icons">search</i></label>
             </div>
@@ -136,4 +179,18 @@
 
         </div>
     {/if}
+
+    <div id="omr-modal-search-feed" class="modal">
+        <div class="modal-title"><i class="material-icons">search</i> Search "{searchKeyword}"</div>
+
+        {#if searchRsp}
+        <div class="row">
+            {#each searchRsp.data as feed}
+            <div class="col s6">
+                <FeedCard feedInfo={feed} />
+            </div>
+            {/each}
+        </div>
+        {/if}
+    </div>
 </div>

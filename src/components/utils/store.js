@@ -31,3 +31,6 @@ export let starEntryContentRsp = writable({})
 export let starActiveEntry = writable({})
 export let starActiveFeed = writable({})
 export let starFeedEntriesView = writable(false)
+
+// apps tab
+export let appsActiveMenu = writable("about")

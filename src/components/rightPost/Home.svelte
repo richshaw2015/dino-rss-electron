@@ -1,5 +1,5 @@
 <script>
-
+    import { SPONSORS } from '../utils/config.js'
 </script>
 
 <style>
@@ -12,16 +12,6 @@
     .donate-info {
         display: flex;
         align-items: center;
-    }
-    .sponsor {
-        border: 1px solid rgba(0,0,0,.1);
-        display: inline-flex;
-        margin-right: 4px;
-        margin-bottom: 4px;
-    }
-    .sponsor-img {
-        width: 100px;
-        height: 100px !important;
     }
     .social-wrapper {
         display: flex;
@@ -127,24 +117,7 @@ console.log(code)</code></pre>
         <a href="https://www.buymeacoffee.com/dinorss" target="_blank">
             <img src="icon/buymeacoffee.png" class="buymeacoffee" alt="Buy Me A Coffee" />
         </a>
-        to unlock 100 feeds limit.
-    </p>
-
-<!--    <h2>Thanks to</h2>-->
-<!--    <ul>-->
-<!--        <li><a href="https://www.electronjs.org/" target="_blank">Electron</a></li>-->
-<!--        <li><a href="https://svelte.dev/" target="_blank">Svelte</a></li>-->
-<!--        <li><a href="https://materializecss.com/" target="_blank">Materialize</a></li>-->
-<!--        <li><a href="https://www.djangoproject.com/" target="_blank">Django</a></li>-->
-<!--        <li><a href="https://redis.io/" target="_blank">Redis</a></li>-->
-<!--        <li><a href="https://postgresql.org/" target="_blank">PostgreSQL</a></li>-->
-<!--    </ul>-->
-
-    <h2>Sponsors</h2>
-    <p>
-        <a href="https://www.jetbrains.com/?from=dinorss" class="sponsor" rel="nofollow" target="_blank" title="JetBrains">
-            <img src="icon/jetbrains.svg" class="sponsor-img" alt="JetBrains" />
-        </a>
+        to unlock 100 feeds.
     </p>
 
     <p class="social-wrapper">

@@ -18,6 +18,7 @@ export function truncateStr(str, len) {
 
 const { ipcRenderer, remote, clipboard } = require('electron')
 const { Menu, MenuItem } = remote
+const path = require('path')
 
 export const toggleMaximizeWindow = () => {
     ipcRenderer.invoke('toggle-maximize-window')
@@ -198,4 +199,8 @@ export function resizeImageUrl(image, size=128) {
 export function copyToClipboard(text) {
     clipboard.writeText(text)
     shortToast("Copied")
+}
+
+export function getCacheDir() {
+    return path.join(remote.app.getPath('temp'), remote.app.getName(), "cache")
 }

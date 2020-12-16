@@ -27,7 +27,9 @@
     "productName": "Dinosaur RSS",
     "artifactName": "${productName}.${version}.${ext}",
     "files": [
-      "!public/*.map"
+      "!public/*.map",
+      "!public/icon/logo.icns",
+      "!public/icon/logo.png"
     ],
     "win": {
       "target": "nsis",
@@ -62,7 +64,7 @@
     "@storybook/addon-links": "6.0.21",
     "@storybook/svelte": "6.0.21",
     "concurrently": "^5.3.0",
-    "electron": "^10.1.6",
+    "electron": "^10.2.0",
     "electron-builder": "^22.9.1",
     "electron-devtools-installer": "^3.1.1",
     "electron-reload": "^1.5.0",
