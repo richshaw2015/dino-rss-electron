@@ -1,5 +1,5 @@
 // local debug or production package
-export const DEBUG_ENV = true
+export const DEBUG_ENV = false
 
 export const SERVER = DEBUG_ENV ? 'http://192.168.31.204:8000' : 'https://dinorss.org'
 
