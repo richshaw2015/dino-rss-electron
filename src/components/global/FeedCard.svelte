@@ -43,6 +43,9 @@
         font-size: 13px;
         margin-right: 3px;
     }
+    .feed-update-stats i, .feed-update-stats span {
+        vertical-align: middle;
+    }
     .card-content {
         padding: 12px;
     }

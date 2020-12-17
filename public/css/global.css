@@ -206,3 +206,6 @@ kbd {
     width: 96px;
     height: 96px !important;
 }
+.flex-grow {
+    flex-grow: 1;
+}

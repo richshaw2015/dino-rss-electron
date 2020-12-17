@@ -34,15 +34,47 @@
 
     <h3>️🚀 Simple and Efficient</h3>
     <p>
-        Dinorss use Client-Server architecture, feeds are synchronized intelligently on the server,
-        so it's very fast and energy efficient for your device.
+        Dinorss is build as minimum viable product, new features will be added up to you.
     </p>
+
     <p>
-        Dinorss is build as minimum viable product, new features will be added up to your feedback.
+        By using Client-Server architecture, feeds are synchronized intelligently on the server, 
+        so it's energy efficient for your device.
     </p>
 
-    <h3>⌨️ Keyboard Shortcuts</h3>
+    <h3>️💻 Cross Platform</h3>
 
+    <table class="responsive-table">
+        <thead>
+        <tr>
+            <th>MacOS</th>
+            <th>Windows</th>
+            <th>Linux</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>✅ tested on MacOS 10.15</td>
+            <td>✅ tested on Windows 10</td>
+            <td>🔜 on the way</td>
+        </tr>
+        </tbody>
+    </table>
+    <br />
+
+    <h3>️🎤 Podcast Optimized</h3>
+    <p>Integrated with <code>@Podlove Player</code> for the specific needs of podcasters.</p>
+    <img src="podplayer/podlove.jpg" width="480px" alt="podlove player" />
+    <br />
+
+    <h3>️💡 Code Highlight</h3>
+    <pre><code class="language-js">const code = `var data = 1;`;
+
+// log
+console.log(code)</code></pre>
+    <br />
+    
+    <h3>⌨️ Keyboard Shortcuts</h3>
     <table class="responsive-table">
         <tr>
             <td><kbd> n </kbd> / <kbd>⬇️</kbd> - Next </td>
@@ -80,44 +112,12 @@
     </table>
     <br />
 
-    <h3>️💻 Cross Platform</h3>
-
-    <table class="responsive-table">
-        <thead>
-        <tr>
-            <th>MacOS</th>
-            <th>Windows</th>
-            <th>Linux</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>✅ tested on MacOS 10.15</td>
-            <td>✅ tested on Windows 10</td>
-            <td>🔜 on the way</td>
-        </tr>
-        </tbody>
-    </table>
-    <br />
-
-    <h3>️🎤 Podcast Optimized</h3>
-    <p>Integrated with <code>@Podlove Player</code> for the specific needs of podcasters.</p>
-    <img src="podplayer/podlove.jpg" width="480px" alt="podlove player" />
-    <br />
-
-    <h3>️💡 Code Highlight</h3>
-    <pre><code class="language-js">const code = `var data = 1;`;
-
-// log
-console.log(code)</code></pre>
-    <br />
-
     <h3>️🆓 Free for 100 feeds</h3>
     <p class="donate-info">
         <a href="https://www.buymeacoffee.com/dinorss" target="_blank">
             <img src="icon/buymeacoffee.png" class="buymeacoffee" alt="Buy Me A Coffee" />
         </a>
-        to unlock 100 feeds.
+        to get more feeds.
     </p>
 
     <p class="social-wrapper">

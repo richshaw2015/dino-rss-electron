@@ -36,12 +36,12 @@
         </li>
 
         <li>
-            <img src="https://svelte.dev/favicon.png" class="logo" alt="Svelte" />
+            <img src="icon/svelte.svg" class="logo" alt="Svelte" />
             <a href="https://svelte.dev/" target="_blank">Svelte</a>
         </li>
 
         <li>
-            <img src="https://materializecss.com/images/favicon/favicon-32x32.png" class="logo" alt="Materialize" />
+            <img src="icon/materialize.svg" class="logo" alt="Materialize" />
             <a href="https://materializecss.com" target="_blank">Materialize</a>
         </li>
 

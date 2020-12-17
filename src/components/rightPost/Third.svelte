@@ -8,6 +8,7 @@
     import Podcast from './Podcast.svelte'
     import Home from './Home.svelte'
     import Thanks from './Thanks.svelte'
+    import Setting from './Setting.svelte'
     import Notice from '../global/Notice.svelte'
 
     const Prism = require('prismjs')
@@ -167,6 +168,8 @@
                 <Home />
             {:else if $appsActiveMenu === 'thanks'}
                 <Thanks />
+            {:else if $appsActiveMenu === 'setting'}
+                <Setting />
             {/if}
         {/if}
     </div>
