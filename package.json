@@ -1,6 +1,6 @@
 {
   "name": "Dinorss",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "news"
   ],
   "author": "Richshaw",
-  "license": "CC0-1.0",
+  "license": "MIT",
   "build": {
     "appId": "org.dinorss",
     "productName": "Dinosaur RSS",
@@ -71,7 +71,7 @@
     "rollup": "^2.27.1",
     "rollup-plugin-svelte": "^6.1.1",
     "rollup-plugin-terser": "^5.1.2",
-    "svelte": "^3.25.1",
+    "svelte": "^3.29.7",
     "svelte-loader": "^2.13.6",
     "telnet-client": "^1.4.6"
   },
