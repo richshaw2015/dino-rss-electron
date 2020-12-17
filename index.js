@@ -1,14 +1,16 @@
 const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard} = require('electron');
 const fs = require('fs')
 
-const production = true
+const DEV = (process.env.ELECTRON_RELOAD === "yes")
 
-if (!production) {
+if (DEV) {
 	const path = require('path');
-	require('electron-reload')(__dirname, {
-		electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
-		awaitWriteFinish: true,
-	});
+	try {
+		require('electron-reload')(__dirname, {
+			electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
+			awaitWriteFinish: true,
+		})
+	} catch (e) {}
 }
 
 let mainWindow;
@@ -66,7 +68,7 @@ function createMainWindow () {
 		mainWindow.webContents.send('found-in-page-content', result)
 	})
 
-	if (!production) mainWindow.webContents.openDevTools()
+	if (DEV) mainWindow.webContents.openDevTools()
 }
 
 function createAuthWindow(token) {
