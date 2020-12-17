@@ -6,7 +6,7 @@
     const { dialog } = remote
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, 
-        warnToast, readableCount, shortToast } from '../utils/helper.js'
+        warnToast, readableCount, shortToast, toggleDevTools } from '../utils/helper.js'
     import { getToken, saveUserInfo, saveToken } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
     import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading } from '../utils/store.js'
@@ -22,6 +22,10 @@
         });
         Mousetrap.bind('f5', function() {
             reloadWindow()
+            return false
+        });
+        Mousetrap.bind('f12', function() {
+            toggleDevTools()
             return false
         });
         Mousetrap.bind('M', function() {

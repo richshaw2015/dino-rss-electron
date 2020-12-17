@@ -132,6 +132,11 @@ ipcMain.handle('close-window', (event) => {
 	return mainWindow.close();
 })
 
+ipcMain.handle('toggle-dev-tools', (event) => {
+	if(!mainWindow) return;
+	return mainWindow.webContents.toggleDevTools();
+})
+
 ipcMain.handle('minimize-window', (event) => {
 	if(!mainWindow) return;
 	return mainWindow.minimize();

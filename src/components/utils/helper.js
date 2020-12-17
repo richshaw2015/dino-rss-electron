@@ -32,6 +32,9 @@ export const closeWindow = () => {
 export const captureWindow = () => {
     ipcRenderer.invoke('capture-window')
 }
+export const toggleDevTools = () => {
+    ipcRenderer.invoke('toggle-dev-tools')
+}
 
 export function reloadWindow() {
     remote.getCurrentWindow().reload()
