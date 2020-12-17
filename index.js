@@ -1,7 +1,7 @@
 const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard} = require('electron');
 const fs = require('fs')
 
-const DEV = (process.env.ELECTRON_RELOAD === "yes")
+const DEV = process.env.ELECTRON_RELOAD
 
 if (DEV) {
 	const path = require('path');

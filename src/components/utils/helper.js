@@ -71,8 +71,7 @@ export function macNavCtxMenu() {
     menu.append(new MenuItem({type: "separator",}));
     menu.append(new MenuItem({
         role: "toggleDevTools",
-        label: "🔨  Inspect",
-        enabled: process.env.ELECTRON_RELOAD
+        label: "🔨  Inspect"
     }));
     menu.append(new MenuItem({type: "separator",}));
     menu.append(new MenuItem({
