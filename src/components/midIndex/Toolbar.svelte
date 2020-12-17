@@ -179,18 +179,18 @@
 
         </div>
     {/if}
+</div>
 
-    <div id="omr-modal-search-feed" class="modal">
-        <div class="modal-title"><i class="material-icons">search</i> Search "{searchKeyword}"</div>
+<div id="omr-modal-search-feed" class="modal">
+    <div class="modal-title"><i class="material-icons">search</i> Search "{searchKeyword}"</div>
 
-        {#if searchRsp}
-        <div class="row">
-            {#each searchRsp.data as feed}
-            <div class="col s6">
-                <FeedCard feedInfo={feed} />
-            </div>
-            {/each}
+    {#if searchRsp}
+    <div class="row">
+        {#each searchRsp.data as feed}
+        <div class="col s6">
+            <FeedCard feedInfo={feed} />
         </div>
-        {/if}
+        {/each}
     </div>
+    {/if}
 </div>

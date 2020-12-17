@@ -16,7 +16,7 @@
             const instanse = M.Modal.init(document.querySelector('#omr-modal-feed-edit'), {
                 inDuration: 0,
                 outDuration: 0,
-                opacity: 1,
+                opacity: 0.5,
                 endingTop: "15%"
             });
             instanse.open()

@@ -20,7 +20,7 @@
         const instanse = M.Modal.init(document.querySelector('#omr-modal-find-in-page'), {
             inDuration: 0,
             outDuration: 0,
-            opacity: 1,
+            opacity: 0.1,
             endingTop: document.querySelector('#omr-post-title-bar').offsetHeight + 'px'
         });
 
@@ -159,23 +159,22 @@
     }
 </style>
 
-<div id="omr-find-in-page">
-    <div id="omr-modal-find-in-page" class="modal" draggable="true" on:dragstart={dragStart} on:dragend="{dragEnd}">
-        <div class="find-inner">
-            <input type="text" id="omr-find-input" bind:value={findKeyword} on:keyup={findStart} />
 
-            {#if matchesNum >= 0}
-                <span class="find-stats">{activeMatch}/{matchesNum}</span>
-            {:else}
-                <span class="find-stats"></span>
-            {/if}
+<div id="omr-modal-find-in-page" class="modal" draggable="true" on:dragstart={dragStart} on:dragend="{dragEnd}">
+    <div class="find-inner">
+        <input type="text" id="omr-find-input" bind:value={findKeyword} on:keyup={findStart} />
 
-            <div class="vertical-line"></div>
-            <div class="find-btns">
-                <i class="material-icons find-prev { matchesNum > 1 ? '' : 'disabled' }" on:click="{findPrev}">expand_less</i>
-                <i class="material-icons find-next { matchesNum > 1 ? '' : 'disabled' }" on:click="{findNext}">expand_more</i>
-                <i class="material-icons find-close" on:click="{findClose}">clear</i>
-            </div>
+        {#if matchesNum >= 0}
+            <span class="find-stats">{activeMatch}/{matchesNum}</span>
+        {:else}
+            <span class="find-stats"></span>
+        {/if}
+
+        <div class="vertical-line"></div>
+        <div class="find-btns">
+            <i class="material-icons find-prev { matchesNum > 1 ? '' : 'disabled' }" on:click="{findPrev}">expand_less</i>
+            <i class="material-icons find-next { matchesNum > 1 ? '' : 'disabled' }" on:click="{findNext}">expand_more</i>
+            <i class="material-icons find-close" on:click="{findClose}">clear</i>
         </div>
     </div>
 </div>

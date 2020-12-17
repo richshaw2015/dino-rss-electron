@@ -114,7 +114,7 @@
                 const instanse = M.Modal.init(document.querySelector('#omr-modal-qrcode'), {
                     inDuration: 0,
                     outDuration: 0,
-                    opacity: 1,
+                    opacity: 0.5,
                     endingTop:  window.outerHeight / 2 - qrcodeSize / 2 + "px"
                 });
                 document.querySelector('#omr-modal-qrcode').style.width = `${qrcodeSize}px`

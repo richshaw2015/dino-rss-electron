@@ -127,17 +127,6 @@ i.material-icons {
     cursor: pointer;
 }
 
-.modal-overlay {
-    background: none !important;
-}
-
-#omr-find-in-page .modal-overlay {
-    z-index: -1 !important;
-}
-#omr-top-toolbar .modal-overlay {
-    background: #000 !important;
-}
-
 .collection .collection-item {
     line-height: unset;
     max-height: 60px !important;

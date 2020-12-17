@@ -92,7 +92,7 @@
                 const instanse = M.Modal.init(document.querySelector('#omr-modal-user-info'), {
                     inDuration: 0,
                     outDuration: 0,
-                    opacity: 1,
+                    opacity: 0.1,
                     endingTop: event.y + 'px'
                 });
                 instanse.open()
@@ -108,7 +108,7 @@
         const instanse = M.Modal.init(document.querySelector('#omr-modal-add-feed'), {
             inDuration: 0,
             outDuration: 0,
-            opacity: 1,
+            opacity: 0.5,
             endingTop: "15%"
         });
         instanse.open()
@@ -406,6 +406,7 @@
     {:else}
         <div class="user-intro-wrapper"><a href="{$userInfoRsp.blog}" target="_blank">{$userInfoRsp.blog}</a></div>
     {/if}
+
 </div>
 
 <div id="omr-modal-add-feed" class="modal">
