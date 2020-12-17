@@ -44,15 +44,16 @@
 
     <div class="divider app-divider"></div>
 
-    <div class="waves-effect one-app" on:click={() => appsActiveMenu.set('setting')}>
-        <i class="material-icons app-icon setting-icon">settings</i>Settings</div>
-    
-    <div class="divider app-divider"></div>
-
     <div class="waves-effect one-app" on:click={() => appsActiveMenu.set('about')}>
         <i class="material-icons app-icon">info_outline</i>About</div>
     <!-- <div class="waves-effect one-app">
         <i class="material-icons app-icon">help_outline</i>FAQ</div> -->
     <div class="waves-effect one-app" on:click={() => appsActiveMenu.set('thanks')}>
         <i class="material-icons app-icon">mood</i>Thanks</div>
+
+    <div class="divider app-divider"></div>
+    
+    <div class="waves-effect one-app" on:click={() => appsActiveMenu.set('setting')}>
+        <i class="material-icons app-icon setting-icon">settings</i>Settings</div>
+    
 </div>

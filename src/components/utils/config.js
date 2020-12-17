@@ -1,7 +1,7 @@
 // local debug or production package
-export const DEBUG = false
+export const DEBUG_ENV = true
 
-export const SERVER = DEBUG ? 'http://192.168.31.204:8000' : 'https://dinorss.org'
+export const SERVER = DEBUG_ENV ? 'http://192.168.31.204:8000' : 'https://dinorss.org'
 
 // j k shortcut scroll
 export const SCROLLSTEP = 60

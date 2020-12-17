@@ -6,7 +6,7 @@
     import { toggleMaximizeWindow, macNavCtxMenu, isInList } from '../utils/helper.js'
     import { saveFontSize } from '../utils/storage.js'
     import { apiReq } from '../utils/req.js'
-    import { activeTab, rssListRsp, starListRsp } from '../utils/store.js'
+    import { activeTab, rssListRsp, starListRsp, appsActiveMenu } from '../utils/store.js'
     
     function showFontSizeWindow(event) {
         const width = 450
@@ -133,7 +133,17 @@
 {:else}
     <div id="omr-post-title-bar" class="drag" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
         <div class="post-title">
+            {#if $activeTab !== 'apps'}
             Dinosaur Rss 🦕
+            {:else}
+                {#if $appsActiveMenu === 'about'}
+                Dinosaur Rss 🦕
+                {:else if $appsActiveMenu === 'thanks'}
+                    Thanks 👏
+                {:else if $appsActiveMenu === 'setting'}
+                    Setting ⚙️
+                {/if}
+            {/if}
         </div>
     </div>
 {/if}

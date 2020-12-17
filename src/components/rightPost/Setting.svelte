@@ -1,5 +1,5 @@
 <script>
-    let cacheSize = 0
+    let cacheSize = 1
 
     import { onMount } from 'svelte'
     import { getCacheDir, toast, warnToast, readableSize, reloadWindow, resizeImageUrl } from '../utils/helper.js'
@@ -10,7 +10,7 @@
     const getFolderSize = require('get-folder-size')
 
     function handleCleanCache() {
-        if (cacheSize > 1) {
+        if (cacheSize > 0) {
             fs.rmdir(getCacheDir(), { recursive: true }, (err) => {
                 if (err) {
                     warnToast(err)
@@ -50,7 +50,7 @@
         justify-content: space-between;
         align-items: center;
         width: 80%;
-        margin: 24px 10%;
+        margin: 24px auto;
     }
     .user-image {
         width: 48px;
@@ -111,7 +111,7 @@
 <div class="setting-item">
     <span class="setting-title">Cache Usage:</span>
     <span class="flex-grow">{readableSize(cacheSize)}</span>
-    <button class="waves-effect waves-light btn-small btn-white {cacheSize > 1 ? '' : 'disabled'}" 
+    <button class="waves-effect waves-light btn-small btn-white {cacheSize > 0 ? '' : 'disabled'}" 
         on:click={handleCleanCache}>Clean</button>
 </div>
 <div class="divider"></div>

@@ -19,6 +19,30 @@
         margin-right: 8px;
         margin-bottom: 8px;
     }
+    #bmc-wbtn {
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        width: 64px; 
+        height: 64px; 
+        color: white; 
+        border-radius: 32px; 
+        position: fixed; 
+        right: 36px; 
+        bottom: 36px; 
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 8px; 
+        z-index: 10; 
+        cursor: pointer; 
+        font-weight: 600; 
+        transition: all 0.2s ease 0s; 
+        transform: scale(1);
+    }
+    #bmc-wbtn img {
+        height: 40px; 
+        width: 40px; 
+        margin: 0; 
+        padding: 0;
+    }
 </style>
 
 <h2>Credits</h2>
@@ -26,7 +50,7 @@
         <li>
             <img src="icon/logo.svg" class="logo" alt="logo" />
             <span>
-                Dinosaur Rss's logo is derived from <a href="https://icon-icons.com/pack/Safari/2565" target="_blank">Beibidog</a>'s design.
+                Dinosaur Rss's logo is derived from <a href="https://icon-icons.com/pack/Safari/2565" target="_blank">Beibidog</a>'s awesome works.
             </span>
         </li>
 
@@ -66,6 +90,21 @@
                 alt="Prism" />
             <a href="https://prismjs.com/" target="_blank">Prism</a>
         </li>
+        <li>
+            <a href="https://github.com/gregjacobs/Autolinker.js" target="_blank">Autolinker.js</a>
+        </li>
+        <li>
+            <a href="https://github.com/alessioalex/get-folder-size#readme" target="_blank">get-folder-size</a>
+        </li>
+        <li>
+            <a href="https://github.com/pvorb/node-md5#readme" target="_blank">MD5</a>
+        </li>
+        <li>
+            <a href="https://github.com/uuidjs/uuid#readme" target="_blank">uuid</a>
+        </li>
+        <li>
+            <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">QRCode.js</a>
+        </li>
     </ul>
 
 <h2>Sponsors</h2>
@@ -89,3 +128,9 @@
 <p>
     <a href="https://opensource.org/licenses/MIT" target="_blank" title="MIT">MIT</a>
 </p>
+
+<a href="https://www.buymeacoffee.com/dinorss" target="_blank">
+    <div id="bmc-wbtn" class="second-bg-color">
+        <img src="icon/coffeecup.svg" alt="Buy Me A Coffee">
+    </div>
+</a>
