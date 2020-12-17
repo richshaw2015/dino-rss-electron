@@ -52,6 +52,9 @@
         width: 80%;
         margin: 24px auto;
     }
+    .setting-item a {
+        color: unset;
+    }
     .user-image {
         width: 48px;
         margin-right: 10px;
@@ -79,8 +82,8 @@
     }
     .btn-white {
         background-color: white;
-        color: #444;
-        width: 90px;
+        color: black;
+        width: 100px;
     }
 </style>
 
@@ -100,10 +103,12 @@
     </div>
 
     {#if $userInfoRsp.level > 1}
-    <a href="{$userInfoRsp.blog}" target="_blank" class="flex-grow"><span>{$userInfoRsp.name}</span></a>
+    <a href="{$userInfoRsp.blog}" target="_blank"><span>{$userInfoRsp.name}</span></a>
+    <span class="flex-grow"></span>
     <button class="waves-effect waves-light btn-small btn-white" on:click={handleLogout}>Logout</button>
     {:else}
-    <span class="flex-grow">Visitor</span>
+    <span>Visitor</span>
+    <span class="flex-grow"></span>
     {/if}
 </div>
 <div class="divider"></div>
