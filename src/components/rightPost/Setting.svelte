@@ -31,13 +31,15 @@
     }
 
     onMount(() => {
-        getFolderSize(getCacheDir(), (err, size) => {
-            if (err) { 
-                warnToast(err)
-            } else {
-                cacheSize = size
-            }
-        })
+        if (fs.existsSync(getCacheDir())) {
+            getFolderSize(getCacheDir(), (err, size) => {
+                if (err) {
+                    warnToast(err)
+                } else {
+                    cacheSize = size
+                }
+            })
+        }
     })
 </script>
 

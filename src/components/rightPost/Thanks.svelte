@@ -129,7 +129,7 @@
     <a href="https://opensource.org/licenses/MIT" target="_blank" title="MIT">MIT</a>
 </p>
 
-<a href="https://www.buymeacoffee.com/dinorss" target="_blank">
+<a href="https://www.buymeacoffee.com/dinorss" target="_blank" title="Buy Me A Coffee">
     <div id="bmc-wbtn" class="second-bg-color">
         <img src="icon/coffeecup.svg" alt="Buy Me A Coffee">
     </div>

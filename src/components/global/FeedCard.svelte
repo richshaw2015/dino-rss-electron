@@ -42,6 +42,7 @@
     .feed-update-stats i {
         font-size: 13px;
         margin-right: 3px;
+        cursor: auto;
     }
     .feed-update-stats i, .feed-update-stats span {
         vertical-align: middle;
