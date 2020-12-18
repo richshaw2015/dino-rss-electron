@@ -25,7 +25,7 @@
   "license": "MIT",
   "build": {
     "appId": "org.dinorss",
-    "productName": "Dinosaur RSS",
+    "productName": "Dinosaur Rss",
     "artifactName": "${productName}.${version}.${ext}",
     "files": [
       "!public/*.map",
