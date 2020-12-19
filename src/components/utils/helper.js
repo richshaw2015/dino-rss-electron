@@ -49,12 +49,6 @@ export function macNavCtxMenu() {
     const menu = new Menu();
 
     menu.append(new MenuItem({
-        role: "zoom",
-        label: "‍📐  Toggle Window Size"
-    }));
-    menu.append(new MenuItem({type: "separator"}));
-
-    menu.append(new MenuItem({
         role: "reload",
         label: "🔄  Reload"
     }));
