@@ -136,12 +136,14 @@
             {#if $activeTab !== 'apps'}
             Dinosaur Rss 🦕
             {:else}
-                {#if $appsActiveMenu === 'about'}
-                Dinosaur Rss 🦕
-                {:else if $appsActiveMenu === 'thanks'}
+                {#if $appsActiveMenu === 'thanks'}
                     Thanks 👏
                 {:else if $appsActiveMenu === 'setting'}
                     Setting ⚙️
+                {:else if $appsActiveMenu === 'explore'}
+                    Explore 🧭
+                {:else}
+                    Dinosaur Rss 🦕
                 {/if}
             {/if}
         </div>

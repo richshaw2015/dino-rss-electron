@@ -64,10 +64,11 @@
     .divider {
         margin: 8px 0;
     }
-    .sub-btn {
-        width: 96px;
-        min-width: 96px;
+    .sub-small-btn {
+        width: 64px;
+        min-width: 64px;
         padding: unset;
+        text-align: center;
     }
     .podcast-icon {
         width: 16px;
@@ -99,9 +100,9 @@
             </span>
 
             {#if feedInfo.stats.is_subscribed}
-                <span class="waves-light sub-btn">Subscribed</span>
+                <span class="waves-light sub-small-btn">✔️️</span>
             {:else}
-                <span class="waves-effect waves-light btn-small sub-btn" on:click={handleSubscribeFeed}>Subscribe</span>
+                <span class="waves-effect waves-light btn-small sub-small-btn" on:click={handleSubscribeFeed}>Sub</span>
             {/if}
         </div>
     </div>

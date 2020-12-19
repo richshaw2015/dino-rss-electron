@@ -7,6 +7,7 @@
     import { appsActiveMenu, activeTab } from '../utils/store.js'
     import Podcast from './Podcast.svelte'
     import Home from './Home.svelte'
+    import Explore from './Explore.svelte'
     import Thanks from './Thanks.svelte'
     import Setting from './Setting.svelte'
     import Notice from '../global/Notice.svelte'
@@ -170,6 +171,8 @@
                 <Thanks />
             {:else if $appsActiveMenu === 'setting'}
                 <Setting />
+            {:else if $appsActiveMenu === 'explore'}
+                <Explore />
             {/if}
         {/if}
     </div>

@@ -129,7 +129,7 @@
         margin: 5px 0;
     }
     #omr-modal-search-feed {
-        width: 80%;
+        width: 76%;
         padding: 24px;
         left: 70px;
         max-height: calc(100% - 120px);

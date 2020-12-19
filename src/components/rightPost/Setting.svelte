@@ -89,10 +89,6 @@
     }
 </style>
 
-{#if $userInfoRsp.level > 1}
-    <div></div>
-{/if}
-
 <div class="setting-item">
     <span class="setting-title">Account:</span>
 
@@ -105,12 +101,12 @@
     </div>
 
     {#if $userInfoRsp.level > 1}
-    <a href="{$userInfoRsp.blog}" target="_blank"><span>{$userInfoRsp.name}</span></a>
-    <span class="flex-grow"></span>
-    <button class="waves-effect waves-light btn-small btn-white" on:click={handleLogout}>Logout</button>
+        <a href="{$userInfoRsp.blog}" target="_blank"><span>{$userInfoRsp.name}</span></a>
+        <span class="flex-grow"></span>
+        <button class="waves-effect waves-light btn-small btn-white" on:click={handleLogout}>Logout</button>
     {:else}
-    <span>Visitor</span>
-    <span class="flex-grow"></span>
+        <span>Visitor</span>
+        <span class="flex-grow"></span>
     {/if}
 </div>
 <div class="divider"></div>
