@@ -2,7 +2,7 @@
     export let feedInfo
 
     import { apiReq } from '../utils/req.js'
-    import { shortToast, warnToast } from '../utils/helper.js'
+    import { shortToast, warnToast, readableCount } from '../utils/helper.js'
 
     function handleSubscribeFeed() {
         apiReq('/api/feed/subscribe', {feed_id: feedInfo.id}).then( rsp => {
@@ -96,7 +96,7 @@
             
             <span class="feed-update-stats">
                 <i class="material-icons">sync</i>
-                <span class="">{ feedInfo.stats.update_count }</span>
+                <span class="">{ readableCount(feedInfo.stats.update_count) }</span>
             </span>
 
             {#if feedInfo.stats.is_subscribed}
