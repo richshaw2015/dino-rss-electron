@@ -1,6 +1,6 @@
 {
   "name": "Dinorss",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,9 @@
   "author": "Richshaw",
   "license": "MIT",
   "build": {
+    "publish": {
+      "provider": "github"
+    },
     "appId": "org.dinorss",
     "productName": "Dinosaur Rss",
     "artifactName": "${productName}.${version}.${ext}",
@@ -42,7 +45,8 @@
       "category": "public.app-category.news",
       "target": [
         "dmg",
-        "mas"
+        "mas",
+        "zip"
       ],
       "extendInfo": {}
     },
@@ -78,6 +82,7 @@
   },
   "dependencies": {
     "autolinker": "^3.14.2",
+    "electron-updater": "^4.3.5",
     "get-folder-size": "^2.0.1",
     "materialize-css": "^1.0.0",
     "md5": "^2.3.0",

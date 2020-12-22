@@ -1,4 +1,5 @@
-const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard} = require('electron');
+const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard} = require('electron')
+const { autoUpdater } = require("electron-updater")
 const fs = require('fs')
 
 const DEV = process.env.ELECTRON_RELOAD
@@ -162,3 +163,8 @@ ipcMain.handle('capture-window', (event) => {
 		})
 	})
 })
+
+// auto update
+setTimeout(() => {
+	autoUpdater.checkForUpdatesAndNotify()
+}, 15*1000)
