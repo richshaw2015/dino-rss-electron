@@ -94,7 +94,7 @@ export function getPlatform() {
 }
 export function setBadge(count) {
     if (isMac()) {
-        remote.app.setBadgeCount(count)
+        remote.app.dock.setBadge(readableCount(count))
     }
 }
 export function getPageSize(isFeedEntriesView=false) {
@@ -167,7 +167,7 @@ export function fromNow(utcTs) {
 
 export function readableCount(count) {
     if (count < 1000) {
-        return count
+        return count.toString()
     } else {
         if (count < 10000) {
             return Math.floor(count / 1000) + 'K+'
