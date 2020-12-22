@@ -6,10 +6,10 @@
     const { dialog } = remote
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, 
-        warnToast, readableCount, shortToast, toggleDevTools } from '../utils/helper.js'
+        warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform } from '../utils/helper.js'
     import { getToken, saveUserInfo, saveToken } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
-    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading } from '../utils/store.js'
+    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, upgradeRsp } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
     
     let feedUrl
@@ -40,6 +40,26 @@
             }
             return false
         });
+
+        setTimeout(() => {
+            // check update after 15 seconds
+            apiReq('/api/app/check/upgrade', {version: appVersion(), platform: getPlatform()}).then( rsp => {
+                if (rsp.code === 0) {
+                    upgradeRsp.set(rsp)
+
+                    const instanse = M.Modal.init(document.querySelector('#omr-modal-upgrade'), {
+                        inDuration: 0,
+                        outDuration: 0,
+                        opacity: 0.3,
+                        dismissible: false,
+                        endingTop: "15%"
+                    });
+                    instanse.open()
+                }
+            }).catch(err => {
+                console.warn(err)
+            })
+        }, 15000)
     })
 
     ipcRenderer.on('login-status-changed', (event) => {
@@ -248,9 +268,9 @@
         padding: 24px;
         left: 70px;
     }
-    #omr-modal-add-feed {
+    #omr-modal-add-feed, #omr-modal-upgrade {
         width: 600px;
-        padding: 24px;
+        padding: 28px;
         left: 70px;
     }
     .user-top-wrapper, .user-info {
@@ -338,6 +358,14 @@
     .padding-space {
         width: 8px;
     }
+    #omr-modal-upgrade ul li {
+        list-style: disc;
+        margin-left: 2rem;
+        word-break: break-all;
+    }
+    #omr-modal-upgrade .modal-footer a {
+        color: unset;
+    }
 </style>
 
 <div id="omr-left-nav" class="drag">
@@ -418,7 +446,7 @@
             <label for="rss-input">Feed URL</label>
         </div>
 
-        <button class="waves-effect waves-light btn rss-submit-btn" on:click={handleAddFeed}>Add</button>
+        <button class="waves-effect waves-light btn btn-small rss-submit-btn" on:click={handleAddFeed}>Add</button>
     </div>
 
     <div class="waves-effect btn-flat submit-opml" on:click={showOpmlUploadDialog}>
@@ -431,3 +459,23 @@
         <i class="material-icons equalizer-icon">equalizer</i>Feed ranking
     </div> -->
 </div>
+
+{#if $upgradeRsp.code === 0}
+    <div id="omr-modal-upgrade" class="modal">
+        <div class="modal-title">
+            <i class="material-icons">flight</i> Dinosaur Rss {$upgradeRsp.version} available</div>
+
+        <h6>Change Log:</h6>
+        <ul>
+            {#each $upgradeRsp.description as dp}
+                <li class="">{dp}</li>
+            {/each}
+        </ul>
+
+        <div class="modal-footer">
+            <button class="modal-close btn waves-effect waves-light btn-small cancel-btn">Cancel</button>
+            <button class="modal-close btn waves-effect waves-light btn-small">
+                <a href="{$upgradeRsp.url}" target="_blank">Upgrade</a></button>
+        </div>
+    </div>
+{/if}

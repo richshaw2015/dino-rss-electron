@@ -47,6 +47,7 @@
       "category": "public.app-category.news",
       "target": [
         "dmg",
+        "zip",
         "mas"
       ],
       "extendInfo": {}
@@ -83,7 +84,6 @@
   },
   "dependencies": {
     "autolinker": "^3.14.2",
-    "electron-updater": "^4.3.5",
     "get-folder-size": "^2.0.1",
     "materialize-css": "^1.0.0",
     "md5": "^2.3.0",

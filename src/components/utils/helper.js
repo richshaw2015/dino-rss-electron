@@ -20,6 +20,9 @@ const { ipcRenderer, remote, clipboard } = require('electron')
 const { Menu, MenuItem } = remote
 const path = require('path')
 
+export const appVersion = () => {
+    return remote.app.getVersion()
+}
 export const toggleMaximizeWindow = () => {
     ipcRenderer.invoke('toggle-maximize-window')
 }
@@ -81,6 +84,13 @@ export function isWin(){
 
 export function isMac(){
     return process.platform === 'darwin'
+}
+export function getPlatform() {
+    if (isWin()) {
+        return 'win'
+    } else if (isMac()) {
+        return 'mac'
+    }
 }
 
 export function getPageSize(isFeedEntriesView=false) {

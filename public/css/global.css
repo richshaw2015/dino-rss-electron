@@ -198,3 +198,8 @@ kbd {
 .flex-grow {
     flex-grow: 1;
 }
+.cancel-btn {
+    margin-right: 2rem !important;
+    background-color: #dfdfdf !important;
+    color: #9f9f9f !important;
+}

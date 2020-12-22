@@ -12,6 +12,7 @@ export let viewScope = writable(getViewScope())
 
 export let userInfoRsp = writable(getUserInfo())
 export let unreadCountRsp = writable({})
+export let upgradeRsp = writable({})
 
 export let isApiLoading = writable(false)
 export let feedToEdit = writable({})

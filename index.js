@@ -1,5 +1,4 @@
 const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard} = require('electron')
-const { autoUpdater } = require("electron-updater")
 const fs = require('fs')
 
 const DEV = process.env.ELECTRON_RELOAD
@@ -110,8 +109,6 @@ function createAuthWindow(token) {
 // handle app events
 app.on('ready', function() {
 	createMainWindow()
-	// auto update
-	autoUpdater.checkForUpdatesAndNotify()
 });
 
 app.on('activate', function () {

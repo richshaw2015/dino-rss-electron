@@ -47,13 +47,8 @@
 <style>
     #omr-modal-feed-edit {
         width: 640px;
-        padding: 24px;
+        padding: 28px;
         left: 70px;
-    }
-    .cancel-btn {
-        margin-right: 2rem !important;
-        background-color: #dfdfdf;
-        color: #9f9f9f;
     }
     .modal-title {
         margin-bottom: 1.6rem;
@@ -82,7 +77,7 @@
     </div>
 
     <div class="modal-footer">
-        <button class="modal-close btn waves-effect waves-light cancel-btn">Cancel</button>
-        <button class="btn waves-effect waves-light" on:click={handleEditSubmit}>Submit</button>
+        <button class="modal-close btn waves-effect waves-light btn-small cancel-btn">Cancel</button>
+        <button class="btn waves-effect waves-light btn-small" on:click={handleEditSubmit}>Submit</button>
     </div>
 </div>
