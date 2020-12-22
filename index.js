@@ -15,6 +15,7 @@ if (DEV) {
 
 let mainWindow;
 let authWindow;
+let willQuitApp = false;
 
 // handle webContents events
 function openUrlInDefaultBrowser(event, url) {
@@ -45,6 +46,14 @@ function createMainWindow () {
 
 	mainWindow.loadFile('public/index.html');
 
+	mainWindow.on('close', (event) => {
+		if (willQuitApp) {
+			mainWindow = null
+		} else {
+			event.preventDefault()
+			mainWindow.minimize()
+		}
+	})
 	mainWindow.on('closed', () => {
 		mainWindow = null
 	})
@@ -107,6 +116,8 @@ function createAuthWindow(token) {
 }
 
 // handle app events
+app.on('before-quit', () => willQuitApp = true);
+
 app.on('ready', function() {
 	createMainWindow()
 });
