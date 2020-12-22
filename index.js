@@ -108,7 +108,11 @@ function createAuthWindow(token) {
 }
 
 // handle app events
-app.on('ready', createMainWindow);
+app.on('ready', function() {
+	createMainWindow()
+	// auto update
+	autoUpdater.checkForUpdatesAndNotify()
+});
 
 app.on('activate', function () {
 	if (mainWindow === null) createMainWindow();
@@ -163,8 +167,3 @@ ipcMain.handle('capture-window', (event) => {
 		})
 	})
 })
-
-// auto update
-setTimeout(() => {
-	autoUpdater.checkForUpdatesAndNotify()
-}, 15*1000)
