@@ -1,6 +1,6 @@
 {
   "name": "Dinorss",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,9 @@
   "license": "MIT",
   "build": {
     "publish": {
-      "provider": "github"
+      "provider": "github",
+      "owner": "richshaw2015",
+      "repo": "dino-rss-electron"
     },
     "appId": "org.dinorss",
     "productName": "Dinosaur Rss",
@@ -45,8 +47,7 @@
       "category": "public.app-category.news",
       "target": [
         "dmg",
-        "mas",
-        "zip"
+        "mas"
       ],
       "extendInfo": {}
     },
