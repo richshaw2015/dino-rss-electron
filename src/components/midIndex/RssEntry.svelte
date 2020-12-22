@@ -2,6 +2,7 @@
     export let entryInfo
 
     import { rssFeedEntriesView, rssListRsp, unreadCountRsp, rssActiveFeed, rssActiveEntry } from '../utils/store.js'
+    import { readableAuthor } from '../utils/helper.js'
 
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
@@ -235,7 +236,7 @@
     </div>
 
     <div class="entry-meta-line">
-        <span class="truncate entry-author">@{entryInfo.custom.author || entryInfo.author}</span>
+        <span class="truncate entry-author">@{ readableAuthor(entryInfo.custom.author || entryInfo.author) }</span>
         <span class="truncate entry-date">{fromNow(entryInfo.updated)}</span>
 
         <span class="entry-view-stats">

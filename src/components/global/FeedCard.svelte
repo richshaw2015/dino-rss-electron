@@ -90,7 +90,7 @@
         <div class="divider"></div>
 
         <div class="feed-info-line">
-            <img src="{ feedInfo.image }" class="feed-image" alt="">
+            <img src="{ feedInfo.image || 'icon/logo.svg' }" class="feed-image" alt="">
 
         <span class="truncate feed-title" title="{feedInfo.title}">{ feedInfo.title }</span>
             

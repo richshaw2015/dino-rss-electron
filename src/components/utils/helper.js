@@ -179,6 +179,10 @@ export function readableSize(size) {
     }
 }
 
+export function readableAuthor(author) {
+    return author.split(' (noreply')[0]
+}
+
 export function isInList(item, list) {
     // TODO struct valid
     if (item && list) {

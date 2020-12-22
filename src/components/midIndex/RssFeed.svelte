@@ -7,7 +7,7 @@
     const { Menu, MenuItem } = remote
     const dispatch = createEventDispatcher()
 
-    import { shortToast, toast, warnToast, isInList, fromNow } from '../utils/helper.js'
+    import { shortToast, toast, warnToast, isInList, fromNow, readableAuthor } from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
     import { unreadCountRsp, rssListRsp, rssFeedEntriesView, feedToEdit } from '../utils/store.js'
     
@@ -186,7 +186,7 @@
     </div>
 
     <div class="feed-meta-line">
-        <span class="truncate feed-author">@{feedInfo.custom.author || feedInfo.author}</span>
+        <span class="truncate feed-author">@{ readableAuthor(feedInfo.custom.author || feedInfo.author) }</span>
         <span class="truncate feed-date">{fromNow(feedInfo.stats.update_ts)}</span>
 
         <span class="feed-update-stats">

@@ -1,7 +1,7 @@
 <script>
     export let feedInfo
 
-    import { fromNow } from '../utils/helper.js'
+    import { fromNow, readableAuthor } from '../utils/helper.js'
 
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
@@ -106,7 +106,7 @@
     </div>
 
     <div class="feed-meta-line">
-        <span class="truncate feed-author">@{feedInfo.custom.author || feedInfo.author}</span>
+        <span class="truncate feed-author">@{readableAuthor(feedInfo.custom.author || feedInfo.author)}</span>
         <span class="truncate feed-date">{fromNow(feedInfo.stats.update_ts)}</span>
 
         <span class="feed-star-stats">
