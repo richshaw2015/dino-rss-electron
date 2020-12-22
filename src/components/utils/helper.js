@@ -92,7 +92,11 @@ export function getPlatform() {
         return 'mac'
     }
 }
-
+export function setBadge(count) {
+    if (isMac()) {
+        remote.app.setBadgeCount(count)
+    }
+}
 export function getPageSize(isFeedEntriesView=false) {
     if (isFeedEntriesView) {
         return Math.floor((window.innerHeight - 60 - 16 - 60 - 48) / 59)

@@ -33,6 +33,7 @@
                 apiReq('/api/entry/mark/read', {entries: $unreadCountRsp.list.join(',')}).then( rsp => {
                     if (rsp.code === 0) {
                         shortToast("Mark all as read")
+                        $unreadCountRsp.count = 0
                     }
                 }).catch(err => {
                     warnToast(err + " Mark")

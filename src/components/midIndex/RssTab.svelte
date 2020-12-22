@@ -5,7 +5,7 @@
     import Pager from './Pager.svelte'
     import Toolbar from './Toolbar.svelte'
     import RssEntry from "./RssEntry.svelte"
-    import { getPageSize, isInList, shortToast, toast, warnToast } from '../utils/helper.js'
+    import { getPageSize, isInList, shortToast, toast, warnToast, setBadge } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
     import { saveRssViewMode } from '../utils/storage.js'
     import { rssViewMode, viewScope, rssActiveEntry, rssActiveFeed, rssListRsp, rssFeedListRspBak, rssFeedEntriesView, 
@@ -89,10 +89,15 @@
     })
 
     unreadCountRsp.subscribe(rsp => {
-        if (rsp.count < 0 && rsp.code === 0) {
-            rsp.code = -1
-            syncUnreadCount()
+        if (rsp.code === 0) {
+            if (rsp.count < 0) {
+                rsp.code = -1
+                syncUnreadCount()
+            } else {
+                setBadge($unreadCountRsp.count)
+            }
         }
+
         return rsp
     });
 
