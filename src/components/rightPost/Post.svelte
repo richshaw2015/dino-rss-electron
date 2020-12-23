@@ -3,7 +3,6 @@
     const Mousetrap = require('mousetrap')
     const fs = require('fs')
     const path = require('path')
-    const Autolinker = require( 'autolinker' );
 
     import { getFontSize } from '../utils/storage.js'
     import { isInList, shortToast, toast, warnToast, copyToClipboard, getCacheDir } from '../utils/helper.js'

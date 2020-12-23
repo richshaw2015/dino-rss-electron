@@ -82,7 +82,6 @@ export async function getTokenPromise() {
     let token = localStorage.getItem(tokenConfKey)
 
     if (!token) {
-        const { v4: uuidv4 } = require('uuid')
         const md5 = require('md5')
         
         const uuid = uuidv4()

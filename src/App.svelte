@@ -13,7 +13,6 @@
     import Preloader from './components/global/Preloader.svelte'
 
     const tokenPromise = getTokenPromise()
-    const M = require('materialize-css')
 
     import { onMount } from 'svelte';
 

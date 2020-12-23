@@ -12,7 +12,6 @@
     import Setting from './Setting.svelte'
     import Notice from '../global/Notice.svelte'
 
-    const Prism = require('prismjs')
     const { remote } = require('electron')
     const { shell } = require('electron')
     const { Menu, MenuItem } = remote
