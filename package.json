@@ -1,6 +1,6 @@
 {
   "name": "Dinorss",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
@@ -47,7 +47,6 @@
       "category": "public.app-category.news",
       "target": [
         "dmg",
-        "zip",
         "mas"
       ],
       "extendInfo": {}
