@@ -95,6 +95,12 @@ export function getPlatform() {
 export function setBadge(count) {
     if (isMac()) {
         remote.app.dock.setBadge(readableCount(count))
+    } else if (isWin()) {
+        if (count > 0 && !remote.getCurrentWindow().isFocused()) {
+            remote.getCurrentWindow().flashFrame(true)
+        }
+    } else {
+        remote.app.setBadgeCount(count)
     }
 }
 export function getPageSize(isFeedEntriesView=false) {
@@ -166,6 +172,9 @@ export function fromNow(utcTs) {
 }
 
 export function readableCount(count) {
+    if (count === 0) {
+        return ''
+    }
     if (count < 1000) {
         return count.toString()
     } else {

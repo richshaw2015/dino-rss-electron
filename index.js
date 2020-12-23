@@ -1,7 +1,7 @@
 const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard} = require('electron')
 const fs = require('fs')
 
-const DEV = process.env.ELECTRON_RELOAD
+const DEV = !app.isPackaged
 
 if (DEV) {
 	const path = require('path');
@@ -15,7 +15,7 @@ if (DEV) {
 
 let mainWindow;
 let authWindow;
-let willQuitApp = false;
+let willQuitMac = false;
 
 // handle webContents events
 function openUrlInDefaultBrowser(event, url) {
@@ -47,11 +47,13 @@ function createMainWindow () {
 	mainWindow.loadFile('public/index.html');
 
 	mainWindow.on('close', (event) => {
-		if (willQuitApp) {
-			mainWindow = null
-		} else {
-			event.preventDefault()
-			mainWindow.minimize()
+		if (process.platform === "darwin") {
+			if (willQuitMac) {
+				mainWindow = null
+			} else {
+				event.preventDefault()
+				mainWindow.minimize()
+			}
 		}
 	})
 	mainWindow.on('closed', () => {
@@ -68,6 +70,7 @@ function createMainWindow () {
 		if (authWindow) {
 			authWindow.close()
 		}
+		mainWindow.flashFrame(false)
 	});
 
 	mainWindow.webContents.on('will-navigate', openUrlInDefaultBrowser)
@@ -116,7 +119,7 @@ function createAuthWindow(token) {
 }
 
 // handle app events
-app.on('before-quit', () => willQuitApp = true);
+app.on('before-quit', () => willQuitMac = true);
 
 app.on('ready', function() {
 	createMainWindow()
