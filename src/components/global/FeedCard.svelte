@@ -37,15 +37,17 @@
     .feed-update-stats {
         width: 54px;
         min-width: 54px;
-        margin: 0 8px;
+        margin: 0 6px;
+        display: flex;
+        align-items: center;
     }
     .feed-update-stats i {
         font-size: 13px;
-        margin-right: 3px;
+        margin-right: 2px;
         cursor: auto;
     }
-    .feed-update-stats i, .feed-update-stats span {
-        vertical-align: middle;
+    .feed-update-stats .count {
+        font-size: 14px;
     }
     .card-content {
         padding: 12px;
@@ -65,8 +67,8 @@
         margin: 8px 0;
     }
     .sub-small-btn {
-        width: 64px;
-        min-width: 64px;
+        width: 48px;
+        min-width: 48px;
         padding: unset;
         text-align: center;
     }
@@ -96,13 +98,13 @@
             
             <span class="feed-update-stats">
                 <i class="material-icons">sync</i>
-                <span class="">{ readableCount(feedInfo.stats.update_count) }</span>
+                <span class="count">{ readableCount(feedInfo.stats.update_count) || 0 }</span>
             </span>
 
             {#if feedInfo.stats.is_subscribed}
                 <span class="waves-light sub-small-btn">✔️️</span>
             {:else}
-                <span class="waves-effect waves-light btn-small sub-small-btn" on:click={handleSubscribeFeed}>Sub</span>
+                <span class="waves-effect waves-light btn-small sub-small-btn" on:click={handleSubscribeFeed}>Add</span>
             {/if}
         </div>
     </div>

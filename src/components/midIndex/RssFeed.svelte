@@ -7,7 +7,7 @@
     const { Menu, MenuItem } = remote
     const dispatch = createEventDispatcher()
 
-    import { shortToast, toast, warnToast, isInList, fromNow, readableAuthor } from '../utils/helper.js'
+    import { shortToast, toast, warnToast, isInList, fromNow, readableAuthor, readableCount } from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
     import { unreadCountRsp, rssListRsp, rssFeedEntriesView, feedToEdit } from '../utils/store.js'
     
@@ -191,7 +191,7 @@
 
         <span class="feed-update-stats">
             <i class="material-icons">sync</i>
-            <span class="uv-stats">{ feedInfo.stats.update_count }</span>
+            <span class="uv-stats">{ readableCount(feedInfo.stats.update_count) || 0 }</span>
         </span>
 
         <span class="feed-toread-stats">
