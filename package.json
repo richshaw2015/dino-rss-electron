@@ -43,7 +43,7 @@
       "!.storybook/*",
       "!node_modules/**/*.md",
       "!node_modules/**/LICENSE",
-      "!node_modules/**/mousetrap.js",
+      "!node_modules/**/mousetrap.min.js",
       "!node_modules/**/*.js.map"
     ],
     "win": {
