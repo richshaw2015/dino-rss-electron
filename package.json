@@ -52,6 +52,8 @@
     },
     "mac": {
       "icon": "public/icon/logo.icns",
+      "hardenedRuntime": true,
+      "entitlements": "src/entitlements.mac.inherit.plist",
       "type": "distribution",
       "category": "public.app-category.news",
       "target": [
