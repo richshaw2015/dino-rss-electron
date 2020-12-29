@@ -25,6 +25,10 @@
         width: 32px;
         height: 32px;
     }
+    h2 {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
 </style>
 
 <div>
