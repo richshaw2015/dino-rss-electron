@@ -83,10 +83,12 @@
 <div class="card">
     <div class="card-content">
         <a href="{ feedInfo.link }" target="_blank">
+            <div>
             {#if feedInfo.is_podcast}
             <img src="./icon/podcast.svg" class="podcast-icon" alt="Podcast" />
             {/if}
-            <span class="card-title">{@html feedInfo.description }</span>
+            <span class="card-title">{@html feedInfo.description || feedInfo.title }</span>
+            </div>
         </a>
 
         <div class="divider"></div>
