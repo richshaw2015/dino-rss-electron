@@ -1,4 +1,5 @@
 # Dinosaur Rss 🦕
+
 A simple, efficient, open source RSS reader service
 
 ![Podlove player](https://raw.githubusercontent.com/richshaw2015/dino-rss-electron/master/build/screenshot.jpg)
@@ -12,7 +13,7 @@ By using Client-Server architecture, feeds are synchronized intelligently on the
 
 ### 💻 Cross Platform
 
-| MacOS      | Windows | Linux ｜
+| MacOS      | Windows | Linux |
 | ----------- | ----------- | ----------- |
 | ✅ tested on MacOS 10.15      | ✅ tested on Windows 10       | 🔜 on the way |
 
@@ -74,7 +75,7 @@ Twitter: [@dino_rss](https://twitter.com/dino_rss)
 - [Electron](https://www.electronjs.org/)
 - [Svelte](https://svelte.dev/)
 - [Materialize](https://materializecss.com)
-- [odlove Web Player](https://podlove.org/podlove-web-player/)
+- [Podlove Web Player](https://podlove.org/podlove-web-player/)
 - [Mousetrap](https://craig.is/killing/mice)
 - [highlight.js](https://highlightjs.org/)
 - [Prism](https://prismjs.com/)
