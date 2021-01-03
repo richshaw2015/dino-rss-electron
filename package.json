@@ -11,8 +11,7 @@
     "dev:mac": "concurrently \"yarn run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
     "pack": "electron-builder --dir",
     "dist:win": "git checkout src & rollup -c & electron-builder",
-    "dist:mac": "git checkout src;  rollup -c;  electron-builder",
-    "storybook": "start-storybook -s ./public -p 12315 --ci & electron .storybook/electron.index.js"
+    "dist:mac": "git checkout src;  rollup -c;  electron-builder"
   },
   "repository": "https://github.com/richshaw2015/dino-rss-electron",
   "keywords": [
@@ -34,11 +33,10 @@
     "artifactName": "${productName}.${version}.${ext}",
     "files": [
       "!public/*.map",
-      "!public/icon/logo.icns",
-      "!public/icon/logo.png",
       "!public/podplayer/**/report.html",
       "!rollup.config.js",
       "!.vscode/*",
+      "!build/*",
       "!src/**/*",
       "!.storybook/*",
       "!node_modules/**/*.md",
@@ -48,12 +46,12 @@
     ],
     "win": {
       "target": "nsis",
-      "icon": "public/icon/logo.png"
+      "icon": "build/logo.png"
     },
     "mac": {
-      "icon": "public/icon/logo.icns",
+      "icon": "build/logo.icns",
       "hardenedRuntime": true,
-      "entitlements": "src/entitlements.mac.inherit.plist",
+      "entitlements": "build/entitlements.mac.inherit.plist",
       "type": "distribution",
       "category": "public.app-category.news",
       "target": [

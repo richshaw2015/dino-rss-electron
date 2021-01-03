@@ -68,7 +68,7 @@
 
     <h3>️🎤 Podcast Optimized</h3>
     <p>Integrated with <code>@Podlove Player</code> for the specific needs of podcasters.</p>
-    <img src="podplayer/podlove.jpg" width="480px" alt="podlove player" />
+    <img src="icon/podlove.jpg" width="480px" alt="podlove player" />
     <br />
 
     <h3>️💡 Code Highlight</h3>
