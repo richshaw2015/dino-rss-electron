@@ -239,5 +239,5 @@ export function copyToClipboard(text) {
 }
 
 export function getCacheDir() {
-    return path.join(remote.app.getPath('temp'), remote.app.getName(), "cache")
+    return path.join(remote.app.getPath('userData'), "APPCache")
 }
