@@ -1,3 +1,5 @@
+<img align="right" width="110" src="https://raw.githubusercontent.com/richshaw2015/dino-rss-electron/master/public/icon/logo.svg">
+
 # Dinosaur Rss 🦕
 
 A simple, efficient, open source RSS reader service
