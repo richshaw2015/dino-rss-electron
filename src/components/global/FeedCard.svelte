@@ -3,6 +3,7 @@
 
     import { apiReq } from '../utils/req.js'
     import { shortToast, warnToast, readableCount } from '../utils/helper.js'
+    import FeedAvatar from '../global/FeedAvatar.svelte'
 
     function handleSubscribeFeed() {
         apiReq('/api/feed/subscribe', {feed_id: feedInfo.id}).then( rsp => {
@@ -21,12 +22,6 @@
 <style>
     .card {
         border-radius: 4px;
-    }
-    .feed-image {
-        max-width: 32.4px;
-        max-height: 32.4px;
-        width: 32.4px;
-        margin-right: 0.3rem;
     }
     .feed-info-line {
         display: flex;
@@ -62,6 +57,8 @@
     }
     .feed-title {
         flex-grow: 1;
+        font-size: 1rem;
+        font-weight: 550;
     }
     .divider {
         margin: 8px 0;
@@ -94,9 +91,9 @@
         <div class="divider"></div>
 
         <div class="feed-info-line">
-            <img src="{ feedInfo.image || 'icon/logo.svg' }" class="feed-image" alt="">
+            <FeedAvatar feedImage="{feedInfo.image}" feedId="{feedInfo.id}" marginLeft="{false}" />
 
-        <span class="truncate feed-title" title="{feedInfo.title}">{ feedInfo.title }</span>
+            <span class="truncate feed-title" title="{feedInfo.title}">{ feedInfo.title }</span>
             
             <span class="feed-update-stats">
                 <i class="material-icons">sync</i>

@@ -8,6 +8,7 @@
     const { Menu, MenuItem } = remote
     import { isWin, shortToast, toast, warnToast, fromNow, isInList, copyToClipboard } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
+    import FeedAvatar from '../global/FeedAvatar.svelte'
 
     function handleStarEntry(entry) {
         if (!entry.stats.has_starred) {
@@ -113,13 +114,6 @@
         font-size: 13px;
         margin-right: 3px;
     }
-    .entry-avatar {
-        min-width: 24px;
-        width: 24px;
-        height: 24px;
-        margin-right: 6px;
-        margin-left: 12px;
-    }
     .entry-title {
         flex-grow: 1;
     }
@@ -144,7 +138,8 @@
 {#if entryInfo}
 <div class="omr-entry-item" title="{entryInfo.title}" on:contextmenu={()=> showEntryCtxMenu(entryInfo)}>
     <div class="entry-title-line">
-        <img src="{entryInfo.image || 'icon/logo.svg'}" class="entry-avatar" alt="" />
+        <FeedAvatar feedImage="{entryInfo.image}" feedId="{entryInfo.feed.id}" />
+
         <span class="truncate entry-title">{ entryInfo.title }</span>
 
         {#if entryInfo.feed.is_podcast}

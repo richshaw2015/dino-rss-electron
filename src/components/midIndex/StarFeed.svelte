@@ -6,6 +6,7 @@
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
     import { starFeedEntriesView, feedToEdit } from '../utils/store.js'
+    import FeedAvatar from '../global/FeedAvatar.svelte'
 
     function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
@@ -54,13 +55,6 @@
         font-size: 13px;
         margin-right: 3px;
     }
-    .feed-avatar {
-        min-width: 24px;
-        width: 24px;
-        height: 24px;
-        margin-right: 6px;
-        margin-left: 12px;
-    }
     .feed-title {
         flex-grow: 1;
     }
@@ -91,7 +85,8 @@
 {#if !$starFeedEntriesView}
 <div class="omr-feed-item" title="{feedInfo.title}" on:contextmenu={() => showFeedCtxMenu(feedInfo)}>
     <div class="feed-title-line">
-        <img src="{feedInfo.image || 'icon/logo.svg'}" class="feed-avatar" alt="" />
+        <FeedAvatar feedImage="{feedInfo.image}" feedId="{feedInfo.id}" />
+
         <span class="truncate feed-title">{ feedInfo.custom.title || feedInfo.title }</span>
 
         {#if feedInfo.is_podcast}

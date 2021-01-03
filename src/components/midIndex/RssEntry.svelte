@@ -3,6 +3,7 @@
 
     import { rssFeedEntriesView, rssListRsp, unreadCountRsp, rssActiveFeed, rssActiveEntry } from '../utils/store.js'
     import { readableAuthor } from '../utils/helper.js'
+    import FeedAvatar from '../global/FeedAvatar.svelte'
 
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
@@ -182,13 +183,6 @@
         font-size: 13px;
         margin-right: 3px;
     }
-    .entry-avatar {
-        min-width: 24px;
-        width: 24px;
-        height: 24px;
-        margin-right: 6px;
-        margin-left: 12px;
-    }
     .entry-title {
         flex-grow: 1;
     }
@@ -224,7 +218,8 @@
 {#if entryInfo}
 <div class="omr-entry-item" title="{entryInfo.title}" on:contextmenu={()=> showEntryCtxMenu(entryInfo)}>
     <div class="entry-title-line">
-        <img src="{entryInfo.image || 'icon/logo.svg'}" class="entry-avatar" alt="" />
+        <FeedAvatar feedImage="{entryInfo.image}" feedId="{entryInfo.feed.id}" />
+
         <span class="truncate entry-title {!entryInfo.stats.has_read ? 'bold' : ''}">{ entryInfo.title }</span>
 
         {#if entryInfo.feed.is_podcast}

@@ -70,13 +70,6 @@
         min-height: 48px;
         border-bottom: 1px dashed rgba(0,0,0,.14);
     }
-    .feed-nav-avatar {
-        min-width: 24px;
-        width: 24px;
-        height: 24px;
-        margin-left: 18px;
-        margin-right: 6px;
-    }
     .feed-nav-title {
         flex-grow: 1;
     }
@@ -93,14 +86,18 @@
         margin-right: 6px;
     }
     .check-icon {
-        margin-left: 18px;
+        margin-left: 12px;
         margin-right: 6px;
     }
     #omr-feed-back {
         display: flex;
         align-items: center;
-        width: 64px;
+        width: 80px;
+        min-width: 80px;
         cursor: pointer;
+    }
+    #omr-feed-back span {
+        font-size: 14px;
     }
 
 </style>
@@ -112,7 +109,6 @@
             <span class="">Back</span>
         </div>
 
-        <img src="{$rssActiveFeed.image || 'icon/logo.svg'}" class="feed-nav-avatar" alt="" />
         <span class="truncate bold feed-nav-title" title="{$rssActiveFeed.title}">
             {$rssActiveFeed.custom.title || $rssActiveFeed.title}</span>
         {#if $rssActiveFeed.stats.unread_count > 0}
@@ -129,7 +125,6 @@
             <span class="">Back</span>
         </div>
 
-        <img src="{$starActiveFeed.image || 'icon/logo.svg'}" class="feed-nav-avatar" alt="" />
         <span class="truncate bold feed-nav-title" title="{$starActiveFeed.title}">
             {$starActiveFeed.custom.title || $starActiveFeed.title}</span>
     </div>
