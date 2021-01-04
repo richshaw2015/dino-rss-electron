@@ -1,6 +1,6 @@
 {
   "name": "Dinorss",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,8 @@
     "dev:win": "concurrently \"yarn run autobuild\" \"set ELECTRON_RELOAD=yes && electron .\"",
     "dev:mac": "concurrently \"yarn run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
     "pack": "electron-builder --dir",
-    "dist:win": "git checkout src & rollup -c & electron-builder",
-    "dist:mac": "git checkout src;  rollup -c;  electron-builder"
+    "dist:win": "git checkout src & rollup -c & electron-builder --win",
+    "dist:mac": "git checkout src;  rollup -c;  electron-builder --mac"
   },
   "repository": "https://github.com/richshaw2015/dino-rss-electron",
   "keywords": [
