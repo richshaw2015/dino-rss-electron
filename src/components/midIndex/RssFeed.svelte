@@ -8,7 +8,8 @@
     const { Menu, MenuItem } = remote
     const dispatch = createEventDispatcher()
 
-    import { shortToast, toast, warnToast, isInList, fromNow, readableAuthor, readableCount } from '../utils/helper.js'
+    import { shortToast, toast, warnToast, isInList, fromNow, readableAuthor, readableCount, copyToClipboard }
+        from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
     import { unreadCountRsp, rssListRsp, rssFeedEntriesView, feedToEdit } from '../utils/store.js'
     
@@ -56,6 +57,14 @@
             label: `🧭  Open in Browser`,
             click: function(){
                 shell.openExternal(feedInfo.link)
+            }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: `📋  Copy RSS`,
+            click: function(){
+                copyToClipboard(feedInfo.rss)
             }
         }));
         menu.append(new MenuItem({type: "separator",}));
