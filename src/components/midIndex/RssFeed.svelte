@@ -62,7 +62,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: `📋  Copy RSS`,
+            label: `📋  Copy Rss`,
             click: function(){
                 copyToClipboard(feedInfo.rss)
             }
