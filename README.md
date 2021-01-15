@@ -44,6 +44,10 @@ console.log(code)
 | `gg` - Go to first line | `G` - Go to last line | `yy` - Copy link |
 | `F5`  - Reload window | `Esc` - Close modal window | `ctrl` + `f` - Search |
 
+### 📝 Personal Memo
+
+_Have a skin in the game !_
+
 ### ️🆓 Free for 100 feeds
 Just [Buy me a coffee](https://www.buymeacoffee.com/dinorss) to get more feeds.
 
