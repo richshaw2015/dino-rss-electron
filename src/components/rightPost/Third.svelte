@@ -206,15 +206,13 @@
                 setEntryCache(activeEntry.id, entryContentRsp)
 
                 // re-render
-                if (rsp.has_starred) {
-                    if ($activeTab === "rss") {
-                        if (activeEntry.id === $rssActiveEntry.id) {
-                            $rssActiveEntry.stats.has_starred = true
-                        }
-                    } else if ($activeTab === "star") {
-                        if (activeEntry.id === $starActiveEntry.id) {
-                            $starActiveEntry.stats.has_starred = true
-                        }
+                if ($activeTab === "rss") {
+                    if (activeEntry.id === $rssActiveEntry.id) {
+                        $rssActiveEntry.stats.has_starred = true
+                    }
+                } else if ($activeTab === "star") {
+                    if (activeEntry.id === $starActiveEntry.id) {
+                        $starActiveEntry.stats.has_starred = true
                     }
                 }
 
