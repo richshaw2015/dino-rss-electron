@@ -116,6 +116,11 @@ console.log(code)</code></pre>
     </table>
     <br />
 
+    <h3>️📝 Personal Memo</h3>
+    <p>
+        <i>Have a skin in the game !</i>
+    </p>
+
     <h3>️🆓 Free for 100 feeds</h3>
     <p class="donate-info">
         <a href="https://www.buymeacoffee.com/dinorss" target="_blank">

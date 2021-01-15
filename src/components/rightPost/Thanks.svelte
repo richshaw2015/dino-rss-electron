@@ -105,6 +105,9 @@
         <li>
             <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">QRCode.js</a>
         </li>
+        <li>
+            <a href="https://github.com/jaredreich/pell" target="_blank">pell</a>
+        </li>
     </ul>
 
 <h2>Sponsors</h2>
