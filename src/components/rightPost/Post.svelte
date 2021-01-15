@@ -5,7 +5,7 @@
     const path = require('path')
 
     import { getFontSize } from '../utils/storage.js'
-    import { isInList, shortToast, toast, warnToast, copyToClipboard, getCacheDir } from '../utils/helper.js'
+    import { isInList, shortToast, toast, warnToast, copyToClipboard, getCacheDir, setEntryCache } from '../utils/helper.js'
     import { SCROLLSTEP } from '../utils/config.js'
 
     import Find from '../global/Find.svelte'
@@ -21,10 +21,6 @@
     
     const entryCacheDir = getCacheDir()
     
-    function setEntryCache(entryId, cacheRsp) {
-        const entryCacheFile = path.join(entryCacheDir, entryId + ".json")
-        fs.writeFileSync(entryCacheFile, JSON.stringify(cacheRsp), {encoding: "utf8"})
-    }
     function getEntryCache(entryId) {
         if (!fs.existsSync(entryCacheDir)) {
             fs.mkdirSync(entryCacheDir, {recursive: true})

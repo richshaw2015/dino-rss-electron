@@ -19,6 +19,7 @@ export function truncateStr(str, len) {
 const { ipcRenderer, remote, clipboard } = require('electron')
 const { Menu, MenuItem } = remote
 const path = require('path')
+const fs = require('fs')
 
 export const appVersion = () => {
     return remote.app.getVersion()
@@ -240,4 +241,10 @@ export function copyToClipboard(text) {
 
 export function getCacheDir() {
     return path.join(remote.app.getPath('userData'), "APPCache")
+}
+
+export function setEntryCache(entryId, cacheRsp) {
+    const entryCacheDir = getCacheDir()
+    const entryCacheFile = path.join(entryCacheDir, entryId + ".json")
+    fs.writeFileSync(entryCacheFile, JSON.stringify(cacheRsp), {encoding: "utf8"})
 }

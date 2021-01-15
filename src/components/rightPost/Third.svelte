@@ -3,8 +3,9 @@
     export let activeEntry = {}
     export let entryContentRsp = {}
 
-    import { truncateStr, isMac, isWin, captureWindow, toast, copyToClipboard } from '../utils/helper.js'
-    import { appsActiveMenu, activeTab } from '../utils/store.js'
+    import { truncateStr, isMac, isWin, captureWindow, toast, copyToClipboard, warnToast, setEntryCache } from '../utils/helper.js'
+    import { apiReq } from '../utils/req.js'
+    import { appsActiveMenu, activeTab, rssActiveEntry, starActiveEntry } from '../utils/store.js'
     import Podcast from './Podcast.svelte'
     import Home from './Home.svelte'
     import Explore from './Explore.svelte'
@@ -17,6 +18,7 @@
     const { Menu, MenuItem } = remote
     
     let qrcode
+    let pellEditor
     const qrcodeSize = 280
 
     import { onMount, afterUpdate } from 'svelte';
@@ -29,6 +31,38 @@
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.L
         })
+
+        pellEditor = window.pell.init({
+            element: document.getElementById('omr-pell-editor'),
+            defaultParagraphSeparator: 'div',
+            styleWithCSS: false,
+            actions: [
+                'bold', 'italic', 'underline', 'strikethrough', 'heading1', 'heading2', 'paragraph', 'quote', 'olist', 'line',
+                {
+                    name: 'format',
+                    title: 'Clear Format',
+                    icon: 'F',
+                    result: function result() {
+                        pell.exec('removeFormat');
+                    }
+                }, {
+                    name: "undo",
+                    icon: '↺',
+                    title: 'Undo',
+                    result: function result() {
+                        pell.exec('undo');
+                    }
+                }, {
+                    name: "redo",
+                    icon: '↻',
+                    title: 'Redo',
+                    result: function result() {
+                        pell.exec('redo');
+                    }
+                }
+            ],
+            onChange: function () {}
+      })
     })
 
     afterUpdate(() => {
@@ -90,6 +124,14 @@
         }
 
         menu.append(new MenuItem({
+            label: "📝  Add a memo",
+            click: function() {
+                showPellEditor()
+            }
+        }));
+        menu.append(new MenuItem({type: "separator"}));
+
+        menu.append(new MenuItem({
             label: "🔗  Copy Link",
             click: function() {
                 copyToClipboard(activeEntry.link)
@@ -138,6 +180,55 @@
     function allowDrop(event) {
         event.preventDefault();
     }
+
+    function showPellEditor() {
+        pellEditor.content.innerHTML = entryContentRsp.memo || ''
+
+        const instanse = M.Modal.init(document.querySelector('#omr-modal-pell'), {
+            inDuration: 0,
+            outDuration: 0,
+            opacity: 0.5,
+            dismissible: false,
+            endingTop: "15%"
+        });
+
+        instanse.open()
+
+        document.getElementsByClassName('pell-content')[0].focus()
+    }
+
+    function handleSubmitMemo() {
+        const memo = pellEditor.content.innerHTML
+        apiReq('/api/star/memo', {feed_id: activeEntry.feed.id, entry_id: activeEntry.id, memo: memo}).then( rsp => {
+            if (rsp.code === 0) {
+                entryContentRsp.memo = memo
+                
+                setEntryCache(activeEntry.id, entryContentRsp)
+
+                // re-render
+                if (rsp.has_starred) {
+                    if ($activeTab === "rss") {
+                        if (activeEntry.id === $rssActiveEntry.id) {
+                            $rssActiveEntry.stats.has_starred = true
+                        }
+                    } else if ($activeTab === "star") {
+                        if (activeEntry.id === $starActiveEntry.id) {
+                            $starActiveEntry.stats.has_starred = true
+                        }
+                    }
+                }
+
+                try {
+                    M.Modal.getInstance(document.querySelector('#omr-modal-pell')).close();
+                } catch (e) {}
+
+            } else if (rsp.code === 108) {
+                warnToast("Add memo failed!")
+            }
+        }).catch(err => {
+            warnToast(err + " Memo")
+        })
+    }
 </script>
 
 <style>
@@ -149,6 +240,20 @@
     #omr-modal-qrcode {
         padding: 16px;
         margin: 0;
+    }
+    .user-memo-txt {
+        margin: 20px 0;
+        padding: 20px;
+        background: white;
+        color: #585858;
+        border-radius: 2px;
+    }
+    #omr-modal-pell {
+        box-sizing: border-box;
+        margin: 0 auto;
+        max-width: 656px;
+        padding: 28px;
+        left: 70px;
     }
 </style>
 
@@ -179,6 +284,12 @@
     <!-- success -->
     <div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu} on:dragover={allowDrop}>
         <Podcast episode={ entryContentRsp.episode } />
+        
+        {#if entryContentRsp.memo}
+        <div class="user-memo-txt z-depth-1" on:dblclick={showPellEditor}>
+            { @html entryContentRsp.memo }
+        </div>
+        {/if}
 
         <article>
             { @html entryContentRsp.content }
@@ -188,4 +299,14 @@
 
 <div class="modal" id="omr-modal-qrcode">
     <div id="omr-qrcode"></div>
+</div>
+
+<div class="modal" id="omr-modal-pell">
+    <div class="modal-title"><i class="material-icons">note_add</i> Add a memo</div>
+    <div id="omr-pell-editor" class="pell"></div>
+
+    <div class="modal-footer">
+        <button class="modal-close btn waves-effect waves-light btn-small cancel-btn">Cancel</button>
+        <button class="btn waves-effect waves-light btn-small" on:click={handleSubmitMemo}>Save</button>
+    </div>
 </div>

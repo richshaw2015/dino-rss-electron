@@ -203,3 +203,31 @@ kbd {
     background-color: #dfdfdf !important;
     color: #9f9f9f !important;
 }
+/* pell editor */
+.pell {
+    border: 1px solid rgba(10, 10, 10, 0.1);
+    box-sizing: border-box; }
+  
+  .pell-content {
+    box-sizing: border-box;
+    height: 200px;
+    outline: 0;
+    overflow-y: auto;
+    background: white;
+    padding: 10px; }
+  
+  .pell-actionbar {
+    background-color: #FFF;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.1); }
+  
+  .pell-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: 30px;
+    outline: 0;
+    width: 40px;
+    vertical-align: bottom; }
+  
+  .pell-button-selected {
+    background-color: #F0F0F0; }
