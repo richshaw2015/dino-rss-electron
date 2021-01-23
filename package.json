@@ -10,8 +10,9 @@
     "dev:win": "concurrently \"yarn run autobuild\" \"set ELECTRON_RELOAD=yes && electron .\"",
     "dev:mac": "concurrently \"yarn run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
     "pack": "electron-builder --dir",
-    "dist:win": "git checkout src & rollup -c & electron-builder --win",
-    "dist:mac": "git checkout src;  rollup -c;  electron-builder --mac"
+    "dist:win": "git checkout src & rollup -c & electron-builder --win --x64",
+    "dist:mac:x64": "git checkout src;  rollup -c;  electron-builder --mac --x64",
+    "dist:mac:arm64": "git checkout src;  rollup -c;  electron-builder --mac --arm64"
   },
   "repository": "https://github.com/richshaw2015/dino-rss-electron",
   "keywords": [
@@ -55,8 +56,7 @@
       "type": "distribution",
       "category": "public.app-category.news",
       "target": [
-        "dmg",
-        "mas"
+        "dmg"
       ],
       "extendInfo": {}
     },
@@ -75,12 +75,9 @@
     "@babel/core": "^7.11.6",
     "@rollup/plugin-commonjs": "^12.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
-    "@storybook/addon-actions": "6.0.21",
-    "@storybook/addon-links": "6.0.21",
-    "@storybook/svelte": "6.0.21",
     "concurrently": "^5.3.0",
-    "electron": "^10.2.0",
-    "electron-builder": "^22.9.1",
+    "electron": "11.1.1",
+    "electron-builder": "^22.10.4",
     "electron-devtools-installer": "^3.1.1",
     "electron-reload": "^1.5.0",
     "rollup": "^2.27.1",
