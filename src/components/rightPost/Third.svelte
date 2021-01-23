@@ -281,13 +281,13 @@
 {:else}
     <!-- success -->
     <div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu} on:dragover={allowDrop}>
-        <Podcast episode={ entryContentRsp.episode } />
-        
         {#if entryContentRsp.memo}
         <div class="user-memo-txt z-depth-1" on:dblclick={showPellEditor}>
             { @html entryContentRsp.memo }
         </div>
         {/if}
+
+        <Podcast episode={ entryContentRsp.episode } />
 
         <article>
             { @html entryContentRsp.content }
