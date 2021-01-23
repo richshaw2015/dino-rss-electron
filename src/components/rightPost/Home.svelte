@@ -58,7 +58,7 @@
         </thead>
         <tbody>
         <tr>
-            <td>✅ tested on MacOS 10.15</td>
+            <td>✅ tested on MacOS 10.15, 11.0</td>
             <td>✅ tested on Windows 10</td>
             <td>🔜 on the way</td>
         </tr>
@@ -119,6 +119,11 @@ console.log(code)</code></pre>
     <h3>️📝 Personal Memo</h3>
     <p>
         <i>Have a skin in the game !</i>
+    </p>
+
+    <h3>️🍎 Apple Silicon Support</h3>
+    <p>
+        Enjoy the benefit of new technology in Apple Silicon.
     </p>
 
     <h3>️🆓 Free for 100 feeds</h3>

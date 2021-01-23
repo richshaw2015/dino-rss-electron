@@ -48,6 +48,10 @@ console.log(code)
 
 _Have a skin in the game !_
 
+### 🍎 Apple Silicon Support
+
+Enjoy the benefit of new technology in Apple Silicon.
+
 ### ️🆓 Free for 100 feeds
 Just [Buy me a coffee](https://www.buymeacoffee.com/dinorss) to get more feeds.
 

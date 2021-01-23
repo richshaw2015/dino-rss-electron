@@ -5,9 +5,10 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
-            "command": "npm run dev:win",
-            "name": "Run npm dev:win",
+            "command": "yarn run dev:mac",
+            "name": "Dev",
             "request": "launch",
             "type": "node-terminal"
         },

@@ -6,7 +6,7 @@
     const { dialog } = remote
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, 
-        warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform } from '../utils/helper.js'
+        warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'
     import { getToken, saveUserInfo, saveToken } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
     import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, upgradeRsp } from '../utils/store.js'
@@ -44,7 +44,7 @@
 
         setTimeout(() => {
             // check update after 15 seconds
-            apiReq('/api/app/check/upgrade', {version: appVersion(), platform: getPlatform()}).then( rsp => {
+            apiReq('/api/app/check/upgrade/v2', {version: appVersion(), platform: getPlatform(), arch: getArch()}).then( rsp => {
                 if (rsp.code === 0) {
                     upgradeRsp.set(rsp)
 

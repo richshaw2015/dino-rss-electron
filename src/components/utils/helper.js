@@ -93,6 +93,11 @@ export function getPlatform() {
         return 'mac'
     }
 }
+
+export function getArch() {
+    return process.arch
+}
+
 export function setBadge(count) {
     if (isMac()) {
         remote.app.dock.setBadge(readableCount(count))
