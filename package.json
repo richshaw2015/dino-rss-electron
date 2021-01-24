@@ -50,7 +50,7 @@
       "icon": "build/logo.png"
     },
     "mac": {
-      "icon": "build/logo.icns",
+      "icon": "build/macOS.icns",
       "hardenedRuntime": true,
       "entitlements": "build/entitlements.mac.inherit.plist",
       "type": "distribution",
