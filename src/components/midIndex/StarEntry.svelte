@@ -14,7 +14,7 @@
         if (!entry.stats.has_starred) {
             apiReq('/api/star/entry', {entry_id: entry.id, feed_id: entry.feed.id}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Star Entry")
+                    shortToast("Starred")
 
                     if (isInList(entry, $starListRsp.data)) {
                         $starListRsp.data[entry._index].stats.has_starred = true
@@ -33,7 +33,7 @@
         if (entry.stats.has_starred) {
             apiReq('/api/unstar/entry', {entry_id: entry.id, feed_id: entry.feed.id}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Unstar Entry")
+                    shortToast("Unstar")
 
                     if (isInList(entry, $starListRsp.data)) {
                         $starListRsp.data[entry._index].stats.has_starred = false

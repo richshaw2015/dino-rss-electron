@@ -19,7 +19,6 @@
         // keyboard shortcut
         Mousetrap.bind('r', function() {
             handleRefreshAction()
-            shortToast("Refresh")
             return false
         });
     })
@@ -39,6 +38,7 @@
         dispatch('refresh-list-view', {page: 1})
     }
     function handleRefreshAction() {
+        shortToast("Refresh")
         dispatch('refresh-list-view', {page: 1})
     }
     function handleSearch(event) {

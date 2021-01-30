@@ -19,7 +19,7 @@
         if (unreadCount > 0) {
             apiReq('/api/entry/mark/read', {entries: feedInfo.stats.unread_list.join(',')}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Mark Feed as read")
+                    shortToast("Mark as read")
                     
                     $unreadCountRsp.count -= unreadCount
 

@@ -14,7 +14,7 @@
         if (!entry.stats.has_read) {
             apiReq('/api/entry/mark/read', {entries: entry.id}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Mark Entry as read")
+                    shortToast("Mark as read")
                     
                     $unreadCountRsp.count -= 1
 
@@ -36,7 +36,7 @@
         if (entry.stats.has_read) {
             apiReq('/api/entry/mark/unread', {entry_id: entry.id}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Mark Entry as unread")
+                    shortToast("Mark as unread")
 
                     $unreadCountRsp.count += 1
 
@@ -58,7 +58,7 @@
         if (!entry.stats.has_starred) {
             apiReq('/api/star/entry', {entry_id: entry.id, feed_id: entry.feed.id}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Star Entry")
+                    shortToast("Starred")
 
                     if (isInList(entry, $rssListRsp.data)) {
                         $rssListRsp.data[entry._index].stats.has_starred = true
@@ -77,7 +77,7 @@
         if (entry.stats.has_starred) {
             apiReq('/api/unstar/entry', {entry_id: entry.id, feed_id: entry.feed.id}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Unstar Entry")
+                    shortToast("Unstar")
 
                     if (isInList(entry, $rssListRsp.data)) {
                         $rssListRsp.data[entry._index].stats.has_starred = false
@@ -134,14 +134,14 @@
             }
         }));
 
-        menu.append(new MenuItem({type: "separator",}));
-        
-        menu.append(new MenuItem({
-            label: "🗑  Unsubscribe",
-            click: function(){
-                handleUnsubscribeFeed(entry.feed.id)
-            }
-        }));
+        // menu.append(new MenuItem({type: "separator",}));
+        //
+        // menu.append(new MenuItem({
+        //     label: "🗑  Unsubscribe",
+        //     click: function(){
+        //         handleUnsubscribeFeed(entry.feed.id)
+        //     }
+        // }));
 
         menu.popup({ window: remote.getCurrentWindow() })
     }

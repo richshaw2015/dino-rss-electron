@@ -131,13 +131,13 @@
         }));
         menu.append(new MenuItem({type: "separator"}));
 
-        menu.append(new MenuItem({
-            label: "🔗  Copy Link",
-            click: function() {
-                copyToClipboard(activeEntry.link)
-            }
-        }));
-        menu.append(new MenuItem({type: "separator"}));
+        // menu.append(new MenuItem({
+        //     label: "🔗  Copy Link",
+        //     click: function() {
+        //         copyToClipboard(activeEntry.link)
+        //     }
+        // }));
+        // menu.append(new MenuItem({type: "separator"}));
         
         menu.append(new MenuItem({
             label: "🧭  Open in Browser",
@@ -221,7 +221,7 @@
                 } catch (e) {}
 
             } else if (rsp.code === 108) {
-                warnToast("Add memo failed!")
+                warnToast("Memo add failed!")
             }
         }).catch(err => {
             warnToast(err + " Memo")

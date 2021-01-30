@@ -32,7 +32,7 @@
             if ($unreadCountRsp.count > 0) {
                 apiReq('/api/entry/mark/read', {entries: $unreadCountRsp.list.join(',')}).then( rsp => {
                     if (rsp.code === 0) {
-                        shortToast("Mark all as read")
+                        shortToast("Mark All as read")
                         $unreadCountRsp.count = 0
                     }
                 }).catch(err => {
@@ -173,7 +173,7 @@
             isApiLoading.set(true)
             apiReq('/api/feed/add', {feed_rss: feedUrl}).then( rsp => {
                 if (rsp.code === 0) {
-                    toast("Feed add success")
+                    toast("Done")
                 } else {
                     warnToast(`Parse error: ${feedUrl}`)
                 }

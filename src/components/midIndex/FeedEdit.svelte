@@ -29,7 +29,7 @@
         if (feedId && feedTitle.length < 64 && feedAuthor.length < 32) {
             apiReq('/api/feed/custom', {feed_id: feedId, feed_title: feedTitle, feed_author: feedAuthor}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("SUCCESS")
+                    shortToast("Done")
                     
                     try {
                         M.Modal.getInstance(document.querySelector('#omr-modal-feed-edit')).close()
