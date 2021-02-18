@@ -1,6 +1,6 @@
 {
   "name": "Dinorss",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
@@ -76,7 +76,7 @@
     "@rollup/plugin-commonjs": "^12.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "concurrently": "^5.3.0",
-    "electron": "11.1.1",
+    "electron": "11.2.3",
     "electron-builder": "^22.10.4",
     "electron-devtools-installer": "^3.1.1",
     "electron-reload": "^1.5.0",
