@@ -1,0 +1,16 @@
+# This is a basic workflow to help you get started with Actions
+
+name: HEARTBEAT
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Heartbeat
+        run: |
+          [[ `curl -s https://dinorss.org/api/monitor/heartbeat` =~ OK ]]
