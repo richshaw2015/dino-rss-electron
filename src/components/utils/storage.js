@@ -1,12 +1,12 @@
-import { SERVER, DEBUG_ENV } from './config.js'
+import { SERVER } from './config.js'
 
 const starViewModeConfKey = 'CONF/STAR/VIEW/MODE'
 const rssViewModeConfKey = 'CONF/RSS/VIEW/MODE'
 
 const viewScopeConfKey = 'CONF/VIEW/SCOPE'
 const fontSizeConfKey = 'CONF/FONT/SIZE'
-const tokenConfKey = DEBUG_ENV ? 'CONF/DEBUG/TOKEN' : 'CONF/TOKEN'
-const userInfoConfKey = DEBUG_ENV ? 'CONF/DEBUG/USER' : 'CONF/USER'
+const tokenConfKey = 'CONF/TOKEN'
+const userInfoConfKey = 'CONF/USER'
 
 // TODO clear thirdparty data and rebuild localStorage
 

@@ -2,6 +2,7 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
+import replace from '@rollup/plugin-replace';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -14,6 +15,11 @@ export default {
 		file: 'public/bundle.js'
 	},
 	plugins: [
+		replace({
+			'__SERVER__': production ? 'https://dinorss.org' : 'http://192.168.31.204:8000',
+			'CONF/TOKEN': production ? 'CONF/TOKEN' : 'CONF/DEBUG/TOKEN',
+			'CONF/USER' : production ? 'CONF/USER' : 'CONF/DEBUG/USER'
+		}),
 		svelte({
 			// enable run-time checks when not in production
 			dev: !production,
