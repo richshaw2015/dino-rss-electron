@@ -65,11 +65,6 @@ export const localeMsg = {
         "zh": "取消订阅",
         "zh-TW": "取消訂閱"
     },
-    "subscribe": {
-        "en": "Subscribe",
-        "zh": "订阅",
-        "zh-TW": "訂閱"
-    },
     "subscribed": {
         "en": "Subscribed",
         "zh": "已订阅",
@@ -439,10 +434,5 @@ export const localeMsg = {
         "en": "Save",
         "zh": "保存",
         "zh-TW": "保存"
-    },
-    "copied": {
-        "en": "Copied",
-        "zh": "已拷贝",
-        "zh-TW": "已拷貝"
     }
 }
