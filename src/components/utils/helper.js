@@ -257,12 +257,14 @@ export function setEntryCache(entryId, cacheRsp) {
 
 export function getLocaleLang() {
     let lang = localStorage.getItem(localeLangConfKey)
-    if (!["zh", "zh-TW", "en"].includes(lang)) {
+    if (!["zh", "zh-TW", "en", "ja"].includes(lang)) {
         const appLocale = remote.app.getLocale()
         if (["zh", "zh-CN"].includes(appLocale)) {
             lang = "zh"
         } else if ("zh-TW" === appLocale) {
             lang = 'zh-TW'
+        } else if ("ja" === appLocale) {
+            lang = "ja"
         } else {
             lang = 'en'
         }
