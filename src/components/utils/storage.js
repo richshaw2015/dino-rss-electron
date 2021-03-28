@@ -13,7 +13,9 @@ export const localeLangConfKey = 'CONF/LOCALE'
 // TODO clear thirdparty data and rebuild localStorage
 
 export function saveLocaleLang(lang) {
+    console.log("Save locale: " + lang)
     localStorage.setItem(localeLangConfKey, lang)
+    location.reload()
 }
 
 export function saveRssViewMode(mode) {

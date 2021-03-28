@@ -140,7 +140,7 @@
     {#if $activeTab === 'apps'}
         <div class="nav-wrapper no-drag omr-full-search">
             <div class="input-field omr-search-form">
-                <input id="omr-search-input" type="search" class="" placeholder="Search" required 
+                <input id="omr-search-input" type="search" class="" placeholder="{i18n('search')}" required
                     bind:value={searchKeyword} on:keyup={handleSearch} />
                 <label class="label-icon search-icon" for="omr-search-input">
                     <i class="material-icons">search</i></label>
@@ -149,7 +149,7 @@
     {:else}
         <div class="nav-wrapper no-drag">
             <div class="input-field omr-search-form">
-                <input id="omr-search-input" type="search" class="" placeholder="Search" required
+                <input id="omr-search-input" type="search" class="" placeholder="{i18n('search')}" required
                     bind:value={searchKeyword} on:keyup={handleSearch} />
                 <label class="label-icon search-icon" for="omr-search-input">
                     <i class="material-icons">search</i></label>
@@ -182,7 +182,7 @@
 </div>
 
 <div id="omr-modal-search-feed" class="modal">
-    <div class="modal-title"><i class="material-icons">search</i> Search "{searchKeyword}"</div>
+    <div class="modal-title"><i class="material-icons">search</i> {i18n('search')} "{searchKeyword}"</div>
 
     {#if searchRsp}
     <div class="row">

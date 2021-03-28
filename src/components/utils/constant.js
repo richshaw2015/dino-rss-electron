@@ -434,5 +434,10 @@ export const localeMsg = {
         "en": "Save",
         "zh": "保存",
         "zh-TW": "保存"
+    },
+    "language": {
+        "en": "Locale",
+        "zh": "语言",
+        "zh-TW": "語言"
     }
 }

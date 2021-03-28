@@ -2,9 +2,12 @@
     let cacheSize = 1
 
     import { onMount } from 'svelte'
-    import { getCacheDir, toast, warnToast, readableSize, reloadWindow, resizeImageUrl, i18n } from '../utils/helper.js'
+    import { getCacheDir, toast, warnToast, readableSize, reloadWindow, resizeImageUrl, i18n, getLocaleLang }
+        from '../utils/helper.js'
     import { userInfoRsp } from '../utils/store.js'
-    import { clearUserInfo } from '../utils/storage.js'
+    import { clearUserInfo, saveLocaleLang } from '../utils/storage.js'
+
+    let locale = getLocaleLang()
 
     const fs = require('fs')
     const getFolderSize = require('get-folder-size')
@@ -40,6 +43,9 @@
                 }
             })
         }
+
+        // init form
+        M.FormSelect.init(document.querySelectorAll('select'), {});
     })
 </script>
 
@@ -87,6 +93,9 @@
         color: black;
         width: 100px;
     }
+    .locale-select {
+        min-width: 200px;
+    }
 </style>
 
 <div class="setting-item">
@@ -126,4 +135,17 @@
     <a href="https://github.com/richshaw2015/dino-rss-electron/discussions/new" target="_blank">
         <button class="waves-effect waves-light btn-small btn-white">{ i18n('discuss') }</button>
     </a>
+</div>
+
+<div class="divider"></div>
+
+<div class="setting-item">
+    <span class="setting-title">{ i18n('language') }</span>
+    <div class="input-field locale-select">
+        <select bind:value={locale} on:change={() => saveLocaleLang(locale)}>
+            <option value="en">🇬🇧  English</option>
+            <option value="zh">🇨🇳  简体中文</option>
+            <option value="zh-TW">🇭🇰  繁體中文</option>
+        </select>
+    </div>
 </div>
