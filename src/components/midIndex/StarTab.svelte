@@ -6,7 +6,7 @@
     import Pager from './Pager.svelte'
     import Toolbar from './Toolbar.svelte'
 
-    import { getPageSize, isInList, shortToast, toast, warnToast } from '../utils/helper.js'
+    import { getPageSize, isInList, shortToast, toast, warnToast, i18n } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
     import { saveStarViewMode } from '../utils/storage.js'
     import { starViewMode, starActiveEntry, starActiveFeed, starFeedEntriesView, starFeedListRspBak, starListRsp } 
@@ -32,7 +32,7 @@
                 } else {
                     const index = $starActiveEntry._index + 1
                     if (index === $starListRsp.data.length) {
-                        warnToast("Already the last Entry")
+                        warnToast(i18n('already.last.entry'))
                     } else {
                         starActiveEntry.set($starListRsp.data[index])
                     }
@@ -43,7 +43,7 @@
                 } else {
                     const index = $starActiveFeed._index + 1
                     if (index === $starListRsp.data.length) {
-                        warnToast("Already the last Feed")
+                        warnToast(i18n('already.last.feed'))
                     } else {
                         handleGotoStarredFeedEntries($starListRsp.data[index])
                     }
@@ -61,7 +61,7 @@
                 } else {
                     const index = $starActiveEntry._index - 1
                     if (index < 0) {
-                        warnToast("Already the first Entry")
+                        warnToast(i18n('already.first.entry'))
                     } else {
                         starActiveEntry.set($starListRsp.data[index])
                     }
@@ -72,7 +72,7 @@
                 } else {
                     const index = $starActiveFeed._index - 1
                     if (index < 0 ) {
-                        warnToast("Already the first Feed")
+                        warnToast(i18n('already.first.feed'))
                     } else {
                         handleGotoStarredFeedEntries($starListRsp.data[index])
                     }
@@ -100,13 +100,13 @@
                             saveStarViewMode(mode)
                         }
                     } else if (rsp.code === 100) {
-                        $starListRsp.msg = "No starred Feeds"
+                        $starListRsp.msg = i18n('no.starred.feed')
                     }
                 }
             }).catch(err => {
                 starListRsp.set({
                     code: -1,
-                    msg:  err + ' starred Feeds'
+                    msg:  err
                 })
                 warnToast($starListRsp.msg)
             })
@@ -120,12 +120,12 @@
                         saveStarViewMode($starViewMode)
                     }
                 } else if (rsp.code === 100) {
-                    $starListRsp.msg ="No starred Entries"
+                    $starListRsp.msg = i18n('no.starred.entry')
                 }
             }).catch(err => {
                 starListRsp.set({
                     code: -1,
-                    msg:  err + ' starred Entries'
+                    msg:  err
                 })
                 warnToast($starListRsp.msg)
             })
@@ -157,10 +157,10 @@
             starListRsp.set(rsp)
 
             if (rsp.code === 100) {
-                $starListRsp.msg = "No starred data"
+                $starListRsp.msg = i18n('no.starred.entry')
             }
         }).catch(err => {
-            warnToast(err + ' starred Entries')
+            warnToast(err)
         })
     }
 </script>

@@ -1,5 +1,6 @@
-import { writable } from 'svelte/store'
+import { writable, readable } from 'svelte/store'
 import { getRssViewMode, getViewScope, getUserInfo, getStarViewMode } from './storage.js'
+import { getLocaleLang } from './helper.js'
 
 // nav tab
 export let activeTab = writable("rss")

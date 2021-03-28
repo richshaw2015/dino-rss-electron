@@ -5,7 +5,7 @@
     import Pager from './Pager.svelte'
     import Toolbar from './Toolbar.svelte'
     import RssEntry from "./RssEntry.svelte"
-    import { getPageSize, isInList, shortToast, toast, warnToast, setBadge } from '../utils/helper.js'
+    import { getPageSize, isInList, shortToast, toast, warnToast, setBadge, i18n } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
     import { saveRssViewMode } from '../utils/storage.js'
     import { rssViewMode, viewScope, rssActiveEntry, rssActiveFeed, rssListRsp, rssFeedListRspBak, rssFeedEntriesView, 
@@ -34,7 +34,7 @@
                 } else {
                     const index = $rssActiveEntry._index + 1
                     if (index === $rssListRsp.data.length) {
-                        warnToast("Already the last Entry")
+                        warnToast(i18n("already.last.entry"))
                     } else {
                         rssActiveEntry.set($rssListRsp.data[index])
                     }
@@ -45,7 +45,7 @@
                 } else {
                     const index = $rssActiveFeed._index + 1
                     if (index === $rssListRsp.data.length) {
-                        warnToast("Already the last Feed")
+                        warnToast(i18n("already.last.feed"))
                     } else {
                         handleGotoFeedEntries($rssListRsp.data[index])
                     }
@@ -63,7 +63,7 @@
                 } else {
                     const index = $rssActiveEntry._index - 1
                     if (index < 0) {
-                        warnToast("Already the first Entry")
+                        warnToast(i18n("already.first.entry"))
                     } else {
                         rssActiveEntry.set($rssListRsp.data[index])
                     }
@@ -74,7 +74,7 @@
                 } else {
                     const index = $rssActiveFeed._index - 1
                     if (index < 0 ) {
-                        warnToast("Already the first Feed")
+                        warnToast(i18n("already.first.feed"))
                     } else {
                         handleGotoFeedEntries($rssListRsp.data[index])
                     }
@@ -114,7 +114,7 @@
                 unreadCountRsp.set(rsp)
             }
         }).catch(err => {
-            toast(err + " unread count")
+            toast(err)
         })
     }
 
@@ -136,15 +136,15 @@
                             saveRssViewMode(mode)
                         }
                     } else if (rsp.code === 100) {
-                        $rssListRsp.msg = "No updated Feeds"
+                        $rssListRsp.msg = i18n('no.updated.feed')
                     }  else if (rsp.code === 101) {
-                        $rssListRsp.msg = "No unread Feeds"
+                        $rssListRsp.msg = i18n('no.unread.feed')
                     }
                 }
             }).catch(err => {
                 rssListRsp.set({
                     "code": -1,
-                    "msg": err + ' Feeds'
+                    "msg": err
                 })
                 warnToast($rssListRsp.msg)
             })
@@ -158,14 +158,14 @@
                         saveRssViewMode(mode)
                     }
                 } else if (rsp.code === 100) {
-                    $rssListRsp.msg = "No updated Entries"
+                    $rssListRsp.msg = i18n("no.updated.entry")
                 } else if (rsp.code === 101) {
-                    $rssListRsp.msg = "No unread Entries"
+                    $rssListRsp.msg = i18n("no.unread.entry")
                 }
             }).catch(err => {
                 rssListRsp.set({
                     "code": -1,
-                    "msg": err + ' Entries'
+                    "msg": err
                 })
                 warnToast($rssListRsp.msg)
             })
@@ -190,12 +190,12 @@
             rssListRsp.set(rsp)
 
             if (rsp.code === 101) {
-                $rssListRsp.msg = "No unread Entries"
+                $rssListRsp.msg = i18n('no.unread.entry')
             } else if (rsp.code === 100) {
-                $rssListRsp.msg = "No Entries data"
+                $rssListRsp.msg = i18n('no.updated.entry')
             }
         }).catch(err => {
-            warnToast(err + ' Entries')
+            warnToast(err)
         })
     }
 
@@ -206,7 +206,6 @@
             updateRssList(event.detail.page, event.detail.mode)
         }
     }
-    // TODO shortcut C r D
 </script>
 
 <style>

@@ -1,6 +1,6 @@
 import { SERVER } from './config.js'
 import { getToken } from './storage.js'
-import { toast, warnToast, shortToast } from './helper.js'
+import { warnToast, shortToast, i18n } from './helper.js'
 
 export function isValidUrl(url) {
     try {
@@ -34,9 +34,9 @@ export async function apiReq(path, data) {
 export function handleUnsubscribeFeed(feedId) {
     apiReq('/api/feed/unsubscribe', {feed_id: feedId}).then( rsp => {
         if (rsp.code === 0) {
-            shortToast("Unsubscribed")
+            shortToast(i18n("unsubscribed"))
         }
     }).catch(err => {
-        warnToast(err + " Unsubscribe")
+        warnToast(err)
     })
 }

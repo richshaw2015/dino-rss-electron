@@ -2,7 +2,7 @@
     let cacheSize = 1
 
     import { onMount } from 'svelte'
-    import { getCacheDir, toast, warnToast, readableSize, reloadWindow, resizeImageUrl } from '../utils/helper.js'
+    import { getCacheDir, toast, warnToast, readableSize, reloadWindow, resizeImageUrl, i18n } from '../utils/helper.js'
     import { userInfoRsp } from '../utils/store.js'
     import { clearUserInfo } from '../utils/storage.js'
 
@@ -16,7 +16,7 @@
                     warnToast(err)
                 } else {
                     cacheSize = 0
-                    toast("Clean up")
+                    toast(i18n('clean.success'))
                     fs.mkdirSync(getCacheDir(), {recursive: true})
                 }
             })
@@ -90,7 +90,7 @@
 </style>
 
 <div class="setting-item">
-    <span class="setting-title">Account:</span>
+    <span class="setting-title">{i18n('account')}</span>
 
     <div class="user-image-wrapper">
         <img class="user-image circle" src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar">
@@ -103,25 +103,27 @@
     {#if $userInfoRsp.level > 1}
         <a href="{$userInfoRsp.blog}" target="_blank"><span>{$userInfoRsp.name}</span></a>
         <span class="flex-grow"></span>
-        <button class="waves-effect waves-light btn-small btn-white" on:click={handleLogout}>Logout</button>
+        <button class="waves-effect waves-light btn-small btn-white" on:click={handleLogout}>
+            {i18n('logout')}
+        </button>
     {:else}
-        <span>Visitor</span>
+        <span>{i18n('visitor')}</span>
         <span class="flex-grow"></span>
     {/if}
 </div>
 <div class="divider"></div>
 
 <div class="setting-item">
-    <span class="setting-title">Cache Usage:</span>
+    <span class="setting-title">{i18n('cache.usage')}</span>
     <span class="flex-grow">{readableSize(cacheSize)}</span>
     <button class="waves-effect waves-light btn-small btn-white {cacheSize > 0 ? '' : 'disabled'}" 
-        on:click={handleCleanCache}>Clean</button>
+        on:click={handleCleanCache}>{i18n('clean')}</button>
 </div>
 <div class="divider"></div>
 
 <div class="setting-item">
-    <span class="setting-title">Feedback:</span>
+    <span class="setting-title">{ i18n('feedback') }</span>
     <a href="https://github.com/richshaw2015/dino-rss-electron/discussions/new" target="_blank">
-        <button class="waves-effect waves-light btn-small btn-white">Discuss</button>
+        <button class="waves-effect waves-light btn-small btn-white">{ i18n('discuss') }</button>
     </a>
 </div>

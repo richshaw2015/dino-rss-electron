@@ -5,7 +5,7 @@
     const fs = require('fs')
     const { dialog } = remote
 
-    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, 
+    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, i18n,
         warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'
     import { getToken, saveUserInfo, saveToken } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
@@ -32,11 +32,11 @@
             if ($unreadCountRsp.count > 0) {
                 apiReq('/api/entry/mark/read', {entries: $unreadCountRsp.list.join(',')}).then( rsp => {
                     if (rsp.code === 0) {
-                        shortToast("Mark All as read")
+                        shortToast(i18n("mark.all.as.read"))
                         $unreadCountRsp.count = 0
                     }
                 }).catch(err => {
-                    warnToast(err + " Mark")
+                    warnToast(err)
                 })
             }
             return false
@@ -88,7 +88,7 @@
                     }
                 }
             }).catch(err => {
-                console.log(err + " User info")
+                console.log(err)
             })
         }
     }
@@ -101,7 +101,7 @@
                     userInfoRsp.set(rsp)
                 }
             }).catch(err => {
-                console.log(err + " User info")
+                console.log(err)
             })
         }
     }
@@ -147,13 +147,13 @@
                     isApiLoading.set(true)
                     apiReq('/api/feed/import/opml', {file: fileContent}).then( rsp => {
                         if (rsp.code === 0) {
-                            toast("Please wait a moment", 30*1000)
+                            toast(i18n("wait.a.moment"), 30*1000)
 
                             try {
                                 M.Modal.getInstance(document.querySelector('#omr-modal-add-feed')).close();
                             } catch (e) {}
                         } else {
-                            warnToast("File parse error")
+                            warnToast(i18n("file.parse.error"))
                         }
                     }).catch(err => {
                         warnToast(err)
@@ -161,11 +161,11 @@
                         isApiLoading.set(false)
                     });
                 } else {
-                    warnToast("File too large")
+                    warnToast(i18n("file.too.large"))
                 }
 			}
         }).catch(err => {
-            warnToast(err + " Upload file")
+            warnToast(err)
         })
     }
     function handleAddFeed(event) {
@@ -173,17 +173,17 @@
             isApiLoading.set(true)
             apiReq('/api/feed/add', {feed_rss: feedUrl}).then( rsp => {
                 if (rsp.code === 0) {
-                    toast("Done")
+                    toast(i18n("feed.add.success"))
                 } else {
-                    warnToast(`Parse error: ${feedUrl}`)
+                    warnToast(i18n("feed.parse.error") + " " + feedUrl)
                 }
             }).catch(err => {
-                warnToast(err + " Request")
-            }).finally(() => { 
+                warnToast(err)
+            }).finally(() => {
                 isApiLoading.set(false)
             });
         } else {
-            warnToast(`Url not valid: ${feedUrl}`)
+            warnToast(i18n("feed.url.invalid") + " " + feedUrl)
         }
     }
 </script>
@@ -374,10 +374,10 @@
         <Titlebar />
     {/if}
     <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}" on:click={showLoginOrUser}>
-        <img src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar" title="{$userInfoRsp.level > 1 ? 'My' : 'Login'}">
+        <img src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar" title="{$userInfoRsp.level > 1 ? i18n('my') : i18n('login')}">
     </div>
 
-    <div title="RSS" class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={() => activeTab.set('rss')}>
+    <div title="{ i18n('rss') }" class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={() => activeTab.set('rss')}>
         <div class="rss-notify-wrapper">
             <i class="material-icons {$activeTab === 'rss' ? 'primary-color' : ''}">rss_feed</i>
             {#if $unreadCountRsp.count > 0}
@@ -388,18 +388,18 @@
         </div>
     </div>
 
-    <div title="Star" class="nav-tab-btn no-drag" id="omr-nav-star" on:click={() => activeTab.set('star')}>
+    <div title="{ i18n('star') }" class="nav-tab-btn no-drag" id="omr-nav-star" on:click={() => activeTab.set('star')}>
         <i class="material-icons {$activeTab === 'star' ? 'primary-color' : ''}">star</i>
     </div>
 
-    <div title="More" class="nav-tab-btn no-drag" id="omr-nav-apps" on:click={() => activeTab.set('apps')}>
+    <div title="{ i18n('more') }" class="nav-tab-btn no-drag" id="omr-nav-apps" on:click={() => activeTab.set('apps')}>
         <i class="material-icons {$activeTab === 'apps' ? 'primary-color' : ''}">apps</i>
     </div>
 
     <div id="omr-nav-space" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
     </div>
 
-    <div title="Add" class="nav-tab-btn no-drag" id="omr-nav-add" on:click={showAddFeedWindow}>
+    <div title="{ i18n('feed.add') }" class="nav-tab-btn no-drag" id="omr-nav-add" on:click={showAddFeedWindow}>
         <i class="material-icons">add_circle</i>
     </div>
 </div>
@@ -439,7 +439,7 @@
 </div>
 
 <div id="omr-modal-add-feed" class="modal">
-    <div class="modal-title"><i class="material-icons">rss_feed</i> Add Subscription</div>
+    <div class="modal-title"><i class="material-icons">rss_feed</i> { i18n("add.subscription") }</div>
 
     <div class="submit-feed">
         <div class="input-field rss-input-wrapper">
@@ -447,11 +447,11 @@
             <label for="rss-input">Feed URL</label>
         </div>
 
-        <button class="waves-effect waves-light btn btn-small rss-submit-btn" on:click={handleAddFeed}>Add</button>
+        <button class="waves-effect waves-light btn btn-small rss-submit-btn" on:click={handleAddFeed}>{ i18n('feed.add') }</button>
     </div>
 
     <div class="waves-effect btn-flat submit-opml" on:click={showOpmlUploadDialog}>
-        <i class="material-icons import-icon">import_export</i>Import from OPML
+        <i class="material-icons import-icon">import_export</i>{ i18n("import.from.opml") }
     </div>
     
     <!-- <div class="divider submit-divider"></div>
@@ -466,7 +466,7 @@
         <div class="modal-title">
             <i class="material-icons">flight</i> Dinosaur Rss {$upgradeRsp.version} available</div>
 
-        <h6>Change Log:</h6>
+        <h6>{ i18n("change.log") }</h6>
         <ul>
             {#each $upgradeRsp.description as dp}
                 <li class="">{dp}</li>
@@ -474,9 +474,9 @@
         </ul>
 
         <div class="modal-footer">
-            <button class="modal-close btn waves-effect waves-light btn-small cancel-btn">Cancel</button>
+            <button class="modal-close btn waves-effect waves-light btn-small cancel-btn">{ i18n("cancel") }</button>
             <button class="modal-close btn waves-effect waves-light btn-small">
-                <a href="{$upgradeRsp.url}" target="_blank">Upgrade</a></button>
+                <a href="{$upgradeRsp.url}" target="_blank">{ i18n("upgrade") }</a></button>
         </div>
     </div>
 {/if}

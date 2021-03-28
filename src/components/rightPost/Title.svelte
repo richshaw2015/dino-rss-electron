@@ -3,7 +3,7 @@
     export let fontSize = "text-medium"
     export let activeEntry = {}
 
-    import { toggleMaximizeWindow, macNavCtxMenu, isInList } from '../utils/helper.js'
+    import { toggleMaximizeWindow, macNavCtxMenu, isInList, i18n, warnToast } from '../utils/helper.js'
     import { saveFontSize } from '../utils/storage.js'
     import { apiReq } from '../utils/req.js'
     import { activeTab, rssListRsp, starListRsp, appsActiveMenu } from '../utils/store.js'
@@ -40,7 +40,7 @@
                 }
             }
         }).catch(err => {
-            warnToast(err + " Star")
+            warnToast(err)
         })
     }
 
@@ -81,6 +81,7 @@
     .size-option {
         max-width: 20%;
         min-width: 18%;
+        display: inline-block;
     }
 </style>
 
@@ -99,35 +100,35 @@
         <span class="size-option">
             <label>
                 <input name="font-size" type="radio" value="text-smaller" bind:group={fontSize} />
-                <span>Smaller</span>
+                <span>{i18n('smaller')}</span>
             </label>
         </span>
 
         <span class="size-option">
             <label>
                 <input name="font-size" type="radio" value="text-small" bind:group={fontSize} />
-                <span>Small</span>
+                <span>{i18n('small')}</span>
             </label>
         </span>
 
         <span class="size-option">
             <label>
                 <input name="font-size" type="radio" value="text-medium" bind:group={fontSize} />
-                <span>Medium</span>
+                <span>{i18n('medium')}</span>
             </label>
         </span>
         
         <span class="size-option">
             <label>
                 <input name="font-size" type="radio" value="text-large" bind:group={fontSize} />
-                <span>Large</span>
+                <span>{i18n('large')}</span>
             </label>
         </span>
 
         <span class="size-option">
             <label>
                 <input name="font-size" type="radio" value="text-larger" bind:group={fontSize} />
-                <span>Larger</span>
+                <span>{i18n('larger')}</span>
             </label>
         </span>
     </div>
@@ -138,11 +139,11 @@
             Dinosaur Rss 🦕
             {:else}
                 {#if $appsActiveMenu === 'thanks'}
-                    Thanks 👏
+                    {i18n('thanks')}  👏
                 {:else if $appsActiveMenu === 'setting'}
-                    Setting ⚙️
+                    {i18n('setting')}  ⚙️
                 {:else if $appsActiveMenu === 'explore'}
-                    Explore 🧭
+                    {i18n('explore')}  🧭
                 {:else}
                     Dinosaur Rss 🦕
                 {/if}

@@ -8,7 +8,13 @@ const fontSizeConfKey = 'CONF/FONT/SIZE'
 const tokenConfKey = 'CONF/TOKEN'
 const userInfoConfKey = 'CONF/USER'
 
+export const localeLangConfKey = 'CONF/LOCALE'
+
 // TODO clear thirdparty data and rebuild localStorage
+
+export function saveLocaleLang(lang) {
+    localStorage.setItem(localeLangConfKey, lang)
+}
 
 export function saveRssViewMode(mode) {
     localStorage.setItem(rssViewModeConfKey, mode)

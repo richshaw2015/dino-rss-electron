@@ -1,3 +1,5 @@
+import { localeLangConfKey } from './storage.js'
+import { localeMsg } from './constant.js'
 
 export function toast(msg, ttl=3000) {
     M.toast({html: msg, displayLength: ttl});
@@ -241,7 +243,6 @@ export function resizeImageUrl(image, size=128) {
 
 export function copyToClipboard(text) {
     clipboard.writeText(text)
-    shortToast("Copied")
 }
 
 export function getCacheDir() {
@@ -252,4 +253,27 @@ export function setEntryCache(entryId, cacheRsp) {
     const entryCacheDir = getCacheDir()
     const entryCacheFile = path.join(entryCacheDir, entryId + ".json")
     fs.writeFileSync(entryCacheFile, JSON.stringify(cacheRsp), {encoding: "utf8"})
+}
+
+export function getLocaleLang() {
+    let lang = localStorage.getItem(localeLangConfKey)
+    if (!["zh", "zh-TW", "en"].includes(lang)) {
+        const appLocale = remote.app.getLocale()
+        if (["zh", "zh-CN"].includes(appLocale)) {
+            lang = "zh"
+        } else if ("zh-TW" === appLocale) {
+            lang = 'zh-TW'
+        } else {
+            lang = 'en'
+        }
+    }
+    console.log(lang)
+    return lang
+}
+
+// locale lang
+export const localeLang = getLocaleLang()
+
+export function i18n(msg) {
+    return localeMsg[msg][localeLang]
 }

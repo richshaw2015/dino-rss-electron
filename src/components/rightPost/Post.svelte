@@ -123,16 +123,15 @@
                 }
             }
         }).catch(err => {
-            const msg =  err + ' Content'
             if ($activeTab === "star") {
                 starEntryContentRsp.set({
                     code: -1,
-                    msg: msg
+                    msg: err
                 })
             } else if ($activeTab === "rss") {
                 rssEntryContentRsp.set({
                     code: -1,
-                    msg: msg
+                    msg: err
                 })
             }
         })

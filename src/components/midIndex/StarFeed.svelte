@@ -1,7 +1,7 @@
 <script>
     export let feedInfo
 
-    import { fromNow, readableAuthor } from '../utils/helper.js'
+    import { fromNow, readableAuthor, i18n } from '../utils/helper.js'
 
     const { remote, shell } = require('electron')
     const { Menu, MenuItem } = remote
@@ -12,7 +12,7 @@
         const menu = new Menu();
 
         menu.append(new MenuItem({
-            label: `🧭  Open in Browser`,
+            label: "🧭  " + i18n('open.in.browser'),
             click: function(){
                 shell.openExternal(feedInfo.link)
             }
@@ -20,7 +20,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "✏️  Edit",
+            label: "✏️  " + i18n('edit'),
             click: function() {
                 feedToEdit.set(feedInfo)
             }

@@ -3,7 +3,7 @@
     import { rssActiveFeed, rssListRsp, rssFeedListRspBak, rssFeedEntriesView, unreadCountRsp, activeTab, 
         starActiveFeed, starFeedEntriesView, starFeedListRspBak, starListRsp } from '../utils/store.js'
     import { apiReq } from '../utils/req.js'
-    import { warnToast, shortToast, readableCount } from '../utils/helper.js'
+    import { warnToast, shortToast, readableCount, i18n } from '../utils/helper.js'
     import { getViewScope } from '../utils/storage.js'
 
     const Mousetrap = require('mousetrap')
@@ -25,7 +25,7 @@
         if (unreadCount > 0) {
             apiReq('/api/entry/mark/read', {entries: $rssActiveFeed.stats.unread_list.join(',')}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Mark as read")
+                    shortToast(i18n('mark.as.read'))
                     
                     $unreadCountRsp.count -= unreadCount
 
@@ -36,7 +36,7 @@
                         if (getViewScope() === 'unread') {
                             rssListRsp.set({
                                 "code": 101,
-                                "msg": "No unread Entries"
+                                "msg": i18n("no.unread.entries")
                             })
                         } else {
                             for (let i in $rssListRsp.data) {
@@ -46,7 +46,7 @@
                     }
                 }
             }).catch(err => {
-                warnToast(err + " Mark")
+                warnToast(err)
             })
         }
     }
@@ -104,9 +104,9 @@
 
 {#if $activeTab === "rss"}
     <div id="omr-feed-nav">
-        <div title="Back" id="omr-feed-back" on:click={backToFeedList}>
+        <div title="{i18n('back')}" id="omr-feed-back" on:click={backToFeedList}>
             <i class="material-icons back-icon">arrow_back</i>
-            <span class="">Back</span>
+            <span class="">{i18n('back')}</span>
         </div>
 
         <span class="truncate bold feed-nav-title" title="{$rssActiveFeed.title}">
@@ -116,13 +116,13 @@
         {/if}
         <span class="padding-space"></span>
 
-        <i title="Mark feed as read" class="material-icons check-icon" on:click={handleMarkFeedAsRead}>check</i>
+        <i title="{i18n('mark.as.read')}" class="material-icons check-icon" on:click={handleMarkFeedAsRead}>check</i>
     </div>
 {:else if $activeTab === "star"}
     <div id="omr-feed-nav">
-        <div title="Back" id="omr-feed-back" on:click={backToFeedList}>
+        <div title="{i18n('back')}" id="omr-feed-back" on:click={backToFeedList}>
             <i class="material-icons back-icon">arrow_back</i>
-            <span class="">Back</span>
+            <span class="">{i18n('back')}</span>
         </div>
 
         <span class="truncate bold feed-nav-title" title="{$starActiveFeed.title}">

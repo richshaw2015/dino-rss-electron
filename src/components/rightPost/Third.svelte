@@ -3,7 +3,8 @@
     export let activeEntry = {}
     export let entryContentRsp = {}
 
-    import { truncateStr, isMac, isWin, captureWindow, toast, copyToClipboard, warnToast, setEntryCache } from '../utils/helper.js'
+    import { truncateStr, isMac, isWin, captureWindow, toast, copyToClipboard, warnToast, setEntryCache, i18n }
+        from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
     import { appsActiveMenu, activeTab, rssActiveEntry, starActiveEntry } from '../utils/store.js'
     import Podcast from './Podcast.svelte'
@@ -90,7 +91,7 @@
         const menu = new Menu()
 
         menu.append(new MenuItem({
-            label: `🔍  Search "${truncateText}" with Google`,
+            label: '🔍  ' + i18n('search') + `"${truncateText}"`,
             visible: hasText,
             click: function(){
                 const url = new URL('https://www.google.com/search');
@@ -99,7 +100,7 @@
             }
         }));
         menu.append(new MenuItem({
-            label: `📗  Look Up "${truncateText}"`,
+            label: '📗  ' + i18n('lookup') + `"${truncateText}"`,
             visible: hasText && isMac(),
             click: function(){
                 remote.getCurrentWindow().showDefinitionForSelection()
@@ -107,7 +108,7 @@
         }));
         menu.append(new MenuItem({
             visible: isMac() && hasText,
-            label: "🔊  Speaking",
+            label: "🔊  " + i18n('speaking'),
             submenu: [
                 {"role": "startSpeaking"},
                 {"role": "stopSpeaking"},
@@ -117,14 +118,14 @@
         // role and separator are not affected by visible attribute
         if (hasText) {
             menu.append(new MenuItem({
-                label: "📋  Copy",
+                label: "📋  " + i18n('copy'),
                 role: "copy"
             }));
             menu.append(new MenuItem({type: "separator", visible: hasText}));
         }
 
         menu.append(new MenuItem({
-            label: "📝  Add a memo",
+            label: "📝  " + i18n('add.memo'),
             click: function() {
                 showPellEditor()
             }
@@ -140,7 +141,7 @@
         // menu.append(new MenuItem({type: "separator"}));
         
         menu.append(new MenuItem({
-            label: "🧭  Open in Browser",
+            label: "🧭  " + i18n('open.in.browser'),
             click: function(){
                 shell.openExternal(activeEntry.link);
             }
@@ -148,7 +149,7 @@
         menu.append(new MenuItem({type: "separator"}));
 
         menu.append(new MenuItem({
-            label: "📲  QR Code",
+            label: "📲  " + i18n('qr.code'),
             click: function() {
                 qrcode.clear()
                 qrcode.makeCode(activeEntry.link);
@@ -168,7 +169,7 @@
         menu.append(new MenuItem({type: "separator"}));
 
         menu.append(new MenuItem({
-            label: "📸  Screenshot",
+            label: "📸  " + i18n('screenshot'),
             click: function(){
                 captureWindow()
             }
@@ -221,10 +222,10 @@
                 } catch (e) {}
 
             } else if (rsp.code === 108) {
-                warnToast("Memo add failed!")
+                warnToast(i18n('add.memo.failed'))
             }
         }).catch(err => {
-            warnToast(err + " Memo")
+            warnToast(err)
         })
     }
 </script>
@@ -300,11 +301,11 @@
 </div>
 
 <div class="modal" id="omr-modal-pell">
-    <div class="modal-title"><i class="material-icons">note_add</i> Add a memo</div>
+    <div class="modal-title"><i class="material-icons">note_add</i> {i18n('add.memo')}</div>
     <div id="omr-pell-editor" class="pell"></div>
 
     <div class="modal-footer">
-        <button class="modal-close btn waves-effect waves-light btn-small cancel-btn">Cancel</button>
-        <button class="btn waves-effect waves-light btn-small" on:click={handleSubmitMemo}>Save</button>
+        <button class="modal-close btn waves-effect waves-light btn-small cancel-btn">{i18n('cancel')}</button>
+        <button class="btn waves-effect waves-light btn-small" on:click={handleSubmitMemo}>{i18n('save')}</button>
     </div>
 </div>

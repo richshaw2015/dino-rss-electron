@@ -5,7 +5,7 @@
     import { createEventDispatcher } from 'svelte'
     import { saveViewScope } from '../utils/storage.js'
     import { activeTab, rssViewMode, viewScope, starViewMode, isApiLoading } from '../utils/store.js'
-    import { shortToast, warnToast } from '../utils/helper.js'
+    import { shortToast, warnToast, i18n } from '../utils/helper.js'
     import FeedCard from '../global/FeedCard.svelte'
     import { apiReq } from '../utils/req.js';
 
@@ -38,7 +38,7 @@
         dispatch('refresh-list-view', {page: 1})
     }
     function handleRefreshAction() {
-        shortToast("Refresh")
+        shortToast(i18n('refresh'))
         dispatch('refresh-list-view', {page: 1})
     }
     function handleSearch(event) {
@@ -52,9 +52,9 @@
                     searchRsp = rsp
                     showSearchhWindow()
                 } else if (rsp.code === 106) {
-                    warnToast("Keyword error!")
+                    warnToast(i18n('keyword.error'))
                 } else if (rsp.code === 100) {
-                    warnToast("No data!")
+                    warnToast(i18n('no.data'))
                 } 
             }).catch(err => {
                 warnToast(err)
@@ -158,22 +158,22 @@
 
         <div class="toolbar-group no-drag">
             {#if $activeTab === 'rss'}
-                <div title="Toggle unread / all" class="toolbar-icon" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
+                <div title="{i18n('toggle.unread.all')}" class="toolbar-icon" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
                     <i class="material-icons">{ $viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
                 </div>
 
                 {#if showModeBtn}
-                <div title="Toggle feed / entry view" class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
+                <div title="{i18n('toggle.view')}" class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
                     <i class="material-icons">{$rssViewMode === 'feed' ? 'view_module' : 'view_list'} </i>
                 </div>
                 {/if}
             {:else if $activeTab === 'star' && showModeBtn}
-                <div title="Toggle feed / entry view" class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
+                <div title="{i18n('toggle.view')}" class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
                     <i class="material-icons">{$starViewMode === 'feed' ? 'view_module' : 'view_list'} </i>
                 </div>
             {/if}
 
-            <div title="Refresh" class="toolbar-icon" id="omr-toolbar-update"  on:click={handleRefreshAction}>
+            <div title="{i18n('refresh')}" class="toolbar-icon" id="omr-toolbar-update"  on:click={handleRefreshAction}>
                 <i class="material-icons">update</i>
             </div>
 

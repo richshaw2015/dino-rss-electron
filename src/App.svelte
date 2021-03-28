@@ -1,6 +1,7 @@
 <script>
     import { getTokenPromise } from './components/utils/storage.js'
     import { activeTab } from './components/utils/store.js'
+    import { i18n } from './components/utils/helper.js'
 
     import Nav from './components/leftNav/Nav.svelte'
     import AppsTab from './components/midIndex/AppsTab.svelte'
@@ -69,7 +70,7 @@
 
         <div class="middle-container">
             <Toolbar />
-            <Notice msg={"Loading ..."} />
+            <Notice msg={i18n('loading')} />
         </div>
 
         <div class="right-container">
@@ -104,7 +105,7 @@
 
     <div class="middle-container">
         <Toolbar />
-        <Notice msg={error + " Token"} level='warn' />
+        <Notice msg={error} level='warn' />
     </div>
 
     <div class="right-container">

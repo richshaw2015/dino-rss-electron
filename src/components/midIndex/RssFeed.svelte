@@ -8,7 +8,7 @@
     const { Menu, MenuItem } = remote
     const dispatch = createEventDispatcher()
 
-    import { shortToast, toast, warnToast, isInList, fromNow, readableAuthor, readableCount, copyToClipboard }
+    import { shortToast, toast, warnToast, isInList, fromNow, readableAuthor, readableCount, copyToClipboard, i18n }
         from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
     import { unreadCountRsp, rssListRsp, rssFeedEntriesView, feedToEdit } from '../utils/store.js'
@@ -19,7 +19,7 @@
         if (unreadCount > 0) {
             apiReq('/api/entry/mark/read', {entries: feedInfo.stats.unread_list.join(',')}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Mark as read")
+                    shortToast(i18n("mark.as.read"))
                     
                     $unreadCountRsp.count -= unreadCount
 
@@ -29,24 +29,24 @@
                     }
                 }
             }).catch(err => {
-                warnToast(err + " Mark")
+                warnToast(err)
             })
         }
     }
     function handleSyncFeed(feedInfo) {
         apiReq('/api/feed/sync', {feed_id: feedInfo.id}).then( rsp => {
             if (rsp.code === 0) {
-                toast("Please wait a moment")
+                toast(i18n("wait.a.moment"))
             }
         }).catch(err => {
-            warnToast(err + " Sync")
+            warnToast(err)
         })
     }
 
     function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
         menu.append(new MenuItem({
-            label: "✅️  Mark as read",
+            label: "✅️  " + i18n("mark.as.read"),
             click: function(){
                 handleMarkFeedAsRead(feedInfo)
             }
@@ -54,7 +54,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: `🧭  Open in Browser`,
+            label: "🧭  " + i18n("open.in.browser"),
             click: function(){
                 shell.openExternal(feedInfo.link)
             }
@@ -62,7 +62,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: `📋  Copy Rss`,
+            label: "📋  " + i18n("copy.rss"),
             click: function(){
                 copyToClipboard(feedInfo.rss)
             }
@@ -70,7 +70,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: `🔄  Sync`,
+            label: "🔄  " + i18n("sync"),
             click: function(){
                 handleSyncFeed(feedInfo)
             }
@@ -78,7 +78,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "✏️  Edit",
+            label: "✏️  " + i18n("edit"),
             click: function(){
                 feedToEdit.set(feedInfo)
             }
@@ -86,7 +86,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "🗑  Unsubscribe",
+            label: "🗑  " + i18n("unsubscribe"),
             click: function(){
                 handleUnsubscribeFeed(feedInfo.id)
             }

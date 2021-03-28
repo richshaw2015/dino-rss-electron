@@ -1,5 +1,6 @@
 <script>
     import Toolbar from './Toolbar.svelte'
+    import { i18n } from '../utils/helper.js'
 
     import { appsActiveMenu, isApiLoading } from '../utils/store.js'
 </script>
@@ -42,21 +43,21 @@
 
 <div id="omr-apps">
     <div class="waves-effect one-app {$appsActiveMenu === 'explore' ? 'active-app' : ''}" on:click={() => appsActiveMenu.set('explore')}>
-        <i class="material-icons app-icon explore-icon">explore</i>Explore</div>
+        <i class="material-icons app-icon explore-icon">explore</i>{ i18n('explore') }</div>
     <!-- <div class="waves-effect one-app"><i class="material-icons app-icon">equalizer</i>Ranking</div> -->
 
     <div class="divider app-divider"></div>
 
     <div class="waves-effect one-app {$appsActiveMenu === 'about' ? 'active-app' : ''}" on:click={() => appsActiveMenu.set('about')}>
-        <i class="material-icons app-icon">info_outline</i>About</div>
+        <i class="material-icons app-icon">info_outline</i>{ i18n('about') }</div>
     <!-- <div class="waves-effect one-app">
         <i class="material-icons app-icon">help_outline</i>FAQ</div> -->
     <div class="waves-effect one-app {$appsActiveMenu === 'thanks' ? 'active-app' : ''}" on:click={() => appsActiveMenu.set('thanks')}>
-        <i class="material-icons app-icon">mood</i>Thanks</div>
+        <i class="material-icons app-icon">mood</i>{ i18n('thanks') }</div>
 
     <div class="divider app-divider"></div>
     
     <div class="waves-effect one-app {$appsActiveMenu === 'setting' ? 'active-app' : ''}" on:click={() => appsActiveMenu.set('setting')}>
-        <i class="material-icons app-icon setting-icon">settings</i>Settings</div>
+        <i class="material-icons app-icon setting-icon">settings</i>{ i18n('setting') }</div>
     
 </div>

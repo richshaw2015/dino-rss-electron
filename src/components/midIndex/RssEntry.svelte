@@ -2,7 +2,7 @@
     export let entryInfo
 
     import { rssFeedEntriesView, rssListRsp, unreadCountRsp, rssActiveFeed, rssActiveEntry } from '../utils/store.js'
-    import { readableAuthor } from '../utils/helper.js'
+    import { readableAuthor, i18n } from '../utils/helper.js'
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
     const { remote, shell } = require('electron')
@@ -14,7 +14,7 @@
         if (!entry.stats.has_read) {
             apiReq('/api/entry/mark/read', {entries: entry.id}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Mark as read")
+                    shortToast(i18n("mark.as.read"))
                     
                     $unreadCountRsp.count -= 1
 
@@ -27,7 +27,7 @@
                     }
                 }
             }).catch(err => {
-                warnToast(err + " Mark")
+                warnToast(err)
             })
         }
     }
@@ -36,7 +36,7 @@
         if (entry.stats.has_read) {
             apiReq('/api/entry/mark/unread', {entry_id: entry.id}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Mark as unread")
+                    shortToast(i18n("mark.as.unread"))
 
                     $unreadCountRsp.count += 1
 
@@ -49,7 +49,7 @@
                     }
                 }
             }).catch(err => {
-                warnToast(err + " Mark")
+                warnToast(err)
             })
         }
     }
@@ -58,7 +58,7 @@
         if (!entry.stats.has_starred) {
             apiReq('/api/star/entry', {entry_id: entry.id, feed_id: entry.feed.id}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Starred")
+                    shortToast(i18n("starred"))
 
                     if (isInList(entry, $rssListRsp.data)) {
                         $rssListRsp.data[entry._index].stats.has_starred = true
@@ -68,7 +68,7 @@
                     }
                 }
             }).catch(err => {
-                warnToast(err + " Star")
+                warnToast(err)
             })
         }
     }
@@ -77,7 +77,7 @@
         if (entry.stats.has_starred) {
             apiReq('/api/unstar/entry', {entry_id: entry.id, feed_id: entry.feed.id}).then( rsp => {
                 if (rsp.code === 0) {
-                    shortToast("Unstar")
+                    shortToast(i18n("unstar"))
 
                     if (isInList(entry, $rssListRsp.data)) {
                         $rssListRsp.data[entry._index].stats.has_starred = false
@@ -87,7 +87,7 @@
                     }
                 }
             }).catch(err => {
-                warnToast(err + " Star")
+                warnToast(err)
             })
         }
     }
@@ -96,14 +96,14 @@
         const menu = new Menu();
 
         menu.append(new MenuItem({
-            label: isWin() ? "🌟  Star" : "⭐️  Star",
+            label: isWin() ? "🌟  " + i18n("star") : "⭐️  " + i18n("star"),
             visible: !entry.stats.has_starred,
             click: function(){
                 handleStarEntry(entry)
             }
         }));
         menu.append(new MenuItem({
-            label: "💔  Unstar",
+            label: "💔  " + i18n("unstar"),
             visible: entry.stats.has_starred,
             click: function(){
                 handleUnstarEntry(entry)
@@ -112,14 +112,14 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: "✅️  Mark as read",
+            label: "✅️  " + i18n("mark.as.read"),
             visible: !entry.stats.has_read,
             click: function(){
                 handleMarkEntryAsRead(entry)
             }
         }));
         menu.append(new MenuItem({
-            label: "📌  Mark as unread",
+            label: "📌  " + i18n("mark.as.unread"),
             visible: entry.stats.has_read,
             click: function(){
                 handleMarkEntryAsUnread(entry)
@@ -128,7 +128,7 @@
         menu.append(new MenuItem({type: "separator",}));
 
         menu.append(new MenuItem({
-            label: `🧭  Open in Browser`,
+            label: "🧭  " + i18n("open.in.browser"),
             click: function(){
                 shell.openExternal(entry.link)
             }

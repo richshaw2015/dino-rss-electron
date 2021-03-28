@@ -2,19 +2,19 @@
     export let feedInfo
 
     import { apiReq } from '../utils/req.js'
-    import { shortToast, warnToast, readableCount } from '../utils/helper.js'
+    import { shortToast, warnToast, readableCount, i18n } from '../utils/helper.js'
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
     function handleSubscribeFeed() {
         apiReq('/api/feed/subscribe', {feed_id: feedInfo.id}).then( rsp => {
             if (rsp.code === 0) {
-                shortToast("Subscribed")
+                shortToast(i18n("subscribed"))
                 feedInfo.stats.is_subscribed = true
             } else if (rsp.code === 105) {
-                warnToast("Max feeds limit!")
+                warnToast(i18n("max.feeds.limit"))
             }
         }).catch(err => {
-            warnToast(err + " Subscribe")
+            warnToast(err)
         })
     }
 </script>
@@ -103,7 +103,8 @@
             {#if feedInfo.stats.is_subscribed}
                 <span class="waves-light sub-small-btn">✔️️</span>
             {:else}
-                <span class="waves-effect waves-light btn-small sub-small-btn" on:click={handleSubscribeFeed}>Add</span>
+                <span class="waves-effect waves-light btn-small sub-small-btn" on:click={handleSubscribeFeed}>
+                    {i18n("add.subscribe")}</span>
             {/if}
         </div>
     </div>

@@ -3,7 +3,7 @@
     export let numPages
 
     import { createEventDispatcher, onMount } from 'svelte'
-    import { warnToast } from '../utils/helper.js'
+    import { warnToast, i18n} from '../utils/helper.js'
 
     const dispatch = createEventDispatcher()
     const Mousetrap = require('mousetrap')
@@ -12,28 +12,28 @@
         if (currentPage < numPages) {
             dispatch('refresh-list-view', {page: currentPage + 1 })
         } else {
-            warnToast("Already the last page")
+            warnToast(i18n('already.last.page'))
         }
     }
     function prevPage() {
         if (currentPage > 1) {
             dispatch('refresh-list-view', { page: currentPage - 1 })
         } else {
-            warnToast("Already the first page")
+            warnToast(i18n('already.first.page'))
         }
     }
     function firstPage() {
         if (currentPage > 1) {
             dispatch('refresh-list-view', { page: 1 })
         } else {
-            warnToast("Already the first page")
+            warnToast(i18n('already.first.page'))
         }
     }
     function lastPage() {
         if (currentPage < numPages) {
             dispatch('refresh-list-view', { page: numPages })
         } else {
-            warnToast("Already the last page")
+            warnToast(i18n('already.last.page'))
         }
     }
 
@@ -74,18 +74,18 @@
 
 <div id="omr-pager">
     <ul class="pagination">
-        <li class="{ currentPage > 1 ? 'waves-effect' : 'disabled' }" title="Previous page" on:click={prevPage}>
+        <li class="{ currentPage > 1 ? 'waves-effect' : 'disabled' }" title="{i18n('prev.page')}" on:click={prevPage}>
             <a href={'#'}><i class="material-icons">chevron_left</i></a></li>
 
-        <li class="{ currentPage > 1 ? 'waves-effect' : 'disabled' }" title="First page" on:click={firstPage}>
+        <li class="{ currentPage > 1 ? 'waves-effect' : 'disabled' }" title="{i18n('first.page')}" on:click={firstPage}>
             <a href={'#'}>1</a></li>
 
-        <li class="current-page primary-bg-color" title="Current page"><a href={'#'}>{currentPage}</a></li>
+        <li class="current-page primary-bg-color"><a href={'#'}>{currentPage}</a></li>
 
-        <li class="{ currentPage < numPages ? 'waves-effect' : 'disabled' }" title="Last page" on:click={lastPage}>
+        <li class="{ currentPage < numPages ? 'waves-effect' : 'disabled' }" title="{i18n('last.page')}" on:click={lastPage}>
             <a href={'#'}>{ numPages }</a></li>
 
-        <li class="{ currentPage < numPages ? 'waves-effect' : 'disabled' }" title="Next page" on:click={nextPage}>
+        <li class="{ currentPage < numPages ? 'waves-effect' : 'disabled' }" title="{i18n('next.page')}" on:click={nextPage}>
             <a href={'#'}><i class="material-icons">chevron_right</i></a></li>
     </ul>
 </div>
