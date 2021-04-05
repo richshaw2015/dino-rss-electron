@@ -89,11 +89,11 @@
     <div id="omr-post-title-bar" class="drag" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
         <div class="post-title">{ activeEntry.title }</div>
 
-        <i title="Toggle star / unstar" class="material-icons no-drag {activeEntry.stats.has_starred ? 'primary-color' : ''}" 
+        <i title="{i18n('toggle.star.unstar')}" class="material-icons no-drag {activeEntry.stats.has_starred ? 'primary-color' : ''}"
             on:click={toggleStarStatus}>
             {activeEntry.stats.has_starred ? 'star' : 'star_border'}</i>
 
-        <i title="Change font size" class="material-icons no-drag" on:click="{showFontSizeWindow}">format_size</i>
+        <i title="{i18n('change.font.size')}" class="material-icons no-drag" on:click="{showFontSizeWindow}">format_size</i>
     </div>
 
     <div id="omr-modal-font-size" class="modal">
