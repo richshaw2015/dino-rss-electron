@@ -18,7 +18,8 @@ export default {
 		replace({
 			'__SERVER__': production ? 'https://dinorss.org' : 'http://192.168.31.204:8000',
 			'CONF/TOKEN': production ? 'CONF/TOKEN' : 'CONF/DEBUG/TOKEN',
-			'CONF/USER' : production ? 'CONF/USER' : 'CONF/DEBUG/USER'
+			'CONF/USER' : production ? 'CONF/USER' : 'CONF/DEBUG/USER',
+			'preventAssignment': true
 		}),
 		svelte({
 			// enable run-time checks when not in production
