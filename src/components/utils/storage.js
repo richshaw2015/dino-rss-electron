@@ -40,7 +40,7 @@ export function saveViewScope(scope) {
 
 export function getViewScope() {
     // all unread
-    return localStorage.getItem(viewScopeConfKey) || 'all'
+    return localStorage.getItem(viewScopeConfKey) || 'unread'
 }
 
 export function saveUserInfo(user) {
