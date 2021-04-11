@@ -73,7 +73,7 @@ yarn run dev:mac
 
 Build package on macOS:
 ```sh
-yarn run dist:mac
+yarn run dist:mac:x64
 ```
 
 ## Follow us
