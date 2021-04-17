@@ -4,8 +4,8 @@
     import { onMount } from 'svelte'
     import { createEventDispatcher } from 'svelte'
     import { saveViewScope } from '../utils/storage.js'
-    import { activeTab, rssViewMode, viewScope, starViewMode, isApiLoading } from '../utils/store.js'
-    import { shortToast, warnToast, i18n } from '../utils/helper.js'
+    import { activeTab, rssViewMode, viewScope, starViewMode, isApiLoading, unreadCountRsp } from '../utils/store.js'
+    import { shortToast, warnToast, toast, i18n } from '../utils/helper.js'
     import FeedCard from '../global/FeedCard.svelte'
     import { apiReq } from '../utils/req.js';
 
@@ -22,7 +22,24 @@
             return false
         });
     })
+    function handleMarkAllAsRead() {
+        console.log('mark all as read')
+        if ($unreadCountRsp.count > 0) {
+            apiReq('/api/entry/mark/read', {entries: $unreadCountRsp.list.join(',')}).then( rsp => {
+                if (rsp.code === 0) {
+                    shortToast(i18n("mark.all.as.read"))
+                    $unreadCountRsp.count = 0
 
+                    // refresh
+                    dispatch('refresh-list-view', {page: 1})
+                }
+            }).catch(err => {
+                warnToast(err)
+            })
+        } else {
+            toast(i18n('no.unread.feed'))
+        }
+    }
     function handleToggleViewMode() {
         // change status after network
         if ($activeTab === "rss") {
@@ -118,7 +135,7 @@
     }
 
     .toolbar-icon {
-        width: 54px;
+        width: 50px;
         height: 34px;
         color: #101010;
     }
@@ -165,6 +182,10 @@
                 {#if showModeBtn}
                 <div title="{i18n('toggle.view')}" class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
                     <i class="material-icons">{$rssViewMode === 'feed' ? 'view_module' : 'view_list'} </i>
+                </div>
+
+                <div title="{i18n('mark.all.as.read')}" class="toolbar-icon" id="dino-mark-all" on:click={handleMarkAllAsRead}>
+                    <i class="material-icons">done_all</i>
                 </div>
                 {/if}
             {:else if $activeTab === 'star' && showModeBtn}
