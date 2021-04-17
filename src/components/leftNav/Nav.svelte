@@ -353,7 +353,7 @@
     #omr-modal-upgrade ul li {
         list-style: disc;
         margin-left: 2rem;
-        word-break: break-all;
+        word-break: break-word;
     }
     #omr-modal-upgrade .modal-footer a {
         color: unset;

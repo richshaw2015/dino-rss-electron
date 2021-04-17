@@ -31,7 +31,7 @@
     },
     "appId": "org.dinorss",
     "productName": "Dinosaur Rss",
-    "artifactName": "${productName}.${version}.${ext}",
+    "artifactName": "${productName}.${version}.${arch}.${ext}",
     "files": [
       "!public/*.map",
       "!public/podplayer/**/report.html",

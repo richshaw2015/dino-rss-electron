@@ -70,7 +70,7 @@
         font-size: 1.8rem;
         margin-top: 16px;
         margin-bottom: 16px;
-        word-break: break-all;
+        word-break: break-word;
     }
     #omr-modal-font-size {
         padding: 12px;

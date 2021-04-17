@@ -47,7 +47,7 @@
         text-align: center;
 	    margin-top: 1.8rem;
         font-size: 1.2rem;
-        word-break: break-all;
+        word-break: break-word;
     }
 </style>
 
