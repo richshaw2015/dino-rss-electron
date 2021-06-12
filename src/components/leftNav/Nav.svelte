@@ -191,15 +191,15 @@
         align-items: center;
     }
     #omr-nav-avatar {
-        margin-top: 64px;
+        margin-top: 60px;
         cursor: pointer;
     }
     .margin-win32 {
         margin-top: 28px !important;
     }
     #omr-nav-avatar img {
-        width: 36px;
-        height: 36px;
+        width: 38px;
+        height: 38px;
         margin: auto;
         display: block;
     }
@@ -212,8 +212,9 @@
         user-select: none;
     }
     .nav-tab-btn i {
-        height: 24px;
-        width: 24px;
+        height: 26px;
+        width: 26px;
+        font-size: 26px;
         margin: auto;
     }
     #omr-nav-apps, #omr-nav-star, #omr-nav-rss{
@@ -239,7 +240,7 @@
         width: 100%;
     }
     .rss-notify-wrapper i {
-        margin-left: 23px;
+        margin-left: 22px;
     }
     .rss-notify-badge {
         position: absolute;
