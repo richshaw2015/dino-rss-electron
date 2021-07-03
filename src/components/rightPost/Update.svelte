@@ -1,19 +1,19 @@
 <script>
     import { warnToast } from "../utils/helper"
 
-    import FeedCard from '../global/FeedCard.svelte'
+    import FeedCard2 from '../global/FeedCard2.svelte'
     import { apiReq } from '../utils/req.js'
-    import { isApiLoading, recentAddRsp } from '../utils/store.js'
+    import { isApiLoading, hourUpdateRsp } from '../utils/store.js'
     import { onMount } from 'svelte'
 
     onMount(() => {
-        if ($recentAddRsp.length === 0) {
+        if ($hourUpdateRsp.length === 0) {
             isApiLoading.set(true)
         }
 
-        apiReq('/api/recent/feeds').then( rsp => {
+        apiReq('/api/explore/last/hour').then( rsp => {
             if (rsp.code === 0) {
-                recentAddRsp.set(rsp.data)
+                hourUpdateRsp.set(rsp.data)
             }
         }).catch(err => {
             warnToast(err)
@@ -26,11 +26,11 @@
 <style>
 </style>
 
-{#if $recentAddRsp.length > 0}
+{#if $hourUpdateRsp.length > 0}
 <div class="row">
-    {#each $recentAddRsp as feed}
+    {#each $hourUpdateRsp as data}
         <div class="col s6">
-            <FeedCard feedInfo={feed} />
+            <FeedCard2 data={data} />
         </div>
     {/each}
 </div>

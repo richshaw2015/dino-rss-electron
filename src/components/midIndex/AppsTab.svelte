@@ -42,8 +42,11 @@
 <Toolbar />
 
 <div id="omr-apps">
+    <div class="waves-effect one-app {$appsActiveMenu === 'update' ? 'active-app' : ''}" on:click={() => appsActiveMenu.set('update')}>
+        <i class="material-icons app-icon sync-icon">sync</i>{ i18n('update') }</div>
+
     <div class="waves-effect one-app {$appsActiveMenu === 'explore' ? 'active-app' : ''}" on:click={() => appsActiveMenu.set('explore')}>
-        <i class="material-icons app-icon explore-icon">explore</i>{ i18n('explore') }</div>
+        <i class="material-icons app-icon explore-icon">add_circle</i>{ i18n('explore') }</div>
     <!-- <div class="waves-effect one-app"><i class="material-icons app-icon">equalizer</i>Ranking</div> -->
 
     <div class="divider app-divider"></div>

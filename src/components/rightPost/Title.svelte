@@ -144,6 +144,8 @@
                     {i18n('setting')}  ⚙️
                 {:else if $appsActiveMenu === 'explore'}
                     {i18n('explore')}  🧭
+                {:else if $appsActiveMenu === 'update'}
+                    {i18n('update')}  📡
                 {:else}
                     Dinosaur Rss 🦕
                 {/if}

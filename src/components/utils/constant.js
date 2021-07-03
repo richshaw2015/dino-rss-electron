@@ -231,12 +231,19 @@ export const localeMsg = {
         "ja": "更新ログ",
         "zh-TW": "更新日誌："
     },
+    "update": {
+        "en": "Recently updated",
+        "zh": "最近更新",
+        "ko": "최근 업데이트",
+        "ja": "最新のアップデート",
+        "zh-TW": "最近更新"
+    },
     "explore": {
-        "en": "Explore",
-        "zh": "发现",
-        "ko": "찾기",
-        "ja": "検索",
-        "zh-TW": "發現"
+        "en": "Recently submitted",
+        "zh": "最新提交",
+        "ko": "최근 제출",
+        "ja": "最近提出された",
+        "zh-TW": "最近提交"
     },
     "about": {
         "en": "About",

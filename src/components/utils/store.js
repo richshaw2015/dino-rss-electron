@@ -35,4 +35,7 @@ export let starActiveFeed = writable({})
 export let starFeedEntriesView = writable(false)
 
 // apps tab
-export let appsActiveMenu = writable("about")
+export let appsActiveMenu = writable("update")
+
+export let hourUpdateRsp = writable([])
+export let recentAddRsp = writable([])

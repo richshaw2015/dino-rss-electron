@@ -9,6 +9,7 @@
     import { appsActiveMenu, activeTab, rssActiveEntry, starActiveEntry } from '../utils/store.js'
     import Podcast from './Podcast.svelte'
     import Home from './Home.svelte'
+    import Update from './Update.svelte'
     import Explore from './Explore.svelte'
     import Thanks from './Thanks.svelte'
     import Setting from './Setting.svelte'
@@ -268,7 +269,9 @@
         {#if $activeTab !== 'apps'}
             <Home />
         {:else}
-            {#if $appsActiveMenu === 'about'}
+            {#if $appsActiveMenu === 'update'}
+                <Update />
+            {:else if $appsActiveMenu === 'about'}
                 <Home />
             {:else if $appsActiveMenu === 'thanks'}
                 <Thanks />
