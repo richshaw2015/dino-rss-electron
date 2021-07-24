@@ -249,6 +249,10 @@ export function getCacheDir() {
     return path.join(remote.app.getPath('userData'), "APPCache")
 }
 
+export function getAppVer() {
+    return remote.app.getVersion()
+}
+
 export function setEntryCache(entryId, cacheRsp) {
     const entryCacheDir = getCacheDir()
     const entryCacheFile = path.join(entryCacheDir, entryId + ".json")

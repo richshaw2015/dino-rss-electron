@@ -2,7 +2,7 @@
     let cacheSize = 1
 
     import { onMount } from 'svelte'
-    import { getCacheDir, toast, warnToast, readableSize, reloadWindow, resizeImageUrl, i18n, getLocaleLang }
+    import { getCacheDir, toast, warnToast, readableSize, reloadWindow, resizeImageUrl, i18n, getLocaleLang, getAppVer }
         from '../utils/helper.js'
     import { userInfoRsp } from '../utils/store.js'
     import { clearUserInfo, saveLocaleLang } from '../utils/storage.js'
@@ -150,4 +150,9 @@
             <option value="ko">🇰🇷  한국어</option>
         </select>
     </div>
+</div>
+
+<div class="setting-item">
+    <span class="setting-title">{ i18n('version') }</span>
+    <span class="">Beta {getAppVer()}</span>
 </div>

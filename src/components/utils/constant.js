@@ -484,11 +484,11 @@ export const localeMsg = {
         "zh-TW": "已清理"
     },
     "account": {
-        "en": "Account:",
-        "zh": "账号：",
-        "ko": "계좌 번호:",
+        "en": "Account",
+        "zh": "账号",
+        "ko": "계좌 번호",
         "ja": "口座番号",
-        "zh-TW": "賬號："
+        "zh-TW": "賬號"
     },
     "visitor": {
         "en": "Visitor",
@@ -498,18 +498,18 @@ export const localeMsg = {
         "zh-TW": "遊客"
     },
     "cache.usage": {
-        "en": "Cache Usage:",
-        "zh": "存储空间：",
-        "ko": "저장:",
+        "en": "Cache Usage",
+        "zh": "存储空间",
+        "ko": "저장",
         "ja": "ストレージ",
-        "zh-TW": "存儲空間："
+        "zh-TW": "存儲空間"
     },
     "feedback": {
-        "en": "Feedback:",
-        "zh": "反馈：",
-        "ko": "피드백:",
+        "en": "Feedback",
+        "zh": "反馈",
+        "ko": "피드백",
         "ja": "フィードバック",
-        "zh-TW": "反饋："
+        "zh-TW": "反饋"
     },
     "discuss": {
         "en": "Discuss",
@@ -622,6 +622,13 @@ export const localeMsg = {
         "ko": "언어",
         "ja": "言語",
         "zh-TW": "語言"
+    },
+    "version": {
+        "en": "Version",
+        "zh": "版本",
+        "ko": "버전",
+        "ja": "バージョン",
+        "zh-TW": "版本"
     },
     "change.font.size": {
         "en": "Change font size",
