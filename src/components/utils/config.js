@@ -10,11 +10,11 @@ export const SPONSORS = [{
     }
 ]
 export const SUPPORTERS = [
-    // {
-    //     name: "twitter",
-    //     link: "https://www.jetbrains.com/?from=dinorss",
-    //     image: "icon/twitter.svg"
-    // }
+    {
+        name: "@leeiv",
+        link: "https://twitter.com/leeiv",
+        image: "icon/supporter/leeiv.jpg"
+    },
 ]
 
 export const podcastConfig = {
