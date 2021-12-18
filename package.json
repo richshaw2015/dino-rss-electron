@@ -45,6 +45,9 @@
       "!node_modules/**/mousetrap.min.js",
       "!node_modules/**/*.js.map"
     ],
+    "extraFiles": [
+      "LICENSES.chromium.html"
+    ],
     "win": {
       "target": "nsis",
       "icon": "build/logo.png"
