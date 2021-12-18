@@ -4,8 +4,8 @@
     import { starListRsp, starActiveEntry } from '../utils/store.js'
     import { readableAuthor, i18n } from '../utils/helper.js'
 
-    const { remote, shell } = require('electron')
-    const { Menu, MenuItem } = remote
+    const { shell } = require('electron')
+    const { Menu, MenuItem } = require('@electron/remote')
     import { isWin, shortToast, toast, warnToast, fromNow, isInList, copyToClipboard } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
     import FeedAvatar from '../global/FeedAvatar.svelte'
@@ -74,7 +74,7 @@
             }
         }));
 
-        menu.popup({ window: remote.getCurrentWindow() })
+        menu.popup({ window: require('@electron/remote').getCurrentWindow() })
     }
 </script>
 

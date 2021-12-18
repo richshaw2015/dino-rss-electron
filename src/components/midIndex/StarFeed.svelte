@@ -3,8 +3,8 @@
 
     import { fromNow, readableAuthor, i18n } from '../utils/helper.js'
 
-    const { remote, shell } = require('electron')
-    const { Menu, MenuItem } = remote
+    const { shell } = require('electron')
+    const { Menu, MenuItem } = require('@electron/remote')
     import { starFeedEntriesView, feedToEdit } from '../utils/store.js'
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
@@ -26,7 +26,7 @@
             }
         }));
 
-        menu.popup({ window: remote.getCurrentWindow() })
+        menu.popup({ window: require('@electron/remote').getCurrentWindow() })
     }
 </script>
 

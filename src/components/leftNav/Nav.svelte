@@ -1,9 +1,9 @@
 <script>
     import { onMount } from 'svelte'
-    const { ipcRenderer, remote } = require('electron')
+    const { ipcRenderer } = require('electron')
     const Mousetrap = require('mousetrap')
     const fs = require('fs')
-    const { dialog } = remote
+    const { dialog } = require('@electron/remote')
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, i18n,
         warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'

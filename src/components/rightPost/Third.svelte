@@ -15,9 +15,8 @@
     import Setting from './Setting.svelte'
     import Notice from '../global/Notice.svelte'
 
-    const { remote } = require('electron')
     const { shell } = require('electron')
-    const { Menu, MenuItem } = remote
+    const { Menu, MenuItem } = require('@electron/remote')
     
     let qrcode
     let pellEditor
@@ -104,7 +103,7 @@
             label: '📗  ' + i18n('lookup') + `"${truncateText}"`,
             visible: hasText && isMac(),
             click: function(){
-                remote.getCurrentWindow().showDefinitionForSelection()
+                require('@electron/remote').getCurrentWindow().showDefinitionForSelection()
             }
         }));
         menu.append(new MenuItem({
@@ -176,7 +175,7 @@
             }
         }));
 
-        menu.popup({ window: remote.getCurrentWindow() })
+        menu.popup({ window: require('@electron/remote').getCurrentWindow() })
     }
 
     function allowDrop(event) {

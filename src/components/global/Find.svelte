@@ -1,8 +1,7 @@
 <script>
     const { ipcRenderer } = require('electron')
-    const { remote } = require('electron');
 
-    const mainWindow = remote.getCurrentWindow()
+    const mainWindow = require('@electron/remote').getCurrentWindow()
 
     let findKeyword
     let activeMatch

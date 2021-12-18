@@ -4,8 +4,8 @@
     import { createEventDispatcher } from 'svelte'
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
-    const { remote, shell } = require('electron')
-    const { Menu, MenuItem } = remote
+    const { shell } = require('electron')
+    const { Menu, MenuItem } = require('@electron/remote')
     const dispatch = createEventDispatcher()
 
     import { shortToast, toast, warnToast, isInList, fromNow, readableAuthor, readableCount, copyToClipboard, i18n }
@@ -91,7 +91,7 @@
                 handleUnsubscribeFeed(feedInfo.id)
             }
         }));
-        menu.popup({ window: remote.getCurrentWindow() })
+        menu.popup({ window: require('@electron/remote').getCurrentWindow() })
     }
 </script>
 

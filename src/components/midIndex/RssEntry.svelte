@@ -5,8 +5,8 @@
     import { readableAuthor, i18n } from '../utils/helper.js'
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
-    const { remote, shell } = require('electron')
-    const { Menu, MenuItem } = remote
+    const { shell } = require('electron')
+    const { Menu, MenuItem } = require('@electron/remote')
     import { isWin, shortToast, toast, warnToast, fromNow, isInList } from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
 
@@ -143,7 +143,7 @@
         //     }
         // }));
 
-        menu.popup({ window: remote.getCurrentWindow() })
+        menu.popup({ window: require('@electron/remote').getCurrentWindow() })
     }
 </script>
 

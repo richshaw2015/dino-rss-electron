@@ -2,6 +2,8 @@ const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard}
 const fs = require('fs')
 
 const DEV = !app.isPackaged
+const remoteMain = require("@electron/remote/main");
+remoteMain.initialize()
 
 if (DEV) {
 	const path = require('path');
@@ -38,11 +40,13 @@ function createMainWindow () {
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,
-			worldSafeExecuteJavaScript: true
+			contextIsolation: false,
 		},
 		icon: 'public/icon/icon.svg',
 		backgroundColor: '#f3f3f3'
 	});
+
+	remoteMain.enable(mainWindow.webContents);
 
 	mainWindow.loadFile('public/index.html');
 
@@ -97,6 +101,9 @@ function createAuthWindow(token) {
 		parent: mainWindow,
 		icon: 'public/icon/icon.svg'
 	})
+
+	remoteMain.enable(authWindow.webContents);
+
 	authWindow.loadURL(githubAuthUrl)
 
 	authWindow.on('closed', () => {

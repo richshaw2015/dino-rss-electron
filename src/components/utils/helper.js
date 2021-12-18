@@ -18,7 +18,10 @@ export function truncateStr(str, len) {
     return str.length < len ? str : str.slice(0, len) + '...'
 }
 
-const { ipcRenderer, remote, clipboard } = require('electron')
+const { ipcRenderer, clipboard } = require('electron')
+
+const remote = require('@electron/remote');
+
 const { Menu, MenuItem } = remote
 const path = require('path')
 const fs = require('fs')
