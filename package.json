@@ -1,6 +1,6 @@
 {
   "name": "Dinorss",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
