@@ -91,7 +91,7 @@
     "rollup": "^2.51.2",
     "rollup-plugin-svelte": "^6.1.1",
     "rollup-plugin-terser": "^5.1.2",
-    "svelte": "^3.38.2",
+    "svelte": "^3.42.6",
     "svelte-loader": "^2.13.6",
     "telnet-client": "^1.4.9"
   },
