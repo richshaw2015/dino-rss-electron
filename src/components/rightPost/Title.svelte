@@ -63,6 +63,7 @@
         width: 40px;
         min-width: 40px;
         padding-left: 8px;
+        font-size: 22px;
     }
     .post-title {
         flex-grow: 1;

@@ -3,6 +3,7 @@
     import Notice from '../global/Notice.svelte'
     import FeedNav from './FeedNav.svelte'
     import Pager from './Pager.svelte'
+    import Tag from './Tag.svelte'
     import Toolbar from './Toolbar.svelte'
     import RssEntry from "./RssEntry.svelte"
     import { getPageSize, isInList, shortToast, toast, warnToast, setBadge, i18n } from '../utils/helper.js'
@@ -250,6 +251,8 @@
             on:refresh-list-view={handleToolbarRefresh} />
     {/if}
 {:else}
+    <Tag />
+
     {#if $rssListRsp.code === undefined}
         <!-- loading -->
         <Notice />

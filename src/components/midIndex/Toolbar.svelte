@@ -132,15 +132,20 @@
         border-radius: 3px;
         font-size: .95rem;
         vertical-align: middle;
+        padding-left: 3rem;
     }
 
     .toolbar-icon {
-        width: 50px;
-        height: 34px;
+        width: 44px;
+        height: 28px;
         color: #101010;
     }
     .toolbar-icon i {
         margin: 5px 15px;
+        font-size: 21px;
+    }
+    #omr-toolbar-scope i {
+        font-size: 19px;
     }
     .search-icon {
         margin: 5px 0;
