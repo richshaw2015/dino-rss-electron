@@ -60,18 +60,18 @@
         cursor: move;
     }
     #omr-post-title-bar > i {
-        width: 54px;
-        min-width: 54px;
-        padding-left: 15px;
-        padding-right: 15px;
+        width: 40px;
+        min-width: 40px;
+        padding-left: 8px;
     }
     .post-title {
         flex-grow: 1;
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         margin-top: 16px;
-        margin-bottom: 16px;
+        margin-bottom: 10px;
         word-break: break-word;
     }
+
     #omr-modal-font-size {
         padding: 12px;
         margin: 0;
