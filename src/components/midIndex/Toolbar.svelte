@@ -114,13 +114,13 @@
         background-color: #E6E6E6;
     }
     .omr-search-form.input-field {
-        margin: 0;
-        height: 100%;
+        height: 28px;
+        margin: 3px 0;
     }
     .nav-wrapper {
         width: 100%;
         flex-grow: 1;
-        margin-right: 10px;
+        margin-right: 6px;
     }
     .omr-full-search {
         padding-right: 0;

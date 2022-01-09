@@ -16,15 +16,15 @@
     .tag-col {
         padding: 0 0.2rem;
         cursor: pointer;
-        opacity: 0.85;
+        opacity: 1.0;
         width: 16.666%;
     }
     .tag-col:hover {
-        opacity: 1.0;
+        opacity: 0.75;
     }
     .tag-col.active {
         border-bottom: 3px solid;
-        opacity: 1.0;
+        opacity: 0.9;
     }
 
     .count {
