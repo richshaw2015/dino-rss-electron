@@ -156,7 +156,7 @@
     #omr-modal-search-feed {
         width: 76%;
         padding: 28px;
-        left: 70px;
+        left: 64px;
         max-height: calc(100% - 120px);
     }
 </style>

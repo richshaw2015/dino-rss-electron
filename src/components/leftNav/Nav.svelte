@@ -183,8 +183,8 @@
     #omr-left-nav {
         height: 100%;
         min-height: 600px;
-        min-width: 70px;
-        max-width: 70px;
+        min-width: 64px;
+        max-width: 64px;
         background: #24292E;
         display: flex;
         flex-direction: column;
@@ -259,12 +259,12 @@
         width: 300px;
         margin: 0;
         padding: 24px;
-        left: 70px;
+        left: 64px;
     }
     #omr-modal-add-feed, #omr-modal-upgrade {
         width: 600px;
         padding: 28px;
-        left: 70px;
+        left: 64px;
     }
     .user-top-wrapper, .user-info {
         display: flex;

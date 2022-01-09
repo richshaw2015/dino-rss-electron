@@ -159,7 +159,7 @@ figure {
 #omr-loader {
     position: fixed;
     top: calc(50% - 32px);
-    left: calc(50% + 70px - 32px);
+    left: calc(50% + 64px - 32px);
     z-index: 9999;
 }
 

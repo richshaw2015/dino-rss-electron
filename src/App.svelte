@@ -34,9 +34,9 @@
         height: 100vh;
     }
     .left-container {
-        width: 70px;
-        min-width: 70px;
-        max-width: 70px;
+        width: 64px;
+        min-width: 64px;
+        max-width: 64px;
         overflow: hidden;
     }
     .middle-container {

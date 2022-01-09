@@ -252,7 +252,7 @@
         margin: 0 auto;
         max-width: 656px;
         padding: 28px;
-        left: 70px;
+        left: 64px;
     }
 </style>
 

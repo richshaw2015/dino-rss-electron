@@ -36,7 +36,7 @@ function createMainWindow () {
 		center: true,
 		titleBarStyle: 'hidden',
 		frame: false,
-		trafficLightPosition: {x: 9, y: 16},
+		trafficLightPosition: {x: 6, y: 16},
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,
@@ -97,7 +97,7 @@ function createAuthWindow(token) {
 		resizable: false,
 		movable: false,
 		frame: false,
-		trafficLightPosition: {x: 9, y: 16},
+		trafficLightPosition: {x: 6, y: 16},
 		parent: mainWindow,
 		icon: 'public/icon/icon.svg'
 	})

@@ -15,8 +15,8 @@
 <style>
     #omr-win-titlebar {
         height: 36px;
-        min-width: 70px;
-        max-width: 70px;
+        min-width: 64px;
+        max-width: 64px;
         background: #24292E;
         display: flex;
         align-items: center;
