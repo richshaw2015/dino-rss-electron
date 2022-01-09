@@ -68,7 +68,8 @@
     .post-title {
         flex-grow: 1;
         font-size: 1.6rem;
-        margin-top: 16px;
+        font-weight: bold;
+        margin-top: 10px;
         margin-bottom: 10px;
         word-break: break-word;
     }
