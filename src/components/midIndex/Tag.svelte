@@ -9,21 +9,22 @@
     .tag-row {
         margin: 0;
     }
-    .tag-row div {
-        width: 16.666%;
-    }
-    .tag-row i {
+    .tag-col i {
         font-size: 18px;
         vertical-align: middle;
     }
-    .tag-row .col {
+    .tag-col {
         padding: 0 0.2rem;
         cursor: pointer;
+        opacity: 0.85;
+        width: 16.666%;
     }
-    .tag-row .active {
-        /*background-color: rgb(230, 230, 230);*/
-        /*border-radius: 4px;*/
+    .tag-col:hover {
+        opacity: 1.0;
+    }
+    .tag-col.active {
         border-bottom: 3px solid;
+        opacity: 1.0;
     }
 
     .count {
@@ -57,7 +58,7 @@
 
 <div id="omr-tag">
     <div class="row tag-row">
-        <div class="col tag-red active">
+        <div class="col tag-red tag-col active">
             <i class="material-icons">assistant_photo</i>
             <span class="count">32</span>
         </div>
@@ -65,23 +66,23 @@
         <!--        <i class="material-icons">folder</i>-->
         <!--        <span class="count">12</span>-->
         <!--    </div>-->
-        <div class="col tag-yellow">
+        <div class="col tag-yellow tag-col">
             <i class="material-icons">folder_special</i>
             <span class="count">2</span>
         </div>
-        <div class="col tag-green">
+        <div class="col tag-green tag-col">
             <i class="material-icons">folder_shared</i>
             <span class="count">302</span>
         </div>
-        <div class="col tag-blue">
+        <div class="col tag-blue tag-col">
             <i class="material-icons">create_new_folder</i>
             <span class="count">5</span>
         </div>
-        <div class="col tag-purple">
+        <div class="col tag-purple tag-col">
             <i class="material-icons">folder</i>
             <span class="count">2</span>
         </div>
-        <div class="col tag-grey">
+        <div class="col tag-grey tag-col">
             <i class="material-icons">folder</i>
             <span class="count">0</span>
         </div>
