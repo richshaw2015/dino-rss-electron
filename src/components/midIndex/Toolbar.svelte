@@ -95,10 +95,10 @@
     #omr-top-toolbar {
         width: 100%;
         max-width: 400px;
-        height: 60px;
+        height: 50px;
         display: flex;
-        padding-top: 16px;
-        padding-bottom: 10px;
+        padding-top: 8px;
+        padding-bottom: 8px;
     }
     .toolbar-group {
         display: flex;
@@ -149,6 +149,9 @@
     }
     .search-icon {
         margin: 5px 0;
+    }
+    .search-icon i {
+        font-size: 21px;
     }
     #omr-modal-search-feed {
         width: 76%;

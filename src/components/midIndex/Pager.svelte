@@ -54,12 +54,14 @@
     #omr-pager {
         width: 100%;
         max-width: 400px;
-        border-top: 1px dashed rgba(0,0,0,0.14);
+        /*border-top: 1px dashed rgba(0,0,0,0.14);*/
         /*border: 0.5px dashed red;*/
     }
     .pagination {
         display: flex;
         justify-content: center;
+        margin-top: 6px;
+        margin-bottom: 6px;
     }
     .pagination li {
         width: 16%;

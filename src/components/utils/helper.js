@@ -116,9 +116,9 @@ export function setBadge(count) {
 }
 export function getPageSize(isFeedEntriesView=false) {
     if (isFeedEntriesView) {
-        return Math.floor((window.innerHeight - 60 - 16 - 60 - 48) / 59)
+        return Math.floor((window.innerHeight - 50 - 16 - 42 - 48) / 59)
     } else {
-        return Math.floor((window.innerHeight - 60 - 16 - 60) / 59)
+        return Math.floor((window.innerHeight - 50 - 28 - 16 - 42) / 59)
     }
 }
 
