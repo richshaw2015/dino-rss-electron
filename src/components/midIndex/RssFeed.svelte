@@ -4,7 +4,7 @@
     import { createEventDispatcher } from 'svelte'
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
-    const { shell } = require('electron')
+    const { shell, nativeImage} = require('electron')
     const { Menu, MenuItem } = require('@electron/remote')
     const dispatch = createEventDispatcher()
 
@@ -12,7 +12,8 @@
         from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
     import { unreadCountRsp, rssListRsp, rssFeedEntriesView, feedToEdit } from '../utils/store.js'
-    
+    import { Tags } from '../utils/constant.js'
+
     function handleMarkFeedAsRead(feedInfo) {
         const unreadCount = feedInfo.stats.unread_count
 
@@ -45,6 +46,13 @@
 
     function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
+        const redIcon = nativeImage.createFromPath("public/icon/tag/red.png");
+        const yellowIcon = nativeImage.createFromPath("public/icon/tag/yellow.png")
+        const greenIcon = nativeImage.createFromPath("public/icon/tag/green.png")
+        const blueIcon = nativeImage.createFromPath("public/icon/tag/blue.png")
+        const purpleIcon = nativeImage.createFromPath("public/icon/tag/purple.png")
+        const greyIcon = nativeImage.createFromPath("public/icon/tag/grey.png")
+
         menu.append(new MenuItem({
             label: "✅️  " + i18n("mark.as.read"),
             click: function(){
@@ -82,6 +90,67 @@
             click: function(){
                 feedToEdit.set(feedInfo)
             }
+        }));
+        menu.append(new MenuItem({type: "separator",}));
+
+        menu.append(new MenuItem({
+            label: "🗂  " + i18n("tag"),
+            submenu: [
+                new MenuItem({
+                    icon: redIcon,
+                    label: " Red",
+                    type: "radio",
+                    checked: feedInfo.tag === Tags.red,
+                    click: function () {
+                        // TOD
+                    }
+                }),
+                new MenuItem({
+                    icon: yellowIcon,
+                    label: " Yellow",
+                    checked: feedInfo.tag === Tags.yellow,
+                    type: "radio",
+                    click: function () {
+                        // TODO
+                    }
+                }),
+                new MenuItem({
+                    icon: greenIcon,
+                    label: " Green",
+                    type: "radio",
+                    checked: feedInfo.tag === Tags.green,
+                    click: function () {
+                        // TODO
+                    }
+                }),
+                new MenuItem({
+                    icon: blueIcon,
+                    label: " Blue",
+                    type: "radio",
+                    checked: feedInfo.tag === Tags.blue,
+                    click: function () {
+                        // TODO
+                    }
+                }),
+                new MenuItem({
+                    icon: purpleIcon,
+                    label: " Purple",
+                    type: "radio",
+                    checked: feedInfo.tag === Tags.purple,
+                    click: function () {
+                        // TODO
+                    }
+                }),
+                new MenuItem({
+                    icon: greyIcon,
+                    label: "️ Grey",
+                    type: "radio",
+                    checked: feedInfo.tag === Tags.grey,
+                    click: function () {
+                        // TODO
+                    }
+                })
+            ]
         }));
         menu.append(new MenuItem({type: "separator",}));
 

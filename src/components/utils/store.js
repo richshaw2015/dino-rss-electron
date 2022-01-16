@@ -1,6 +1,5 @@
 import { writable, readable } from 'svelte/store'
 import { getRssViewMode, getViewScope, getUserInfo, getStarViewMode } from './storage.js'
-import { getLocaleLang } from './helper.js'
 
 // nav tab
 export let activeTab = writable("rss")
@@ -39,3 +38,6 @@ export let appsActiveMenu = writable("update")
 
 export let hourUpdateRsp = writable([])
 export let recentAddRsp = writable([])
+
+// tag
+export let activeTag = writable(-1)

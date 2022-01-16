@@ -1,5 +1,14 @@
 <script>
+    import { Tags } from '../utils/constant.js'
+    import { activeTag } from '../utils/store.js'
 
+    function switchTag(tag) {
+        if (tag === $activeTag) {
+            activeTag.set(Tags.all);
+        } else {
+            activeTag.set(tag);
+        }
+    }
 </script>
 
 <style>
@@ -36,9 +45,6 @@
     .tag-red {
         color: rgb(247, 93, 78);
     }
-    /*.tag-orange {*/
-    /*    color: rgb(247, 163, 55);*/
-    /*}*/
     .tag-yellow {
         color: rgb(247, 207, 54);
     }
@@ -58,33 +64,30 @@
 
 <div id="omr-tag">
     <div class="row tag-row">
-        <div class="col tag-red tag-col active">
+        <div class="col tag-red tag-col {$activeTag == Tags.red ? 'active' : ''}" on:click={() => switchTag(Tags.red)}>
             <i class="material-icons">assistant_photo</i>
             <span class="count">32</span>
         </div>
-        <!--    <div class="col tag-orange">-->
-        <!--        <i class="material-icons">folder</i>-->
-        <!--        <span class="count">12</span>-->
-        <!--    </div>-->
-        <div class="col tag-yellow tag-col">
+        <div class="col tag-yellow tag-col {$activeTag == Tags.yellow ? 'active' : ''}" on:click={() => switchTag(Tags.yellow)}>
             <i class="material-icons">folder_special</i>
             <span class="count">2</span>
         </div>
-        <div class="col tag-green tag-col">
+        <div class="col tag-green tag-col {$activeTag == Tags.green ? 'active' : ''}" on:click={() => switchTag(Tags.green)}>
             <i class="material-icons">folder_shared</i>
             <span class="count">302</span>
         </div>
-        <div class="col tag-blue tag-col">
+        <div class="col tag-blue tag-col {$activeTag == Tags.blue ? 'active' : ''}" on:click={() => switchTag(Tags.blue)}>
             <i class="material-icons">create_new_folder</i>
             <span class="count">5</span>
         </div>
-        <div class="col tag-purple tag-col">
+        <div class="col tag-purple tag-col {$activeTag == Tags.purple ? 'active' : ''}" on:click={() => switchTag(Tags.purple)}>
             <i class="material-icons">folder</i>
             <span class="count">2</span>
         </div>
-        <div class="col tag-grey tag-col">
+        <div class="col tag-grey tag-col {$activeTag == Tags.grey ? 'active' : ''}" on:click={() => switchTag(Tags.grey)}>
             <i class="material-icons">folder</i>
             <span class="count">0</span>
         </div>
     </div>
 </div>
+

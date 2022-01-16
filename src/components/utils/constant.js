@@ -1,3 +1,6 @@
+// tag id
+export const Tags = {"all": 0, "red": 1, "yellow": 2, "green": 3, "blue": 4, "purple": 5, "grey": 6}
+
 // i18n dict
 export const localeMsg = {
     "mark.as.read": {
@@ -6,6 +9,13 @@ export const localeMsg = {
         "ko": "읽은 상태로 설정",
         "ja": "既読に設定",
         "zh-TW": "設為已讀"
+    },
+    "tag": {
+        "en": "Tag",
+        "zh": "标签",
+        "ko": "상표",
+        "ja": "ラベル",
+        "zh-TW": "標籤"
     },
     "mark.all.as.read": {
         "en": "Mark all as read",

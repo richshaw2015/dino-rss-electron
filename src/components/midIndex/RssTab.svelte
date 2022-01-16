@@ -10,7 +10,7 @@
     import { apiReq } from '../utils/req.js'
     import { saveRssViewMode } from '../utils/storage.js'
     import { rssViewMode, viewScope, rssActiveEntry, rssActiveFeed, rssListRsp, rssFeedListRspBak, rssFeedEntriesView, 
-        unreadCountRsp} from '../utils/store.js'
+        unreadCountRsp, activeTag} from '../utils/store.js'
 
     import { onMount, onDestroy } from 'svelte'
 
@@ -98,8 +98,15 @@
                 setBadge($unreadCountRsp.count)
             }
         }
-
         return rsp
+    });
+
+    activeTag.subscribe(tag => {
+        console.log("Tag changed to " + tag)
+        if (tag >= 0) {
+            updateRssList(1, $rssViewMode)
+        }
+        return tag
     });
 
     function handleGotoFeedEntries(feed, page) {
@@ -110,7 +117,7 @@
     }
 
     function syncUnreadCount() {
-        apiReq('/api/count/unread', {}).then(rsp => {
+        apiReq('/api/count/unread', {tag: $activeTag}).then(rsp => {
             if (rsp.code === 0) {
                 unreadCountRsp.set(rsp)
             }
@@ -123,7 +130,7 @@
         if (!mode) mode = $rssViewMode
 
         if (mode === 'feed') {
-            apiReq('/api/my/feeds', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
+            apiReq('/api/my/feeds', {page: page, page_size: getPageSize(), scope: $viewScope, tag: $activeTag}).then( rsp => {
                 if (!$rssFeedEntriesView) {
                     rssListRsp.set(rsp)
 
@@ -150,7 +157,7 @@
                 warnToast($rssListRsp.msg)
             })
         } else if (mode === 'entry') {
-            apiReq('/api/my/entries', {page: page, page_size: getPageSize(), scope: $viewScope}).then( rsp => {
+            apiReq('/api/my/entries', {page: page, page_size: getPageSize(), scope: $viewScope, tag: $activeTag}).then( rsp => {
                 rssListRsp.set(rsp)
 
                 if (rsp.code === 0) {
