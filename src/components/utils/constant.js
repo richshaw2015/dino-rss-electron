@@ -1,5 +1,13 @@
 // tag id
 export const Tags = {"all": 0, "red": 1, "yellow": 2, "green": 3, "blue": 4, "purple": 5, "grey": 6}
+export const tagImgMap = {
+    1: './icon/tag/red@2x.png',
+    2: './icon/tag/yellow@2x.png',
+    3: './icon/tag/green@2x.png',
+    4: './icon/tag/blue@2x.png',
+    5: './icon/tag/purple@2x.png',
+    6: './icon/tag/grey@2x.png',
+}
 
 // i18n dict
 export const localeMsg = {

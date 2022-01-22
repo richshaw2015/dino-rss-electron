@@ -1,5 +1,5 @@
 import { writable, readable } from 'svelte/store'
-import { getRssViewMode, getViewScope, getUserInfo, getStarViewMode } from './storage.js'
+import { getRssViewMode, getViewScope, getUserInfo, getStarViewMode, getFeedTagInfo, getTagCountInfo } from './storage.js'
 
 // nav tab
 export let activeTab = writable("rss")
@@ -41,3 +41,6 @@ export let recentAddRsp = writable([])
 
 // tag
 export let activeTag = writable(-1)
+export let isTagSynced = writable(false)
+export let feedTagMap = writable(getFeedTagInfo())
+export let tagCountMap = writable(getTagCountInfo())

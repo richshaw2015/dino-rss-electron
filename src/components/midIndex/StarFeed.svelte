@@ -44,9 +44,9 @@
     }
     .feed-meta-line {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         height: 24px;
-        font-size: 0.9rem !important;
+        font-size: 0.85rem !important;
     }
     .feed-star-stats{
         width: 60px;

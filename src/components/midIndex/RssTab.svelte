@@ -6,17 +6,32 @@
     import Tag from './Tag.svelte'
     import Toolbar from './Toolbar.svelte'
     import RssEntry from "./RssEntry.svelte"
-    import { getPageSize, isInList, shortToast, toast, warnToast, setBadge, i18n } from '../utils/helper.js'
+    import { getPageSize, isInList, shortToast, toast, warnToast, setBadge, i18n, calTagCountMap } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
-    import { saveRssViewMode } from '../utils/storage.js'
+    import { saveRssViewMode, saveFeedTagInfo, saveTagCountInfo } from '../utils/storage.js'
     import { rssViewMode, viewScope, rssActiveEntry, rssActiveFeed, rssListRsp, rssFeedListRspBak, rssFeedEntriesView, 
-        unreadCountRsp, activeTag} from '../utils/store.js'
+        unreadCountRsp, activeTag, feedTagMap, tagCountMap, isTagSynced} from '../utils/store.js'
 
     import { onMount, onDestroy } from 'svelte'
 
     const Mousetrap = require('mousetrap')
     
     onMount(() => {
+        // sync feed tag info
+        if ($rssViewMode === 'feed' && !$isTagSynced) {
+            console.log('sync tag info')
+            apiReq('/api/my/tags', {}).then(rsp => {
+                feedTagMap.set(rsp)
+                tagCountMap.set(calTagCountMap(rsp))
+                isTagSynced.set(true)
+
+                saveFeedTagInfo($feedTagMap)
+                saveTagCountInfo($tagCountMap)
+            }).catch(err => {
+                toast(err)
+            })
+        }
+
         // first list request
         if(!$rssFeedEntriesView) {
             if (!$rssListRsp.page || $rssListRsp.page === 1) {
@@ -258,7 +273,7 @@
             on:refresh-list-view={handleToolbarRefresh} />
     {/if}
 {:else}
-    <Tag />
+    <Tag countMap="{$tagCountMap}" />
 
     {#if $rssListRsp.code === undefined}
         <!-- loading -->

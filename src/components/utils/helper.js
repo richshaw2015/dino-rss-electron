@@ -1,5 +1,5 @@
 import { localeLangConfKey } from './storage.js'
-import { localeMsg } from './constant.js'
+import { localeMsg, tagImgMap } from './constant.js'
 
 export function toast(msg, ttl=3000) {
     M.toast({html: msg, displayLength: ttl});
@@ -283,4 +283,17 @@ export const localeLang = getLocaleLang()
 
 export function i18n(msg) {
     return localeMsg[msg][localeLang]
+}
+
+export function calTagCountMap(tagMap) {
+    let destMap = {}
+    for (let feed in tagMap) {
+        let tag = tagMap[feed]
+        destMap[tag] = (destMap[tag] || 0) + 1
+    }
+    return destMap
+}
+
+export function getTagSrc(tag) {
+    return tagImgMap[tag]
 }

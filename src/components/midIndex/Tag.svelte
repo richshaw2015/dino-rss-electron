@@ -1,4 +1,6 @@
 <script>
+    export let countMap = {};
+
     import { Tags } from '../utils/constant.js'
     import { activeTag } from '../utils/store.js'
 
@@ -66,27 +68,27 @@
     <div class="row tag-row">
         <div class="col tag-red tag-col {$activeTag == Tags.red ? 'active' : ''}" on:click={() => switchTag(Tags.red)}>
             <i class="material-icons">assistant_photo</i>
-            <span class="count">32</span>
+            <span class="count">{countMap[Tags.red] || 0}</span>
         </div>
         <div class="col tag-yellow tag-col {$activeTag == Tags.yellow ? 'active' : ''}" on:click={() => switchTag(Tags.yellow)}>
             <i class="material-icons">folder_special</i>
-            <span class="count">2</span>
+            <span class="count">{countMap[Tags.yellow] || 0}</span>
         </div>
         <div class="col tag-green tag-col {$activeTag == Tags.green ? 'active' : ''}" on:click={() => switchTag(Tags.green)}>
             <i class="material-icons">folder_shared</i>
-            <span class="count">302</span>
+            <span class="count">{countMap[Tags.green] || 0}</span>
         </div>
         <div class="col tag-blue tag-col {$activeTag == Tags.blue ? 'active' : ''}" on:click={() => switchTag(Tags.blue)}>
             <i class="material-icons">create_new_folder</i>
-            <span class="count">5</span>
+            <span class="count">{countMap[Tags.blue] || 0}</span>
         </div>
         <div class="col tag-purple tag-col {$activeTag == Tags.purple ? 'active' : ''}" on:click={() => switchTag(Tags.purple)}>
             <i class="material-icons">folder</i>
-            <span class="count">2</span>
+            <span class="count">{countMap[Tags.purple] || 0}</span>
         </div>
         <div class="col tag-grey tag-col {$activeTag == Tags.grey ? 'active' : ''}" on:click={() => switchTag(Tags.grey)}>
             <i class="material-icons">folder</i>
-            <span class="count">0</span>
+            <span class="count">{countMap[Tags.grey] || 0}</span>
         </div>
     </div>
 </div>

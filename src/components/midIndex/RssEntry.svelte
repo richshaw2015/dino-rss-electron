@@ -161,9 +161,9 @@
     }
     .entry-meta-line {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         height: 24px;
-        font-size: 0.9rem !important;
+        font-size: 0.85rem !important;
     }
     .entry-view-stats, .entry-star-stats {
         display: flex;

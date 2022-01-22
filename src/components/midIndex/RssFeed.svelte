@@ -1,4 +1,6 @@
 <script>
+    import {saveFeedTagInfo, saveTagCountInfo} from "../utils/storage";
+
     export let feedInfo
 
     import { createEventDispatcher } from 'svelte'
@@ -8,10 +10,28 @@
     const { Menu, MenuItem } = require('@electron/remote')
     const dispatch = createEventDispatcher()
 
-    import { shortToast, toast, warnToast, isInList, fromNow, readableAuthor, readableCount, copyToClipboard, i18n }
-        from '../utils/helper.js'
+    import {
+        shortToast,
+        toast,
+        warnToast,
+        isInList,
+        fromNow,
+        readableAuthor,
+        readableCount,
+        copyToClipboard,
+        i18n,
+        calTagCountMap, getTagSrc
+    } from '../utils/helper.js'
     import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
-    import { unreadCountRsp, rssListRsp, rssFeedEntriesView, feedToEdit } from '../utils/store.js'
+    import {
+        unreadCountRsp,
+        rssListRsp,
+        rssFeedEntriesView,
+        feedToEdit,
+        tagCountMap,
+        feedTagMap,
+        isTagSynced
+    } from '../utils/store.js'
     import { Tags } from '../utils/constant.js'
 
     function handleMarkFeedAsRead(feedInfo) {
@@ -39,6 +59,19 @@
             if (rsp.code === 0) {
                 toast(i18n("wait.a.moment"))
             }
+        }).catch(err => {
+            warnToast(err)
+        })
+    }
+
+    function updateFeedTag(feedId, tagId) {
+        apiReq('/api/tag/feed', {feed_id: feedId, tag_id: tagId}).then( rsp => {
+            feedTagMap.set(rsp)
+            tagCountMap.set(calTagCountMap(rsp))
+            isTagSynced.set(true)
+
+            saveFeedTagInfo($feedTagMap)
+            saveTagCountInfo($tagCountMap)
         }).catch(err => {
             warnToast(err)
         })
@@ -100,54 +133,54 @@
                     icon: redIcon,
                     label: " Red",
                     type: "radio",
-                    checked: feedInfo.tag === Tags.red,
+                    checked: $feedTagMap[feedInfo.id] === Tags.red,
                     click: function () {
-                        // TOD
+                        updateFeedTag(feedInfo.id, Tags.red);
                     }
                 }),
                 new MenuItem({
                     icon: yellowIcon,
                     label: " Yellow",
-                    checked: feedInfo.tag === Tags.yellow,
+                    checked: $feedTagMap[feedInfo.id] === Tags.yellow,
                     type: "radio",
                     click: function () {
-                        // TODO
+                        updateFeedTag(feedInfo.id, Tags.yellow);
                     }
                 }),
                 new MenuItem({
                     icon: greenIcon,
                     label: " Green",
                     type: "radio",
-                    checked: feedInfo.tag === Tags.green,
+                    checked: $feedTagMap[feedInfo.id] === Tags.green,
                     click: function () {
-                        // TODO
+                        updateFeedTag(feedInfo.id, Tags.green);
                     }
                 }),
                 new MenuItem({
                     icon: blueIcon,
                     label: " Blue",
                     type: "radio",
-                    checked: feedInfo.tag === Tags.blue,
+                    checked: $feedTagMap[feedInfo.id] === Tags.blue,
                     click: function () {
-                        // TODO
+                        updateFeedTag(feedInfo.id, Tags.blue);
                     }
                 }),
                 new MenuItem({
                     icon: purpleIcon,
                     label: " Purple",
                     type: "radio",
-                    checked: feedInfo.tag === Tags.purple,
+                    checked: $feedTagMap[feedInfo.id] === Tags.purple,
                     click: function () {
-                        // TODO
+                        updateFeedTag(feedInfo.id, Tags.purple);
                     }
                 }),
                 new MenuItem({
                     icon: greyIcon,
                     label: "️ Grey",
                     type: "radio",
-                    checked: feedInfo.tag === Tags.grey,
+                    checked: $feedTagMap[feedInfo.id] === Tags.grey,
                     click: function () {
-                        // TODO
+                        updateFeedTag(feedInfo.id, Tags.grey);
                     }
                 })
             ]
@@ -178,16 +211,16 @@
     }
     .feed-meta-line {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         height: 24px;
-        font-size: 0.9rem !important;
+        font-size: 0.85rem !important;
     }
     .feed-update-stats, .feed-toread-stats {
         display: flex;
         align-items: center;
     }
     .feed-toread-stats {
-        min-width: 60px;
+        min-width: 54px;
     }
     .feed-update-stats {
         width: 54px;
@@ -226,14 +259,21 @@
         margin-left: 16px;
     }
     .feed-author {
-        width: 130px;
-        padding-left: 12px;
+        width: 120px;
         flex-grow: 1;
     }
+    .feed-tag {
+        margin-left: 12px;
+        margin-right: 6px;
+        width: 12px;
+    }
+    .feed-tag-default {
+        font-size: 11.3px;
+    }
     .feed-date {
-        width: 130px;
-        min-width: 130px;
-        padding: 0 8px;
+        width: 120px;
+        min-width: 120px;
+        padding: 0 4px;
     }
 
 </style>
@@ -259,6 +299,11 @@
     </div>
 
     <div class="feed-meta-line">
+        {#if $feedTagMap[feedInfo.id]}
+            <img class="feed-tag" src="{getTagSrc($feedTagMap[feedInfo.id])}" alt="Tag" />
+        {:else}
+            <i class="material-icons feed-tag feed-tag-default">local_offer</i>
+        {/if}
         <span class="truncate feed-author">@{ readableAuthor(feedInfo.custom.author || feedInfo.author) }</span>
         <span class="truncate feed-date">{fromNow(feedInfo.stats.update_ts)}</span>
 

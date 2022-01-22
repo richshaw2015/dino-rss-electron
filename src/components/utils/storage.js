@@ -8,6 +8,9 @@ const fontSizeConfKey = 'CONF/FONT/SIZE'
 const tokenConfKey = 'CONF/TOKEN'
 const userInfoConfKey = 'CONF/USER'
 
+const feed2tagConfKey = 'CONF/FEED/TAG'
+const tagCountConfKey = 'CONF/TAG/COUNT'
+
 export const localeLangConfKey = 'CONF/LOCALE'
 
 // TODO clear thirdparty data and rebuild localStorage
@@ -41,6 +44,28 @@ export function saveViewScope(scope) {
 export function getViewScope() {
     // all unread
     return localStorage.getItem(viewScopeConfKey) || 'unread'
+}
+
+export function saveFeedTagInfo(tag) {
+    localStorage.setItem(feed2tagConfKey, JSON.stringify(tag))
+}
+export function getFeedTagInfo() {
+    const tag = localStorage.getItem(feed2tagConfKey)
+    if (tag) {
+        return JSON.parse(tag)
+    }
+    return {}
+}
+
+export function saveTagCountInfo(tag) {
+    localStorage.setItem(tagCountConfKey, JSON.stringify(tag))
+}
+export function getTagCountInfo() {
+    const tag = localStorage.getItem(tagCountConfKey)
+    if (tag) {
+        return JSON.parse(tag)
+    }
+    return {}
 }
 
 export function saveUserInfo(user) {
