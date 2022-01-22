@@ -170,7 +170,7 @@
         align-items: center;
     }
     .entry-star-stats {
-        min-width: 60px;
+        min-width: 54px;
     }
     .entry-view-stats {
         width: 54px;

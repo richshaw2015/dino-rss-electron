@@ -18,6 +18,7 @@
         width: 24px;
         height: 24px;
         margin-right: 6px;
+        border-radius: 43%;
     }
     .feed-avatar-emoji {
         line-height: 24px;
