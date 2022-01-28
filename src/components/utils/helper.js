@@ -63,15 +63,16 @@ export function macNavCtxMenu() {
     }));
     menu.append(new MenuItem({type: "separator"}));
 
-    menu.append(new MenuItem({
-        label: "🔎  Zoom",
-        submenu: [
-            {"role": "resetZoom"},
-            {"role": "zoomIn"},
-            {"role": "zoomOut"},
-        ]
-    }));
-    menu.append(new MenuItem({type: "separator",}));
+    // menu.append(new MenuItem({
+    //     label: "🔎  Zoom",
+    //     submenu: [
+    //         {"role": "resetZoom"},
+    //         {"role": "zoomIn"},
+    //         {"role": "zoomOut"},
+    //     ]
+    // }));
+    // menu.append(new MenuItem({type: "separator",}));
+    //
     menu.append(new MenuItem({
         role: "toggleDevTools",
         label: "🔨  Inspect"
@@ -132,51 +133,51 @@ export function fromNow(utcTs) {
 
     let interval = seconds / 31536000 | 0
     if (interval > 1) {
-        return interval + " years ago"
+        return interval + i18n("years.ago")
     } else if (interval === 1) {
-        return "Last year"
+        return i18n("last.year")
     }
 
     interval = seconds / 2678400 | 0
     if (interval > 1) {
-        return interval + " months ago"
+        return interval + i18n("months.ago")
     } else if (interval === 1) {
-        return "Last month"
+        return i18n("last.month")
     }
 
     interval = seconds / 604800 | 0
     if (interval > 1) {
-        return interval + " weeks ago"
+        return interval + i18n("weeks.ago")
     } else if (interval === 1) {
-        return "Last week"
+        return i18n("last.week")
     }
 
     interval = seconds / 86400 | 0
     if (interval > 1) {
-        return interval + " days ago"
+        return interval + i18n("days.ago")
     } else if (interval === 1) {
-        return "Yesterday"
+        return i18n("yesterday")
     }
 
     interval = seconds / 3600 | 0
     if (interval > 1) {
-        return interval + " hours ago"
+        return interval + i18n("hours.ago")
     } else if (interval === 1) {
-        return "An hour ago"
+        return i18n("last.hour")
     }
 
     interval = seconds / 60 | 0
     if (interval > 1) {
-        return interval + " minutes ago"
+        return interval + i18n("minutes.ago")
     } else if (interval === 1) {
-        return "A minute ago"
+        return i18n("last.minute")
     }
 
     interval = seconds
     if (interval > 10) {
-        return interval + " seconds ago"
+        return interval + i18n("seconds.ago")
     } else {
-        return "Just now"
+        return i18n("just.now")
     }
 
     return utcTs

@@ -661,5 +661,103 @@ export const localeMsg = {
         "ko": "즐겨 찾기 / 즐겨 찾기",
         "ja": "好き/嫌い",
         "zh-TW": "切換收藏 / 取消收藏"
-    }
+    },
+    "years.ago": {
+        "en": " years ago",
+        "zh": "年前",
+        "ko": "년 전",
+        "ja": "年前",
+        "zh-TW": "年前"
+    },
+    "last.year": {
+        "en": "Last year",
+        "zh": "去年",
+        "ko": "작년",
+        "ja": "去年",
+        "zh-TW": "去年"
+    },
+    "months.ago": {
+        "en": " months ago",
+        "zh": "个月前",
+        "ko": "개월 전",
+        "ja": "か月前",
+        "zh-TW": "個月前"
+    },
+    "last.month": {
+        "en": "Last month",
+        "zh": "上个月",
+        "ko": "지난 달",
+        "ja": "先月",
+        "zh-TW": "上個月"
+    },
+    "weeks.ago": {
+        "en": " weeks ago",
+        "zh": "周前",
+        "ko": "주 전",
+        "ja": "週間前",
+        "zh-TW": "週前"
+    },
+    "last.week": {
+        "en": "Last week",
+        "zh": "上周",
+        "ko": "지난주",
+        "ja": "先週",
+        "zh-TW": "上週"
+    },
+    "days.ago": {
+        "en": " days ago",
+        "zh": "天前",
+        "ko": "일 전",
+        "ja": "日前",
+        "zh-TW": "天前"
+    },
+    "yesterday": {
+        "en": "Yesterday",
+        "zh": "昨天",
+        "ko": "어제",
+        "ja": "昨日",
+        "zh-TW": "昨天"
+    },
+    "hours.ago": {
+        "en": " hours ago",
+        "zh": "小时前",
+        "ko": "시간 전",
+        "ja": "時間前",
+        "zh-TW": "小時前"
+    },
+    "last.hour": {
+        "en": "An hour ago",
+        "zh": "一小时前",
+        "ko": "한 시간 전에",
+        "ja": "1時間前",
+        "zh-TW": "一小時前"
+    },
+    "minutes.ago": {
+        "en": " minutes ago",
+        "zh": "分钟前",
+        "ko": "분 전",
+        "ja": "分前",
+        "zh-TW": "分鐘前"
+    },
+    "last.minute": {
+        "en": "A minute ago",
+        "zh": "一分钟前",
+        "ko": "1분 전",
+        "ja": "1分前",
+        "zh-TW": "一分鐘前"
+    },
+    "seconds.ago": {
+        "en": " seconds ago",
+        "zh": "秒前",
+        "ko": "초 전",
+        "ja": "秒前",
+        "zh-TW": "秒前"
+    },
+    "just.now": {
+        "en": "Just now",
+        "zh": "刚刚",
+        "ko": "단지",
+        "ja": "ただ",
+        "zh-TW": "剛剛"
+    },
 }
