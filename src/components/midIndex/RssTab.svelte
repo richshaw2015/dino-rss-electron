@@ -105,7 +105,6 @@
     })
 
     const tagSub = activeTag.subscribe(tag => {
-        console.log("Tag changed to " + tag)
         if (tag >= 0) {
             updateRssList(1, $rssViewMode)
         }
@@ -113,7 +112,6 @@
     });
 
     const unreadCountSub = unreadCountRsp.subscribe(rsp => {
-        console.log("unreadCountRsp subscribe")
         if (rsp.code === 0) {
             if (rsp.count < 0) {
                 rsp.code = -1

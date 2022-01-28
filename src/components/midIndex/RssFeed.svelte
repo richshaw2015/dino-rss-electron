@@ -286,7 +286,7 @@
         width: 12px;
     }
     .feed-tag-default {
-        font-size: 11.3px;
+        font-size: 13px;
     }
     .feed-date {
         width: 120px;
@@ -320,7 +320,7 @@
         {#if $feedTagMap[feedInfo.id]}
             <img class="feed-tag" src="{getTagSrc($feedTagMap[feedInfo.id])}" alt="Tag" />
         {:else}
-            <i class="material-icons feed-tag feed-tag-default">local_offer</i>
+            <i class="material-icons feed-tag feed-tag-default">add_alert</i>
         {/if}
         <span class="truncate feed-author">@{ readableAuthor(feedInfo.custom.author || feedInfo.author) }</span>
         <span class="truncate feed-date">{fromNow(feedInfo.stats.update_ts)}</span>
