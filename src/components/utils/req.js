@@ -30,13 +30,3 @@ export async function apiReq(path, data) {
     )
     return await rsp.json()
 }
-
-export function handleUnsubscribeFeed(feedId) {
-    apiReq('/api/feed/unsubscribe', {feed_id: feedId}).then( rsp => {
-        if (rsp.code === 0) {
-            shortToast(i18n("unsubscribed"))
-        }
-    }).catch(err => {
-        warnToast(err)
-    })
-}

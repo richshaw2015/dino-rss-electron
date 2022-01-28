@@ -8,7 +8,7 @@
     const { shell } = require('electron')
     const { Menu, MenuItem } = require('@electron/remote')
     import { isWin, shortToast, toast, warnToast, fromNow, isInList } from '../utils/helper.js'
-    import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
+    import { apiReq } from '../utils/req.js'
 
     function handleMarkEntryAsRead(entry) {
         if (!entry.stats.has_read) {
@@ -133,15 +133,6 @@
                 shell.openExternal(entry.link)
             }
         }));
-
-        // menu.append(new MenuItem({type: "separator",}));
-        //
-        // menu.append(new MenuItem({
-        //     label: "🗑  Unsubscribe",
-        //     click: function(){
-        //         handleUnsubscribeFeed(entry.feed.id)
-        //     }
-        // }));
 
         menu.popup({ window: require('@electron/remote').getCurrentWindow() })
     }

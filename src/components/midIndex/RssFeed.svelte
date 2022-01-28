@@ -22,7 +22,7 @@
         i18n,
         calTagCountMap, getTagSrc
     } from '../utils/helper.js'
-    import { apiReq, handleUnsubscribeFeed } from '../utils/req.js'
+    import { apiReq } from '../utils/req.js'
     import {
         unreadCountRsp,
         rssListRsp,
@@ -58,6 +58,24 @@
         apiReq('/api/feed/sync', {feed_id: feedInfo.id}).then( rsp => {
             if (rsp.code === 0) {
                 toast(i18n("wait.a.moment"))
+            }
+        }).catch(err => {
+            warnToast(err)
+        })
+    }
+
+    function handleUnsubscribeFeed(feedId) {
+        apiReq('/api/feed/unsubscribe', {feed_id: feedId}).then( rsp => {
+            if (rsp.code === 0) {
+                shortToast(i18n("unsubscribed"))
+
+                // sync tag info
+                feedTagMap.set(rsp.data)
+                tagCountMap.set(calTagCountMap(rsp.data))
+                isTagSynced.set(true)
+
+                saveFeedTagInfo($feedTagMap)
+                saveTagCountInfo($tagCountMap)
             }
         }).catch(err => {
             warnToast(err)
