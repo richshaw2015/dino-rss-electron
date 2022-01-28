@@ -104,7 +104,16 @@
         return () => clearInterval(syncUnreadInterval)
     })
 
-    unreadCountRsp.subscribe(rsp => {
+    const tagSub = activeTag.subscribe(tag => {
+        console.log("Tag changed to " + tag)
+        if (tag >= 0) {
+            updateRssList(1, $rssViewMode)
+        }
+        return tag
+    });
+
+    const unreadCountSub = unreadCountRsp.subscribe(rsp => {
+        console.log("unreadCountRsp subscribe")
         if (rsp.code === 0) {
             if (rsp.count < 0) {
                 rsp.code = -1
@@ -116,13 +125,8 @@
         return rsp
     });
 
-    activeTag.subscribe(tag => {
-        console.log("Tag changed to " + tag)
-        if (tag >= 0) {
-            updateRssList(1, $rssViewMode)
-        }
-        return tag
-    });
+    onDestroy(tagSub);
+    onDestroy(unreadCountSub);
 
     function handleGotoFeedEntries(feed, page) {
         if (!$rssFeedEntriesView && $rssViewMode === "feed") {
