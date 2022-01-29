@@ -45,9 +45,6 @@
       "!node_modules/**/mousetrap.min.js",
       "!node_modules/**/*.js.map"
     ],
-    "extraFiles": [
-      "LICENSES.chromium.html"
-    ],
     "detectUpdateChannel": false,
     "win": {
       "target": "nsis",
@@ -70,10 +67,7 @@
       "deleteAppDataOnUninstall": true,
       "allowToChangeInstallationDirectory": true
     },
-    "dmg": {},
-    "electronDownload": {
-      "mirror": "https://npm.taobao.org/mirrors/electron/"
-    }
+    "dmg": {}
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
