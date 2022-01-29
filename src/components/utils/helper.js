@@ -1,5 +1,6 @@
-import { localeLangConfKey } from './storage.js'
+import { localeLangConfKey, tokenConfKey } from './storage.js'
 import { localeMsg, tagImgMap } from './constant.js'
+import {SERVER} from "./config";
 
 export function toast(msg, ttl=3000) {
     M.toast({html: msg, displayLength: ttl});
@@ -268,11 +269,13 @@ export function getLocaleLang() {
     if (!lang) {
         lang = remote.app.getLocale()
     }
-    if (!["zh", "zh-TW", "en", "ja", "ko"].includes(lang)){
+    if (!["zh", "zh-TW", "zh-CN", "zh-HK", "en", "ja", "ko"].includes(lang)){
         lang = "en"
     } else {
         if (lang === "zh-CN") {
             lang = "zh"
+        } else if (lang === "zh-HK") {
+            lang = "zh-TW"
         }
     }
     console.log(lang)
@@ -297,4 +300,31 @@ export function calTagCountMap(tagMap) {
 
 export function getTagSrc(tag) {
     return tagImgMap[tag]
+}
+
+export async function getTokenPromise() {
+    let token = localStorage.getItem(tokenConfKey)
+
+    if (!token) {
+        const md5 = require('md5')
+
+        const uuid = uuidv4()
+        const random = Math.floor(Math.random() * 100000000)
+        const sign = md5(`${uuid} ${random}`)
+        const lang = getLocaleLang()
+
+        let formData = new FormData()
+        formData.append('uuid', uuid)
+        formData.append('random', random)
+        formData.append('sign', sign)
+        formData.append('lang', lang)
+
+        const rsp = await fetch((new URL('/api/user/token', SERVER)).href, {method:'POST', body: formData})
+        token = (await rsp.json())['token']
+
+        if (token) {
+            localStorage.setItem(tokenConfKey, token)
+        }
+    }
+    return token
 }

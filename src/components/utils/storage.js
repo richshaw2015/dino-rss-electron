@@ -1,11 +1,9 @@
-import { SERVER } from './config.js'
-
 const starViewModeConfKey = 'CONF/STAR/VIEW/MODE'
 const rssViewModeConfKey = 'CONF/RSS/VIEW/MODE'
 
 const viewScopeConfKey = 'CONF/VIEW/SCOPE'
 const fontSizeConfKey = 'CONF/FONT/SIZE'
-const tokenConfKey = 'CONF/TOKEN'
+export const tokenConfKey = 'CONF/TOKEN'
 const userInfoConfKey = 'CONF/USER'
 
 const feed2tagConfKey = 'CONF/FEED/TAG'
@@ -109,29 +107,4 @@ export function saveToken(token) {
 export function clearUserInfo() {
     localStorage.removeItem(userInfoConfKey)
     localStorage.removeItem(tokenConfKey)
-}
-
-export async function getTokenPromise() {
-    let token = localStorage.getItem(tokenConfKey)
-
-    if (!token) {
-        const md5 = require('md5')
-        
-        const uuid = uuidv4()
-        const random = Math.floor(Math.random() * 100000000)
-        const sign = md5(`${uuid} ${random}`)
-
-        let formData = new FormData()
-        formData.append('uuid', uuid)
-        formData.append('random', random)
-        formData.append('sign', sign)
-
-        const rsp = await fetch((new URL('/api/user/token', SERVER)).href, {method:'POST', body: formData})
-        token = (await rsp.json())['token']
-
-        if (token) {
-            localStorage.setItem(tokenConfKey, token)
-        }
-    }
-    return token
 }

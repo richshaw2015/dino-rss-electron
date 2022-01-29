@@ -1,7 +1,6 @@
 <script>
-    import { getTokenPromise } from './components/utils/storage.js'
     import { activeTab } from './components/utils/store.js'
-    import { i18n } from './components/utils/helper.js'
+    import { i18n, getTokenPromise } from './components/utils/helper.js'
 
     import Nav from './components/leftNav/Nav.svelte'
     import AppsTab from './components/midIndex/AppsTab.svelte'
