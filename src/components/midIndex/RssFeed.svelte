@@ -7,7 +7,9 @@
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
     const { shell, nativeImage} = require('electron')
-    const { Menu, MenuItem } = require('@electron/remote')
+    const { Menu, MenuItem, app } = require('@electron/remote')
+    const path = require('path');
+    const appPath = app.getAppPath();
     const dispatch = createEventDispatcher()
 
     import {
@@ -97,12 +99,13 @@
 
     function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
-        const redIcon = nativeImage.createFromPath("public/icon/tag/red.png");
-        const yellowIcon = nativeImage.createFromPath("public/icon/tag/yellow.png")
-        const greenIcon = nativeImage.createFromPath("public/icon/tag/green.png")
-        const blueIcon = nativeImage.createFromPath("public/icon/tag/blue.png")
-        const purpleIcon = nativeImage.createFromPath("public/icon/tag/purple.png")
-        const greyIcon = nativeImage.createFromPath("public/icon/tag/grey.png")
+
+        const redIcon = nativeImage.createFromPath(path.join(appPath, "public/icon/tag/red.png"));
+        const yellowIcon = nativeImage.createFromPath(path.join(appPath, "public/icon/tag/yellow.png"));
+        const greenIcon = nativeImage.createFromPath(path.join(appPath, "public/icon/tag/green.png"));
+        const blueIcon = nativeImage.createFromPath(path.join(appPath, "public/icon/tag/blue.png"));
+        const purpleIcon = nativeImage.createFromPath(path.join(appPath, "public/icon/tag/purple.png"));
+        const greyIcon = nativeImage.createFromPath(path.join(appPath, "public/icon/tag/grey.png"));
 
         menu.append(new MenuItem({
             label: "✅️  " + i18n("mark.as.read"),
