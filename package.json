@@ -1,6 +1,6 @@
 {
   "name": "Dinorss",
-  "version": "0.4.1",
+  "version": "1.0.3",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
@@ -54,12 +54,22 @@
       "icon": "build/macOS.icns",
       "hardenedRuntime": true,
       "entitlements": "build/entitlements.mac.inherit.plist",
+      "provisioningProfile": "build/macOS.provisionprofile",
       "type": "distribution",
       "category": "public.app-category.news",
       "target": [
-        "dmg"
+        "dmg",
+        "mas"
       ],
       "extendInfo": {}
+    },
+    "mas": {
+      "icon": "build/macOS.icns",
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mas.plist",
+      "entitlementsInherit": "build/entitlements.mas.plist",
+      "type": "distribution",
+      "category": "public.app-category.news"
     },
     "nsis": {
       "oneClick": false,
