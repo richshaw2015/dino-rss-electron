@@ -1,6 +1,6 @@
 {
   "name": "Dinorss",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
@@ -53,6 +53,7 @@
     "mac": {
       "icon": "build/macOS.icns",
       "hardenedRuntime": true,
+      "gatekeeperAssess": false,
       "entitlements": "build/entitlements.mac.inherit.plist",
       "provisioningProfile": "build/macOS.provisionprofile",
       "type": "distribution",
@@ -67,7 +68,7 @@
       "icon": "build/macOS.icns",
       "hardenedRuntime": true,
       "entitlements": "build/entitlements.mas.plist",
-      "entitlementsInherit": "build/entitlements.mas.plist",
+      "entitlementsInherit": "build/entitlements.mas.inherit.plist",
       "type": "distribution",
       "category": "public.app-category.news"
     },
@@ -88,7 +89,7 @@
     "autolinker": "^3.14.3",
     "concurrently": "^5.3.0",
     "electron": "15.3.5",
-    "electron-builder": "^22.13.1",
+    "electron-builder": "22.11.7",
     "electron-devtools-installer": "^3.2.0",
     "electron-reload": "^1.5.0",
     "fsevents": "^2.3.2",
