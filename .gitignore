@@ -12,4 +12,3 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 public/bundle.*
 dist/
 !dist/.placeholder
-build/macOS.provisionprofile
