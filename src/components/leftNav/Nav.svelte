@@ -33,27 +33,25 @@
             return false
         });
 
-        if (!process.mas) {
-            setTimeout(() => {
-                // check update after 15 seconds
-                apiReq('/api/app/check/upgrade/v2', {version: appVersion(), platform: getPlatform(), arch: getArch()}).then( rsp => {
-                    if (rsp.code === 0) {
-                        upgradeRsp.set(rsp)
+        setTimeout(() => {
+            // check update after 15 seconds
+            apiReq('/api/app/check/upgrade/v2', {version: appVersion(), platform: getPlatform(), arch: getArch()}).then( rsp => {
+                if (rsp.code === 0) {
+                    upgradeRsp.set(rsp)
 
-                        const instanse = M.Modal.init(document.querySelector('#omr-modal-upgrade'), {
-                            inDuration: 0,
-                            outDuration: 0,
-                            opacity: 0.3,
-                            dismissible: false,
-                            endingTop: "15%"
-                        });
-                        instanse.open()
-                    }
-                }).catch(err => {
-                    console.warn(err)
-                })
-            }, 15000)
-        }
+                    const instanse = M.Modal.init(document.querySelector('#omr-modal-upgrade'), {
+                        inDuration: 0,
+                        outDuration: 0,
+                        opacity: 0.3,
+                        dismissible: false,
+                        endingTop: "15%"
+                    });
+                    instanse.open()
+                }
+            }).catch(err => {
+                console.warn(err)
+            })
+        }, 15000)
     })
 
     ipcRenderer.on('login-status-changed', (event) => {
