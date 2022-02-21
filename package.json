@@ -1,10 +1,11 @@
 {
   "name": "Dinorss",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
-    "dist:mas": "rollup -c; CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --universal"
+    "mas": "rollup -c; CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --universal",
+    "sign": "cd build && ./mas.sh"
   },
   "repository": "https://github.com/richshaw2015/dino-rss-electron",
   "keywords": [
@@ -52,7 +53,9 @@
       "target": [
         "mas"
       ],
-      "extendInfo": {}
+      "extendInfo": {
+        "ElectronTeamID": "4788B8LJ4S"
+      }
     },
     "mas": {
       "icon": "build/macOS.icns",
