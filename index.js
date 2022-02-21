@@ -154,7 +154,7 @@ ipcMain.handle('close-window', (event) => {
 })
 
 ipcMain.handle('toggle-dev-tools', (event) => {
-	if(!mainWindow) return;
+	if(!mainWindow || process.mas) return;
 	return mainWindow.webContents.toggleDevTools();
 })
 
