@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard} = require('electron')
+const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard, Menu} = require('electron')
 const fs = require('fs')
 
 const DEV = !app.isPackaged
@@ -185,3 +185,32 @@ ipcMain.handle('capture-window', (event) => {
 		})
 	})
 })
+
+if (process.platform === 'darwin') {
+	const template = [
+		{ role: 'appMenu' },
+		{ role: 'editMenu' },
+		// { role: 'viewMenu' },
+		{
+			label: 'View',
+			submenu: [
+				{ role: 'togglefullscreen' }
+			]
+		},
+		{ role: 'windowMenu' },
+		{
+			role: 'help',
+			submenu: [
+				{
+					label: 'Learn More',
+					click: async () => {
+						await shell.openExternal('https://github.com/richshaw2015/dino-rss-electron')
+					}
+				}
+			]
+		}
+	];
+
+	menu = Menu.buildFromTemplate(template);
+	Menu.setApplicationMenu(menu);
+}
