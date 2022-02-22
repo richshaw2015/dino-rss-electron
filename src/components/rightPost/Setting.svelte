@@ -154,5 +154,5 @@
 
 <div class="setting-item">
     <span class="setting-title">{ i18n('version') }</span>
-    <span class="">Beta {getAppVer()}</span>
+    <span class="">Release {getAppVer()}</span>
 </div>
