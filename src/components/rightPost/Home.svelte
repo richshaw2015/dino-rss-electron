@@ -72,7 +72,7 @@
     <br />
 
     <h3>️💡 Code Highlight</h3>
-    <pre><code class="language-js">const code = `var data = 1;`;
+    <pre><code class="language-js">const code = `var data = "Hello World!"`;
 
 // log
 console.log(code)</code></pre>
