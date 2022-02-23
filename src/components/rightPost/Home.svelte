@@ -127,12 +127,15 @@ console.log(code)</code></pre>
     </p>
 
     <h3>️🆓 Free for 100 feeds</h3>
-    <p class="donate-info">
-        <a href="https://www.buymeacoffee.com/dinorss" target="_blank">
-            <img src="icon/buymeacoffee.png" class="buymeacoffee" alt="Buy Me A Coffee" />
-        </a>
-        to get more feeds.
-    </p>
+
+    {#if !process.mas}
+        <p class="donate-info">
+            <a href="https://www.buymeacoffee.com/dinorss" target="_blank">
+                <img src="icon/buymeacoffee.png" class="buymeacoffee" alt="Buy Me A Coffee" />
+            </a>
+            to get more feeds.
+        </p>
+    {/if}
 
     <p class="social-wrapper">
         <span>Follow Us: </span>
