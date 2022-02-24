@@ -132,7 +132,7 @@
 
 <div class="setting-item">
     <span class="setting-title">{ i18n('feedback') }</span>
-    <a href="https://github.com/richshaw2015/dino-rss-electron/discussions/new" target="_blank">
+    <a href="https://github.com/richshaw2015/dino-rss-electron/discussions" target="_blank">
         <button class="waves-effect waves-light btn-small btn-white">{ i18n('discuss') }</button>
     </a>
 </div>
