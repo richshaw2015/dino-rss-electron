@@ -15,7 +15,12 @@ CHILD_PLIST="entitlements.mas.inherit.plist"
 PARENT_PLIST="entitlements.mas.plist"
 LOGINHELPER_PLIST="loginhelper.mas.plist"
 
+PROVISION="macOS.provisionprofile"
+
 FRAMEWORKS_PATH="$APP_PATH/Contents/Frameworks"
+
+# handle testflight
+cp $PROVISION "$APP_PATH/Contents/embedded.provisionprofile"
 
 # sign font-list binary
 # codesign --deep --force --verify --verbose=4 --timestamp --options runtime --entitlements "$CHILD_PLIST" -s "$APP_KEY" "$APP_PATH/Contents/Resources/app.asar.unpacked/node_modules/font-list/libs/darwin/fontlist"
