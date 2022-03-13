@@ -760,4 +760,11 @@ export const localeMsg = {
         "ja": "ただ",
         "zh-TW": "剛剛"
     },
+    "load.image": {
+        "en": "",
+        "zh": "加载图片",
+        "ko": "",
+        "ja": "",
+        "zh-TW": "加载图片"
+    },
 }

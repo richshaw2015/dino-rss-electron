@@ -167,6 +167,22 @@ ipcMain.handle('show-login-window', (event, token) => {
 	createAuthWindow(token)
 })
 
+ipcMain.handle('image-mode-change', (event, mode) => {
+	const { session } = require('electron')
+	const filter = {urls: []}
+
+	session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
+		if (!mode && details.resourceType === 'image') {
+			if (details.url.startsWith('http') && !details.url.startsWith('https://favicon-') &&
+				!details.url.startsWith('https://avatars.githubusercontent.com/')) {
+				callback({ cancel: true })
+				return
+			}
+		}
+		callback({})
+	})
+})
+
 ipcMain.handle('capture-window', (event) => {
 	mainWindow.webContents.capturePage().then(image => {
 		// copy to clipboard, then save to file

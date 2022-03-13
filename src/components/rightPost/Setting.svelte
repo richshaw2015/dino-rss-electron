@@ -1,13 +1,16 @@
 <script>
+    const { ipcRenderer } = require('electron')
+
     let cacheSize = 1
 
     import { onMount } from 'svelte'
     import { getCacheDir, toast, warnToast, readableSize, reloadWindow, resizeImageUrl, i18n, getLocaleLang, getAppVer }
         from '../utils/helper.js'
     import { userInfoRsp } from '../utils/store.js'
-    import { clearUserInfo, saveLocaleLang } from '../utils/storage.js'
+    import { clearUserInfo, saveLocaleLang, getImgMode, saveImgMode } from '../utils/storage.js'
 
     let locale = getLocaleLang()
+    let imgMode = getImgMode()
 
     const fs = require('fs')
     const getFolderSize = require('get-folder-size')
@@ -31,6 +34,11 @@
             clearUserInfo()
             reloadWindow()
         }
+    }
+
+    function handleImageMode(mode) {
+        ipcRenderer.invoke('image-mode-change', mode)
+        saveImgMode(mode)
     }
 
     onMount(() => {
@@ -120,6 +128,20 @@
         <span class="flex-grow"></span>
     {/if}
 </div>
+
+<div class="divider"></div>
+<div class="setting-item">
+    <span class="setting-title">{ i18n('load.image') }</span>
+    <div class="switch">
+        <label>
+            OFF
+            <input type="checkbox" bind:checked={imgMode} on:change={() => handleImageMode(imgMode)}>
+            <span class="lever"></span>
+            ON
+        </label>
+    </div>
+</div>
+
 <div class="divider"></div>
 
 <div class="setting-item">
@@ -128,6 +150,7 @@
     <button class="waves-effect waves-light btn-small btn-white {cacheSize > 0 ? '' : 'disabled'}" 
         on:click={handleCleanCache}>{i18n('clean')}</button>
 </div>
+
 <div class="divider"></div>
 
 <div class="setting-item">

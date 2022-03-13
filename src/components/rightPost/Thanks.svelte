@@ -70,24 +70,16 @@
         </li>
 
         <li>
-            <img src="https://podlove.org/files/2014/06/cropped-podlove-avatar-bkd-1024-180x180.png" class="logo" 
-                alt="Podlove Web Player" />
             <a href="https://podlove.org/podlove-web-player/" target="_blank">Podlove Web Player</a>
         </li>
         <li>
-            <img src="https://craig.global.ssl.fastly.net/img/favicon/mousetrap.png" class="logo" 
-                alt="Mousetrap" />
             <a href="https://craig.is/killing/mice" target="_blank">Mousetrap</a>
         </li>
 
         <li>
-            <img src="https://highlightjs.org/static/favicon.png" class="logo" 
-                alt="highlight.js" />
             <a href="https://highlightjs.org/" target="_blank">highlight.js</a>
         </li>
         <li>
-            <img src="https://prismjs.com/assets/favicon.png" class="logo" 
-                alt="Prism" />
             <a href="https://prismjs.com/" target="_blank">Prism</a>
         </li>
         <li>
