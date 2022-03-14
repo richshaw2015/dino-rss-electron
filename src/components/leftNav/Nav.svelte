@@ -9,7 +9,7 @@
         warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'
     import { getToken, saveUserInfo, saveToken, getImgMode } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
-    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, upgradeRsp } from '../utils/store.js'
+    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, upgradeRsp, readingMode } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
     
     let feedUrl
@@ -26,6 +26,10 @@
         });
         Mousetrap.bind('f12', function() {
             toggleDevTools()
+            return false
+        });
+        Mousetrap.bind('.', function() {
+            readingMode.set(!$readingMode)
             return false
         });
         Mousetrap.bind('M', function() {
