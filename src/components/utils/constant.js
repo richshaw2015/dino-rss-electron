@@ -761,10 +761,10 @@ export const localeMsg = {
         "zh-TW": "剛剛"
     },
     "load.image": {
-        "en": "",
+        "en": "Load Images",
         "zh": "加载图片",
-        "ko": "",
-        "ja": "",
-        "zh-TW": "加载图片"
+        "ko": "이미지 로드",
+        "ja": "画像を読み込む",
+        "zh-TW": "加載圖片"
     },
 }
