@@ -6,7 +6,7 @@
     import { truncateStr, isMac, isWin, captureWindow, toast, copyToClipboard, warnToast, setEntryCache, i18n }
         from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
-    import { appsActiveMenu, activeTab, rssActiveEntry, starActiveEntry } from '../utils/store.js'
+    import { appsActiveMenu, activeTab, rssActiveEntry, starActiveEntry, readingMode } from '../utils/store.js'
     import Podcast from './Podcast.svelte'
     import Home from './Home.svelte'
     import Update from './Update.svelte'
@@ -172,6 +172,14 @@
             label: "📸  " + i18n('screenshot'),
             click: function(){
                 captureWindow()
+            }
+        }));
+
+        menu.append(new MenuItem({type: "separator"}));
+        menu.append(new MenuItem({
+            label: "📖  " + ($readingMode ? i18n('exit.reader.mode') : i18n('reader.mode')),
+            click: function(){
+                readingMode.set(!$readingMode)
             }
         }));
 

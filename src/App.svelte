@@ -1,5 +1,5 @@
 <script>
-    import { activeTab } from './components/utils/store.js'
+    import { activeTab, readingMode } from './components/utils/store.js'
     import { i18n, getTokenPromise } from './components/utils/helper.js'
 
     import Nav from './components/leftNav/Nav.svelte'
@@ -22,6 +22,9 @@
 </script>
 
 <style>
+    .hidden {
+        display: none !important;
+    }
     .main-container {
         display: flex;
         position: fixed;
@@ -82,7 +85,7 @@
             <Nav />
         </div>
 
-        <div class="middle-container">
+        <div class="middle-container {$readingMode && ($activeTab === 'rss' || $activeTab === 'star') ? 'hidden' : '' }">
             {#if $activeTab === 'rss'}
                 <RssTab />
             {:else if $activeTab === 'star'}

@@ -7,9 +7,9 @@
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, i18n,
         warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'
-    import { getToken, saveUserInfo, saveToken } from '../utils/storage.js';
+    import { getToken, saveUserInfo, saveToken, getImgMode } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
-    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, upgradeRsp } from '../utils/store.js'
+    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, upgradeRsp, readingMode } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
     
     let feedUrl
@@ -28,10 +28,16 @@
             toggleDevTools()
             return false
         });
+        Mousetrap.bind('.', function() {
+            readingMode.set(!$readingMode)
+            return false
+        });
         Mousetrap.bind('M', function() {
             document.getElementById('dino-mark-all').click()
             return false
         });
+
+        ipcRenderer.invoke('image-mode-change', getImgMode())
 
         if (!process.mas) {
             setTimeout(() => {

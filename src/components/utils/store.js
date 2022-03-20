@@ -44,3 +44,6 @@ export let activeTag = writable(-1)
 export let isTagSynced = writable(false)
 export let feedTagMap = writable(getFeedTagInfo())
 export let tagCountMap = writable(getTagCountInfo())
+
+// article mode
+export let readingMode = writable(false)

@@ -6,8 +6,12 @@
     import { toggleMaximizeWindow, macNavCtxMenu, isInList, i18n, warnToast } from '../utils/helper.js'
     import { saveFontSize } from '../utils/storage.js'
     import { apiReq } from '../utils/req.js'
-    import { activeTab, rssListRsp, starListRsp, appsActiveMenu } from '../utils/store.js'
-    
+    import { activeTab, rssListRsp, starListRsp, appsActiveMenu, readingMode } from '../utils/store.js'
+
+    function exitReadingMode(event) {
+        readingMode.set(false)
+    }
+
     function showFontSizeWindow(event) {
         const width = 450
 
@@ -85,9 +89,59 @@
         min-width: 18%;
         display: inline-block;
     }
+    .iphone {
+        position: relative;
+    }
+
+    .notch {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 210px;
+        height: 42px;
+        background-color: #24292E;
+        border-radius: 0 0 28px 28px;
+        transform: translateX(-50%);
+    }
+    .notch::before, .notch::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -7px;
+        width: 14px;
+        height: 7px;
+        background-size: 50% 100%;
+        background-repeat: no-repeat;
+        background-image: radial-gradient(circle at 0 100%, transparent 6px, #222 7px);
+    }
+    .notch::after {
+        left: 100%;
+        margin-right: corner-sizepx;
+        background-image: radial-gradient(circle at 100% 100%, transparent 6px, #222 7px);
+    }
+    .exit-btn {
+        cursor: pointer;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        line-height: 42px;
+        opacity: 0.8;
+    }
+    .exit-btn:hover {
+        opacity: 1;
+    }
 </style>
 
 {#if activeEntry.id}
+    {#if $readingMode}
+        <div class="iphone">
+            <div class="notch" on:click={exitReadingMode}>
+                <div class="exit-btn">{i18n('exit.reader.mode')}</div>
+            </div>
+        </div>
+    {/if}
+
     <div id="omr-post-title-bar" class="drag" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
         <div class="post-title">{ activeEntry.title }</div>
 

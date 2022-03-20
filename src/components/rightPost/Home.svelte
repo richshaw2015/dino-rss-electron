@@ -109,7 +109,7 @@ console.log(code)</code></pre>
         </tr>
 
         <tr>
-            <td><kbd>F5</kbd> - Reload window </td>
+            <td><kbd>.</kbd> - Toggle Reading Mode </td>
             <td><kbd>Esc</kbd> - Close modal window </td>
             <td><kbd>Ctrl + f</kbd> - Search </td>
         </tr>

@@ -760,4 +760,25 @@ export const localeMsg = {
         "ja": "ただ",
         "zh-TW": "剛剛"
     },
+    "load.image": {
+        "en": "Load Images",
+        "zh": "加载图片",
+        "ko": "이미지 로드",
+        "ja": "画像を読み込む",
+        "zh-TW": "加載圖片"
+    },
+    "reader.mode": {
+        "en": "Reading Mode",
+        "zh": "阅读模式",
+        "ko": "읽기 모드",
+        "ja": "読書モード",
+        "zh-TW": "閱讀模式"
+    },
+    "exit.reader.mode": {
+        "en": "Exit Reading Mode",
+        "zh": "退出阅读模式",
+        "ko": "읽기 모드 종료",
+        "ja": "読み取りモードを終了します",
+        "zh-TW": "退出閱讀模式"
+    },
 }

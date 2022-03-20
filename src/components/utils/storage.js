@@ -8,6 +8,7 @@ const userInfoConfKey = 'CONF/USER'
 
 const feed2tagConfKey = 'CONF/FEED/TAG'
 const tagCountConfKey = 'CONF/TAG/COUNT'
+const imgModeKey = 'CONF/IMG/MODE'
 
 export const localeLangConfKey = 'CONF/LOCALE'
 
@@ -17,6 +18,18 @@ export function saveLocaleLang(lang) {
     console.log("Save locale: " + lang)
     localStorage.setItem(localeLangConfKey, lang)
     location.reload()
+}
+
+export function saveImgMode(mode) {
+    localStorage.setItem(imgModeKey, mode)
+}
+
+export function getImgMode() {
+    const mode = localStorage.getItem(imgModeKey)
+    if (mode === 'false') {
+        return false
+    }
+    return true
 }
 
 export function saveRssViewMode(mode) {
