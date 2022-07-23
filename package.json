@@ -87,7 +87,7 @@
     "@rollup/plugin-replace": "^2.4.2",
     "autolinker": "^3.14.3",
     "concurrently": "^5.3.0",
-    "electron": "15.3.7",
+    "electron": "15.5.7",
     "electron-builder": "22.11.7",
     "electron-devtools-installer": "^3.2.0",
     "electron-reload": "^1.5.0",
