@@ -50,17 +50,8 @@ function createMainWindow () {
 
 	mainWindow.loadFile('public/index.html');
 
-	ipcMain.handle('toggle-dark-mode', () => {
-		if (nativeTheme.shouldUseDarkColors) {
-			nativeTheme.themeSource = 'light'
-		} else {
-			nativeTheme.themeSource = 'dark'
-		}
-		return nativeTheme.shouldUseDarkColors
-	})
-
-	ipcMain.handle('system-dark-mode', () => {
-		nativeTheme.themeSource = 'system'
+	ipcMain.handle('toggle-appearance', (event, mode) => {
+		nativeTheme.themeSource = mode;
 	})
 
 	mainWindow.on('close', (event) => {

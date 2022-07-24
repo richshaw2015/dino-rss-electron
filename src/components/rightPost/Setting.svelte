@@ -7,10 +7,11 @@
     import { getCacheDir, toast, warnToast, readableSize, reloadWindow, resizeImageUrl, i18n, getLocaleLang, getAppVer }
         from '../utils/helper.js'
     import { userInfoRsp } from '../utils/store.js'
-    import { clearUserInfo, saveLocaleLang, getImgMode, saveImgMode } from '../utils/storage.js'
+    import { clearUserInfo, saveLocaleLang, getImgMode, saveImgMode, getAppearance, saveAppearanceMode } from '../utils/storage.js'
 
     let locale = getLocaleLang()
     let imgMode = getImgMode()
+    let appearance = getAppearance()
 
     const fs = require('fs')
     const getFolderSize = require('get-folder-size')
@@ -39,6 +40,10 @@
     function handleImageMode(mode) {
         ipcRenderer.invoke('image-mode-change', mode)
         saveImgMode(mode)
+    }
+    function handleAppearanceMode(mode) {
+        ipcRenderer.invoke('toggle-appearance', mode)
+        saveAppearanceMode(mode)
     }
 
     onMount(() => {
@@ -134,6 +139,18 @@
         <span>{i18n('visitor')}</span>
         <span class="flex-grow"></span>
     {/if}
+</div>
+
+<div class="divider"></div>
+<div class="setting-item">
+    <span class="setting-title">{ i18n('appearance') }</span>
+    <div class="input-field locale-select">
+        <select bind:value={appearance} on:change={() => handleAppearanceMode(appearance)}>
+            <option value="system">{ i18n('appearance.system') }</option>
+            <option value="light">{ i18n('appearance.light') }</option>
+            <option value="dark">{ i18n('appearance.dark') }</option>
+        </select>
+    </div>
 </div>
 
 <div class="divider"></div>

@@ -9,6 +9,7 @@ const userInfoConfKey = 'CONF/USER'
 const feed2tagConfKey = 'CONF/FEED/TAG'
 const tagCountConfKey = 'CONF/TAG/COUNT'
 const imgModeKey = 'CONF/IMG/MODE'
+const appearanceModeKey = 'CONF/IMG/APPEARANCE'
 
 export const localeLangConfKey = 'CONF/LOCALE'
 
@@ -24,12 +25,24 @@ export function saveImgMode(mode) {
     localStorage.setItem(imgModeKey, mode)
 }
 
+export function saveAppearanceMode(mode) {
+    localStorage.setItem(appearanceModeKey, mode)
+}
+
 export function getImgMode() {
     const mode = localStorage.getItem(imgModeKey)
     if (mode === 'false') {
         return false
     }
     return true
+}
+
+export function getAppearance() {
+    const mode = localStorage.getItem(appearanceModeKey)
+    if (mode === 'light' || mode === 'dark') {
+        return mode
+    }
+    return 'system';
 }
 
 export function saveRssViewMode(mode) {

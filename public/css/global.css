@@ -315,6 +315,9 @@ kbd {
         background: linear-gradient(180deg,#000,#000,#000,#222);
         color: #cecece;
     }
+    .btn-flat {
+        color: #cecece;
+    }
     .sponsor {
         border-color: #373737;
     }

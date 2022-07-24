@@ -271,7 +271,7 @@
     }
     #omr-modal-add-feed, #omr-modal-upgrade {
         width: 600px;
-        padding: 28px;
+        padding: 24px;
         left: 64px;
     }
     .user-top-wrapper, .user-info {

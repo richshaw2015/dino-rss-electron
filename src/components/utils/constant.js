@@ -781,4 +781,32 @@ export const localeMsg = {
         "ja": "読み取りモードを終了します",
         "zh-TW": "退出閱讀模式"
     },
+    "appearance": {
+        "en": "Appearance",
+        "zh": "外观",
+        "ko": "외부",
+        "ja": "外観",
+        "zh-TW": "外觀"
+    },
+    "appearance.light": {
+        "en": "Light",
+        "zh": "浅色模式",
+        "ko": "라이트 모드",
+        "ja": "ライトモード",
+        "zh-TW": "淺色模式"
+    },
+    "appearance.dark": {
+        "en": "Dark",
+        "zh": "深色模式",
+        "ko": "다크 모드",
+        "ja": "ダークモード",
+        "zh-TW": "深色模式"
+    },
+    "appearance.system": {
+        "en": "System",
+        "zh": "跟随系统",
+        "ko": "시스템을 따르다",
+        "ja": "システムをフォロー",
+        "zh-TW": "跟隨系統"
+    }
 }
