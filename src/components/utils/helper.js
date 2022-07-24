@@ -303,6 +303,12 @@ export function getTagSrc(tag) {
     return tagImgMap[tag]
 }
 
+export function  convHtml(src) {
+    return src.replaceAll('<', "&lt;");
+    // return src.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+    //     .replaceAll("&", "&amp;").replaceAll('"', "&quot;")
+}
+
 export async function getTokenPromise() {
     let token = localStorage.getItem(tokenConfKey)
 

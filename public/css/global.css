@@ -211,6 +211,9 @@ kbd {
     background-color: #dfdfdf !important;
     color: #9f9f9f !important;
 }
+.material-tooltip {
+    font-weight: bold;
+}
 
 /* pell editor */
 .pell {
@@ -324,6 +327,10 @@ kbd {
     .cancel-btn {
         background-color: #373737 !important;
         color: #cecece !important;
+    }
+    .material-tooltip {
+        background-color: #fefefe;
+        color: #111111;
     }
 
     .pell {

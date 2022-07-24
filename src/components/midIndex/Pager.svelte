@@ -80,6 +80,10 @@
         .current-page a {
             color: #555 !important;
         }
+        .current-page {
+            background-color: #cdcdcd;
+            opacity: 0.8;
+        }
     }
 </style>
 

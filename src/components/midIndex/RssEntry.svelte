@@ -1,8 +1,10 @@
 <script>
+    import {onMount} from "svelte";
+
     export let entryInfo
 
     import { rssFeedEntriesView, rssListRsp, unreadCountRsp, rssActiveFeed, rssActiveEntry } from '../utils/store.js'
-    import { readableAuthor, i18n } from '../utils/helper.js'
+    import {readableAuthor, i18n, getCacheDir, convHtml} from '../utils/helper.js'
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
     const { shell } = require('electron')
@@ -136,6 +138,10 @@
 
         menu.popup({ window: require('@electron/remote').getCurrentWindow() })
     }
+
+    onMount(() => {
+        M.Tooltip.init(document.querySelectorAll('.tooltipped'), {"outDuration": 0, "enterDelay": 0, "inDuration": 0});
+    })
 </script>
 
 <style>
@@ -207,7 +213,8 @@
 </style>
 
 {#if entryInfo}
-<div class="omr-entry-item" title="{entryInfo.title}" on:contextmenu={()=> showEntryCtxMenu(entryInfo)}>
+<div class="omr-entry-item tooltipped" data-position="right" data-tooltip="{ convHtml(entryInfo.title) }"
+     on:contextmenu={()=> showEntryCtxMenu(entryInfo)}>
     <div class="entry-title-line">
         <FeedAvatar feedImage="{entryInfo.image}" feedId="{entryInfo.feed.id}" />
 
