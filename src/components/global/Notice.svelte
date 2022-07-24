@@ -49,6 +49,11 @@
         font-size: 1.2rem;
         word-break: break-word;
     }
+    @media (prefers-color-scheme: dark) {
+        .notice-msg {
+            color: #cecece;
+        }
+    }
 </style>
 
 <div class="notice-container">

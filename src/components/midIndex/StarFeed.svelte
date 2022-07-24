@@ -35,7 +35,6 @@
         width: 100%;
         max-width: 400px;
         user-select: none;
-        /*border: 0.5px dashed red;*/
     }
     .feed-title-line {
         display: flex;
@@ -79,7 +78,6 @@
         width: 150px;
         padding: 0 10px;
     }
-
 </style>
 
 {#if !$starFeedEntriesView}

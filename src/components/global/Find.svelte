@@ -150,11 +150,22 @@
     .vertical-line {
         height: 100%;
         width: 1px;
-        border-right: 1px dashed rgba(0,0,0,0.14)
+        border-right: 1px solid rgba(0,0,0,0.14)
     }
     .find-btns .disabled {
         cursor: default;
         color: #999;
+    }
+    @media (prefers-color-scheme: dark) {
+        #omr-modal-find-in-page input {
+            color: #cecece;
+        }
+        .vertical-line {
+            border-color: #373737;
+        }
+        .find-btns .disabled {
+            color: #444;
+        }
     }
 </style>
 

@@ -66,7 +66,7 @@
         justify-content: space-between;
         align-items: center;
         width: 80%;
-        margin: 24px auto;
+        margin: 16px auto;
     }
     .setting-item a {
         color: unset;
@@ -103,6 +103,13 @@
     }
     .locale-select {
         min-width: 200px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .btn-white {
+            background-color: #373737;
+            color: #cecece;
+        }
     }
 </style>
 

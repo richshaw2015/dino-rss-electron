@@ -17,7 +17,7 @@
         height: 36px;
         min-width: 64px;
         max-width: 64px;
-        background: #24292E;
+        background: #24292e;
         display: flex;
         align-items: center;
         justify-content: space-evenly;
@@ -25,6 +25,9 @@
     #omr-win-titlebar img {
         display: block;
         user-select: none;
+    }
+    @media (prefers-color-scheme: dark) {
+        #omr-win-titlebar { background: #1e1e1e; }
     }
 </style>
 

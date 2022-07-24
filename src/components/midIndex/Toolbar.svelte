@@ -159,6 +159,19 @@
         left: 64px;
         max-height: calc(100% - 120px);
     }
+
+    @media (prefers-color-scheme: dark) {
+        .omr-search-form {
+            background: #373737;
+        }
+        input[id=omr-search-input]:active, input[id=omr-search-input]:focus {
+            background-color: #373737;
+            color: #cecece;
+        }
+        .toolbar-icon {
+            color: #cecece;
+        }
+    }
 </style>
 
 <div id="omr-top-toolbar" class="drag">

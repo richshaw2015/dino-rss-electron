@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard, Menu} = require('electron')
+const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard, Menu, nativeTheme} = require('electron')
 const fs = require('fs')
 
 const DEV = !app.isPackaged
@@ -49,6 +49,19 @@ function createMainWindow () {
 	remoteMain.enable(mainWindow.webContents);
 
 	mainWindow.loadFile('public/index.html');
+
+	ipcMain.handle('toggle-dark-mode', () => {
+		if (nativeTheme.shouldUseDarkColors) {
+			nativeTheme.themeSource = 'light'
+		} else {
+			nativeTheme.themeSource = 'dark'
+		}
+		return nativeTheme.shouldUseDarkColors
+	})
+
+	ipcMain.handle('system-dark-mode', () => {
+		nativeTheme.themeSource = 'system'
+	})
 
 	mainWindow.on('close', (event) => {
 		if (process.platform === "darwin") {

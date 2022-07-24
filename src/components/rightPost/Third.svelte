@@ -251,8 +251,8 @@
         margin: 0;
     }
     .user-memo-txt {
-        margin: 20px 0;
-        padding: 20px;
+        margin: 16px 0;
+        padding: 16px;
         background: white;
         color: #585858;
         border-radius: 2px;
@@ -261,8 +261,14 @@
         box-sizing: border-box;
         margin: 0 auto;
         max-width: 656px;
-        padding: 28px;
+        padding: 24px;
         left: 64px;
+    }
+    @media (prefers-color-scheme: dark) {
+        .user-memo-txt {
+            color: #cecece;
+            background: #282828;
+        }
     }
 </style>
 

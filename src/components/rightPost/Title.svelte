@@ -60,7 +60,7 @@
         align-items: center;
         padding-left: 24px;
         padding-right: 10px;
-        border-bottom: 1px dashed rgba(0,0,0,0.14);
+        border-bottom: 1px solid rgba(0,0,0,0.14);
         cursor: move;
     }
     #omr-post-title-bar > i {
@@ -77,7 +77,6 @@
         margin-bottom: 10px;
         word-break: break-word;
     }
-
     #omr-modal-font-size {
         padding: 12px;
         margin: 0;
@@ -92,7 +91,6 @@
     .iphone {
         position: relative;
     }
-
     .notch {
         cursor: pointer;
         position: absolute;
@@ -130,6 +128,21 @@
     }
     .exit-btn:hover {
         opacity: 1;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        #omr-post-title-bar {
+            border-color: #373737;
+        }
+        .notch {
+            background-color: #373737;
+        }
+        .notch::before, .notch::after {
+            background-image: radial-gradient(circle at 0 100%, transparent 6px, #373737 7px);
+        }
+        .notch::after {
+            background-image: radial-gradient(circle at 100% 100%, transparent 6px, #373737 7px);
+        }
     }
 </style>
 
