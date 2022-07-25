@@ -1,7 +1,8 @@
 <script>
-    import {onMount} from "svelte";
+    import {onDestroy, onMount} from "svelte";
 
     export let entryInfo
+    let tooltipInstance = null
 
     import { starListRsp, starActiveEntry } from '../utils/store.js'
     import { readableAuthor, i18n, convHtml } from '../utils/helper.js'
@@ -80,8 +81,15 @@
     }
 
     onMount(() => {
-        M.Tooltip.init(document.querySelectorAll('.tooltipped'), {"outDuration": 0, "enterDelay": 0, "inDuration": 0});
+        const el = '#StarEntry' + entryInfo.id;
+        tooltipInstance = M.Tooltip.init(document.querySelector(el), {"outDuration": 0, "enterDelay": 20, "inDuration": 30});
+
     })
+    onDestroy(() => {
+        if (tooltipInstance !== null) {
+            tooltipInstance.destroy()
+        }
+    });
 </script>
 
 <style>
@@ -141,7 +149,7 @@
 </style>
 
 {#if entryInfo}
-<div class="omr-entry-item tooltipped" data-position="right" data-tooltip="{ convHtml(entryInfo.title) }"
+<div class="omr-entry-item tooltipped" id="StarEntry{entryInfo.id}" data-position="right" data-tooltip="{ convHtml(entryInfo.title) }"
      on:contextmenu={()=> showEntryCtxMenu(entryInfo)}>
     <div class="entry-title-line">
         <FeedAvatar feedImage="{entryInfo.image}" feedId="{entryInfo.feed.id}" />

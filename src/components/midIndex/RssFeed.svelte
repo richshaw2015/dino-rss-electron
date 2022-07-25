@@ -2,8 +2,9 @@
     import {saveFeedTagInfo, saveTagCountInfo} from "../utils/storage";
 
     export let feedInfo
+    let tooltipInstance = null
 
-    import { createEventDispatcher } from 'svelte'
+    import {createEventDispatcher, onDestroy, onMount} from 'svelte'
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
     const { shell, nativeImage} = require('electron')
@@ -35,6 +36,17 @@
         isTagSynced
     } from '../utils/store.js'
     import { Tags } from '../utils/constant.js'
+
+    onMount(() => {
+        const el = '#RssFeed' + feedInfo.id;
+        tooltipInstance = M.Tooltip.init(document.querySelector(el), {"outDuration": 0, "enterDelay": 20, "inDuration": 30});
+
+    })
+    onDestroy(() => {
+        if (tooltipInstance !== null) {
+            tooltipInstance.destroy()
+        }
+    });
 
     function handleMarkFeedAsRead(feedInfo) {
         const unreadCount = feedInfo.stats.unread_count
@@ -300,7 +312,8 @@
 </style>
 
 {#if !$rssFeedEntriesView}
-<div class="omr-feed-item" title="{feedInfo.title}" on:contextmenu={() => showFeedCtxMenu(feedInfo)}>
+<div class="omr-feed-item tooltipped" id="RssFeed{feedInfo.id}" data-position="right" data-tooltip="{feedInfo.title}"
+     on:contextmenu={() => showFeedCtxMenu(feedInfo)}>
     <div class="feed-title-line">
         <FeedAvatar feedImage="{feedInfo.image}" feedId="{feedInfo.id}" />
 

@@ -213,6 +213,7 @@ kbd {
 }
 .material-tooltip {
     font-weight: bold;
+    max-width: 600px;
 }
 
 /* pell editor */
