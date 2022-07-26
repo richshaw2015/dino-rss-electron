@@ -13,6 +13,12 @@
         background: #DEE1E6;
         border-radius: 3px;
     }
+    @media (prefers-color-scheme: dark) {
+        #omr-status-bar {
+            color: #5f5f5f;
+            background: #252525;
+        }
+    }
 </style>
 
 {#if activeEntry.link }

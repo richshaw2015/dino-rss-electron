@@ -1,8 +1,11 @@
 <script>
+    import {onMount, onDestroy} from "svelte";
+
     export let entryInfo
+    let tooltipInstance = null
 
     import { rssFeedEntriesView, rssListRsp, unreadCountRsp, rssActiveFeed, rssActiveEntry } from '../utils/store.js'
-    import { readableAuthor, i18n } from '../utils/helper.js'
+    import {readableAuthor, i18n, getCacheDir, convHtml} from '../utils/helper.js'
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
     const { shell } = require('electron')
@@ -136,6 +139,17 @@
 
         menu.popup({ window: require('@electron/remote').getCurrentWindow() })
     }
+
+    onMount(() => {
+        const el = '#RssEntry' + entryInfo.id;
+        tooltipInstance = M.Tooltip.init(document.querySelector(el), {"outDuration": 0, "enterDelay": 20, "inDuration": 30});
+
+    })
+    onDestroy(() => {
+        if (tooltipInstance !== null) {
+            tooltipInstance.destroy()
+        }
+    });
 </script>
 
 <style>
@@ -207,7 +221,8 @@
 </style>
 
 {#if entryInfo}
-<div class="omr-entry-item" title="{entryInfo.title}" on:contextmenu={()=> showEntryCtxMenu(entryInfo)}>
+<div class="omr-entry-item tooltipped" data-position="right" id="RssEntry{entryInfo.id}" data-tooltip="{ convHtml(entryInfo.title) }"
+     on:contextmenu={()=> showEntryCtxMenu(entryInfo)}>
     <div class="entry-title-line">
         <FeedAvatar feedImage="{entryInfo.image}" feedId="{entryInfo.feed.id}" />
 

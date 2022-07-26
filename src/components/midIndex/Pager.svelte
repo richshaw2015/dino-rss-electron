@@ -54,8 +54,6 @@
     #omr-pager {
         width: 100%;
         max-width: 400px;
-        /*border-top: 1px dashed rgba(0,0,0,0.14);*/
-        /*border: 0.5px dashed red;*/
     }
     .pagination {
         display: flex;
@@ -71,6 +69,21 @@
     .current-page a {
         color: #fff;
         cursor: default;
+    }
+    @media (prefers-color-scheme: dark) {
+        .pagination li.disabled a {
+            color: #444;
+        }
+        .pagination li a {
+            color: #999;
+        }
+        .current-page a {
+            color: #555 !important;
+        }
+        .current-page {
+            background-color: #cdcdcd;
+            opacity: 0.8;
+        }
     }
 </style>
 

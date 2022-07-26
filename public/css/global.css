@@ -26,6 +26,13 @@
 body {
     color: #444;
 }
+::-webkit-scrollbar { width: 10px;}
+::-webkit-scrollbar-track-piece { background-color: #DEE1E6;}
+::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 6px;
+}
+
 main {
     width: 100%;
     height: 100%;
@@ -136,6 +143,7 @@ i.material-icons {
 .collection .collection-item:not(.active) .feed-meta-line {
     color: #616161;
 }
+
 .collection .collection-item:not(.active) .entry-title, 
 .collection .collection-item:not(.active) .feed-title {
     color: #444;
@@ -203,6 +211,11 @@ kbd {
     background-color: #dfdfdf !important;
     color: #9f9f9f !important;
 }
+.material-tooltip {
+    font-weight: bold;
+    max-width: 600px;
+}
+
 /* pell editor */
 .pell {
     border: 1px solid rgba(10, 10, 10, 0.1);
@@ -231,3 +244,112 @@ kbd {
   
   .pell-button-selected {
     background-color: #F0F0F0; }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #cecece;
+    }
+    .input-field input[type=search]:focus:not(.browser-default)+label i, .input-field input[type=search]:focus:not(.browser-default) ~ .mdi-navigation-close, .input-field input[type=search]:focus:not(.browser-default) ~ .material-icons {
+        color: #cecece;
+    }
+    input {
+        color: #cecece;
+    }
+    .card {
+        background-color: #282828;
+    }
+    .divider {
+        background-color: #373737;
+    }
+    .select-wrapper input.select-dropdown {
+        color: #cecece;
+    }
+    .modal .modal-footer,
+    .modal {
+        background-color: #111111;
+    }
+    .modal {
+        border: 2px solid #373737;
+    }
+    label {
+        color: #cecece;
+    }
+    .primary-color {
+        color: #f26522;
+    }
+    .primary-bg-color {
+        background-color: #f26522;
+    }
+    .second-color {
+        color: #00897b;
+    }
+    .second-bg-color {
+        background-color: #00897b;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-track-piece { background-color: #252525;}
+    ::-webkit-scrollbar-thumb {
+        background-color: #616161;
+        border-radius: 6px;
+    }
+    .collection .collection-item:not(.active) .entry-meta-line,
+    .collection .collection-item:not(.active) .feed-meta-line {
+        color: #5f5f5f;
+    }
+
+    .collection .collection-item,
+    .collection {
+        background-color: #181818;
+        border-color: #373737;
+    }
+
+    .collection .collection-item:not(.active) .entry-title,
+    .collection .collection-item:not(.active) .feed-title {
+        color: #cecece;
+    }
+
+    .collection .collection-item.active {
+        background-color: #00897b;
+    }
+
+    kbd {
+        background: linear-gradient(180deg,#000,#000,#000,#222);
+        color: #cecece;
+    }
+    .btn-flat {
+        color: #cecece;
+    }
+    .sponsor {
+        border-color: #373737;
+    }
+    .cancel-btn {
+        background-color: #373737 !important;
+        color: #cecece !important;
+    }
+    .material-tooltip {
+        background-color: #fefefe;
+        color: #111111;
+    }
+
+    .pell {
+        border-color: #373737;
+    }
+
+    .pell-content {
+        background: #111111;
+    }
+
+    .pell-actionbar {
+        background-color: #252525;
+        border-color: #373737;
+    }
+    .pell-button {
+        color: #cecece;
+    }
+    .pell-button-selected {
+        background-color: #5f5f5f;
+    }
+}

@@ -180,6 +180,11 @@
         background-color:#ddd;
         cursor: pointer;
     }
+    @media (prefers-color-scheme: dark) {
+        .list-li:not(.active):hover{
+            background-color: #373737;
+        }
+    }
 </style>
 
 <Toolbar showModeBtn={!$starFeedEntriesView} on:refresh-list-view={handleToolbarRefresh} />

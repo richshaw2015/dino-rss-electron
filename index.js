@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard, Menu} = require('electron')
+const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard, Menu, nativeTheme} = require('electron')
 const fs = require('fs')
 
 const DEV = !app.isPackaged
@@ -49,6 +49,10 @@ function createMainWindow () {
 	remoteMain.enable(mainWindow.webContents);
 
 	mainWindow.loadFile('public/index.html');
+
+	ipcMain.handle('toggle-appearance', (event, mode) => {
+		nativeTheme.themeSource = mode;
+	})
 
 	mainWindow.on('close', (event) => {
 		if (process.platform === "darwin") {

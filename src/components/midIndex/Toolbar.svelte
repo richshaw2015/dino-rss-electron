@@ -1,7 +1,7 @@
 <script>
     export let showModeBtn = true
 
-    import { onMount } from 'svelte'
+    import {onDestroy, onMount, afterUpdate} from 'svelte'
     import { createEventDispatcher } from 'svelte'
     import { saveViewScope } from '../utils/storage.js'
     import { activeTab, rssViewMode, viewScope, starViewMode, isApiLoading, unreadCountRsp } from '../utils/store.js'
@@ -15,6 +15,7 @@
     let searchKeyword
     let searchRsp
 
+    let tooltipInstances = null
     onMount(() => {
         // keyboard shortcut
         Mousetrap.bind('r', function() {
@@ -22,6 +23,21 @@
             return false
         });
     })
+    afterUpdate(() => {
+        if (tooltipInstances !== null) {
+            tooltipInstances.forEach(instance => instance.destroy());
+        }
+
+        tooltipInstances = M.Tooltip.init(document.querySelectorAll('.toolbar-icon.tooltipped'),
+            {"outDuration": 0, "enterDelay": 5, "inDuration": 10})
+    });
+
+    onDestroy(() => {
+        if (tooltipInstances !== null) {
+            tooltipInstances.forEach(instance => instance.destroy());
+        }
+    });
+
     function handleMarkAllAsRead() {
         console.log('mark all as read')
         if ($unreadCountRsp.count > 0) {
@@ -159,6 +175,19 @@
         left: 64px;
         max-height: calc(100% - 120px);
     }
+
+    @media (prefers-color-scheme: dark) {
+        .omr-search-form {
+            background: #373737;
+        }
+        input[id=omr-search-input]:active, input[id=omr-search-input]:focus {
+            background-color: #373737;
+            color: #cecece;
+        }
+        .toolbar-icon {
+            color: #cecece;
+        }
+    }
 </style>
 
 <div id="omr-top-toolbar" class="drag">
@@ -183,26 +212,26 @@
 
         <div class="toolbar-group no-drag">
             {#if $activeTab === 'rss'}
-                <div title="{i18n('toggle.unread.all')}" class="toolbar-icon" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
+                <div data-position="bottom" data-tooltip="{i18n('toggle.unread.all')}" class="toolbar-icon tooltipped" id="omr-toolbar-scope" on:click={handleToggleViewScope}>
                     <i class="material-icons">{ $viewScope === 'all' ? 'donut_large' : 'fiber_manual_record' }</i>
                 </div>
 
                 {#if showModeBtn}
-                <div title="{i18n('toggle.view')}" class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
+                <div data-position="bottom" data-tooltip="{i18n('toggle.view')}" class="toolbar-icon tooltipped" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
                     <i class="material-icons">{$rssViewMode === 'feed' ? 'view_module' : 'view_list'} </i>
                 </div>
 
-                <div title="{i18n('mark.all.as.read')}" class="toolbar-icon" id="dino-mark-all" on:click={handleMarkAllAsRead}>
+                <div data-position="bottom" data-tooltip="{i18n('mark.all.as.read')}" class="toolbar-icon tooltipped" id="dino-mark-all" on:click={handleMarkAllAsRead}>
                     <i class="material-icons">done_all</i>
                 </div>
                 {/if}
             {:else if $activeTab === 'star' && showModeBtn}
-                <div title="{i18n('toggle.view')}" class="toolbar-icon" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
+                <div data-position="bottom" data-tooltip="{i18n('toggle.view')}" class="toolbar-icon tooltipped" id="omr-toolbar-mode" on:click={handleToggleViewMode}>
                     <i class="material-icons">{$starViewMode === 'feed' ? 'view_module' : 'view_list'} </i>
                 </div>
             {/if}
 
-            <div title="{i18n('refresh')}" class="toolbar-icon" id="omr-toolbar-update"  on:click={handleRefreshAction}>
+            <div data-position="bottom" data-tooltip="{i18n('refresh')}" class="toolbar-icon tooltipped" id="omr-toolbar-update"  on:click={handleRefreshAction}>
                 <i class="material-icons">update</i>
             </div>
 

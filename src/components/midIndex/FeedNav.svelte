@@ -68,7 +68,6 @@
         align-items: center;
         height: 48px;
         min-height: 48px;
-        border-bottom: 1px dashed rgba(0,0,0,.14);
     }
     .feed-nav-title {
         flex-grow: 1;
@@ -100,6 +99,14 @@
         font-size: 14px;
     }
 
+    @media (prefers-color-scheme: dark) {
+        #omr-feed-nav {
+            border-color: #373737;
+        }
+        .feed-nav-unread {
+            color: rgb(157, 157, 161);
+        }
+    }
 </style>
 
 {#if $activeTab === "rss"}

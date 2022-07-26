@@ -47,7 +47,7 @@
 <style>
     #omr-modal-feed-edit {
         width: 640px;
-        padding: 28px;
+        padding: 24px;
         left: 64px;
     }
     .modal-title {

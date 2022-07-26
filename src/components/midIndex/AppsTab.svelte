@@ -11,7 +11,6 @@
         max-width: 400px;
         display: flex;
         flex-direction: column;
-        /*border: 0.5px dashed red;*/
     }
     .active-app {
         background-color: #ddd;
@@ -36,6 +35,12 @@
     .explore-icon {
         width: 24px;
         font-size: 22px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .active-app {
+            background-color: #373737;
+        }
     }
 </style>
 

@@ -46,12 +46,13 @@
         min-width: 400px;
         max-width: 400px;
         padding: 0 10px;
-        border-right: 1px dashed rgba(0,0,0,.14);
+        /*border-right: 1px solid rgba(0,0,0,.14);*/
         display: flex;
         flex-direction: column;
         overflow: hidden;
         background-color: #ffffff;
     }
+
     .right-container {
         flex-grow: 1;
         min-width: 500px;
@@ -60,6 +61,14 @@
         flex-direction: column;
         justify-content: space-between;
         background-color: #f3f3f3;
+    }
+    @media (prefers-color-scheme: dark) {
+        .middle-container {
+            background: #181818;
+        }
+        .right-container {
+            background: #111111;
+        }
     }
 </style>
 

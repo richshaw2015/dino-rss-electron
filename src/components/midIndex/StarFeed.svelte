@@ -1,5 +1,8 @@
 <script>
+    import {onDestroy, onMount} from "svelte";
+
     export let feedInfo
+    let tooltipInstance = null
 
     import { fromNow, readableAuthor, i18n } from '../utils/helper.js'
 
@@ -7,6 +10,17 @@
     const { Menu, MenuItem } = require('@electron/remote')
     import { starFeedEntriesView, feedToEdit } from '../utils/store.js'
     import FeedAvatar from '../global/FeedAvatar.svelte'
+
+    onMount(() => {
+        const el = '#StarFeed' + feedInfo.id;
+        tooltipInstance = M.Tooltip.init(document.querySelector(el), {"outDuration": 0, "enterDelay": 20, "inDuration": 30});
+
+    })
+    onDestroy(() => {
+        if (tooltipInstance !== null) {
+            tooltipInstance.destroy()
+        }
+    });
 
     function showFeedCtxMenu(feedInfo) {
         const menu = new Menu();
@@ -35,7 +49,6 @@
         width: 100%;
         max-width: 400px;
         user-select: none;
-        /*border: 0.5px dashed red;*/
     }
     .feed-title-line {
         display: flex;
@@ -79,11 +92,11 @@
         width: 150px;
         padding: 0 10px;
     }
-
 </style>
 
 {#if !$starFeedEntriesView}
-<div class="omr-feed-item" title="{feedInfo.title}" on:contextmenu={() => showFeedCtxMenu(feedInfo)}>
+<div class="omr-feed-item tooltipped" id="StarFeed{feedInfo.id}" data-position="right" data-tooltip="{feedInfo.title}"
+     on:contextmenu={() => showFeedCtxMenu(feedInfo)}>
     <div class="feed-title-line">
         <FeedAvatar feedImage="{feedInfo.image}" feedId="{feedInfo.id}" />
 

@@ -271,7 +271,7 @@
     }
     #omr-modal-add-feed, #omr-modal-upgrade {
         width: 600px;
-        padding: 28px;
+        padding: 24px;
         left: 64px;
     }
     .user-top-wrapper, .user-info {
@@ -285,6 +285,7 @@
     .user-oauth {
         color: #616161;
     }
+    /* TODO */
     .user-name {
         font-size: 1.2rem;
     }
@@ -314,6 +315,7 @@
         background: #ff9d28;
         box-shadow: 0 0 0 1px #fff;
     }
+    /* TODO */
 
     .user-divider {
         margin: 16px 0;
@@ -366,6 +368,10 @@
     }
     #omr-modal-upgrade .modal-footer a {
         color: unset;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        #omr-left-nav { background: #1e1e1e; }
     }
 </style>
 

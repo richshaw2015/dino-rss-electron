@@ -66,6 +66,10 @@
       })
     })
 
+    function toggleReadingMode() {
+        readingMode.set(!$readingMode)
+    }
+
     afterUpdate(() => {
         if (entryContentRsp && entryContentRsp.code !== -1 && entryContentRsp.content && activeEntry.id ) {
             // highlight code
@@ -178,9 +182,7 @@
         menu.append(new MenuItem({type: "separator"}));
         menu.append(new MenuItem({
             label: "📖  " + ($readingMode ? i18n('exit.reader.mode') : i18n('reader.mode')),
-            click: function(){
-                readingMode.set(!$readingMode)
-            }
+            click: toggleReadingMode
         }));
 
         menu.popup({ window: require('@electron/remote').getCurrentWindow() })
@@ -249,8 +251,8 @@
         margin: 0;
     }
     .user-memo-txt {
-        margin: 20px 0;
-        padding: 20px;
+        margin: 16px 0;
+        padding: 16px;
         background: white;
         color: #585858;
         border-radius: 2px;
@@ -259,8 +261,14 @@
         box-sizing: border-box;
         margin: 0 auto;
         max-width: 656px;
-        padding: 28px;
+        padding: 24px;
         left: 64px;
+    }
+    @media (prefers-color-scheme: dark) {
+        .user-memo-txt {
+            color: #cecece;
+            background: #282828;
+        }
     }
 </style>
 
@@ -291,7 +299,8 @@
     </div>
 {:else}
     <!-- success -->
-    <div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu} on:dragover={allowDrop}>
+    <div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu}
+         on:dragover={allowDrop} on:dblclick={toggleReadingMode}>
         {#if entryContentRsp.memo}
         <div class="user-memo-txt z-depth-1" on:dblclick={showPellEditor}>
             { @html entryContentRsp.memo }
