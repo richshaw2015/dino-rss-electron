@@ -34,6 +34,8 @@
                     try {
                         M.Modal.getInstance(document.querySelector('#omr-modal-feed-edit')).close()
                     } catch (e) {}
+                } else {
+                    warnToast(i18n("unknown.error"))
                 }
             }).catch(err => {
                 warnToast(err)

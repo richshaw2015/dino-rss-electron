@@ -12,6 +12,8 @@
                 data.is_subscribed = true
             } else if (rsp.code === 105) {
                 warnToast(i18n("max.feeds.limit"))
+            } else {
+                warnToast(i18n("unknown.error"))
             }
         }).catch(err => {
             warnToast(err)

@@ -7,7 +7,7 @@
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, i18n,
         warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'
-    import { getToken, saveUserInfo, saveToken, getImgMode } from '../utils/storage.js';
+    import { getToken, saveUserInfo, saveToken, getImgMode, getAppearance } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
     import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, upgradeRsp, readingMode } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
@@ -15,6 +15,9 @@
     let feedUrl
 
     onMount(() => {
+        // init appearance
+        ipcRenderer.invoke('toggle-appearance', getAppearance())
+
         // keyboard shortcut
         Mousetrap.bind('x', function() {
             closeWindow()

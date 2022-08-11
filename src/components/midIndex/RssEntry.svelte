@@ -28,6 +28,8 @@
                     if ($rssFeedEntriesView && entry.feed.id === $rssActiveFeed.id) {
                         $rssActiveFeed.stats.unread_count -= 1
                     }
+                } else {
+                    warnToast(i18n("unknown.error"))
                 }
             }).catch(err => {
                 warnToast(err)
@@ -50,6 +52,8 @@
                     if ($rssFeedEntriesView && entry.feed.id === $rssActiveFeed.id) {
                         $rssActiveFeed.stats.unread_count += 1
                     }
+                } else {
+                    warnToast(i18n("unknown.error"))
                 }
             }).catch(err => {
                 warnToast(err)
@@ -69,6 +73,10 @@
                     if (entry.id === $rssActiveEntry.id) {
                         $rssActiveEntry.stats.has_starred = true
                     }
+                } else if (rsp.code === 109) {
+                    warnToast(i18n("max.stars.limit"))
+                } else {
+                    warnToast(i18n("unknown.error"))
                 }
             }).catch(err => {
                 warnToast(err)
@@ -88,6 +96,8 @@
                     if (entry.id === $rssActiveEntry.id) {
                         $rssActiveEntry.stats.has_starred = false
                     }
+                } else {
+                    warnToast(i18n("unknown.error"))
                 }
             }).catch(err => {
                 warnToast(err)

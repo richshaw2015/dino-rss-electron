@@ -44,6 +44,8 @@
                             }
                         }
                     }
+                } else {
+                    warnToast(i18n("unknown.error"))
                 }
             }).catch(err => {
                 warnToast(err)

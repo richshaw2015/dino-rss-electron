@@ -1,5 +1,5 @@
 <script>
-    import { warnToast } from "../utils/helper"
+    import {i18n, warnToast} from "../utils/helper"
 
     import FeedCard2 from '../global/FeedCard2.svelte'
     import { apiReq } from '../utils/req.js'
@@ -14,6 +14,8 @@
         apiReq('/api/explore/last/hour').then( rsp => {
             if (rsp.code === 0) {
                 hourUpdateRsp.set(rsp.data)
+            } else {
+                warnToast(i18n("unknown.error"))
             }
         }).catch(err => {
             warnToast(err)

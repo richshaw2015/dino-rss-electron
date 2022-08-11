@@ -233,6 +233,10 @@
 
             } else if (rsp.code === 108) {
                 warnToast(i18n('add.memo.failed'))
+            } else if (rsp.code === 109) {
+                warnToast(i18n("max.stars.limit"))
+            } else {
+                warnToast(i18n("unknown.error"))
             }
         }).catch(err => {
             warnToast(err)
@@ -302,7 +306,7 @@
     <div class="flow-text {fontSize}" id="omr-post-third-html" on:contextmenu={showPostCtxMenu}
          on:dragover={allowDrop} on:dblclick={toggleReadingMode}>
         {#if entryContentRsp.memo}
-        <div class="user-memo-txt z-depth-1" on:dblclick={showPellEditor}>
+        <div class="user-memo-txt z-depth-1" on:dblclick|stopPropagation={showPellEditor}>
             { @html entryContentRsp.memo }
         </div>
         {/if}

@@ -62,6 +62,8 @@
                         $rssListRsp.data[feedInfo._index].stats.unread_count = 0
                         $rssListRsp.data[feedInfo._index].stats.unread_list = []
                     }
+                } else {
+                    warnToast(i18n("unknown.error"))
                 }
             }).catch(err => {
                 warnToast(err)
@@ -72,6 +74,8 @@
         apiReq('/api/feed/sync', {feed_id: feedInfo.id}).then( rsp => {
             if (rsp.code === 0) {
                 toast(i18n("wait.a.moment"))
+            } else {
+                warnToast(i18n("unknown.error"))
             }
         }).catch(err => {
             warnToast(err)
@@ -90,6 +94,8 @@
 
                 saveFeedTagInfo($feedTagMap)
                 saveTagCountInfo($tagCountMap)
+            } else {
+                warnToast(i18n("unknown.error"))
             }
         }).catch(err => {
             warnToast(err)
