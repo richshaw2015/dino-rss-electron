@@ -44,6 +44,8 @@
                 }
             } else if (rsp.code === 109) {
                 warnToast(i18n("max.stars.limit"))
+            } else {
+                warnToast(i18n("unknown.error"))
             }
         }).catch(err => {
             warnToast(err)

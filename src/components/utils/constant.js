@@ -815,5 +815,12 @@ export const localeMsg = {
         "ko": "시스템을 따르다",
         "ja": "システムをフォロー",
         "zh-TW": "跟隨系統"
+    },
+    "unknown.error": {
+        "en": "Unknown error!",
+        "zh": "未知异常！",
+        "ko": "알 수 없는 예외!",
+        "ja": "未知の例外!",
+        "zh-TW": "未知異常！"
     }
 }

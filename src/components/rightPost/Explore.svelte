@@ -1,5 +1,5 @@
 <script>
-    import { warnToast } from "../utils/helper"
+    import {i18n, warnToast} from "../utils/helper"
 
     import FeedCard from '../global/FeedCard.svelte'
     import { apiReq } from '../utils/req.js'
@@ -14,6 +14,8 @@
         apiReq('/api/recent/feeds').then( rsp => {
             if (rsp.code === 0) {
                 recentAddRsp.set(rsp.data)
+            } else {
+                warnToast(i18n("unknown.error"))
             }
         }).catch(err => {
             warnToast(err)

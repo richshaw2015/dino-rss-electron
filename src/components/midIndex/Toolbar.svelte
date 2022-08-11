@@ -48,6 +48,8 @@
 
                     // refresh
                     dispatch('refresh-list-view', {page: 1})
+                } else {
+                    warnToast(i18n("unknown.error"))
                 }
             }).catch(err => {
                 warnToast(err)
@@ -88,7 +90,9 @@
                     warnToast(i18n('keyword.error'))
                 } else if (rsp.code === 100) {
                     warnToast(i18n('no.data'))
-                } 
+                } else {
+                    warnToast(i18n("unknown.error"))
+                }
             }).catch(err => {
                 warnToast(err)
             }).finally(() => {
