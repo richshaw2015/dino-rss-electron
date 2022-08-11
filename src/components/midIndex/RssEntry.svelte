@@ -69,6 +69,8 @@
                     if (entry.id === $rssActiveEntry.id) {
                         $rssActiveEntry.stats.has_starred = true
                     }
+                } else if (rsp.code === 109) {
+                    warnToast(i18n("max.stars.limit"))
                 }
             }).catch(err => {
                 warnToast(err)

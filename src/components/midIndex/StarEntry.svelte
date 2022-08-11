@@ -25,6 +25,8 @@
                     if (entry.id === $starActiveEntry.id) {
                         $starActiveEntry.stats.has_starred = true
                     }
+                } else if (rsp.code === 109) {
+                    warnToast(i18n("max.stars.limit"))
                 }
             }).catch(err => {
                 warnToast(err)

@@ -233,6 +233,8 @@
 
             } else if (rsp.code === 108) {
                 warnToast(i18n('add.memo.failed'))
+            } else if (rsp.code === 109) {
+                warnToast(i18n("max.stars.limit"))
             }
         }).catch(err => {
             warnToast(err)

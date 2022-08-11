@@ -130,6 +130,13 @@ export const localeMsg = {
         "ja": "サブスクリプションの最大数に達しました",
         "zh-TW": "已達最大訂閱數！"
     },
+    "max.stars.limit": {
+        "en": "Max stars limit!",
+        "zh": "已达最大收藏数！",
+        "ko": "최대 즐겨찾기 수에 도달했습니다!",
+        "ja": "お気に入りの数が上限に達しました!",
+        "zh-TW": "已達最大收藏數！"
+    },
     "add.subscribe": {
         "en": "Add",
         "zh": "订阅",
