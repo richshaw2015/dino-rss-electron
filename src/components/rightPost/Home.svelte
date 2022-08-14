@@ -53,12 +53,12 @@
         <tr>
             <th>MacOS</th>
             <th>Windows</th>
-            <th>Linux</th>
+            <th>Android/iOS</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>✅ tested on MacOS 10.15, 11.0</td>
+            <td>✅ tested on MacOS 12.3</td>
             <td>✅ tested on Windows 10</td>
             <td>🔜 on the way</td>
         </tr>
