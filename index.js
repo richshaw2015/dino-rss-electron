@@ -91,8 +91,21 @@ function createMainWindow () {
 	if (DEV) mainWindow.webContents.openDevTools()
 }
 
-function createAuthWindow(token) {
-	const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=d7e9908669cff42cdbc8&allow_signup=false&state=${token}`
+function createAuthWindow(token, sdk) {
+	let authUrl = ""
+	if (sdk === "github") {
+		authUrl = `https://github.com/login/oauth/authorize?client_id=d7e9908669cff42cdbc8&allow_signup=false&state=${token}`
+	} else if (sdk === "google") {
+		if (DEV) {
+			authUrl = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fapi%2Foauth%2Fgoogle%2Fcallback%3Ftoken%3D" + token + "&prompt=consent&response_type=code&client_id=174849857390-mej0vfvi1g0noboa5ppan94jp2b6lksl.apps.googleusercontent.com&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&access_type=offline"
+		} else {
+			authUrl = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=https%3A%2F%2Fdinorss.org%2Fapi%2Foauth%2Fgoogle%2Fcallback%3Ftoken%3D" + token + "&prompt=consent&response_type=code&client_id=174849857390-mej0vfvi1g0noboa5ppan94jp2b6lksl.apps.googleusercontent.com&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&access_type=offline"
+		}
+	}
+
+	if (authUrl === "") {
+		return
+	}
 
 	authWindow = new BrowserWindow({
 		width: 480, 
@@ -108,7 +121,7 @@ function createAuthWindow(token) {
 
 	remoteMain.enable(authWindow.webContents);
 
-	authWindow.loadURL(githubAuthUrl)
+	authWindow.loadURL(authUrl)
 
 	authWindow.on('closed', () => {
 		authWindow = null
@@ -167,8 +180,8 @@ ipcMain.handle('minimize-window', (event) => {
 	return mainWindow.minimize();
 })
 
-ipcMain.handle('show-login-window', (event, token) => {
-	createAuthWindow(token)
+ipcMain.handle('show-login-window', (event, obj) => {
+	createAuthWindow(obj.token, obj.sdk)
 })
 
 ipcMain.handle('image-mode-change', (event, mode) => {
