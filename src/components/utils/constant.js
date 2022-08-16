@@ -822,5 +822,12 @@ export const localeMsg = {
         "ko": "알 수 없는 예외!",
         "ja": "未知の例外!",
         "zh-TW": "未知異常！"
+    },
+    "select.login": {
+        "en": "OAuth Login",
+        "zh": "OAuth 登录",
+        "ko": "OAuth 로그인",
+        "ja": "OAuth ログイン",
+        "zh-TW": "OAuth 登錄"
     }
 }

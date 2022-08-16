@@ -13,6 +13,7 @@
     import Titlebar from './Titlebar.svelte'
     
     let feedUrl
+    let loginModalInstance
 
     onMount(() => {
         // init appearance
@@ -137,9 +138,28 @@
                 
                 syncUserInfo()
             } else {
-                ipcRenderer.invoke('show-login-window', token)
+                loginModalInstance = M.Modal.init(document.querySelector('#omr-modal-oauth-login'), {
+                    inDuration: 0,
+                    outDuration: 0,
+                    opacity: 0.1,
+                    endingTop: event.y + 'px'
+                });
+                loginModalInstance.open()
             }
         }
+    }
+
+    function handleGithubLogin() {
+        if (loginModalInstance) {
+            loginModalInstance.close()
+        }
+        ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "github"})
+    }
+    function  handleGoogleLogin() {
+        if (loginModalInstance) {
+            loginModalInstance.close()
+        }
+        ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "google"})
     }
 
     function showAddFeedWindow(event) {
@@ -387,6 +407,21 @@
     #omr-modal-upgrade .modal-footer a {
         color: unset;
     }
+    #omr-modal-oauth-login {
+        width: 300px;
+        margin: 0;
+        padding: 24px;
+        left: 64px;
+    }
+    .oauth-sdks {
+        display: flex;
+    }
+    .sdk {
+        cursor: pointer;
+        display: block;
+        width: 48px;
+        margin: 8px 16px;
+    }
 
     @media (prefers-color-scheme: dark) {
         #omr-left-nav { background: #1e1e1e; }
@@ -483,6 +518,16 @@
     <div class="waves-effect btn-flat feed-ranking">
         <i class="material-icons equalizer-icon">equalizer</i>Feed ranking
     </div> -->
+</div>
+
+<div id="omr-modal-oauth-login" class="modal">
+    <div class="modal-title"><i class="material-icons">account_circle</i> { i18n("select.login") }</div>
+
+    <div class="oauth-sdks">
+        <img src="./icon/github.png" class="sdk" alt="GitHub" title="GitHub" on:click={handleGithubLogin} />
+        <img src="./icon/google.png" class="sdk" alt="Google" title="Google" on:click={handleGoogleLogin} />
+    </div>
+
 </div>
 
 {#if $upgradeRsp.code === 0}
