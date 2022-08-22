@@ -73,13 +73,13 @@ export function macNavCtxMenu() {
     //     ]
     // }));
     // menu.append(new MenuItem({type: "separator",}));
-    //
-    menu.append(new MenuItem({
-        role: "toggleDevTools",
-        visible: !process.mas,
-        label: "🔨  Inspect"
-    }));
-    menu.append(new MenuItem({type: "separator",}));
+
+    // menu.append(new MenuItem({
+    //     role: "toggleDevTools",
+    //     visible: !process.mas,
+    //     label: "🔨  Inspect"
+    // }));
+    // menu.append(new MenuItem({type: "separator",}));
     menu.append(new MenuItem({
         role: "windowMenu",
         label: "🔲  Window"
