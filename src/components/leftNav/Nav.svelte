@@ -7,7 +7,8 @@
 
     import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, i18n,
         warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'
-    import { getToken, saveUserInfo, saveToken, getImgMode, getAppearance } from '../utils/storage.js';
+    import { getToken, saveUserInfo, saveToken, getImgMode, getAppearance, setMasVerify, deleteMasVerify,
+        isMasVerify } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
     import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, upgradeRsp, readingMode } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
@@ -42,6 +43,17 @@
         });
 
         ipcRenderer.invoke('image-mode-change', getImgMode())
+
+        if (process.mas) {
+            // demo mode for apple verify
+            apiReq('/api/user/demo', {version: appVersion()}).then( rsp => {
+                if (rsp.code === 0) {
+                    setMasVerify(JSON.stringify(rsp))
+                } else {
+                    deleteMasVerify()
+                }
+            }).catch(err => {})
+        }
 
         if (!process.mas) {
             setTimeout(() => {
@@ -96,6 +108,16 @@
         }
     }
 
+    function syncDemoUserInfo(rsp) {
+        if (rsp.code === 0 && rsp.id > 0) {
+            saveToken(rsp.token)
+            saveUserInfo(rsp)
+            userInfoRsp.set(rsp)
+
+            reloadWindow()
+        }
+    }
+
     function syncUserInfo() {
         if ($userInfoRsp.id > 0) {
             apiReq('/api/user/info', {}).then( rsp => {
@@ -138,13 +160,25 @@
         if (loginModalInstance) {
             loginModalInstance.close()
         }
-        ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "github"})
+
+        const verifyRsp = isMasVerify()
+        if (process.mas && verifyRsp) {
+            syncDemoUserInfo(JSON.parse(verifyRsp))
+        } else {
+            ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "github"})
+        }
     }
     function  handleGoogleLogin() {
         if (loginModalInstance) {
             loginModalInstance.close()
         }
-        ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "google"})
+
+        const verifyRsp = isMasVerify()
+        if (process.mas && verifyRsp) {
+            syncDemoUserInfo(JSON.parse(verifyRsp))
+        } else {
+            ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "google"})
+        }
     }
 
     function showAddFeedWindow(event) {

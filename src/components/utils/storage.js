@@ -12,6 +12,7 @@ const imgModeKey = 'CONF/IMG/MODE'
 const appearanceModeKey = 'CONF/IMG/APPEARANCE'
 
 export const localeLangConfKey = 'CONF/LOCALE'
+export const masVerifyConfKey = 'CONF/MAS/VERIFY'
 
 // TODO clear thirdparty data and rebuild localStorage
 
@@ -128,6 +129,16 @@ export function getToken() {
 
 export function saveToken(token) {
     return localStorage.setItem(tokenConfKey, token)
+}
+
+export function setMasVerify(rsp) {
+    return localStorage.setItem(masVerifyConfKey, rsp)
+}
+export function deleteMasVerify() {
+    return localStorage.removeItem(masVerifyConfKey)
+}
+export function isMasVerify() {
+    return localStorage.getItem(masVerifyConfKey)
 }
 
 export function clearUserInfo() {
