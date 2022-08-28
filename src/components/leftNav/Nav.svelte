@@ -43,21 +43,6 @@
 
         ipcRenderer.invoke('image-mode-change', getImgMode())
 
-        if (process.mas) {
-            // demo mode for apple verify
-            if ($userInfoRsp.id <= 0) {
-                apiReq('/api/user/demo', {version: appVersion()}).then( rsp => {
-                    if (rsp.code === 0) {
-                        saveToken(rsp.token)
-                        saveUserInfo(rsp)
-                        userInfoRsp.set(rsp)
-
-                        reloadWindow()
-                    }
-                }).catch(err => {})
-            }
-        }
-
         if (!process.mas) {
             setTimeout(() => {
                 // check update after 15 seconds
