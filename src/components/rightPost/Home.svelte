@@ -53,7 +53,7 @@
         <tr>
             <th>MacOS</th>
             <th>Windows</th>
-            <th>Android/iOS</th>
+            <th>Mobile</th>
         </tr>
         </thead>
         <tbody>
