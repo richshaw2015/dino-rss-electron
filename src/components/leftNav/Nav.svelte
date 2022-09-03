@@ -411,6 +411,9 @@
     @media (prefers-color-scheme: dark) {
         #omr-left-nav { background: #1e1e1e; }
     }
+    .user-intro-wrapper {
+        word-break: break-word;
+    }
 </style>
 
 <div id="omr-left-nav" class="drag">
