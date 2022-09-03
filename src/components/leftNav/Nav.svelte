@@ -147,6 +147,13 @@
         ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "google"})
     }
 
+    function  handleAppleLogin() {
+        if (loginModalInstance) {
+            loginModalInstance.close()
+        }
+        ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "apple"})
+    }
+
     function showAddFeedWindow(event) {
         const instanse = M.Modal.init(document.querySelector('#omr-modal-add-feed'), {
             inDuration: 0,
@@ -514,6 +521,7 @@
     <div class="oauth-sdks">
         <img src="./icon/github.png" class="sdk" alt="GitHub" title="GitHub" on:click={handleGithubLogin} />
         <img src="./icon/google.png" class="sdk" alt="Google" title="Google" on:click={handleGoogleLogin} />
+        <img src="./icon/apple.png" class="sdk" alt="Apple" title="Apple" on:click={handleAppleLogin} />
     </div>
 
 </div>

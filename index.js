@@ -101,6 +101,8 @@ function createAuthWindow(token, sdk) {
 		} else {
 			authUrl = `https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=https%3A%2F%2Fdinorss.org%2Fapi%2Foauth%2Fgoogle%2Fcallback&prompt=consent&response_type=code&client_id=174849857390-dsj5k713qmivd1h5c8tl4dlu0emvtg3f.apps.googleusercontent.com&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&access_type=offline&state=${token}`
 		}
+	} else if (sdk === "apple") {
+		authUrl = `https://appleid.apple.com/auth/authorize?response_type=code&redirect_uri=https%3A%2F%2Fdinorss.org%2Fapi%2Foauth%2Fapple%2Fcallback&client_id=org.dinorss.apple.login.service&state=${token}&scope=name%20email&response_mode=form_post`
 	}
 	if (authUrl === "") {
 		return
