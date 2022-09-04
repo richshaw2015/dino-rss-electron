@@ -5,7 +5,7 @@
     const fs = require('fs')
     const { dialog } = require('@electron/remote')
 
-    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, i18n,
+    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, fixAvatarUrl, i18n,
         warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'
     import { getToken, saveUserInfo, saveToken, getImgMode, getAppearance } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
@@ -429,7 +429,7 @@
         <Titlebar />
     {/if}
     <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}" on:click={showLoginOrUser}>
-        <img src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar" title="{$userInfoRsp.level > 1 ? i18n('my') : i18n('login')}">
+        <img src="{fixAvatarUrl($userInfoRsp.image, $userInfoRsp.id)}" alt="Avatar" title="{$userInfoRsp.level > 1 ? i18n('my') : i18n('login')}">
     </div>
 
     <div title="{ i18n('rss') }" class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={() => activeTab.set('rss')}>
@@ -474,7 +474,7 @@
 
         <div>
             <div class="user-image-wrapper">
-                <img class="user-image circle" src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar">
+                <img class="user-image circle" src="{fixAvatarUrl($userInfoRsp.image, $userInfoRsp.id)}" alt="Avatar">
     
                 {#if $userInfoRsp.level >= 10}
                     <span class="avatar-vip-badge">V</span>
