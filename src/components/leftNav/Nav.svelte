@@ -173,18 +173,14 @@
             loginModalInstance.close()
         }
 
-        const verifyRsp = isMasVerify()
-        if (process.mas && verifyRsp) {
-            syncDemoUserInfo(JSON.parse(verifyRsp))
-        } else {
-            ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "google"})
-        }
+        ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "google"})
     }
 
     function  handleAppleLogin() {
         if (loginModalInstance) {
             loginModalInstance.close()
         }
+
         ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "apple"})
     }
 
