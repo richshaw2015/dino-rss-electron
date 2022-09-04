@@ -4,7 +4,7 @@
     let cacheSize = 1
 
     import { onMount } from 'svelte'
-    import { getCacheDir, toast, warnToast, readableSize, reloadWindow, resizeImageUrl, i18n, getLocaleLang, getAppVer }
+    import { getCacheDir, toast, warnToast, readableSize, reloadWindow, fixAvatarUrl, i18n, getLocaleLang, getAppVer }
         from '../utils/helper.js'
     import { userInfoRsp } from '../utils/store.js'
     import { clearUserInfo, saveLocaleLang, getImgMode, saveImgMode, getAppearance, saveAppearanceMode } from '../utils/storage.js'
@@ -122,7 +122,7 @@
     <span class="setting-title">{i18n('account')}</span>
 
     <div class="user-image-wrapper">
-        <img class="user-image circle" src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar">
+        <img class="user-image circle" src="{fixAvatarUrl($userInfoRsp.image, $userInfoRsp.id)}" alt="Avatar">
 
         {#if $userInfoRsp.level >= 10}
             <span class="avatar-vip-badge">V</span>

@@ -5,7 +5,7 @@
     const fs = require('fs')
     const { dialog } = require('@electron/remote')
 
-    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, resizeImageUrl, i18n,
+    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, fixAvatarUrl, i18n,
         warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'
     import { getToken, saveUserInfo, saveToken, getImgMode, getAppearance, setMasVerify, deleteMasVerify,
         isMasVerify } from '../utils/storage.js';
@@ -181,6 +181,13 @@
         }
     }
 
+    function  handleAppleLogin() {
+        if (loginModalInstance) {
+            loginModalInstance.close()
+        }
+        ipcRenderer.invoke('show-login-window', {token: getToken(), sdk: "apple"})
+    }
+
     function showAddFeedWindow(event) {
         const instanse = M.Modal.init(document.querySelector('#omr-modal-add-feed'), {
             inDuration: 0,
@@ -250,7 +257,7 @@
         min-height: 600px;
         min-width: 64px;
         max-width: 64px;
-        background: #24292E;
+        background: rgb(247, 247, 247);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -273,7 +280,7 @@
         align-items: center;
         width: 100%;
         height: 36px;
-        color: #CDCDCD;
+        color: black;
         user-select: none;
     }
     .nav-tab-btn i {
@@ -439,11 +446,19 @@
         cursor: pointer;
         display: block;
         width: 48px;
+        height: 48px;
         margin: 8px 16px;
     }
 
     @media (prefers-color-scheme: dark) {
         #omr-left-nav { background: #1e1e1e; }
+
+        .nav-tab-btn {
+            color: #CDCDCD;
+        }
+    }
+    .user-intro-wrapper {
+        word-break: break-word;
     }
 </style>
 
@@ -452,7 +467,7 @@
         <Titlebar />
     {/if}
     <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}" on:click={showLoginOrUser}>
-        <img src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar" title="{$userInfoRsp.level > 1 ? i18n('my') : i18n('login')}">
+        <img src="{fixAvatarUrl($userInfoRsp.image, $userInfoRsp.id)}" alt="Avatar" title="{$userInfoRsp.level > 1 ? i18n('my') : i18n('login')}">
     </div>
 
     <div title="{ i18n('rss') }" class="nav-tab-btn no-drag" id="omr-nav-rss" on:click={() => activeTab.set('rss')}>
@@ -497,7 +512,7 @@
 
         <div>
             <div class="user-image-wrapper">
-                <img class="user-image circle" src="{resizeImageUrl($userInfoRsp.image)}" alt="Avatar">
+                <img class="user-image circle" src="{fixAvatarUrl($userInfoRsp.image, $userInfoRsp.id)}" alt="Avatar">
     
                 {#if $userInfoRsp.level >= 10}
                     <span class="avatar-vip-badge">V</span>
@@ -543,8 +558,21 @@
     <div class="modal-title"><i class="material-icons">account_circle</i> { i18n("select.login") }</div>
 
     <div class="oauth-sdks">
-        <img src="./icon/github.png" class="sdk" alt="GitHub" title="GitHub" on:click={handleGithubLogin} />
-        <img src="./icon/google.png" class="sdk" alt="Google" title="Google" on:click={handleGoogleLogin} />
+        <picture title="GitHub" on:click={handleGithubLogin}>
+            <source srcset="./icon/github_dark.png" media="(prefers-color-scheme: dark)">
+            <img class="sdk" src="./icon/github_light.png" alt="GitHub" />
+        </picture>
+
+        <picture title="Google" on:click={handleGoogleLogin}>
+            <source srcset="./icon/google_dark.png" media="(prefers-color-scheme: dark)">
+            <img class="sdk" src="./icon/google_light.png" alt="Google" />
+        </picture>
+
+        <picture title="Apple" on:click={handleAppleLogin}>
+            <source srcset="./icon/apple_dark.png" media="(prefers-color-scheme: dark)">
+            <img class="sdk" src="./icon/apple_light.png" alt="Apple" />
+        </picture>
+
     </div>
 
 </div>

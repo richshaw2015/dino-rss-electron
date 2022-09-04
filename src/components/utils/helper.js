@@ -233,7 +233,12 @@ export function isInList(item, list) {
     return false
 }
 
-export function resizeImageUrl(image, size=128) {
+export function fixAvatarUrl(image, uid, size=128) {
+    if (!image) {
+        const idx = uid.toString().slice(-1)
+        return `icon/avatar/${idx}.png`
+    }
+
     try {
         let url = new URL(image)
         if (url.host.indexOf("github") > 0) {
