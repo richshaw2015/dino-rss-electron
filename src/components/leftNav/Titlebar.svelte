@@ -15,6 +15,7 @@
 <style>
     #omr-win-titlebar {
         height: 36px;
+        padding-top: 10px;
         min-width: 64px;
         max-width: 64px;
         background: rgb(247, 247, 247);;
