@@ -412,6 +412,7 @@
         cursor: pointer;
         display: block;
         width: 48px;
+        height: 48px;
         margin: 8px 16px;
     }
 
@@ -519,9 +520,21 @@
     <div class="modal-title"><i class="material-icons">account_circle</i> { i18n("select.login") }</div>
 
     <div class="oauth-sdks">
-        <img src="./icon/github.png" class="sdk" alt="GitHub" title="GitHub" on:click={handleGithubLogin} />
-        <img src="./icon/google.png" class="sdk" alt="Google" title="Google" on:click={handleGoogleLogin} />
-        <img src="./icon/apple.png" class="sdk" alt="Apple" title="Apple" on:click={handleAppleLogin} />
+        <picture title="GitHub" on:click={handleGithubLogin}>
+            <source srcset="./icon/github_dark.png" media="(prefers-color-scheme: dark)">
+            <img class="sdk" src="./icon/github_light.png" alt="GitHub" />
+        </picture>
+
+        <picture title="Google" on:click={handleGoogleLogin}>
+            <source srcset="./icon/google_dark.png" media="(prefers-color-scheme: dark)">
+            <img class="sdk" src="./icon/google_light.png" alt="Google" />
+        </picture>
+
+        <picture title="Apple" on:click={handleAppleLogin}>
+            <source srcset="./icon/apple_dark.png" media="(prefers-color-scheme: dark)">
+            <img class="sdk" src="./icon/apple_light.png" alt="Apple" />
+        </picture>
+
     </div>
 
 </div>
