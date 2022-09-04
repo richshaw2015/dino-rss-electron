@@ -223,7 +223,7 @@
         min-height: 600px;
         min-width: 64px;
         max-width: 64px;
-        background: #24292E;
+        background: rgb(247, 247, 247);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -246,7 +246,7 @@
         align-items: center;
         width: 100%;
         height: 36px;
-        color: #CDCDCD;
+        color: black;
         user-select: none;
     }
     .nav-tab-btn i {
@@ -418,6 +418,10 @@
 
     @media (prefers-color-scheme: dark) {
         #omr-left-nav { background: #1e1e1e; }
+
+        .nav-tab-btn {
+            color: #CDCDCD;
+        }
     }
     .user-intro-wrapper {
         word-break: break-word;
