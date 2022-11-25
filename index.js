@@ -43,12 +43,17 @@ function createMainWindow () {
 			contextIsolation: false,
 		},
 		icon: 'public/icon/icon.svg',
-		backgroundColor: '#f3f3f3'
+		backgroundColor: '#f3f3f3',
+		show: false,
 	});
 
 	remoteMain.enable(mainWindow.webContents);
 
 	mainWindow.loadFile('public/index.html');
+
+	mainWindow.once('ready-to-show', () => {
+		mainWindow.show()
+	})
 
 	ipcMain.handle('toggle-appearance', (event, mode) => {
 		nativeTheme.themeSource = mode;
@@ -117,13 +122,18 @@ function createAuthWindow(token, sdk) {
 		frame: false,
 		trafficLightPosition: {x: 6, y: 16},
 		parent: mainWindow,
-		icon: 'public/icon/icon.svg'
+		icon: 'public/icon/icon.svg',
+		backgroundColor: '#f3f3f3',
+		show: false
 	})
 
 	remoteMain.enable(authWindow.webContents);
 
 	authWindow.loadURL(authUrl)
 
+	authWindow.once('ready-to-show', () => {
+		authWindow.show()
+	})
 	authWindow.on('closed', () => {
 		authWindow = null
 	})
