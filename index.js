@@ -98,7 +98,9 @@ function createMainWindow () {
 }
 
 function createAuthWindow(token, sdk) {
-	mainWindow.webContents.send('loading-login-window', {});
+	if (mainWindow) {
+		mainWindow.webContents.send('loading-login-window', {});
+	}
 
 	let authUrl = ""
 	if (sdk === "github") {
@@ -136,12 +138,16 @@ function createAuthWindow(token, sdk) {
 	authWindow.loadURL(authUrl)
 
 	authWindow.once('ready-to-show', () => {
-		mainWindow.webContents.send('finish-login-window', {})
+		if (mainWindow) {
+			mainWindow.webContents.send('finish-login-window', {})
+		}
 		authWindow.show()
 	})
 	authWindow.on('closed', () => {
 		authWindow = null
-		mainWindow.webContents.send('finish-login-window', {})
+		if (mainWindow) {
+			mainWindow.webContents.send('finish-login-window', {})
+		}
 	})
 	authWindow.webContents.on('did-finish-load', function() {
 		authWindow.webContents.insertCSS('body{ overflow: hidden !important; }')
@@ -152,9 +158,9 @@ function createAuthWindow(token, sdk) {
 		// back to homepage, success or fail ?
 		if (new URL(url).pathname === "/") {
 			if (mainWindow) {
+				mainWindow.webContents.send('finish-login-window', {})
 				mainWindow.webContents.send('login-status-changed')
 			}
-			mainWindow.webContents.send('finish-login-window', {})
 			event.preventDefault()
 			authWindow.hide()
 		}
