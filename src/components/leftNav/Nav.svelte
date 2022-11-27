@@ -10,7 +10,7 @@
     import { getToken, saveUserInfo, saveToken, getImgMode, getAppearance, setMasVerify, deleteMasVerify,
         isMasVerify } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
-    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, upgradeRsp, readingMode } from '../utils/store.js'
+    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, isForceLoading, upgradeRsp, readingMode } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
     
     let feedUrl
@@ -87,7 +87,17 @@
         setTimeout(syncVisitorInfo, 10000)
         setTimeout(syncVisitorInfo, 30000)
     })
-    
+
+    // Login loading process
+    ipcRenderer.on('loading-login-window', (event) => {
+        isApiLoading.set(true)
+        isForceLoading.set(true)
+    })
+    ipcRenderer.on('finish-login-window', (event) => {
+        isApiLoading.set(false)
+        isForceLoading.set(false)
+    })
+
     function syncVisitorInfo() {
         if ($userInfoRsp.id <= 0) {
             apiReq('/api/user/info', {}).then( rsp => {

@@ -45,6 +45,7 @@ function createMainWindow () {
 		icon: 'public/icon/icon.svg',
 		backgroundColor: '#f3f3f3',
 		show: false,
+		autoHideMenuBar: true,
 	});
 
 	remoteMain.enable(mainWindow.webContents);
@@ -97,6 +98,8 @@ function createMainWindow () {
 }
 
 function createAuthWindow(token, sdk) {
+	mainWindow.webContents.send('loading-login-window', {});
+
 	let authUrl = ""
 	if (sdk === "github") {
 		authUrl = `https://github.com/login/oauth/authorize?client_id=d7e9908669cff42cdbc8&allow_signup=false&state=${token}`
@@ -122,9 +125,10 @@ function createAuthWindow(token, sdk) {
 		frame: false,
 		trafficLightPosition: {x: 6, y: 16},
 		parent: mainWindow,
+		modal: true,
 		icon: 'public/icon/icon.svg',
 		backgroundColor: '#f3f3f3',
-		show: false
+		show: false,
 	})
 
 	remoteMain.enable(authWindow.webContents);
@@ -132,10 +136,12 @@ function createAuthWindow(token, sdk) {
 	authWindow.loadURL(authUrl)
 
 	authWindow.once('ready-to-show', () => {
+		mainWindow.webContents.send('finish-login-window', {})
 		authWindow.show()
 	})
 	authWindow.on('closed', () => {
 		authWindow = null
+		mainWindow.webContents.send('finish-login-window', {})
 	})
 	authWindow.webContents.on('did-finish-load', function() {
 		authWindow.webContents.insertCSS('body{ overflow: hidden !important; }')
@@ -148,6 +154,8 @@ function createAuthWindow(token, sdk) {
 			if (mainWindow) {
 				mainWindow.webContents.send('login-status-changed')
 			}
+			mainWindow.webContents.send('finish-login-window', {})
+			event.preventDefault()
 			authWindow.hide()
 		}
 	})
