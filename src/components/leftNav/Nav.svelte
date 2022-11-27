@@ -75,7 +75,15 @@
         setTimeout(syncVisitorInfo, 10000)
         setTimeout(syncVisitorInfo, 30000)
     })
-    
+
+    // Login loading process
+    ipcRenderer.on('loading-login-window', (event) => {
+        isApiLoading.set(true)
+    })
+    ipcRenderer.on('finish-login-window', (event) => {
+        isApiLoading.set(false)
+    })
+
     function syncVisitorInfo() {
         if ($userInfoRsp.id <= 0) {
             apiReq('/api/user/info', {}).then( rsp => {
