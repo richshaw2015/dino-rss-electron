@@ -1,5 +1,5 @@
 <script>
-    import { isApiLoading } from '../utils/store.js'
+    import { isApiLoading, isForceLoading } from '../utils/store.js'
 </script>
 
 <style>
@@ -14,7 +14,7 @@
   }
 </style>
 
-{#if $isApiLoading}
+{#if $isForceLoading}
   <div class="preloader-bg"></div>
 {/if}
 

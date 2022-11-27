@@ -9,7 +9,7 @@
         warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'
     import { getToken, saveUserInfo, saveToken, getImgMode, getAppearance } from '../utils/storage.js';
     import { apiReq, isValidUrl } from '../utils/req.js';
-    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, upgradeRsp, readingMode } from '../utils/store.js'
+    import { activeTab, unreadCountRsp, userInfoRsp, isApiLoading, isForceLoading, upgradeRsp, readingMode } from '../utils/store.js'
     import Titlebar from './Titlebar.svelte'
     
     let feedUrl
@@ -79,9 +79,11 @@
     // Login loading process
     ipcRenderer.on('loading-login-window', (event) => {
         isApiLoading.set(true)
+        isForceLoading.set(true)
     })
     ipcRenderer.on('finish-login-window', (event) => {
         isApiLoading.set(false)
+        isForceLoading.set(false)
     })
 
     function syncVisitorInfo() {
