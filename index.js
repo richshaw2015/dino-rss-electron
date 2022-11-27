@@ -154,6 +154,8 @@ function createAuthWindow(token, sdk) {
 			if (mainWindow) {
 				mainWindow.webContents.send('login-status-changed')
 			}
+			mainWindow.webContents.send('finish-login-window', {})
+			event.preventDefault()
 			authWindow.hide()
 		}
 	})

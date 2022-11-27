@@ -829,5 +829,26 @@ export const localeMsg = {
         "ko": "OAuth 로그인",
         "ja": "OAuth ログイン",
         "zh-TW": "OAuth 登錄"
+    },
+    "delete": {
+        "en": "Delete",
+        "zh": "删除",
+        "ko": "삭제",
+        "ja": "消去",
+        "zh-TW": "刪除"
+    },
+    "delete.account": {
+        "en": "Delete account",
+        "zh": "删除帐号",
+        "ko": "계정 삭제",
+        "ja": "アカウントを削除する",
+        "zh-TW": "刪除帳號"
+    },
+    "delete.account.tips": {
+        "en": "WARNING: This operation will erase all your personal data irrecoverably!",
+        "zh": "警告：此操作会清空你的所有个人数据且无法恢复！",
+        "ko": "경고: 이 작업은 모든 개인 데이터를 복구 불가능하게 삭제합니다!",
+        "ja": "警告: この操作を行うと、すべての個人データが完全に消去されます。",
+        "zh-TW": "警告：此操作會清空你的所有個人數據且無法恢復！"
     }
 }
