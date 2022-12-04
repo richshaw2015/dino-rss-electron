@@ -4,8 +4,15 @@
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
-    "mas": "rollup -c; CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --universal || exit 0",
-    "sign": "cd build && ./mas.sh"
+    "start": "electron .",
+    "build": "rollup -c",
+    "autobuild": "rollup -c -w",
+    "dev:win": "concurrently \"yarn run autobuild\" \"set ELECTRON_RELOAD=yes && electron .\"",
+    "dev:mac": "concurrently \"yarn run autobuild\" \"ELECTRON_RELOAD=yes electron .\"",
+    "pack": "electron-builder --dir",
+    "dist:win": "rollup -c; electron-builder --win --x64",
+    "dist:mac:x64": "rollup -c; electron-builder --mac --x64",
+    "dist:mac:arm64": "rollup -c; electron-builder --mac --arm64"
   },
   "repository": "https://github.com/richshaw2015/dino-rss-electron",
   "keywords": [
@@ -51,11 +58,9 @@
       "type": "distribution",
       "category": "public.app-category.news",
       "target": [
-        "mas"
+        "dmg"
       ],
-      "extendInfo": {
-        "ElectronTeamID": "4788B8LJ4S"
-      }
+      "extendInfo": {}
     },
     "mas": {
       "icon": "build/macOS.icns",
@@ -106,3 +111,4 @@
     "uuid": "^8.3.2"
   }
 }
+s
