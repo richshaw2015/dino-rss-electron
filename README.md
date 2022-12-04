@@ -15,9 +15,9 @@ By using Client-Server architecture, feeds are synchronized intelligently on the
 
 ### 💻 Cross Platform
 
-| MacOS      | Windows | Linux |
+| MacOS      | Windows | Mobile |
 | ----------- | ----------- | ----------- |
-| ✅ tested on MacOS 10.15      | ✅ tested on Windows 10       | 🔜 on the way |
+| ✅ tested on MacOS 10.15+      | ✅ tested on Windows 7+       | 🔜 on the way |
 
 ### 🎤 Podcast Optimized
 Integrated with @Podlove Player for the specific needs of podcasters.
