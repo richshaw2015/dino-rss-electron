@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard, Menu, nativeTheme} = require('electron')
+const {app, BrowserWindow, ipcMain, systemPreferences, shell, dialog, clipboard, Menu, nativeTheme, screen} = require('electron')
 const fs = require('fs')
 
 const DEV = !app.isPackaged
@@ -28,11 +28,19 @@ function openUrlInDefaultBrowser(event, url) {
 }
 
 function createMainWindow () {
+	const workAreaSize = screen.getPrimaryDisplay().workAreaSize
+	// auto set window size
+	const rows = Math.round((workAreaSize.height * 0.87 - 136) / 59)
+	const height = 59 * rows + 136
+	const width1 = Math.round(height / 0.5625)
+	const width2 = 0.8 * workAreaSize.width
+	const width = width1 < width2 ? width1 : width2
+
 	mainWindow = new BrowserWindow({
-		width: 1280,
-		height: 726,
+		width: width,
+		height: height,
 		minWidth: 1080,
-		minHeight: 640,
+		minHeight: 667,
 		center: true,
 		titleBarStyle: 'hidden',
 		frame: false,
