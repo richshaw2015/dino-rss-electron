@@ -30,7 +30,7 @@ function openUrlInDefaultBrowser(event, url) {
 function createMainWindow () {
 	const workAreaSize = screen.getPrimaryDisplay().workAreaSize
 	// auto set window size
-	const rows = Math.round((workAreaSize.height * 0.87 - 136) / 59)
+	const rows = Math.floor((workAreaSize.height * 0.87 - 136) / 59)
 	const height = 59 * rows + 136
 	const width1 = Math.round(height / 0.5625)
 	const width2 = 0.8 * workAreaSize.width
