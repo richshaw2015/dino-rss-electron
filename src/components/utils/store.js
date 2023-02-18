@@ -48,3 +48,7 @@ export let tagCountMap = writable(getTagCountInfo())
 
 // article mode
 export let readingMode = writable(false)
+
+// Podcast
+export let showPodcastMini = writable(false)
+export let podcastMiniInfo = writable({})

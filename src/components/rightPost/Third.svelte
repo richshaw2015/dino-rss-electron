@@ -1,4 +1,6 @@
 <script>
+    import {podcastConfig, podcastTemplate} from "../utils/config";
+
     export let fontSize
     export let activeEntry = {}
     export let entryContentRsp = {}
@@ -6,7 +8,13 @@
     import { truncateStr, isMac, isWin, captureWindow, toast, copyToClipboard, warnToast, setEntryCache, i18n }
         from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
-    import { appsActiveMenu, activeTab, rssActiveEntry, starActiveEntry, readingMode } from '../utils/store.js'
+    import {
+        appsActiveMenu,
+        activeTab,
+        rssActiveEntry,
+        starActiveEntry,
+        readingMode,
+    } from '../utils/store.js'
     import Podcast from './Podcast.svelte'
     import Home from './Home.svelte'
     import Update from './Update.svelte'
@@ -22,7 +30,8 @@
     let pellEditor
     const qrcodeSize = 280
 
-    import { onMount, afterUpdate } from 'svelte';
+    import {onMount, afterUpdate, onDestroy} from 'svelte';
+    import {podcastMiniInfo, showPodcastMini} from "../utils/store.js";
 
     onMount(() => {
         qrcode = new QRCode(document.getElementById("omr-qrcode"), {
@@ -85,6 +94,18 @@
         } else if (entryContentRsp && Object.keys(entryContentRsp).length === 0) {
             console.log('Highlight home')
             Prism.highlightAll()
+        }
+
+        // podcast mini floating button
+        if (!$showPodcastMini && (Object.keys($podcastMiniInfo).length > 0)) {
+            let currentAudio = null
+            try {
+                currentAudio = entryContentRsp.episode.audio[0].url
+            } catch (e) {}
+
+            if (currentAudio !== $podcastMiniInfo.src) {
+                showPodcastMini.set(true)
+            }
         }
 	});
 

@@ -1,26 +1,38 @@
 <script>
-    import { onMount } from 'svelte'
+    import {onMount} from 'svelte'
+
     const Mousetrap = require('mousetrap')
     const fs = require('fs')
     const path = require('path')
 
-    import { getFontSize } from '../utils/storage.js'
-    import { isInList, shortToast, toast, warnToast, copyToClipboard, getCacheDir, setEntryCache } from '../utils/helper.js'
-    import { SCROLLSTEP } from '../utils/config.js'
+    import {getFontSize} from '../utils/storage.js'
+    import {
+        isInList,
+        shortToast,
+        toast,
+        warnToast,
+        copyToClipboard,
+        getCacheDir,
+        setEntryCache
+    } from '../utils/helper.js'
+    import {SCROLLSTEP} from '../utils/config.js'
 
     import Find from '../global/Find.svelte'
     import Title from './Title.svelte'
     import Statusbar from './Statusbar.svelte'
-    import Third from './Third.svelte'    
+    import Third from './Third.svelte'
 
-    import { apiReq } from '../utils/req.js'
-    import { rssActiveEntry, rssListRsp, rssEntryContentRsp, starActiveEntry, starEntryContentRsp, 
-        activeTab, unreadCountRsp, rssFeedEntriesView, rssActiveFeed } from '../utils/store.js'
+    import {apiReq} from '../utils/req.js'
+    import {
+        rssActiveEntry, rssListRsp, rssEntryContentRsp, starActiveEntry, starEntryContentRsp,
+        activeTab, unreadCountRsp, rssFeedEntriesView, rssActiveFeed, showPodcastMini, podcastMiniInfo
+    } from '../utils/store.js'
+    import PodcastAudio from "../global/PodcastAudio.svelte";
 
     let fontSize = getFontSize()
-    
+
     const entryCacheDir = getCacheDir()
-    
+
     function getEntryCache(entryId) {
         if (!fs.existsSync(entryCacheDir)) {
             fs.mkdirSync(entryCacheDir, {recursive: true})
@@ -51,7 +63,8 @@
 
             try {
                 document.querySelector('#omr-post-third-html').scrollTop = 0
-            } catch (e) {}
+            } catch (e) {
+            }
 
             return true
         }
@@ -72,7 +85,7 @@
             entry_id: activeEntry.id,
             feed_id: activeEntry.feed.id,
             is_podcast: activeEntry.feed.is_podcast
-        }).then( rsp => {
+        }).then(rsp => {
             if (rsp.episode && Object.keys(rsp.episode).length > 0) {
                 let episodeBase = {
                     "version": 5,
@@ -97,7 +110,7 @@
             } else {
                 entryContentRsp = rsp
             }
-            
+
             // auto link
             entryContentRsp.content = Autolinker.link(entryContentRsp.content, {
                 phone: false, stripPrefix: false, stripTrailingSlash: false
@@ -138,56 +151,65 @@
     }
 
     onMount(() => {
+        M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {})
+
         // keyboard shortcut
-        Mousetrap.bind('j', function() {
+        Mousetrap.bind('j', function () {
             try {
                 document.querySelector('#omr-post-third-html').scrollTop += SCROLLSTEP
-            } catch (e) {}
+            } catch (e) {
+            }
             return false
         });
-        Mousetrap.bind('d', function() {
+        Mousetrap.bind('d', function () {
             try {
-                document.querySelector('#omr-post-third-html').scrollTop += 
+                document.querySelector('#omr-post-third-html').scrollTop +=
                     document.querySelector('#omr-post-third-html').offsetHeight / 2 - 20
-            } catch(e) {}
+            } catch (e) {
+            }
             return false
         });
 
-        Mousetrap.bind('k', function() {
+        Mousetrap.bind('k', function () {
             try {
                 document.querySelector('#omr-post-third-html').scrollTop -= SCROLLSTEP
-            } catch(e) {}
+            } catch (e) {
+            }
             return false
         });
-        Mousetrap.bind('u', function() {
+        Mousetrap.bind('u', function () {
             try {
-                document.querySelector('#omr-post-third-html').scrollTop -= 
+                document.querySelector('#omr-post-third-html').scrollTop -=
                     document.querySelector('#omr-post-third-html').offsetHeight / 2 - 20
-            } catch(e) {}
+            } catch (e) {
+            }
             return false
         });
 
-        Mousetrap.bind('g g', function() {
+        Mousetrap.bind('g g', function () {
             try {
                 document.querySelector('#omr-post-third-html').scrollTop = 0
-            } catch(e) {}
+            } catch (e) {
+            }
             return false
         });
-        Mousetrap.bind('G', function() {
+        Mousetrap.bind('G', function () {
             try {
                 document.querySelector('#omr-post-third-html').scrollTop =
                     document.querySelector('#omr-post-third-html').scrollHeight
-            } catch(e) {}
+            } catch (e) {
+            }
             return false
         });
-        Mousetrap.bind('space', function() {
+        Mousetrap.bind('space', function () {
             try {
                 document.querySelector('#omr-post-third-html').scrollTop +=
-                document.querySelector('#omr-post-third-html').offsetHeight - 40
-            } catch(e) {}
+                    document.querySelector('#omr-post-third-html').offsetHeight - 40
+            } catch (e) {
+            }
             return false
         });
-        Mousetrap.bind('y y', function() {
+        Mousetrap.bind('y y', function () {
             if ($activeTab === "star") {
                 copyToClipboard($starActiveEntry.link)
             } else if ($activeTab === "rss") {
@@ -231,3 +253,7 @@
 {/if}
 
 <Find />
+
+{#if $showPodcastMini}
+    <PodcastAudio podcastInfo={$podcastMiniInfo} />
+{/if}

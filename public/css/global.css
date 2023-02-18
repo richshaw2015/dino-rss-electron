@@ -353,3 +353,26 @@ kbd {
         background-color: #5f5f5f;
     }
 }
+
+.podcast-mini {
+    right: 48px;
+    bottom: 48px;
+}
+.podcast-mini-btn {
+    background-color: rgb(35, 89, 115);
+    width: 50px;
+    height: 50px;
+}
+.podcast-mini-btn:hover {
+    background-color: rgb(26, 58, 74);
+}
+.podcast-mini-playinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.podcast-mini-playarrow {
+    width: 28px;
+    padding-left: 3px;
+}
