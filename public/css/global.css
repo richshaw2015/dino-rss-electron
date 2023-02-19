@@ -362,9 +362,11 @@ kbd {
     background-color: rgb(35, 89, 115);
     width: 50px;
     height: 50px;
+    box-shadow: 0 4px 8px 0 rgb(35 89 115 / 50%);
 }
 .podcast-mini-btn:hover {
     background-color: rgb(26, 58, 74);
+    box-shadow: 0 4px 8px 0 rgb(26 58 74 / 50%);
 }
 .podcast-mini-playinner {
     display: flex;

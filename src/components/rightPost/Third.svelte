@@ -105,6 +105,10 @@
 
             if (currentAudio !== $podcastMiniInfo.src) {
                 showPodcastMini.set(true)
+            } else {
+                if ($activeTab !== $podcastMiniInfo.tab) {
+                    showPodcastMini.set(true)
+                }
             }
         }
 	});

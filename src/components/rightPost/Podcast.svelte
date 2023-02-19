@@ -3,7 +3,7 @@
 
     import { afterUpdate, onDestroy } from 'svelte';
     import {podcastConfig, podcastTemplate} from '../utils/config.js'
-    import {showPodcastMini, podcastMiniInfo, endPodcastMini} from '../utils/store.js'
+    import {showPodcastMini, podcastMiniInfo, endPodcastMini, activeTab} from '../utils/store.js'
 
     afterUpdate(() => {
         if (episode && Object.keys(episode).length > 0) {
@@ -30,6 +30,7 @@
                             "duration": state.timepiece.duration,
                             "playtime": state.timepiece.playtime,
                             "poster": state.episode.poster,
+                            "tab": $activeTab
                         }
                         podcastMiniInfo.set(podcast)
                     }
