@@ -96,7 +96,7 @@
             Prism.highlightAll()
         }
 
-        // podcast mini floating button
+        // next afterUpdate, whether to show background podcast?
         if (!$showPodcastMini && (Object.keys($podcastMiniInfo).length > 0)) {
             let currentAudio = null
             try {

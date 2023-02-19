@@ -3,7 +3,7 @@
 
     import { afterUpdate, onDestroy } from 'svelte';
     import {podcastConfig, podcastTemplate} from '../utils/config.js'
-    import {showPodcastMini, podcastMiniInfo} from '../utils/store.js'
+    import {showPodcastMini, podcastMiniInfo, endPodcastMini} from '../utils/store.js'
 
     afterUpdate(() => {
         if (episode && Object.keys(episode).length > 0) {
@@ -20,6 +20,7 @@
                     if (state.lastAction.type === 'PLAYER_REQUEST_PLAY' || 
                         state.lastAction.type === 'PLAYER_BACKEND_PLAY') {
                         showPodcastMini.set(false)
+                        endPodcastMini.set(false)
                         podcastMiniInfo.set({})
                     } else if (state.lastAction.type === 'PLAYER_BACKEND_PLAYTIME') {
                         const podcast = {

@@ -51,4 +51,5 @@ export let readingMode = writable(false)
 
 // Podcast
 export let showPodcastMini = writable(false)
+export let endPodcastMini = writable(false)
 export let podcastMiniInfo = writable({})

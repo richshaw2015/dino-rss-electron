@@ -1,6 +1,8 @@
 <script>
     import { onMount } from 'svelte'
 
+    import { endPodcastMini } from '../utils/store.js'
+
     export let podcastInfo
 
     let player
@@ -13,15 +15,25 @@
         player.currentTime = podcastInfo.playtime / 1000
 
         player.play()
+
+        player.addEventListener("ended", function(){
+            player.pause();
+            isPlaying = false
+
+            player.src = player.src;
+            player.currentTime = 0;
+            
+            endPodcastMini.set(true)
+        });
     })
 
     function handlePlayAudio() {
-        if (player.paused) {
-            player.play()
-            isPlaying = true
-        } else {
+        if (isPlaying) {
             player.pause()
             isPlaying = false
+        } else {
+            player.play()
+            isPlaying = true
         }
     }
 </script>

@@ -24,7 +24,7 @@
 
     import {apiReq} from '../utils/req.js'
     import {
-        rssActiveEntry, rssListRsp, rssEntryContentRsp, starActiveEntry, starEntryContentRsp,
+        rssActiveEntry, rssListRsp, rssEntryContentRsp, starActiveEntry, starEntryContentRsp, endPodcastMini,
         activeTab, unreadCountRsp, rssFeedEntriesView, rssActiveFeed, showPodcastMini, podcastMiniInfo
     } from '../utils/store.js'
     import PodcastAudio from "../global/PodcastAudio.svelte";
@@ -254,6 +254,6 @@
 
 <Find />
 
-{#if $showPodcastMini}
+{#if !$endPodcastMini && $showPodcastMini}
     <PodcastAudio podcastInfo={$podcastMiniInfo} />
 {/if}
