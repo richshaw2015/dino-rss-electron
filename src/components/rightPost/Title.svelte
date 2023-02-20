@@ -152,8 +152,8 @@
 
 {#if activeEntry.id}
     {#if $readingMode}
-        <div class="iphone no-drag">
-            <div class="notch" on:click={exitReadingMode}>
+        <div class="iphone">
+            <div class="notch no-drag" on:click={exitReadingMode}>
                 <div class="exit-btn">{i18n('exit.reader.mode')}</div>
             </div>
         </div>
