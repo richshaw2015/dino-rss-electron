@@ -94,11 +94,18 @@ export function isWin(){
 export function isMac(){
     return process.platform === 'darwin'
 }
+
+export function isLinux(){
+    return process.platform === 'linux'
+}
+
 export function getPlatform() {
     if (isWin()) {
         return 'win'
     } else if (isMac()) {
         return 'mac'
+    } else if (isLinux()) {
+        return 'linux'
     }
 }
 
