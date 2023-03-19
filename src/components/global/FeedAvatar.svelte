@@ -5,7 +5,7 @@
 
     const emojiList = "🌲,🤓,🤣,🍄,🥕,😺,🍃,‍🐯,🥰,🦦,🦒,💐,😨,🐦,😗,🐔,🤗,😶,🌶,👽,😸,🤬,🐋,🧄,🦈,🐵,😷,🐪,🐄,🐨,🥒,🐆,😾,🐭,🌹,🍏,🦁,🦌,🍅,😻,🥦,🦟,🤔,🤕,😣,👾,🍉,🐉,🐴,😟,🕷,🍋,🥳,🤨,🐖,🙊,🥑,👿,😵,🦖,😽,🐤,🍆,🐢,🦔,😄,🐹,🍎,🐈,👺,🤥,🦕,🐾,😖,🍈,🤯,🐮,😱,🦮,🦜,🍓,🐚,😭,🐂,🧅,🌾,🦄,🐛,😫,🌳,🐀,😰,🎍,😅,🥭,😠,🐼,🙁,🦥,🐻,🥬,🦎,🐍,🦋,🥀,🎄,😮,😊,😚,🤧,🍀,🐒,☘,🤢,🦚,😑,😙,🌻,🐐,🦇,🤭,🥺,🤩,🦂,🌷,🦙,🍑,😈,😓,🦝,🙃,🤡,😿,🐿,😒,🐕,🍁,😍,😳,😪,🥔,🦆,🦉,🥵,🍒,🧐,🌸,🐣,🤖,🙉,🦏,🍐,‍🐶,🐘,🌱,🐳,🐏,🎃,🌵,😕,🐬,🐠,😇,🥝,🦊,🌺,🥶,🐡,👹,🦍,😲,🐜,🤒,🙂,🐷,😋,🦡,🐫,😤,🦃,🤮,🦓,💩,😂,😉,🙀,🌽,🦨,😡,💀,🐺,🌼,🍊,🤫,😦,🤠,🐁,🐊,😁,🤑,🐸,😐,😢,🤪,😛,🦐,🦗,🦢,🦩,🎋,🌿,🐅,🐓,😘,🐱,🍠,🐞,🙈,😧,🥥,😯,🐃,🐲,🥱,🐑,🐰,🐎,🐌,😞,😹,😝,🍂,🦑,😬,😴,😎,😩,🍌,🐟,🕊,🥴,🐝,🙄,🦅,🦞,😏,🦀,😀,🤤,🐥,🐇,🐙,🍇,😼,🐽,🍍,🐩,🦛,😔,🦧,🐗,👻,🤐,😌,😥,🦘,🐧,😜,😆,😃,🌴".split(',')
 
-    import { isWin } from '../utils/helper.js'
+    import { isWin, isLinux } from '../utils/helper.js'
 
     function getEmoji(feedId) {
         return emojiList[feedId % emojiList.length]
@@ -36,5 +36,5 @@
     <img src="{feedImage}" class="feed-avatar {marginLeft ? 'feed-margin-left' : ''}" alt="" />
 {:else}
     <span class="feed-avatar {marginLeft ? 'feed-margin-left' : ''} feed-avatar-emoji 
-        {isWin() ? 'feed-avatar-emoji-win' : ''}">{getEmoji(feedId)}</span>
+        {isWin() || isLinux() ? 'feed-avatar-emoji-win' : ''}">{getEmoji(feedId)}</span>
 {/if}

@@ -62,7 +62,7 @@ Just [Buy me a coffee](https://www.buymeacoffee.com/dinorss) to get more feeds.
 Install dependencies:
 
 ```sh
-yarn
+yarn --ignore-platform
 ```
 
 Start development on macOS:
@@ -74,6 +74,14 @@ yarn run dev:mac
 Build package on macOS:
 ```sh
 yarn run dist:mac:x64
+```
+
+For better network speed:
+```sh
+npm config set registry https://registry.npm.taobao.org/
+yarn config set registry https://registry.npm.taobao.org/
+yarn config set electron_mirror https://npm.taobao.org/mirrors/electron/
+npm config set electron_mirror https://npm.taobao.org/mirrors/electron/
 ```
 
 ## Follow us

@@ -5,7 +5,7 @@
     const fs = require('fs')
     const { dialog } = require('@electron/remote')
 
-    import { toggleMaximizeWindow, macNavCtxMenu, isWin, closeWindow, toast, reloadWindow, fixAvatarUrl, i18n,
+    import { toggleMaximizeWindow, macNavCtxMenu, isWin, isLinux, closeWindow, toast, reloadWindow, fixAvatarUrl, i18n,
         warnToast, readableCount, shortToast, toggleDevTools, appVersion, getPlatform, getArch } from '../utils/helper.js'
     import { getToken, saveUserInfo, saveToken, getImgMode, getAppearance, setMasVerify, deleteMasVerify,
         isMasVerify } from '../utils/storage.js';
@@ -469,10 +469,10 @@
 </style>
 
 <div id="omr-left-nav" class="drag">
-    {#if isWin()}
+    {#if isWin() || isLinux()}
         <Titlebar />
     {/if}
-    <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() ? 'margin-win32' : ''}" on:click={showLoginOrUser}>
+    <div id="omr-nav-avatar" class="nav-tab-btn no-drag {isWin() || isLinux() ? 'margin-win32' : ''}" on:click={showLoginOrUser}>
         <img src="{fixAvatarUrl($userInfoRsp.image, $userInfoRsp.id)}" alt="Avatar" title="{$userInfoRsp.level > 1 ? i18n('my') : i18n('login')}">
     </div>
 
