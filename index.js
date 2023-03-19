@@ -3,10 +3,11 @@ const fs = require('fs')
 
 const DEV = !app.isPackaged
 const remoteMain = require("@electron/remote/main");
+const { PassThrough } = require('stream');
+const path = require('path');
 remoteMain.initialize()
 
 if (DEV) {
-	const path = require('path');
 	try {
 		require('electron-reload')(__dirname, {
 			electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
@@ -52,7 +53,7 @@ function createMainWindow () {
 			enableRemoteModule: true,
 			contextIsolation: false,
 		},
-		icon: 'public/icon/icon.svg',
+		icon: path.join(__dirname, '/public/icon/logo.png'),
 		backgroundColor: '#f3f3f3',
 		show: false,
 		autoHideMenuBar: true,
@@ -138,7 +139,7 @@ function createAuthWindow(token, sdk) {
 		trafficLightPosition: {x: 6, y: 16},
 		parent: mainWindow,
 		modal: true,
-		icon: 'public/icon/icon.svg',
+		icon: path.join(__dirname, '/public/icon/logo.png'),
 		backgroundColor: '#f3f3f3',
 		show: false,
 	})

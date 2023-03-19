@@ -68,7 +68,7 @@
       "icon": "build/macOS.icns",
       "category": "Network",
       "target": [
-        "AppImage", "deb", "rpm"
+        "AppImage"
       ]
     },
     "mas": {
