@@ -850,5 +850,68 @@ export const localeMsg = {
         "ko": "경고: 이 작업은 모든 개인 데이터를 복구 불가능하게 삭제합니다!",
         "ja": "警告: この操作を行うと、すべての個人データが完全に消去されます。",
         "zh-TW": "警告：此操作會清空你的所有個人數據且無法恢復！"
+    },
+    "open.image.browser": {
+        "en": "Open image in Browser",
+        "zh": "浏览器中打开图片",
+        "ko": "브라우저에서 이미지 열기",
+        "ja": "ブラウザで画像を開く",
+        "zh-TW": "在瀏覽器中開啟圖片"
+    },
+    "save.image.as": {
+        "en": "Save image as...",
+        "zh": "图片另存为...",
+        "ko": "다른 이름으로 이미지 저장...",
+        "ja": "名前を付けて画像を保存...",
+        "zh-TW": "圖片另存為..."
+    },
+    "copy.image": {
+        "en": "Copy image",
+        "zh": "复制图片",
+        "ko": "이미지 복사",
+        "ja": "画像をコピー",
+        "zh-TW": "複製圖片"
+    },
+    "copy.image.address": {
+        "en": "Copy image address",
+        "zh": "复制图片地址",
+        "ko": "이미지 주소 복사",
+        "ja": "画像アドレスをコピー",
+        "zh-TW": "複製圖片網址"
+    },
+    "open.link.browser": {
+        "en": "Open link in browser",
+        "zh": "浏览器中打开链接",
+        "ko": "브라우저에서 링크 열기",
+        "ja": "リンクをブラウザで開く",
+        "zh-TW": "在瀏覽器中開啟連結"
+    },
+    "save.link.as": {
+        "en": "Save link as...",
+        "zh": "链接存储为...",
+        "ko": "링크를 다른 이름으로 저장...",
+        "ja": "名前を付けてリンク先を保存...",
+        "zh-TW": "儲存連結為..."
+    },
+    "copy.link.address": {
+        "en": "Copy link address",
+        "zh": "复制链接地址",
+        "ko": "링크 주소 복사",
+        "ja": "リンクアドレスをコピーする",
+        "zh-TW": "複製連結網址"
+    },
+    "open.audio.browser": {
+        "en": "Open audio in Browser",
+        "zh": "在浏览器中打开音频",
+        "ko": "브라우저에서 오디오 열기",
+        "ja": "オーディオをブラウザーで開く",
+        "zh-TW": "在瀏覽器中打開音頻"
+    },
+    "copy.audio.address": {
+        "en": "Copy audio link",
+        "zh": "复制音频链接",
+        "ko": "오디오 링크 복사",
+        "ja": "オーディオリンクをコピー",
+        "zh-TW": "複製音頻鏈接"
     }
 }
