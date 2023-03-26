@@ -15,9 +15,9 @@ By using Client-Server architecture, feeds are synchronized intelligently on the
 
 ### 💻 Cross Platform
 
-| MacOS      | Windows | Mobile |
+| MacOS      | Windows | Linux |
 | ----------- | ----------- | ----------- |
-| ✅ tested on MacOS 10.15+      | ✅ tested on Windows 7+       | 🔜 on the way |
+| ✅ tested on macOS 10.15+      | ✅ tested on Windows 7+       | ✅ tested on manjaro |
 
 ### 🎤 Podcast Optimized
 Integrated with @Podlove Player for the specific needs of podcasters.
@@ -62,7 +62,7 @@ Just [Buy me a coffee](https://www.buymeacoffee.com/dinorss) to get more feeds.
 Install dependencies:
 
 ```sh
-yarn
+yarn --ignore-platform
 ```
 
 Start development on macOS:
@@ -73,7 +73,26 @@ yarn run dev:mac
 
 Build package on macOS:
 ```sh
-yarn run dist:mac:x64
+rollup -c; electron-builder --mac
+```
+
+Build package on Windows:
+```sh
+rollup -c; electron-builder --win
+```
+
+Build package(deb、rpm) on Linux:
+```sh
+rollup -c; electron-builder --linux deb
+rollup -c; electron-builder --linux rpm
+```
+
+For better network speed in China:
+```sh
+npm config set registry https://registry.npm.taobao.org/
+yarn config set registry https://registry.npm.taobao.org/
+yarn config set electron_mirror https://npm.taobao.org/mirrors/electron/
+npm config set electron_mirror https://npm.taobao.org/mirrors/electron/
 ```
 
 ## Follow us

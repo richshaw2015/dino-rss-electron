@@ -9,7 +9,7 @@
 
     const { shell } = require('electron')
     const { Menu, MenuItem } = require('@electron/remote')
-    import { isWin, shortToast, toast, warnToast, fromNow, isInList, copyToClipboard } from '../utils/helper.js'
+    import { isWin, isLinux, shortToast, toast, warnToast, fromNow, isInList, copyToClipboard } from '../utils/helper.js'
     import { apiReq } from '../utils/req.js'
     import FeedAvatar from '../global/FeedAvatar.svelte'
 
@@ -61,7 +61,7 @@
         const menu = new Menu();
 
         menu.append(new MenuItem({
-            label: isWin() ? "🌟  " + i18n('star') : "⭐️  " + i18n('star'),
+            label: isWin() || isLinux() ? "🌟  " + i18n('star') : "⭐️  " + i18n('star'),
             visible: !entry.stats.has_starred,
             click: function(){
                 handleStarEntry(entry)

@@ -38,7 +38,7 @@
 
     <h3>️🚀 Simple and Efficient</h3>
     <p>
-        Dinorss is build as minimum viable product, new features will be added up to you.
+        Dinosaur Rss 🦕 is build as minimum viable product, new features will be added up to you.
     </p>
 
     <p>
@@ -51,16 +51,16 @@
     <table class="responsive-table">
         <thead>
         <tr>
-            <th>MacOS</th>
+            <th>macOS</th>
             <th>Windows</th>
-            <th>Mobile</th>
+            <th>Linux</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>✅ tested on MacOS 10.15+</td>
+            <td>✅ tested on macOS 10.15+</td>
             <td>✅ tested on Windows 7+</td>
-            <td>🔜 on the way</td>
+            <td>✅ tested on manjaro</td>
         </tr>
         </tbody>
     </table>

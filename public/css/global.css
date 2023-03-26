@@ -378,3 +378,7 @@ kbd {
     width: 28px;
     padding-left: 3px;
 }
+/* extra third party */
+img.twemoji {
+    width: 20px;
+}

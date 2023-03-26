@@ -23,8 +23,10 @@
     import Setting from './Setting.svelte'
     import Notice from '../global/Notice.svelte'
 
-    const { shell } = require('electron')
-    const { Menu, MenuItem } = require('@electron/remote')
+    const { shell, clipboard, nativeImage } = require('electron')
+    const { Menu, MenuItem, dialog } = require('@electron/remote')
+    const { writeFile } = require('fs')
+    const path = require('path')
     
     let qrcode
     let pellEditor
@@ -119,6 +121,114 @@
 
         const menu = new Menu()
 
+        const targetNode = event.target
+        if (targetNode.tagName === 'IMG') {
+            // image context
+            const hasSrc = targetNode.src.length > 0
+
+            menu.append(new MenuItem({
+                label: '🧭  ' + i18n('open.image.browser'),
+                visible: hasSrc,
+                click: function(){
+                    shell.openExternal(targetNode.src);
+                }
+            }));
+            menu.append(new MenuItem({
+                label: '💾  ' + i18n('save.image.as'),
+                visible: hasSrc,
+                click: function(){
+                    dialog.showSaveDialog(null, {
+                        defaultPath: path.basename(targetNode.src),
+                        filters: [{ name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']}],
+                    }).then((result) => {
+                        if (!result.canceled && result.filePath) {
+                            const canvas = document.createElement('canvas')
+                            canvas.width = targetNode.naturalWidth
+                            canvas.height = targetNode.naturalHeight
+
+                            const context = canvas.getContext('2d')
+                            context.drawImage(targetNode, 0, 0)
+
+                            writeFile(
+                                result.filePath,
+                                Buffer.from(canvas.toDataURL().split(',')[1], 'base64'),
+                                (err) => {
+                                    if (err) {
+                                        console.error(err)
+                                    }
+                                }
+                            )
+                        }
+                    }).catch((err) => {
+                        console.error(err)
+                    })
+                }
+            }));
+            menu.append(new MenuItem({
+                label: '🖼️  ' + i18n('copy.image'),
+                visible: hasSrc,
+                click: function(){
+                    const canvas = document.createElement('canvas')
+                    canvas.width = targetNode.naturalWidth
+                    canvas.height = targetNode.naturalHeight
+                    const context = canvas.getContext('2d')
+                    context.drawImage(targetNode, 0, 0)
+
+                    const base64 = canvas.toDataURL('image/png')
+                    const image = nativeImage.createFromDataURL(base64)
+                    clipboard.writeImage(image)
+                }
+            }));
+            menu.append(new MenuItem({
+                label: '🌐  ' + i18n('copy.image.address'),
+                visible: hasSrc,
+                click: function(){
+                    copyToClipboard(targetNode.src)
+                }
+            }));
+            menu.append(new MenuItem({type: "separator", visible: hasSrc}));
+        } else if (targetNode.tagName === 'A') {
+            // link context
+            const hasHref = targetNode.href.length > 0
+            menu.append(new MenuItem({
+                label: '🧭  ' + i18n('open.link.browser'),
+                visible: hasHref,
+                click: function(){
+                    shell.openExternal(targetNode.href);
+                }
+            }));
+            menu.append(new MenuItem({
+                label: '🌐  ' + i18n('copy.link.address'),
+                visible: hasHref,
+                click: function(){
+                    copyToClipboard(targetNode.href)
+                }
+            }));
+            menu.append(new MenuItem({type: "separator", visible: hasHref}));
+        }
+
+        // podcast link
+        try {
+            const podcastAudio = entryContentRsp.episode.audio[0].url
+            const hasAudio = podcastAudio.length > 0
+            menu.append(new MenuItem({
+                label: '🧭  ' + i18n('open.audio.browser'),
+                visible: hasAudio,
+                click: function(){
+                    shell.openExternal(podcastAudio);
+                }
+            }));
+            menu.append(new MenuItem({
+                label: '🎙️  ' + i18n('copy.audio.address'),
+                visible: hasAudio,
+                click: function(){
+                    copyToClipboard(podcastAudio)
+                }
+            }));
+            menu.append(new MenuItem({type: "separator", visible: hasAudio}));
+        } catch(err) {}
+
+        // text selection context
         menu.append(new MenuItem({
             label: '🔍  ' + i18n('search') + `"${truncateText}"`,
             visible: hasText,

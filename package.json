@@ -1,6 +1,6 @@
 {
-  "name": "Dinorss",
-  "version": "1.11.0",
+  "name": "Dinosaur.Rss",
+  "version": "1.11.1",
   "description": "Dinosaur Rss 🦕",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "reader",
     "news"
   ],
-  "author": "Richshaw",
+  "author": "Richshaw <richshaw2015@gmail.com>",
   "license": "MIT",
   "build": {
     "publish": {
@@ -56,6 +56,13 @@
       "extendInfo": {
         "ElectronTeamID": "4788B8LJ4S"
       }
+    },
+    "linux": {
+      "icon": "build/macOS.icns",
+      "category": "Network",
+      "target": [
+        "AppImage"
+      ]
     },
     "mas": {
       "icon": "build/macOS.icns",

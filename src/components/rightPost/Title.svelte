@@ -151,16 +151,16 @@
 </style>
 
 {#if activeEntry.id}
-    {#if $readingMode}
-        <div class="iphone">
-            <div class="notch no-drag" on:click={exitReadingMode}>
-                <div class="exit-btn">{i18n('exit.reader.mode')}</div>
-            </div>
-        </div>
-    {/if}
-
     <div id="omr-post-title-bar" class="drag" on:dblclick={toggleMaximizeWindow} on:contextmenu={macNavCtxMenu}>
         <div class="post-title">{ activeEntry.title }</div>
+
+        {#if $readingMode}
+            <div class="phone">
+                <div class="notch">
+                    <div class="no-drag exit-btn" on:click={exitReadingMode}>{i18n('exit.reader.mode')}</div>
+                </div>
+            </div>
+        {/if}
 
         <i title="{i18n('toggle.star.unstar')}" class="material-icons no-drag {activeEntry.stats.has_starred ? 'primary-color' : ''}"
             on:click={toggleStarStatus}>
